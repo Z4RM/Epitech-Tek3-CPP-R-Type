@@ -9,6 +9,10 @@ find_package(spdlog REQUIRED)
 
 set(RTYPE_SRC
         src/main.cpp
+        src/ECS/ComponentManager.hpp
+        src/ECS/EntityManager.hpp
+        src/ECS/SparseSet.hpp
+        src/ECS/SystemManager.hpp
 )
 
 set(RTYPE_HEADERS

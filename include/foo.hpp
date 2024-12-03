@@ -5,9 +5,7 @@
 ** foo.hpp
 */
 
-#ifndef FOO_HPP_
-#define FOO_HPP_
+#ifndef FOO_HPP
+#define FOO_HPP
 
-// TODO: this is a sample file, remove it once a real one is created
-
-#endif /* !FOO_HPP_ */
+#endif //FOO_HPP
