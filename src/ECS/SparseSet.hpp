@@ -73,11 +73,11 @@ namespace rtype::ecs
          * Otherwise, returns `nullptr`.
          *
          * @param entity The unique ID of the entity.
-         * @return A unique pointer to the component, or `nullptr` if the entity does not have a component.
+         * @return A pointer to the component, or `nullptr` if the entity does not have a component.
          */
-        std::unique_ptr<T> getComponent(unsigned int entity) {
+        T* getComponent(unsigned int entity) {
             if (_sparse.find(entity) != _sparse.end()) {
-                return std::make_unique<T>(_components[_sparse[entity]]);
+                return &_components[_sparse[entity]];
             }
             return nullptr;
         }

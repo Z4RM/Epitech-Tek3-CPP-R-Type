@@ -68,10 +68,10 @@ namespace rtype::ecs
          *
          * @tparam T The type of the component.
          * @param entity The unique identifier of the entity.
-         * @return A unique pointer to the component, or `nullptr` if the entity does not have a component of this type.
+         * @return A pointer to the component, or `nullptr` if the entity does not have a component of this type.
          */
         template <typename T>
-        std::unique_ptr<T> getComponent(unsigned int entity) {
+        T* getComponent(unsigned int entity) {
             if (_componentSets.find(typeid(T)) != _componentSets.end()) {
                 auto sparse_set = std::static_pointer_cast<SparseSet<T>>(_componentSets[typeid(T)]);
                 return sparse_set->getComponent(entity);
