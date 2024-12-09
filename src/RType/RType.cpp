@@ -17,5 +17,39 @@ int rtype::RType::run() {
     ecs::EntityManager entityManager;
     ecs::ComponentManager componentManager;
     ecs::SystemManager systemManager(entityManager, componentManager);
-    return 0;
+
+    systemManager.addSystem(rtype::systems::RenderWindowSys::createWindow);
+    systemManager.addSystem(rtype::systems::RenderWindowSys::render);
+
+    String title;
+    title.s = "RType";
+    RWindow renderWindow;
+    Mode mode;
+    mode.style.style = sf::Style::Default;
+    Sprite sprite1 = {{0, 0, 0}, {800, 600}, "sprites/background.jpg", {-1}};
+    rtype::components::Window window(
+        entityManager,
+        componentManager,
+        {800, 600},
+        {"RType"},
+        renderWindow,
+        mode,
+        {60},
+        sprite1
+        );
+
+    Sprite sprite2 = {{0, 0, 0}, {64, 64}, "sprites/r-typesheet42.gif", {0}};
+    rtype::components::Player player(
+        entityManager,
+        componentManager,
+        {0, 0, 0},
+        {0, 0, 0},
+        {64, 64},
+        sprite2,
+        {"", 0, 0}
+        );
+
+    while (1) {
+        systemManager.updateSystems();
+    }
 }

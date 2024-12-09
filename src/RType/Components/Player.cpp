@@ -15,10 +15,19 @@ rtype::components::Player::Player(
     const Position pos,
     const Velocity vel,
     const Size size,
-    const Sprite& sprite,
+    Sprite& sprite,
     const Animation& animation)
 {
     _id = entityManager.createEntity();
+    sprite.texture = new sf::Texture();
+    sprite.sprite = new sf::Sprite();
+    sprite.texture->loadFromFile(sprite.path);
+    sprite.sprite->setTexture(*sprite.texture);
+    sprite.sprite->setPosition({pos.x, pos.y});
+    sprite.sprite->setScale(
+        size.width / sprite.sprite->getGlobalBounds().width,
+        size.height / sprite.sprite->getGlobalBounds().height
+    );
     componentManager.addComponent<Position>(_id, pos);
     componentManager.addComponent<Velocity>(_id, vel);
     componentManager.addComponent<Size>(_id, size);

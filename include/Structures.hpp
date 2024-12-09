@@ -10,6 +10,7 @@
 
 #pragma once
 #include <string>
+#include <SFML/Graphics.hpp>
 
 struct Position
 {
@@ -37,11 +38,25 @@ struct Hitbox
     Size size;
 };
 
+struct Created
+{
+    bool isCreate = false;
+};
+
+struct ZIndex
+{
+    int value;
+};
+
 struct Sprite
 {
     Position pos;
     Size size;
     std::string path;
+    ZIndex priority;
+    sf::Texture* texture;
+    sf::Sprite* sprite;
+    Created created;
 };
 
 struct Animation
@@ -49,6 +64,11 @@ struct Animation
     std::string path;
     int nbFrames;
     int frameRate;
+};
+
+struct String
+{
+    std::string s;
 };
 
 #endif //STRUCTURE_HPP

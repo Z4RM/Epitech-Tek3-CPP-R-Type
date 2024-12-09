@@ -9,5 +9,6 @@
 #define SYSTEMS_HPP
 
 #include "Systems/Movement.hpp"
+#include "Systems/RenderWindow.hpp"
 
 #endif //SYSTEMS_HPP

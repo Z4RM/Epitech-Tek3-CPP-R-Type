@@ -20,6 +20,11 @@
  */
 namespace rtype::ecs
 {
+    struct Entity
+    {
+        size_t id;
+    };
+
     class EntityManager {
     public:
         /**
