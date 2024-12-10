@@ -1,4 +1,5 @@
 [requires]
+xorg/system
 inih/58
 spdlog/1.15.0
 sfml/2.6.2

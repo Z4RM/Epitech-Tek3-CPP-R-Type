@@ -51,7 +51,7 @@ namespace rtype::components
             Position pos,
             Velocity vel,
             Size size,
-            const Sprite& sprite,
+            Sprite& sprite,
             const Animation& animation);
 
         /**
