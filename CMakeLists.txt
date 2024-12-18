@@ -31,8 +31,9 @@ set(RTYPE_SRC
         src/RType/ModeManager/ModeManager.hpp
         src/Systems/Movement.cpp
         src/Systems/Movement.hpp
-        src/RType/Server/Network/UDPServer/UDPServer.cpp
-        src/RType/Server/Network/UDPServer/UDPServer.hpp
+        src/RType/Network/UDPNetwork/UDPNetwork.cpp
+        src/RType/Network/UDPNetwork/UDPNetwork.hpp
+        src/RType/ThreadPool/ThreadPool.cpp
 )
 
 set(CLIENT_SRC
@@ -45,6 +46,12 @@ set(CLIENT_SRC
         src/Systems/RenderWindow.hpp
         src/Systems/InputSystem.cpp
         src/Systems/InputSystem.hpp
+        src/RType/Network/UDPNetwork/UDPNetwork.cpp
+        src/RType/Network/UDPNetwork/UDPNetwork.hpp
+        src/Systems/Network.cpp
+        src/Systems/Network.hpp
+        src/RType/ThreadPool/ThreadPool.cpp
+        include/ThreadPool.hpp
 )
 
 set(RTYPE_HEADERS
