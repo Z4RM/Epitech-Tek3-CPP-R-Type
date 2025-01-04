@@ -36,8 +36,9 @@ set(RTYPE_SRC
         src/RType/Network/TCPNetwork/TCPNetwork.cpp
         src/RType/Network/TCPNetwork/TCPNetwork.hpp
         src/RType/ThreadPool/ThreadPool.cpp
-        src/RType/Network/Packets/BasePacket.hpp
         src/RType/Network/Packets/ConnectPacket.hpp
+        src/RType/Network/Packets/PacketFactory/PacketFactory.cpp
+        src/RType/Network/Packets/PacketFactory/PacketFactory.hpp
 )
 
 set(CLIENT_SRC
@@ -59,9 +60,10 @@ set(CLIENT_SRC
         src/RType/Network/TCPNetwork/TCPNetwork.cpp
         src/RType/Network/TCPNetwork/TCPNetwork.hpp
         src/RType/Network/TCPNetwork/TCPNetwork.cpp
-        src/RType/Network/Packets/BasePacket.hpp
         src/RType/Network/Packets/ConnectPacket.hpp
         src/RType/Network/Packets/IPacket.hpp
+        src/RType/Network/Packets/PacketFactory/PacketFactory.cpp
+        src/RType/Network/Packets/PacketFactory/PacketFactory.hpp
 )
 
 set(RTYPE_HEADERS
