@@ -83,17 +83,18 @@ namespace rtype::network {
 
         socket->async_read_some(asio::buffer(*buffer),
     [this, socket, buffer](const asio::error_code& error, std::size_t bytes_transferred) {
+        std::string address = socket->remote_endpoint().address().to_string();
+        int port = socket->remote_endpoint().port();
+
             if (!error) {
                 std::string message(buffer->data(), bytes_transferred);
-                std::string address = socket->remote_endpoint().address().to_string();
-                int port = socket->remote_endpoint().port();
 
                 spdlog::info("Message: {} received from: {}:{}", message, address, port);
                 handleMessage(message, socket);
                 handleClient(socket);
             } else {
                 if (error == asio::error::eof) {
-                    std::cout << "Client closed the connection" << std::endl;
+                    spdlog::warn("Remote {}:{} closed the connection", address, port);
                 } else {
                     spdlog::error("Receive error while reading client: {}", error.message());
                 }
