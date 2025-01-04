@@ -36,6 +36,8 @@ set(RTYPE_SRC
         src/RType/Network/TCPNetwork/TCPNetwork.cpp
         src/RType/Network/TCPNetwork/TCPNetwork.hpp
         src/RType/ThreadPool/ThreadPool.cpp
+        src/RType/Network/Packets/BasePacket.hpp
+        src/RType/Network/Packets/ConnectPacket.hpp
 )
 
 set(CLIENT_SRC
@@ -57,12 +59,16 @@ set(CLIENT_SRC
         src/RType/Network/TCPNetwork/TCPNetwork.cpp
         src/RType/Network/TCPNetwork/TCPNetwork.hpp
         src/RType/Network/TCPNetwork/TCPNetwork.cpp
+        src/RType/Network/Packets/BasePacket.hpp
+        src/RType/Network/Packets/ConnectPacket.hpp
+        src/RType/Network/Packets/IPacket.hpp
 )
 
 set(RTYPE_HEADERS
         include/Structures.hpp
         include/ECS.hpp
         include/Systems.hpp
+        include/Packets.hpp
 )
 
 link_libraries(inih::inireader spdlog::spdlog asio::asio)
