@@ -20,11 +20,12 @@ namespace rtype::network {
         if (IS_SERVER) {
             this->_acceptor = asio::ip::tcp::acceptor(this->_ioContext, asio::ip::tcp::endpoint(asio::ip::tcp::v4(), port));
         } else {
-            this->_socket.emplace(this->_ioContext);
+            this->_socket = std::make_shared<asio::ip::tcp::socket>(this->_ioContext);
             try {
                 asio::ip::tcp::endpoint serverEndpoint(asio::ip::make_address("127.0.0.1"), port);
                 this->connect(serverEndpoint);
                 spdlog::info("Successfully connected to the server tcp network: 127.0.0.1:{}", port);
+                this->handleClient(this->_socket);
             } catch (std::exception &e) {
                 spdlog::error("Error while connecting to the server tcp network: 127.0.0.1:{}", port);
             }
@@ -76,8 +77,6 @@ namespace rtype::network {
         });
     }
 
-    //TODO: clients should have a list of message to send foreah client and a way to send them message
-    // (reuse code of client part)
     //TODO: try new method to have dynamic buffer size
     void TCPNetwork::handleClient(std::shared_ptr<asio::ip::tcp::socket> socket) {
         auto buffer = std::make_shared<std::vector<char>>(1024);
@@ -86,11 +85,18 @@ namespace rtype::network {
     [this, socket, buffer](const asio::error_code& error, std::size_t bytes_transferred) {
             if (!error) {
                 std::string message(buffer->data(), bytes_transferred);
-                spdlog::info("New message received: {}", message);
-                //handleMessage(socket, message);
+                std::string address = socket->remote_endpoint().address().to_string();
+                int port = socket->remote_endpoint().port();
+
+                spdlog::info("Message: {} received from: {}:{}", message, address, port);
+                handleMessage(message, socket);
                 handleClient(socket);
             } else {
-                spdlog::error("Receive error while reading client: {}", error.message());
+                if (error == asio::error::eof) {
+                    std::cout << "Client closed the connection" << std::endl;
+                } else {
+                    spdlog::error("Receive error while reading client: {}", error.message());
+                }
             }
         });
     }
@@ -99,51 +105,32 @@ namespace rtype::network {
         this->_socket->async_connect(endpoint, [this](const asio::error_code& ec) {
             if (!ec) {
                 spdlog::info("Connected to server");
-                sendNextMessage();
             } else {
                 spdlog::error("Connection failed: {}", ec.message());
             }
         });
     }
 
-    void TCPNetwork::sendMessage(std::string &message) {
-        {
-            std::lock_guard lock(this->_toSendMutex);
-            this->_toSendQueue.push(message);
-        }
-        sendNextMessage();
-    }
+    void TCPNetwork::sendMessage(const std::string &message, std::shared_ptr<asio::ip::tcp::socket> socket) const {
+        const auto msgPtr = std::make_shared<std::string>(message);
+        auto targetSocket = socket ? socket : this->_socket;
 
-    void TCPNetwork::sendNextMessage() {
-        std::lock_guard lock(this->_toSendMutex);
-
-        if (this->_toSendQueue.empty())
-            return;
-
-        _isSending = true;
-
-        const std::string& message = this->_toSendQueue.front();
-
-        async_write(_socket.value(), asio::buffer(message), [this](const asio::error_code& ec, std::size_t) {
-            handleSend(ec);
+        async_write(*targetSocket, asio::buffer(*msgPtr), [this, msgPtr, targetSocket](const asio::error_code& ec, std::size_t) {
+            if (ec) {
+                spdlog::error("Error while sending message: {}", ec.message());
+            } else {
+                std::string address = targetSocket->remote_endpoint().address().to_string();
+                int port = targetSocket->remote_endpoint().port();
+                spdlog::info("Message: {} successfully sended to: {}:{}", *msgPtr, address, port);
+            }
         });
     }
 
+    void TCPNetwork::handleMessage(const std::string &message, std::shared_ptr<asio::ip::tcp::socket> socket) const {
+        if (message == "CONNECT") {
+            std::string msg = "WELCOME";
 
-    void TCPNetwork::handleSend(const asio::error_code &ec) {
-        {
-            std::lock_guard lock(this->_toSendMutex);
-
-            if (!ec) {
-                spdlog::info("Message sent successfully");
-                this->_toSendQueue.pop();
-            } else {
-                spdlog::error("Failed to send message: {}", ec.message());
-            }
-
-            _isSending = false;
+            this->sendMessage(msg, socket);
         }
-
-        sendNextMessage();
     }
 }

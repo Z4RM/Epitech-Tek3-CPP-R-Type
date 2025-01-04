@@ -116,13 +116,14 @@ int rtype::RType::_run() {
     );
 #endif
 
-  // TODO: use mode manager
+  // TODO: use mode manager and make good exceptions
     network::TCPNetwork tcpNetwork(_port);
 
     try {
         tcpNetwork.start();
     } catch (std::exception &e) {
         spdlog::error("Error while starting tcp network: {}", e.what());
+        throw;
     }
 
     systemManager.addSystem(rtype::systems::Movement::move);
