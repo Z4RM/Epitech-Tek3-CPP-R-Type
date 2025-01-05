@@ -2,12 +2,16 @@
 ** EPITECH PROJECT, 2024
 ** RType
 ** File description:
-** TODO: add description
+** TCP Network
 */
 
 #include "spdlog/spdlog.h"
 #include "TCPNetwork.hpp"
+
+#include <RType/Network/Packets/EPacketCode.hpp>
+
 #include "RType/ModeManager/ModeManager.hpp"
+#include "Packets.hpp"
 
 
 namespace rtype::network {
@@ -43,8 +47,8 @@ namespace rtype::network {
             spdlog::info("Server tcp network started on port: {}", this->_port);
         } else {
             std::string message = "CONNECT";
-
-            this->sendMessage(message);
+            PacketConnect packet;
+            this->sendPacket(packet);
         }
 
         for (int i = 0; i < numThreads; i++) {
@@ -87,10 +91,7 @@ namespace rtype::network {
         int port = socket->remote_endpoint().port();
 
             if (!error) {
-                std::string message(buffer->data(), bytes_transferred);
-
-                spdlog::info("Message: {} received from: {}:{}", message, address, port);
-                handleMessage(message, socket);
+                handlePacket(*buffer, socket);
                 handleClient(socket);
             } else {
                 if (error == asio::error::eof) {
@@ -112,26 +113,52 @@ namespace rtype::network {
         });
     }
 
-    void TCPNetwork::sendMessage(const std::string &message, std::shared_ptr<asio::ip::tcp::socket> socket) const {
-        const auto msgPtr = std::make_shared<std::string>(message);
+    void TCPNetwork::sendPacket(const IPacket &packet, std::shared_ptr<asio::ip::tcp::socket> socket) const {
+        const auto packetData = std::make_shared<std::vector<char>>(packet.bufferize());
+        const auto code = packet.getCode();
         auto targetSocket = socket ? socket : this->_socket;
 
-        async_write(*targetSocket, asio::buffer(*msgPtr), [this, msgPtr, targetSocket](const asio::error_code& ec, std::size_t) {
+        async_write(*targetSocket, asio::buffer(*packetData), [this, code, targetSocket, packetData](const
+        asio::error_code& ec,
+        std::size_t) {
             if (ec) {
                 spdlog::error("Error while sending message: {}", ec.message());
             } else {
                 std::string address = targetSocket->remote_endpoint().address().to_string();
+                std::string codeStr = std::to_string(code);
                 int port = targetSocket->remote_endpoint().port();
-                spdlog::info("Message: {} successfully sended to: {}:{}", *msgPtr, address, port);
+
+                const char* data = static_cast<const char*>(packetData->data());
+                std::size_t size = packetData->size();
+
+                // Afficher chaque byte sous forme hexadécimale
+                spdlog::info("Bytes in buffer:");
+                for (std::size_t i = 0; i < size; ++i) {
+                    spdlog::info("Byte {}: 0x{:02X}", i, static_cast<unsigned char>(data[i]));
+                }
+                spdlog::info("Packet: {} successfully sended to: {}:{}", codeStr, address, port);
             }
         });
     }
 
-    void TCPNetwork::handleMessage(const std::string &message, std::shared_ptr<asio::ip::tcp::socket> socket) const {
-        if (message == "CONNECT") {
-            std::string msg = "WELCOME";
+    void TCPNetwork::handlePacket(const std::vector<char> &buffer, std::shared_ptr<asio::ip::tcp::socket> socket)
+    const {
+        std::string address = socket->remote_endpoint().address().to_string();
+        int port = socket->remote_endpoint().port();
 
-            this->sendMessage(msg, socket);
+        if (buffer.size() < 4) {
+            spdlog::error("Invalid packet received from {}:{}", address, port);
+            return;
+        }
+        int code = 0;
+        std::memcpy(&code, buffer.data(), sizeof(int));
+
+        try {
+            std::unique_ptr<IPacket> packet = PacketFactory::fromCode(code);
+            std::string codeStr = std::to_string(code);
+            spdlog::info("Packet: {} received from {}:{}", codeStr, address, port);
+        } catch (std::exception &e) {
+            spdlog::error(e.what());
         }
     }
 }

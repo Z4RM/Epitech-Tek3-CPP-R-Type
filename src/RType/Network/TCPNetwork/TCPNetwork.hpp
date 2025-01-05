@@ -10,6 +10,7 @@
 #include <optional>
 #include <RType/ThreadPool/ThreadPool.hpp>
 #include "asio.hpp"
+#include "Packets.hpp"
 
 namespace rtype::network {
 
@@ -28,8 +29,9 @@ namespace rtype::network {
             void connect(const asio::ip::tcp::endpoint& endpoint);
 
             //SHARED
-            void sendMessage(const std::string &message, std::shared_ptr<asio::ip::tcp::socket> socket = nullptr) const;
-            void handleMessage(const std::string &message, std::shared_ptr<asio::ip::tcp::socket> socket) const;
+            void sendPacket(const IPacket &message, std::shared_ptr<asio::ip::tcp::socket> socket = nullptr) const;
+            void handlePacket(const std::vector<char> &buffer, std::shared_ptr<asio::ip::tcp::socket>
+            socket) const;
 
         private:
             unsigned short _port;

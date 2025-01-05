@@ -9,7 +9,8 @@
 
 namespace rtype::network {
     enum EPacketCode {
-        CONNECT,
-        WELCOME
+        //SHARED
+        CONNECT = 100,
+        WELCOME = 101
     };
 }

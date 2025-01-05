@@ -8,5 +8,6 @@
 #pragma once
 
 #include "RType/Network/Packets/APacket.hpp"
-#include "RType/Network/Packets/ConnectPacket.hpp"
+#include "RType/Network/Packets/PacketConnect/PacketConnect.hpp"
 #include "RType/Network/Packets/EPacketCode.hpp"
+#include "RType/Network/Packets/PacketFactory/PacketFactory.hpp"
