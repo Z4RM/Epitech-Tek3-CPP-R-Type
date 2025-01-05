@@ -28,10 +28,10 @@ namespace rtype::network {
             try {
                 asio::ip::tcp::endpoint serverEndpoint(asio::ip::make_address("127.0.0.1"), port);
                 this->connect(serverEndpoint);
-                spdlog::info("Successfully connected to the server tcp network: 127.0.0.1:{}", port);
+                spdlog::info("Connection established with the server TCP: 127.0.0.1:{}", port);
                 this->handleClient(this->_socket);
             } catch (std::exception &e) {
-                spdlog::error("Error while connecting to the server tcp network: 127.0.0.1:{}", port);
+                spdlog::error("Error while establishing a connction to the server tcp network: 127.0.0.1:{}", port);
             }
         }
     }
@@ -83,7 +83,7 @@ namespace rtype::network {
 
     //TODO: try new method to have dynamic buffer size
     void TCPNetwork::handleClient(std::shared_ptr<asio::ip::tcp::socket> socket) {
-        auto buffer = std::make_shared<std::vector<char>>(1024);
+        auto buffer = std::make_shared<std::vector<char>>(BUFFER_SIZE);
 
         socket->async_read_some(asio::buffer(*buffer),
     [this, socket, buffer](const asio::error_code& error, std::size_t bytes_transferred) {

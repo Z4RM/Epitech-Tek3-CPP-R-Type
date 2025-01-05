@@ -12,6 +12,8 @@
 #include "asio.hpp"
 #include "Packets.hpp"
 
+#define BUFFER_SIZE 1024
+
 namespace rtype::network {
 
     class TCPNetwork {
