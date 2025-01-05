@@ -46,7 +46,6 @@ namespace rtype::network {
 
             spdlog::info("Server tcp network started on port: {}", this->_port);
         } else {
-            std::string message = "CONNECT";
             PacketConnect packet;
             this->sendPacket(packet);
         }
