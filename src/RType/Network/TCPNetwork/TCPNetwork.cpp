@@ -128,14 +128,6 @@ namespace rtype::network {
                 std::string codeStr = std::to_string(code);
                 int port = targetSocket->remote_endpoint().port();
 
-                const char* data = static_cast<const char*>(packetData->data());
-                std::size_t size = packetData->size();
-
-                // Afficher chaque byte sous forme hexadécimale
-                spdlog::info("Bytes in buffer:");
-                for (std::size_t i = 0; i < size; ++i) {
-                    spdlog::info("Byte {}: 0x{:02X}", i, static_cast<unsigned char>(data[i]));
-                }
                 spdlog::info("Packet: {} successfully sended to: {}:{}", codeStr, address, port);
             }
         });
