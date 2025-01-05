@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2024
-** plazza
+** Rtype
 ** File description:
 ** thread pool
 */
