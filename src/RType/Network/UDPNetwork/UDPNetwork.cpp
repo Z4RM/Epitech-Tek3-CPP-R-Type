@@ -63,7 +63,7 @@ namespace rtype::network {
                 handleClient(this->_endpoint, *buffer);
                 startReceive();
             } else {
-                spdlog::error("Receive error: {}", error.message());
+                spdlog::error("UDP Receive error: {}", error.message());
             }
         });
     }
@@ -73,7 +73,7 @@ namespace rtype::network {
         int port = endpoint.port();
 
         if (buffer.size() < 4) {
-            spdlog::error("Invalid packet received from {}:{}", address, port);
+            spdlog::error("Invalid UDP Packet received from {}:{}", address, port);
             return;
         }
 
@@ -83,7 +83,7 @@ namespace rtype::network {
         try {
             std::unique_ptr<IPacket> packet = PacketFactory::fromCode(code);
             std::string codeStr = std::to_string(code);
-            spdlog::info("Packet: {} received from {}:{}", codeStr, address, port);
+            spdlog::info("UDP Packet {}: received from {}:{}", codeStr, address, port);
 
             if (code == EPacketCode::CONNECT) {
                 //TODO: send welcome for the client to know he is connected successfully
@@ -100,13 +100,13 @@ namespace rtype::network {
 
         _socket->async_send_to(asio::buffer(*packetData), endpoint, [this, code, packetData, endpoint](const asio::error_code& ec, std::size_t) {
             if (ec) {
-                spdlog::error("Error while sending message: {}", ec.message());
+                spdlog::error("Error while sending UDP Packet: {}", ec.message());
             } else {
                 std::string address = endpoint.address().to_string();
                 int port = endpoint.port();
                 std::string codeStr = std::to_string(code);
 
-                spdlog::info("Packet: {} successfully sent to: {}:{}", codeStr, address, port);
+                spdlog::info("UDP Packet {}: successfully sent to: {}:{}", codeStr, address, port);
             }
         });
     }

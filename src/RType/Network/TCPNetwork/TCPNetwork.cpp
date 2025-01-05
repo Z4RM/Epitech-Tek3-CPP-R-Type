@@ -28,7 +28,6 @@ namespace rtype::network {
             try {
                 asio::ip::tcp::endpoint serverEndpoint(asio::ip::make_address("127.0.0.1"), port);
                 this->connect(serverEndpoint);
-                spdlog::info("Connection established with the server TCP: 127.0.0.1:{}", port);
                 this->handleClient(this->_socket);
             } catch (std::exception &e) {
                 spdlog::error("Error while establishing a connction to the server tcp network: 127.0.0.1:{}", port);
@@ -44,7 +43,7 @@ namespace rtype::network {
         if (IS_SERVER) {
             this->startAccept();
 
-            spdlog::info("Server tcp network started on port: {}", this->_port);
+            spdlog::info("Server TCP network started on port: {}", this->_port);
         } else {
             PacketConnect packet;
             this->sendPacket(packet);
@@ -71,10 +70,10 @@ namespace rtype::network {
                 std::string address = socket->remote_endpoint().address().to_string();
                 int port = socket->remote_endpoint().port();
 
-                spdlog::info("New client connected: {}:{}", address, port);
+                spdlog::info("New client TCP connected: {}:{}", address, port);
                 handleClient(socket);
             } else {
-                spdlog::error("Accept error: {}", error.message());
+                spdlog::error("TCP Accept error: {}", error.message());
             }
             this->startAccept();
         });
@@ -94,7 +93,7 @@ namespace rtype::network {
                 handleClient(socket);
             } else {
                 if (error == asio::error::eof) {
-                    spdlog::warn("Remote {}:{} closed the connection", address, port);
+                    spdlog::warn("TCP Remote {}:{} closed the connection", address, port);
                 } else {
                     spdlog::error("Receive error while reading client: {}", error.message());
                 }
@@ -105,9 +104,9 @@ namespace rtype::network {
     void TCPNetwork::connect(const asio::ip::tcp::endpoint& endpoint) {
         this->_socket->async_connect(endpoint, [this](const asio::error_code& ec) {
             if (!ec) {
-                spdlog::info("Connected to server");
+                spdlog::info("Connected to TCP server");
             } else {
-                spdlog::error("Connection failed: {}", ec.message());
+                spdlog::error("TCP Connection failed: {}", ec.message());
             }
         });
     }
@@ -121,13 +120,13 @@ namespace rtype::network {
         asio::error_code& ec,
         std::size_t) {
             if (ec) {
-                spdlog::error("Error while sending message: {}", ec.message());
+                spdlog::error("TCP Error while sending message: {}", ec.message());
             } else {
                 std::string address = targetSocket->remote_endpoint().address().to_string();
                 std::string codeStr = std::to_string(code);
                 int port = targetSocket->remote_endpoint().port();
 
-                spdlog::info("Packet: {} successfully sended to: {}:{}", codeStr, address, port);
+                spdlog::info("TCP Packet {}: successfully sended to: {}:{}", codeStr, address, port);
             }
         });
     }
@@ -138,7 +137,7 @@ namespace rtype::network {
         int port = socket->remote_endpoint().port();
 
         if (buffer.size() < 4) {
-            spdlog::error("Invalid packet received from {}:{}", address, port);
+            spdlog::error("Invalid TCP Packet received from {}:{}", address, port);
             return;
         }
         int code = 0;
@@ -147,7 +146,7 @@ namespace rtype::network {
         try {
             std::unique_ptr<IPacket> packet = PacketFactory::fromCode(code);
             std::string codeStr = std::to_string(code);
-            spdlog::info("Packet: {} received from {}:{}", codeStr, address, port);
+            spdlog::info("TCP Packet {}: received from {}:{}", codeStr, address, port);
         } catch (std::exception &e) {
             spdlog::error(e.what());
         }

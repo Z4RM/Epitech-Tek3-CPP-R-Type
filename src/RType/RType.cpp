@@ -117,11 +117,11 @@ int rtype::RType::_run() {
 #endif
 
   // TODO: use mode manager and make good exceptions
-    //network::TCPNetwork tcpNetwork(_port);
+    network::TCPNetwork tcpNetwork(_port);
     network::UDPNetwork udpNetwork(_port);
 
     try {
-        //tcpNetwork.start();
+        tcpNetwork.start();
         udpNetwork.start();
     } catch (std::exception &e) {
         spdlog::error("Error while starting tcp network: {}", e.what());
