@@ -104,8 +104,6 @@ namespace rtype::network {
             } else {
                 std::string address = endpoint.address().to_string();
                 int port = endpoint.port();
-
-                std::size_t size = packetData->size();
                 std::string codeStr = std::to_string(code);
 
                 spdlog::info("Packet: {} successfully sent to: {}:{}", codeStr, address, port);
