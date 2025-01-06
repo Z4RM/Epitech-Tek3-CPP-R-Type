@@ -14,4 +14,10 @@ namespace rtype::network {
         std::memcpy(buffer.data(), &this->_code, sizeof(this->_code));
         return buffer;
     }
+
+    void PacketConnect::fillData(const std::vector<char> &buffer) {
+        test = true;
+    }
+
+
 }

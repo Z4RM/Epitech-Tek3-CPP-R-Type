@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include "../APacket.hpp"
+#include "../../APacket.hpp"
 
 namespace rtype::network {
   /** @brief Represent a client packet to tell you try to connect as server **/
@@ -16,5 +16,8 @@ namespace rtype::network {
       ~PacketConnect() override = default;
       PacketConnect() : APacket(EPacketCode::CONNECT) {};
       [[nodiscard]] std::vector<char> bufferize() const override;
+      void fillData(const std::vector<char> &buffer) override;
+      bool test = false;
   };
+
 }

@@ -13,6 +13,7 @@
 #include "Systems.hpp"
 #include "RType.hpp"
 #include "Networks.hpp"
+#include "Systems/Network.hpp"
 #ifdef RTYPE_IS_CLIENT
 #include "Entities/Window.hpp"
 #endif
@@ -117,20 +118,9 @@ int rtype::RType::_run() {
         {64, 64}
     );
 #endif
-
-  // TODO: use mode manager and make good exceptions
-    network::TCPNetwork tcpNetwork(_port);
-    network::UDPNetwork udpNetwork(_port);
-
-    try {
-        tcpNetwork.start();
-        udpNetwork.start();
-    } catch (std::exception &e) {
-        spdlog::error("Error while starting tcp network: {}", e.what());
-        throw;
-    }
-
     systemManager.addSystem(rtype::systems::Movement::move);
+    systemManager.addSystem(rtype::systems::Network::udpProcess);
+    systemManager.addSystem(rtype::systems::Network::tcpProcess);
     while (_running()) {
         systemManager.updateSystems();
 #ifdef RTYPE_IS_CLIENT

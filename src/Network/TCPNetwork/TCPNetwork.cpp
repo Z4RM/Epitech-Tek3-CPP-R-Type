@@ -28,7 +28,7 @@ namespace rtype::network {
                 this->connect(serverEndpoint);
                 this->handleClient(this->_socket);
             } catch (std::exception &e) {
-                spdlog::error("Error while establishing a connction to the server tcp network: 127.0.0.1:{}", port);
+                spdlog::error("Error while creating a endpoint to the server tcp network: 127.0.0.1:{}", port);
             }
         }
     }
@@ -101,10 +101,8 @@ namespace rtype::network {
 
     void TCPNetwork::connect(const asio::ip::tcp::endpoint& endpoint) {
         this->_socket->async_connect(endpoint, [this](const asio::error_code& ec) {
-            if (!ec) {
-                spdlog::info("Connected to TCP server");
-            } else {
-                spdlog::error("TCP Connection failed: {}", ec.message());
+            if (ec) {
+                spdlog::error("TCP connect failed: {}", ec.message());
             }
         });
     }
@@ -138,13 +136,10 @@ namespace rtype::network {
             spdlog::error("Invalid TCP Packet received from {}:{}", address, port);
             return;
         }
-        int code = 0;
-        std::memcpy(&code, buffer.data(), sizeof(int));
 
         try {
-            std::unique_ptr<IPacket> packet = PacketFactory::fromCode(code);
-            std::string codeStr = std::to_string(code);
-            spdlog::info("TCP Packet {}: received from {}:{}", codeStr, address, port);
+            std::unique_ptr<IPacket> packet = PacketFactory::fromBuffer(buffer);
+            spdlog::info("TCP Packet {}: received from {}:{}", std::to_string(packet->getCode()), address, port);
         } catch (std::exception &e) {
             spdlog::error(e.what());
         }

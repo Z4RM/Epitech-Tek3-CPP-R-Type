@@ -6,12 +6,12 @@
 */
 
 #pragma once
+#include "ECS.hpp"
 
-//todo: make a class that :
-// handle packets
-// handle new connection if server
-// handle connection to server if client
-// etc...
-class Network {
-
-};
+namespace rtype::systems {
+    class Network {
+    public:
+        static void udpProcess(const ecs::EntityManager& entityManager, ecs::ComponentManager& componentManager);
+        static void tcpProcess(const ecs::EntityManager& entityManager, ecs::ComponentManager& componentManager);
+    };
+}

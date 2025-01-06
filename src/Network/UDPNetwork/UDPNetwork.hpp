@@ -45,6 +45,8 @@ namespace rtype::network {
         /** @brief starting receiving packets **/
         void startReceive();
 
+        inline bool getStarted() const { return this->_started; };
+
     private:
         unsigned short _port; ///< port of the server
         asio::io_context _ioContext; ///< asio context
@@ -52,6 +54,7 @@ namespace rtype::network {
         asio::ip::udp::endpoint _endpoint; ///< endpoint that stock the new received packet's endpoint
         asio::ip::udp::endpoint _serverEndpoint; ///< endpoint of the server
         std::optional<ThreadPool> _threadPool; ///< thread pool
+        bool _started = false;
     };
 
 }
