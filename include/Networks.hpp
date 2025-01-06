@@ -7,5 +7,5 @@
 
 #pragma once
 
-#include "RType/Network/TCPNetwork/TCPNetwork.hpp"
-#include "RType/Network/UDPNetwork/UDPNetwork.hpp"
+#include "Network/TCPNetwork/TCPNetwork.hpp"
+#include "Network/UDPNetwork/UDPNetwork.hpp"

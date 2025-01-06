@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include "RType/Network/Packets/APacket.hpp"
-#include "RType/Network/Packets/PacketConnect/PacketConnect.hpp"
-#include "RType/Network/Packets/EPacketCode.hpp"
-#include "RType/Network/Packets/PacketFactory/PacketFactory.hpp"
+#include "Network/Packets/APacket.hpp"
+#include "Network/Packets/PacketConnect/PacketConnect.hpp"
+#include "Network/Packets/EPacketCode.hpp"
+#include "Network/Packets/PacketFactory/PacketFactory.hpp"

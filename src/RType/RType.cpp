@@ -8,11 +8,14 @@
 #include "ModeManager/ModeManager.hpp"
 #include "Config/Config.hpp"
 #include "ECS.hpp"
-#include "Components/Enemy.hpp"
-#include "Components/Player.hpp"
+#include "Entities/Enemy.hpp"
+#include "Entities/Player.hpp"
 #include "Systems.hpp"
 #include "RType.hpp"
 #include "Networks.hpp"
+#ifdef RTYPE_IS_CLIENT
+#include "Entities/Window.hpp"
+#endif
 
 int rtype::RType::run() {
     if (!Config::initialize())
@@ -59,13 +62,13 @@ int rtype::RType::_run() {
     size_t rtype = entityManager.createEntity();
 #ifdef RTYPE_IS_CLIENT
     systemManager.addSystem(rtype::systems::RenderWindowSys::createWindow);
-    String title;
+    components::String title;
     title.s = "RType";
-    rtype::components::RWindow renderWindow{};
-    rtype::components::Mode mode;
+    rtype::entities::RWindow renderWindow{};
+    rtype::entities::Mode mode;
     mode.style.style = sf::Style::Default;
-    Sprite sprite1 = {{0, 0, 0}, {800, 600}, "assets/sprites/background.jpg", {-1}};
-    rtype::components::Window window(
+    components::Sprite sprite1 = {{0, 0, 0}, {800, 600}, "assets/sprites/background.jpg", {-1}};
+    rtype::entities::Window window(
             entityManager,
             componentManager,
             {800, 600},
@@ -76,8 +79,8 @@ int rtype::RType::_run() {
     );
     systemManager.addSystem(rtype::systems::RenderWindowSys::render);
 
-    Sprite sprite2 = {{100, 100, 0}, {33, 17}, "assets/sprites/players.gif", {0}};
-    rtype::components::Player player(
+    components::Sprite sprite2 = {{100, 100, 0}, {33, 17}, "assets/sprites/players.gif", {0}};
+    rtype::entites::Player player(
             entityManager,
             componentManager,
             {0, 0, 0},
@@ -87,8 +90,8 @@ int rtype::RType::_run() {
             {"", 0, 0}
     );
 
-    Sprite sprite3 = {{600, 100, 0}, {33, 36}, "assets/sprites/enemy.gif", {1}};
-    rtype::components::Enemy enemy(
+    components::Sprite sprite3 = {{600, 100, 0}, {33, 36}, "assets/sprites/enemy.gif", {1}};
+    rtype::entites::Enemy enemy(
         entityManager,
         componentManager,
         {600, 100, 0},
@@ -98,7 +101,7 @@ int rtype::RType::_run() {
         {"", 0, 0}
     );
 #else
-    rtype::components::Player player(
+    rtype::entites::Player player(
         entityManager,
         componentManager,
         {0, 0, 0},
@@ -106,7 +109,7 @@ int rtype::RType::_run() {
         {64, 64}
         );
 
-    rtype::components::Enemy enemy(
+    rtype::entites::Enemy enemy(
         entityManager,
         componentManager,
         {600, 100, 0},
