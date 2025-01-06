@@ -60,12 +60,14 @@ namespace rtype::network {
             void handlePacket(const std::vector<char> &buffer, std::shared_ptr<asio::ip::tcp::socket>
             socket) const;
 
+            inline bool getStarted() const { return this->_started; };
         private:
             unsigned short _port; ///< port of the server
             std::optional<asio::ip::tcp::acceptor> _acceptor; ///< asio acceptor for the server
             std::optional<ThreadPool> _threadPool; ///< the thread pool for multi threading tasks
             std::shared_ptr<asio::ip::tcp::socket> _socket; ///< client socket
             asio::io_context _ioContext; ///< asio context
+            bool _started = false;
     };
 
 }

@@ -27,5 +27,7 @@ namespace rtype::network {
 
         /** @brief creating the code packet class based on a packet code **/
         static std::unique_ptr<IPacket> fromCode(int code);
+
+        static std::unique_ptr<IPacket> fromBuffer(const std::vector<char> &buffer);
     };
 }

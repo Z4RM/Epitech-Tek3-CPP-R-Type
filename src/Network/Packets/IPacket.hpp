@@ -20,5 +20,7 @@ namespace rtype::network {
 
         /** @brief returning the code of the packet **/
         [[nodiscard]] virtual EPacketCode getCode() const = 0;
+
+        virtual void fillData(const std::vector<char> &buffer) = 0;
     };
 }

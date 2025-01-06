@@ -35,10 +35,12 @@ set(RTYPE_SRC
         src/Network/UDPNetwork/UDPNetwork.hpp
         src/Network/TCPNetwork/TCPNetwork.cpp
         src/Network/TCPNetwork/TCPNetwork.hpp
+        src/RType/Systems/Network.cpp
+        src/RType/Systems/Network.hpp
         src/ThreadPool/ThreadPool.cpp
         src/Network/Packets/PacketFactory/PacketFactory.cpp
         src/Network/Packets/PacketFactory/PacketFactory.hpp
-        src/Network/Packets/PacketConnect/PacketConnect.cpp
+        src/Network/Packets/Descriptors/PacketConnect/PacketConnect.cpp
 )
 
 set(CLIENT_SRC
@@ -62,7 +64,7 @@ set(CLIENT_SRC
         src/Network/Packets/IPacket.hpp
         src/Network/Packets/PacketFactory/PacketFactory.cpp
         src/Network/Packets/PacketFactory/PacketFactory.hpp
-        src/Network/Packets/PacketConnect/PacketConnect.cpp
+        src/Network/Packets/Descriptors/PacketConnect/PacketConnect.cpp
         include/Networks.hpp
         src/RType/Components/Client/Sprite.hpp
 )

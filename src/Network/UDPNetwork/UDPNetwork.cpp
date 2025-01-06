@@ -50,6 +50,7 @@ namespace rtype::network {
                 }
             });
         }
+        this->_started = true;
     }
 
     UDPNetwork::~UDPNetwork() = default;
@@ -76,19 +77,10 @@ namespace rtype::network {
             spdlog::error("Invalid UDP Packet received from {}:{}", address, port);
             return;
         }
-
-        int code = 0;
-        std::memcpy(&code, buffer.data(), sizeof(int));
-
         try {
-            std::unique_ptr<IPacket> packet = PacketFactory::fromCode(code);
-            std::string codeStr = std::to_string(code);
+            std::unique_ptr<IPacket> packet = PacketFactory::fromBuffer(buffer);
+            std::string codeStr = std::to_string(packet->getCode());
             spdlog::info("UDP Packet {}: received from {}:{}", codeStr, address, port);
-
-            if (code == EPacketCode::CONNECT) {
-                //TODO: send welcome for the client to know he is connected successfully
-            }
-
         } catch (std::exception &e) {
             spdlog::error(e.what());
         }
