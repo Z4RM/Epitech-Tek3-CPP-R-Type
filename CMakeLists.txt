@@ -31,8 +31,14 @@ set(RTYPE_SRC
         src/RType/ModeManager/ModeManager.hpp
         src/Systems/Movement.cpp
         src/Systems/Movement.hpp
-        src/RType/Server/Network/UDPServer/UDPServer.cpp
-        src/RType/Server/Network/UDPServer/UDPServer.hpp
+        src/RType/Network/UDPNetwork/UDPNetwork.cpp
+        src/RType/Network/UDPNetwork/UDPNetwork.hpp
+        src/RType/Network/TCPNetwork/TCPNetwork.cpp
+        src/RType/Network/TCPNetwork/TCPNetwork.hpp
+        src/RType/ThreadPool/ThreadPool.cpp
+        src/RType/Network/Packets/PacketFactory/PacketFactory.cpp
+        src/RType/Network/Packets/PacketFactory/PacketFactory.hpp
+        src/RType/Network/Packets/PacketConnect/PacketConnect.cpp
 )
 
 set(CLIENT_SRC
@@ -45,12 +51,28 @@ set(CLIENT_SRC
         src/Systems/RenderWindow.hpp
         src/Systems/InputSystem.cpp
         src/Systems/InputSystem.hpp
+        src/RType/Network/UDPNetwork/UDPNetwork.cpp
+        src/RType/Network/UDPNetwork/UDPNetwork.hpp
+        src/Systems/Network.cpp
+        src/Systems/Network.hpp
+        src/RType/ThreadPool/ThreadPool.cpp
+        include/ThreadPool.hpp
+        src/RType/Network/TCPNetwork/TCPNetwork.cpp
+        src/RType/Network/TCPNetwork/TCPNetwork.hpp
+        src/RType/Network/TCPNetwork/TCPNetwork.cpp
+        src/RType/Network/Packets/IPacket.hpp
+        src/RType/Network/Packets/PacketFactory/PacketFactory.cpp
+        src/RType/Network/Packets/PacketFactory/PacketFactory.hpp
+        src/RType/Network/Packets/PacketConnect/PacketConnect.cpp
+        include/Networks.hpp
 )
 
 set(RTYPE_HEADERS
         include/Structures.hpp
         include/ECS.hpp
         include/Systems.hpp
+        include/Packets.hpp
+        include/Networks.hpp
 )
 
 link_libraries(inih::inireader spdlog::spdlog asio::asio)

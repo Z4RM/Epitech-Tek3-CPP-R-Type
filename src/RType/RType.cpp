@@ -12,6 +12,7 @@
 #include "Components/Player.hpp"
 #include "Systems.hpp"
 #include "RType.hpp"
+#include "Networks.hpp"
 
 int rtype::RType::run() {
     if (!Config::initialize())
@@ -45,9 +46,9 @@ void rtype::RType::stopServer() {
 #endif
 
 #ifndef RTYPE_IS_CLIENT
-rtype::RType::RType(unsigned short port) : _port(port), _server(_port) {}
+rtype::RType::RType(unsigned short port) : _port(port) {}
 #else
-rtype::RType::RType(unsigned short port) : _port(port), _server(_port), _client(this) {}
+rtype::RType::RType(unsigned short port) : _port(port), _client(this) {}
 #endif
 
 int rtype::RType::_run() {
@@ -113,6 +114,18 @@ int rtype::RType::_run() {
         {64, 64}
     );
 #endif
+
+  // TODO: use mode manager and make good exceptions
+    network::TCPNetwork tcpNetwork(_port);
+    network::UDPNetwork udpNetwork(_port);
+
+    try {
+        tcpNetwork.start();
+        udpNetwork.start();
+    } catch (std::exception &e) {
+        spdlog::error("Error while starting tcp network: {}", e.what());
+        throw;
+    }
 
     systemManager.addSystem(rtype::systems::Movement::move);
     while (_running()) {

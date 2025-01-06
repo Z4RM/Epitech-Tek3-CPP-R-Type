@@ -8,7 +8,6 @@
 #ifndef RTYPE_RTYPE_HPP_
 #define RTYPE_RTYPE_HPP_
 
-#include "Server/Network/UDPServer/UDPServer.hpp"
 #ifdef RTYPE_IS_CLIENT
 #include "Client/Client.hpp"
 #endif
@@ -56,9 +55,6 @@ namespace rtype {
 
         // TODO: documentation
         unsigned short _port;
-
-        // TODO: documentation
-        server::network::UDPServer _server;
 
 #ifdef RTYPE_IS_CLIENT
         // TODO: documentation
