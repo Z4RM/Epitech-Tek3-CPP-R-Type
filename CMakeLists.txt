@@ -19,56 +19,56 @@ set(RTYPE_SRC
         src/ECS/EntityManager.hpp
         src/ECS/SparseSet.hpp
         src/ECS/SystemManager.hpp
-        src/RType/Components/Enemy.cpp
-        src/RType/Components/Enemy.hpp
-        src/RType/Components/Player.cpp
-        src/RType/Components/Player.hpp
+        src/RType/Entities/Enemy.cpp
+        src/RType/Entities/Enemy.hpp
+        src/RType/Entities/Player.cpp
+        src/RType/Entities/Player.hpp
         src/RType/RType.cpp
         src/RType/RType.hpp
         src/RType/Config/Config.cpp
         src/RType/Config/Config.hpp
         src/RType/ModeManager/ModeManager.cpp
         src/RType/ModeManager/ModeManager.hpp
-        src/Systems/Movement.cpp
-        src/Systems/Movement.hpp
-        src/RType/Network/UDPNetwork/UDPNetwork.cpp
-        src/RType/Network/UDPNetwork/UDPNetwork.hpp
-        src/RType/Network/TCPNetwork/TCPNetwork.cpp
-        src/RType/Network/TCPNetwork/TCPNetwork.hpp
-        src/RType/ThreadPool/ThreadPool.cpp
-        src/RType/Network/Packets/PacketFactory/PacketFactory.cpp
-        src/RType/Network/Packets/PacketFactory/PacketFactory.hpp
-        src/RType/Network/Packets/PacketConnect/PacketConnect.cpp
+        src/RType/Systems/Movement.cpp
+        src/RType/Systems/Movement.hpp
+        src/Network/UDPNetwork/UDPNetwork.cpp
+        src/Network/UDPNetwork/UDPNetwork.hpp
+        src/Network/TCPNetwork/TCPNetwork.cpp
+        src/Network/TCPNetwork/TCPNetwork.hpp
+        src/ThreadPool/ThreadPool.cpp
+        src/Network/Packets/PacketFactory/PacketFactory.cpp
+        src/Network/Packets/PacketFactory/PacketFactory.hpp
+        src/Network/Packets/PacketConnect/PacketConnect.cpp
 )
 
 set(CLIENT_SRC
         src/RType/Client/Client.cpp
         src/RType/Client/Client.hpp
-        src/RType/Components/InputHandler.hpp
-        src/RType/Components/Window.cpp
-        src/RType/Components/Window.hpp
-        src/Systems/RenderWindow.cpp
-        src/Systems/RenderWindow.hpp
-        src/Systems/InputSystem.cpp
-        src/Systems/InputSystem.hpp
-        src/RType/Network/UDPNetwork/UDPNetwork.cpp
-        src/RType/Network/UDPNetwork/UDPNetwork.hpp
-        src/Systems/Network.cpp
-        src/Systems/Network.hpp
-        src/RType/ThreadPool/ThreadPool.cpp
+        src/RType/Entities/Window.cpp
+        src/RType/Entities/Window.hpp
+        src/RType/Systems/RenderWindow.cpp
+        src/RType/Systems/RenderWindow.hpp
+        src/RType/Systems/InputSystem.cpp
+        src/RType/Systems/InputSystem.hpp
+        src/Network/UDPNetwork/UDPNetwork.cpp
+        src/Network/UDPNetwork/UDPNetwork.hpp
+        src/RType/Systems/Network.cpp
+        src/RType/Systems/Network.hpp
+        src/ThreadPool/ThreadPool.cpp
         include/ThreadPool.hpp
-        src/RType/Network/TCPNetwork/TCPNetwork.cpp
-        src/RType/Network/TCPNetwork/TCPNetwork.hpp
-        src/RType/Network/TCPNetwork/TCPNetwork.cpp
-        src/RType/Network/Packets/IPacket.hpp
-        src/RType/Network/Packets/PacketFactory/PacketFactory.cpp
-        src/RType/Network/Packets/PacketFactory/PacketFactory.hpp
-        src/RType/Network/Packets/PacketConnect/PacketConnect.cpp
+        src/Network/TCPNetwork/TCPNetwork.cpp
+        src/Network/TCPNetwork/TCPNetwork.hpp
+        src/Network/TCPNetwork/TCPNetwork.cpp
+        src/Network/Packets/IPacket.hpp
+        src/Network/Packets/PacketFactory/PacketFactory.cpp
+        src/Network/Packets/PacketFactory/PacketFactory.hpp
+        src/Network/Packets/PacketConnect/PacketConnect.cpp
         include/Networks.hpp
+        src/RType/Components/Client/Sprite.hpp
 )
 
 set(RTYPE_HEADERS
-        include/Structures.hpp
+        include/Components.hpp
         include/ECS.hpp
         include/Systems.hpp
         include/Packets.hpp
