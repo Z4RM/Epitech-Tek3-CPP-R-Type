@@ -60,7 +60,7 @@ namespace rtype::network {
         this->_socket->async_receive_from(asio::buffer(*buffer), this->_endpoint,
         [this, buffer](const asio::error_code& error, std::size_t bytes_transferred) {
             if (!error) {
-                handleClient(this->_endpoint, *buffer);
+                handlePacket(this->_endpoint, *buffer);
                 startReceive();
             } else {
                 spdlog::error("UDP Receive error: {}", error.message());
@@ -68,7 +68,7 @@ namespace rtype::network {
         });
     }
 
-    void UDPNetwork::handleClient(const asio::ip::udp::endpoint &endpoint, const std::vector<char> &buffer) {
+    void UDPNetwork::handlePacket(const asio::ip::udp::endpoint &endpoint, const std::vector<char> &buffer) {
         std::string address = endpoint.address().to_string();
         int port = endpoint.port();
 

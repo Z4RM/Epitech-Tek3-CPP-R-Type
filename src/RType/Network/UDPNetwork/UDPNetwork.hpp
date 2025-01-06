@@ -21,22 +21,36 @@ namespace rtype::network {
         explicit UDPNetwork(unsigned short port = 0);
         ~UDPNetwork();
 
+        /** @brief Start the network **/
         void start();
 
-        //SERVER
-        void startReceive();
-        void handleClient(const asio::ip::udp::endpoint &endpoint, const std::vector<char> &buffer);
+        // SERVER //
+        /**
+         * @brief handle a received packet
+         * @param endpoint endpoint that sent the packet
+         * @param buffer buffer containing the packet
+         * **/
+        void handlePacket(const asio::ip::udp::endpoint &endpoint, const std::vector<char> &buffer);
 
-        //CLIENT
-        void sendPacket(const IPacket &message, const asio::ip::udp::endpoint &endpoint) const;
+        // CLIENT //
+        /**
+        * @brief send a packet to the given endpoint
+        * @param packet the packet to send
+        * @param endpoint the endpoint to send the packet
+        * **/
+        void sendPacket(const IPacket &packet, const asio::ip::udp::endpoint &endpoint) const;
+
+        // SHARED //
+        /** @brief starting receiving packets **/
+        void startReceive();
 
     private:
-        unsigned short _port;
-        asio::io_context _ioContext;
-        std::shared_ptr<asio::ip::udp::socket> _socket;
-        asio::ip::udp::endpoint _endpoint;
-        asio::ip::udp::endpoint _serverEndpoint;
-        std::optional<ThreadPool> _threadPool;
+        unsigned short _port; ///< port of the server
+        asio::io_context _ioContext; ///< asio context
+        std::shared_ptr<asio::ip::udp::socket> _socket; ///< socket of the network
+        asio::ip::udp::endpoint _endpoint; ///< endpoint that stock the new received packet's endpoint
+        asio::ip::udp::endpoint _serverEndpoint; ///< endpoint of the server
+        std::optional<ThreadPool> _threadPool; ///< thread pool
     };
 
 }
