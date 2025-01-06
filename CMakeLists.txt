@@ -64,6 +64,7 @@ set(CLIENT_SRC
         src/RType/Network/Packets/PacketFactory/PacketFactory.cpp
         src/RType/Network/Packets/PacketFactory/PacketFactory.hpp
         src/RType/Network/Packets/PacketConnect/PacketConnect.cpp
+        include/Networks.hpp
 )
 
 set(RTYPE_HEADERS
@@ -71,6 +72,7 @@ set(RTYPE_HEADERS
         include/ECS.hpp
         include/Systems.hpp
         include/Packets.hpp
+        include/Networks.hpp
 )
 
 link_libraries(inih::inireader spdlog::spdlog asio::asio)

@@ -12,8 +12,7 @@
 #include "Components/Player.hpp"
 #include "Systems.hpp"
 #include "RType.hpp"
-#include "./Network/UDPNetwork/UDPNetwork.hpp"
-#include "./Network/TCPNetwork/TCPNetwork.hpp"
+#include "Networks.hpp"
 
 int rtype::RType::run() {
     if (!Config::initialize())
