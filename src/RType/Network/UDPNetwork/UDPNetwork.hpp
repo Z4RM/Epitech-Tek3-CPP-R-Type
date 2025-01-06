@@ -16,6 +16,7 @@
 
 namespace rtype::network {
 
+    /** @brief Represent a UDP Network (client or server) **/
     class UDPNetwork {
     public:
         explicit UDPNetwork(unsigned short port = 0);

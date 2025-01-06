@@ -12,8 +12,10 @@
 #include <stdexcept>
 
 namespace rtype::network {
+    /** @brief Creating packet **/
     class PacketFactory {
     public:
+        /** @brief Exception in the packet factory **/
         class PacketFactoryException : public std::exception {
         public:
             // TODO: documentation
@@ -23,6 +25,7 @@ namespace rtype::network {
             }
         };
 
+        /** @brief creating the code packet class based on a packet code **/
         static std::unique_ptr<IPacket> fromCode(int code);
     };
 }

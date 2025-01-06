@@ -10,10 +10,15 @@
 #include "IPacket.hpp"
 
 namespace rtype::network {
+    /** @brief Abstract class for packet's default implementations **/
     class APacket : public virtual IPacket {
     protected:
          explicit APacket(const EPacketCode code) : _code(code) {};
-        [[nodiscard]] EPacketCode getCode() const override {return _code;};
+
+        /** @brief returning the packet code **/
+        [[nodiscard]] EPacketCode getCode() const override { return _code; };
+
+        /** @brief the packet code **/
         const EPacketCode _code;
     };
 }

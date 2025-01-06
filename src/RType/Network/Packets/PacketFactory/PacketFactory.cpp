@@ -20,5 +20,4 @@ namespace rtype::network {
             default: throw PacketFactoryException();
         }
     }
-
 }

@@ -10,6 +10,7 @@
 #include "../APacket.hpp"
 
 namespace rtype::network {
+  /** @brief Represent a client packet to tell you try to connect as server **/
   class PacketConnect final : public APacket {
     public:
       ~PacketConnect() override = default;

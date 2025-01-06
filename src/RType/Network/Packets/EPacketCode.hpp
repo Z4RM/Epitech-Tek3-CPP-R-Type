@@ -8,6 +8,7 @@
 #pragma once
 
 namespace rtype::network {
+    /** @brief Enum for packet codes **/
     enum EPacketCode {
         //SHARED
         CONNECT = 100,

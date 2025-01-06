@@ -14,5 +14,4 @@ namespace rtype::network {
         std::memcpy(buffer.data(), &this->_code, sizeof(this->_code));
         return buffer;
     }
-
 }

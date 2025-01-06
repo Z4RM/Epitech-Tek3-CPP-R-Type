@@ -16,6 +16,7 @@
 
 namespace rtype::network {
 
+    /** @brief Represent a TCP network (client or server) **/
     class TCPNetwork {
         public:
             explicit TCPNetwork(unsigned short port = 0);
