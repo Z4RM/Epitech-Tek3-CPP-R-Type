@@ -7,7 +7,7 @@
 
 #pragma once
 #include "ECS.hpp"
-
+#include "RType/ModeManager/ModeManager.hpp"
 namespace rtype::systems {
     class Network {
     public:

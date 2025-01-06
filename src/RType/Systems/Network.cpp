@@ -18,6 +18,13 @@ namespace rtype::systems {
         if (!network.getStarted()) {
             try {
                 network.start();
+                if (IS_SERVER) {
+                    network.addHandler(network::CONNECT, [](std::unique_ptr<network::IPacket> packet, asio::ip::udp::endpoint
+                    endpoint) {
+                        network::PacketConnect response;
+                        network.sendPacket(response, endpoint);
+                    });
+                }
             } catch (std::exception &e) {
                 spdlog::error("Error while starting udp");
             }

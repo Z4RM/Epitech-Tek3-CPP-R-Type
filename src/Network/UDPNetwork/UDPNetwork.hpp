@@ -47,6 +47,8 @@ namespace rtype::network {
 
         inline bool getStarted() const { return this->_started; };
 
+        void addHandler(EPacketCode code, std::function<void(std::unique_ptr<IPacket>, asio::ip::udp::endpoint endpoint)> handler);
+
     private:
         unsigned short _port; ///< port of the server
         asio::io_context _ioContext; ///< asio context
@@ -55,6 +57,8 @@ namespace rtype::network {
         asio::ip::udp::endpoint _serverEndpoint; ///< endpoint of the server
         std::optional<ThreadPool> _threadPool; ///< thread pool
         bool _started = false;
+        std::vector<std::pair<EPacketCode, std::function<void(std::unique_ptr<IPacket>, asio::ip::udp::endpoint endpoint)>>>
+        _handlers;
     };
 
 }

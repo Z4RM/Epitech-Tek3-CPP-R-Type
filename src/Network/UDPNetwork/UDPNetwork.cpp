@@ -81,6 +81,13 @@ namespace rtype::network {
             std::unique_ptr<IPacket> packet = PacketFactory::fromBuffer(buffer);
             std::string codeStr = std::to_string(packet->getCode());
             spdlog::info("UDP Packet {}: received from {}:{}", codeStr, address, port);
+            for (auto& handler : _handlers) {
+                if (handler.first == packet->getCode()) {
+                    handler.second(std::move(packet), endpoint);
+                    return;
+                }
+            }
+            std::cout << "No handler found for packet code " << static_cast<int>(packet->getCode()) << std::endl;
         } catch (std::exception &e) {
             spdlog::error(e.what());
         }
@@ -101,5 +108,10 @@ namespace rtype::network {
                 spdlog::info("UDP Packet {}: successfully sent to: {}:{}", codeStr, address, port);
             }
         });
+    }
+
+    void UDPNetwork::addHandler(EPacketCode code, std::function<void(std::unique_ptr<IPacket>, asio::ip::udp::endpoint endpoint)>
+    handler) {
+        this->_handlers.push_back({code, handler});
     }
 }
