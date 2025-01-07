@@ -14,22 +14,19 @@
 
 namespace rtype::network {
     std::unique_ptr<IPacket> PacketFactory::fromCode(int code) {
-        switch (code) {
-            case EPacketCode::CONNECT:
-                return std::make_unique<PacketConnect>();
-            default: throw PacketFactoryException();
-        }
+        if (code == EPacketCode::CONNECT)
+            return std::make_unique<PacketConnect>();
+        throw PacketFactoryException();
     }
 
     std::unique_ptr<IPacket> PacketFactory::fromBuffer(const std::vector<char> &buffer) {
         int code = 0;
         std::memcpy(&code, buffer.data(), sizeof(int));
-        switch (code) {
-            case CONNECT:
-                std::unique_ptr<PacketConnect> packet = std::make_unique<PacketConnect>();
-                packet->fillData(buffer);
-                return packet;
+        if (code == CONNECT) {
+            std::unique_ptr<PacketConnect> packet = std::make_unique<PacketConnect>();
+            packet->fillData(buffer);
+            return packet;
         }
+        throw PacketFactoryException();
     }
-
 }
