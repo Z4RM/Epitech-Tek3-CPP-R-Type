@@ -113,7 +113,7 @@ namespace rtype::components {
          */
         size_t _id;
         mutable sf::Clock _shootClock;
-        const float _shootCooldown = 0.5f;
+        const float _shootCooldown = 0.8f;
 
 #ifdef RTYPE_IS_CLIENT
         InputHandler _inputs;

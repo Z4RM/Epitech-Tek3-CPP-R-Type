@@ -118,7 +118,7 @@ void rtype::components::Player::shoot(rtype::ecs::EntityManager &entityManager, 
     Sprite projectileSprite = {
         projectilePos,
         {10.0f, 10.0f},
-        "assets/sprites/r-typesheet1.gif",
+        "assets/sprites/projectile/player-shots.gif",
         {1},
         new sf::Texture(),
         new sf::Sprite(),
@@ -128,7 +128,7 @@ void rtype::components::Player::shoot(rtype::ecs::EntityManager &entityManager, 
     projectileSprite.texture->loadFromFile(projectileSprite.path);
     projectileSprite.sprite->setTexture(*projectileSprite.texture);
 
-    sf::IntRect textureRect(120, 150, 80, 20);
+    sf::IntRect textureRect(80, 150, 85, 50);
     projectileSprite.sprite->setTextureRect(textureRect);
     projectileSprite.sprite->setPosition({projectilePos.x, projectilePos.y});
 
