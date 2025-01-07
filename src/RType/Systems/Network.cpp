@@ -35,6 +35,7 @@ namespace rtype::systems {
 
     void Network::addUdpHandlers(network::UDPNetwork &network, ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager) {
         if (IS_SERVER) {
+
             network.addHandler(network::CONNECT, [&network](std::unique_ptr<network::IPacket> packet, asio::ip::udp::endpoint endpoint) {
                 network::PacketWelcome response;
 
@@ -55,7 +56,9 @@ namespace rtype::systems {
                 }
                 network.sendPacket(response, endpoint);
             });
+
         } else {
+
             network.addHandler(network::WELCOME, [](std::unique_ptr<network::IPacket> packet, asio::ip::udp::endpoint endpoint) {
                 network::PacketWelcome response;
 
@@ -63,21 +66,22 @@ namespace rtype::systems {
             });
 
         #ifndef RTYPE_IS_SERVER
+
             network.addHandler(network::NEW_PLAYER, [&entityManager, &componentManager](std::unique_ptr<network::IPacket> packet,
             asio::ip::udp::endpoint
             endpoint) {
-
-            components::Sprite sprite2 = {{100, 100, 0}, {33, 17}, "assets/sprites/players.gif", {0}};
-            entities::Player player2(
-                    entityManager,
-                    componentManager,
-                    {0, 200, 0},
-                    {0, 0, 0},
-                    {64, 64},
-                    sprite2,
-                    {"", 0, 0}
-            );
+                components::Sprite sprite2 = {{100, 100, 0}, {33, 17}, "assets/sprites/players.gif", {0}};
+                entities::Player player2(
+                        entityManager,
+                        componentManager,
+                        {0, 200, 0},
+                        {0, 0, 0},
+                        {64, 64},
+                        sprite2,
+                        {"", 0, 0}
+                );
             });
+
         #endif
         }
     }

@@ -57,7 +57,8 @@ namespace rtype::entities {
                 components::Velocity vel,
                 components::Size size,
                 components::Sprite &sprite,
-                const components::Animation &animation
+                const components::Animation &animation,
+                components::Network network = {false}
         );
 
 #else

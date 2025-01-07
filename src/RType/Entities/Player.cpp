@@ -20,7 +20,8 @@ rtype::entities::Player::Player(
         const components::Velocity vel,
         const components::Size size,
         components::Sprite &sprite,
-        const components::Animation &animation
+        const components::Animation &animation,
+        components::Network network
 ) {
     _id = entityManager.createEntity();
     sprite.texture = new sf::Texture();
@@ -38,6 +39,10 @@ rtype::entities::Player::Player(
     componentManager.addComponent<components::Velocity>(_id, vel);
     componentManager.addComponent<components::Size>(_id, size);
     componentManager.addComponent<components::Hitbox>(_id, {pos, size});
+
+    if (!network.online)
+        return;
+    componentManager.addComponent<components::Network>(_id, network);
 
     size_t id = _id;
 
