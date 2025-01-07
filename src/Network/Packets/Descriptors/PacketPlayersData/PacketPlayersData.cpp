@@ -7,6 +7,8 @@
 
 #include "PacketPlayersData.hpp"
 
+#include <spdlog/spdlog.h>
+
 namespace rtype::network {
 
     std::vector<char> PacketPlayersData::bufferize() const {
@@ -20,23 +22,24 @@ namespace rtype::network {
             size += sizeof(data.vel);
         }
 
-        std::vector<char> buffer(sizeof(this->_code) + size + (sizeof(PlayerData) * dataCount));
+        std::vector<char> buffer(sizeof(this->_code) + sizeof(int) + size);
 
         std::memcpy(buffer.data(), &this->_code, sizeof(this->_code));
         std::memcpy(buffer.data() + sizeof(this->_code), &dataCount, sizeof(dataCount));
 
-        size_t currentSize = sizeof(dataCount);
+        size_t currentSize = sizeof(this->_code) + sizeof(dataCount);
         for (const auto &data : datas) {
-            std::memcpy(buffer.data() + sizeof(this->_code) + currentSize, &data.network, sizeof(data.network));
+            std::memcpy(buffer.data() + currentSize, &data.network, sizeof(data.network));
             currentSize += sizeof(data.network);
 
-            std::memcpy(buffer.data() + sizeof(this->_code) + currentSize, &data.pos, sizeof(data.pos));
+            std::memcpy(buffer.data() + currentSize, &data.pos, sizeof(data.pos));
             currentSize += sizeof(data.pos);
 
-            std::memcpy(buffer.data() + sizeof(this->_code) + currentSize, &data.size, sizeof(data.size));
+            std::memcpy(buffer.data() + currentSize, &data.size, sizeof(data.size));
             currentSize += sizeof(data.size);
 
-            std::memcpy(buffer.data() + sizeof(this->_code) + currentSize, &data.vel, sizeof(data.vel));
+            std::memcpy(buffer.data() + currentSize, &data.vel, sizeof(data.vel));
+            currentSize += sizeof(data.vel);
         }
 
         return buffer;
@@ -45,8 +48,8 @@ namespace rtype::network {
     void PacketPlayersData::fillData(const std::vector<char> &buffer) {
         size_t currentSize = sizeof(this->_code) + sizeof(int);
         int dataCount = 0;
-
         std::memcpy(&dataCount, buffer.data() + sizeof(this->_code), sizeof(dataCount));
+
         datas.resize(dataCount);
 
         for (int i = 0; i < dataCount; ++i) {

@@ -48,6 +48,7 @@ namespace rtype::systems {
 
                 if (net && vel && pos && size) {
                     PlayerData pdata{*pos, *vel, *size, *net};
+
                     if (net->netId == 0 && !IS_SERVER)
                         data.emplace_back(pdata);
 
@@ -59,6 +60,7 @@ namespace rtype::systems {
 
             if (!data.empty()) {
                 network::PacketPlayersData playersData(data);
+
                 if (!IS_SERVER)
                     network.sendPacket(playersData, network.getServerEndpoint());
                 else {
@@ -68,7 +70,7 @@ namespace rtype::systems {
                 }
             }
 
-            timer->expires_after(std::chrono::milliseconds(1));
+            timer->expires_after(std::chrono::microseconds(1));
             timer->async_wait([&entityManager, &componentManager, &network, timer](const asio::error_code& ec) {
                 if (!ec) {
                     schedulePacketSending(entityManager, componentManager, network, timer);
@@ -82,7 +84,6 @@ namespace rtype::systems {
 
     void Network::addUdpHandlers(network::UDPNetwork &network, ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager) {
         if (IS_SERVER) {
-
             network.addHandler(network::CONNECT, [&network, &entityManager, &componentManager](std::unique_ptr<network::IPacket> packet, asio::ip::udp::endpoint endpoint) {
 
                 int playerId = 1;
@@ -131,10 +132,11 @@ namespace rtype::systems {
                                     auto vel = componentManager.getComponent<components::Velocity>(entity);
                                     auto size = componentManager.getComponent<components::Size>(entity);
                                     auto net = componentManager.getComponent<components::Network>(entity);
+
                                     if (pos && vel && size && net && net->netId == player.first) {
                                         *pos = data.pos;
                                         //*vel = data.vel;
-                                        //*size = data.size;
+                                        *size = data.size;
                                     }
 
                                 }
@@ -156,8 +158,6 @@ namespace rtype::systems {
                 packet, asio::ip::udp::endpoint endpoint) {
                     auto* playersData = dynamic_cast<network::PacketPlayersData*>(packet.get());
 
-                    /** UPDATING SERVER PLAYER LIST **/
-                spdlog::warn("Player Data received");
                     if (playersData) {
                         for (const auto &entity : entityManager.getEntities()) {
                             auto net = componentManager.getComponent<components::Network>(entity);

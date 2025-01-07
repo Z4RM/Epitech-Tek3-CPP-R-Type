@@ -8,6 +8,7 @@
 #include "Movement.hpp"
 #include "Components.hpp"
 #include <iostream>
+#include <spdlog/spdlog.h>
 
 void rtype::systems::Movement::move(const rtype::ecs::EntityManager& entityManager, rtype::ecs::ComponentManager& componentManager)
 {
