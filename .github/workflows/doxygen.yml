@@ -1,0 +1,17 @@
+name: Deploy Doxygen documentation to GitHub Pages
+
+on:
+  workflow_call:
+
+jobs:
+  deploy:
+    name: Deploy Doxygen documentation to GitHub Pages
+    runs-on: ubuntu-latest
+    if: ${{ github.ref_name == 'main' || github.ref_name == 'dev' }}
+    permissions:
+      contents: write
+    steps:
+      - uses: DenverCoder1/doxygen-github-pages-action@v2.0.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          doxygen_version: 1.13.1

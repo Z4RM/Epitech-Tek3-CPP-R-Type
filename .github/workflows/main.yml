@@ -14,10 +14,19 @@ jobs:
     name: Lint
     uses: ./.github/workflows/lint.yml
 
-  mirror:
-    name: Mirror
+  doxygen:
+    name: Doxygen
     needs:
       - build
       - lint
+    uses: ./.github/workflows/doxygen.yml
+    permissions:
+      contents: write
+    secrets: inherit
+
+  mirror:
+    name: Mirror
+    needs:
+      - doxygen
     uses: ./.github/workflows/mirror.yml
     secrets: inherit
