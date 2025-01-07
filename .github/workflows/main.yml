@@ -10,9 +10,14 @@ jobs:
     with:
       EXECUTABLES: "build/r-type_server,build/r-type_client"
 
+  lint:
+    name: Lint
+    uses: ./.github/workflows/lint.yml
+
   mirror:
     name: Mirror
     needs:
       - build
+      - lint
     uses: ./.github/workflows/mirror.yml
     secrets: inherit
