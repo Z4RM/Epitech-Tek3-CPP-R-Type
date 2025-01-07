@@ -24,6 +24,16 @@ jobs:
       contents: write
     secrets: inherit
 
+  release:
+    name: Release
+    needs:
+      - build
+      - lint
+    uses: ./.github/workflows/release.yml
+    permissions:
+      contents: write
+    secrets: inherit
+
   mirror:
     name: Mirror
     needs:
