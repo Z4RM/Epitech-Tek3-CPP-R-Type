@@ -19,7 +19,7 @@
  *
  * This class encapsulates the player entity and its associated components in the ECS architecture.
  */
-namespace rtype::entites {
+namespace rtype::entities {
     class Player {
     public:
 #ifdef RTYPE_IS_CLIENT

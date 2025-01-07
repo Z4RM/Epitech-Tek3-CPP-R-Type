@@ -35,6 +35,7 @@ namespace rtype::ecs
          * @param component The component to associate with the entity.
          */
         void addComponent(unsigned int entity, const T& component) {
+            std::lock_guard lock(_mutex);
             if (_sparse.find(entity) == _sparse.end()) {
                 _sparse[entity] = _dense.size();
                 _dense.push_back(entity);
@@ -51,6 +52,7 @@ namespace rtype::ecs
          * @param entity The unique ID of the entity.
          */
         void removeComponent(unsigned int entity) {
+            std::lock_guard lock(_mutex);
             if (_sparse.find(entity) != _sparse.end()) {
                 size_t index = _sparse[entity];
                 unsigned int last_entity = _dense.back();
@@ -76,6 +78,7 @@ namespace rtype::ecs
          * @return A pointer to the component, or `nullptr` if the entity does not have a component.
          */
         T* getComponent(unsigned int entity) {
+            std::lock_guard lock(_mutex);
             if (_sparse.find(entity) != _sparse.end()) {
                 return &_components[_sparse[entity]];
             }
@@ -114,6 +117,8 @@ namespace rtype::ecs
          * Stores components in the same order as the corresponding entities in `_dense`.
          */
         std::vector<T> _components;
+
+        mutable std::mutex _mutex;
     };
 }
 

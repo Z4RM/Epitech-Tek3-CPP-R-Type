@@ -17,7 +17,6 @@ namespace rtype::network {
       PacketConnect() : APacket(EPacketCode::CONNECT) {};
       [[nodiscard]] std::vector<char> bufferize() const override;
       void fillData(const std::vector<char> &buffer) override;
-      bool test = false;
   };
 
 }

@@ -12,7 +12,7 @@
 #include "Components.hpp"
 #include "ECS.hpp"
 
-namespace rtype::entites {
+namespace rtype::entities {
     /**
      * @class Enemy
      * @brief Represents an enemy entity in the ECS framework.

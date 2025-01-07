@@ -6,12 +6,22 @@
 */
 
 #pragma once
+#include <list>
+
 #include "ECS.hpp"
+#include "Network/UDPNetwork/UDPNetwork.hpp"
 #include "RType/ModeManager/ModeManager.hpp"
 namespace rtype::systems {
     class Network {
     public:
-        static void udpProcess(const ecs::EntityManager& entityManager, ecs::ComponentManager& componentManager);
-        static void tcpProcess(const ecs::EntityManager& entityManager, ecs::ComponentManager& componentManager);
+
+        static void udpProcess(ecs::EntityManager& entityManager, ecs::ComponentManager& componentManager);
+        static void addUdpHandlers(network::UDPNetwork &network, ecs::EntityManager& entityManager, ecs::ComponentManager&
+        componentManager);
+
+
+        static void tcpProcess(ecs::EntityManager& entityManager, ecs::ComponentManager& componentManager);
+
+        static std::list<std::pair<int, asio::ip::udp::endpoint>> _playerList;
     };
 }

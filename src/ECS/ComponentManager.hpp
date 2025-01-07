@@ -10,6 +10,7 @@
 
 #include <unordered_map>
 #include <memory>
+#include <mutex>
 #include <typeindex>
 #include "SparseSet.hpp"
 
@@ -36,6 +37,8 @@ namespace rtype::ecs
          */
         template <typename T>
         void addComponent(unsigned int entity, const T& component) {
+            std::lock_guard lock(_componentsMutex);
+
             if (_componentSets.find(typeid(T)) == _componentSets.end()) {
                 _componentSets[typeid(T)] = std::make_shared<SparseSet<T>>();
             }
@@ -54,6 +57,7 @@ namespace rtype::ecs
          */
         template <typename T>
         void removeComponent(unsigned int entity) {
+            std::lock_guard lock(_componentsMutex);
             if (_componentSets.find(typeid(T)) != _componentSets.end()) {
                 auto sparse_set = std::static_pointer_cast<SparseSet<T>>(_componentSets[typeid(T)]);
                 sparse_set->removeComponent(entity);
@@ -72,6 +76,7 @@ namespace rtype::ecs
          */
         template <typename T>
         T* getComponent(unsigned int entity) {
+            std::lock_guard lock(_componentsMutex);
             if (_componentSets.find(typeid(T)) != _componentSets.end()) {
                 auto sparse_set = std::static_pointer_cast<SparseSet<T>>(_componentSets[typeid(T)]);
                 return sparse_set->getComponent(entity);
@@ -87,6 +92,8 @@ namespace rtype::ecs
          * shared pointers (`std::shared_ptr<void>`) to the corresponding sparse sets.
          */
         std::unordered_map<std::type_index, std::shared_ptr<void>> _componentSets;
+
+        mutable std::mutex _componentsMutex;
     };
 }
 

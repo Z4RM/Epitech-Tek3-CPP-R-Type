@@ -87,7 +87,7 @@ namespace rtype::network {
                     return;
                 }
             }
-            std::cout << "No handler found for packet code " << static_cast<int>(packet->getCode()) << std::endl;
+            spdlog::warn("No handler found for packet code {}", codeStr);
         } catch (std::exception &e) {
             spdlog::error(e.what());
         }
@@ -114,4 +114,5 @@ namespace rtype::network {
     handler) {
         this->_handlers.push_back({code, handler});
     }
+
 }

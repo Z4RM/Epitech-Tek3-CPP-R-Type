@@ -56,6 +56,7 @@ namespace rtype::network {
                 }
             });
         }
+        this->_started = true;
     }
 
     TCPNetwork::~TCPNetwork() = default;
