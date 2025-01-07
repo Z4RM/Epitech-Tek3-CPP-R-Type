@@ -112,6 +112,8 @@ namespace rtype::components {
          * @brief The unique identifier for the player entity.
          */
         size_t _id;
+        mutable sf::Clock _shootClock;
+        const float _shootCooldown = 0.5f;
 
 #ifdef RTYPE_IS_CLIENT
         InputHandler _inputs;

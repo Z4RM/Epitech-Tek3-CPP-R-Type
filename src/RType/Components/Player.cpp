@@ -106,6 +106,11 @@ rtype::components::Player::Player(
 }
 
 void rtype::components::Player::shoot(rtype::ecs::EntityManager &entityManager, rtype::ecs::ComponentManager &componentManager) const {
+    if (_shootClock.getElapsedTime().asSeconds() < _shootCooldown) {
+        return;
+    }
+    _shootClock.restart();
+
     size_t projectileId = entityManager.createEntity();
     Position playerPos = *componentManager.getComponent<Position>(_id);
     Velocity projectileVel = {2.0f, 0.0f, 0.0f};
@@ -123,7 +128,7 @@ void rtype::components::Player::shoot(rtype::ecs::EntityManager &entityManager, 
     projectileSprite.texture->loadFromFile(projectileSprite.path);
     projectileSprite.sprite->setTexture(*projectileSprite.texture);
 
-    sf::IntRect textureRect(120, 30, 50, 20);
+    sf::IntRect textureRect(120, 40, 50, 16);
     projectileSprite.sprite->setTextureRect(textureRect);
     projectileSprite.sprite->setPosition({projectilePos.x, projectilePos.y});
 
