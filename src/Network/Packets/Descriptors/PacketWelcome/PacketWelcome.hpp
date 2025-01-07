@@ -12,7 +12,7 @@ namespace rtype::network {
     class PacketWelcome : public APacket {
     public:
         ~PacketWelcome() override = default;
-        PacketWelcome() : APacket(EPacketCode::WELCOME) {};
+        explicit PacketWelcome() : APacket(EPacketCode::WELCOME) {};
         [[nodiscard]] std::vector<char> bufferize() const override;
         void fillData(const std::vector<char> &buffer) override;
     };

@@ -78,7 +78,6 @@ namespace rtype::network {
         });
     }
 
-    //TODO: try new method to have dynamic buffer size
     void TCPNetwork::handleClient(std::shared_ptr<asio::ip::tcp::socket> socket) {
         auto buffer = std::make_shared<std::vector<char>>(BUFFER_SIZE);
 

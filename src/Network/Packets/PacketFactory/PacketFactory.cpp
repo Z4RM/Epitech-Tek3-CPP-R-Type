@@ -12,6 +12,7 @@
 
 #include "Network/Packets/Descriptors/PacketConnect/PacketConnect.hpp"
 #include "Network/Packets/Descriptors/PacketNewPlayer/PacketNewPlayer.hpp"
+#include "Network/Packets/Descriptors/PacketPlayersData/PacketPlayersData.hpp"
 #include "Network/Packets/Descriptors/PacketWelcome/PacketWelcome.hpp"
 
 namespace rtype::network {
@@ -29,6 +30,9 @@ namespace rtype::network {
                 break;
             case NEW_PLAYER:
                 packet = std::make_unique<PacketNewPlayer>();
+                break;
+            case PLAYERS_DATA:
+                packet = std::make_unique<PacketPlayersData>();
                 break;
             default:
                 throw PacketFactoryException();

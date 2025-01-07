@@ -13,8 +13,10 @@ namespace rtype::network {
     class PacketNewPlayer final : public APacket {
     public:
         ~PacketNewPlayer() override = default;
-        PacketNewPlayer() : APacket(EPacketCode::NEW_PLAYER) {};
+        explicit PacketNewPlayer(int id = 0) : id(id), APacket(EPacketCode::NEW_PLAYER) {};
         [[nodiscard]] std::vector<char> bufferize() const override;
         void fillData(const std::vector<char> &buffer) override;
+
+        int id;
     };
 }

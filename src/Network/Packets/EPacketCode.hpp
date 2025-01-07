@@ -14,6 +14,7 @@ namespace rtype::network {
         CONNECT = 100,
         WELCOME = 101,
 
-        NEW_PLAYER = 200
+        NEW_PLAYER = 200,
+        PLAYERS_DATA = 201
     };
 }

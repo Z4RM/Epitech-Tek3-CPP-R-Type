@@ -13,9 +13,9 @@
 #include "RType/Components/Client/Sprite.hpp"
 #include "RType/Config/Config.hpp"
 #include "Components.hpp"
+#include "Network/Packets/Descriptors/PacketPlayersData/PacketPlayersData.hpp"
 #include "RType/Entities/Enemy.hpp"
 #include "RType/Entities/Player.hpp"
-#include "RType/Entities/Window.hpp"
 
 namespace rtype::systems {
     std::list<std::pair<int, asio::ip::udp::endpoint>> Network::_playerList;
@@ -26,6 +26,10 @@ namespace rtype::systems {
         if (!network.getStarted()) {
             try {
                 addUdpHandlers(network, entityManager, componentManager);
+                if (!IS_SERVER) {
+                    auto timer = std::make_shared<asio::steady_timer>(network.getIoContext());
+                    schedulePacketSending(entityManager, componentManager, network, timer);
+                }
                 network.start();
             } catch (std::exception &e) {
                 spdlog::error("Error while starting udp");
@@ -33,35 +37,92 @@ namespace rtype::systems {
         }
     }
 
+    void Network::schedulePacketSending(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager,
+        network::UDPNetwork &network, std::shared_ptr<asio::steady_timer> timer) {
+        try {
+            std::vector<PlayerData> data;
+
+            for (const auto& entity : entityManager.getEntities()) {
+                const auto net = componentManager.getComponent<components::Network>(entity);
+                const auto vel = componentManager.getComponent<components::Velocity>(entity);
+                const auto pos = componentManager.getComponent<components::Position>(entity);
+                const auto size = componentManager.getComponent<components::Size>(entity);
+
+                if (net && net->netId == 0 && vel && pos && size) {
+                    PlayerData pdata{*pos, *vel, *size, *net};
+                    data.emplace_back(pdata);
+                }
+            }
+
+            if (!data.empty()) {
+                network::PacketPlayersData playersData(data);
+                network.sendPacket(playersData, network.getServerEndpoint());
+                spdlog::info("Sent player data");
+            }
+
+            timer->expires_after(std::chrono::seconds(1));
+            timer->async_wait([&entityManager, &componentManager, &network, timer](const asio::error_code& ec) {
+                if (!ec) {
+                    schedulePacketSending(entityManager, componentManager, network, timer);
+                }
+            });
+        } catch (const std::exception &e) {
+            spdlog::error("Exception in sendPackets: {}", e.what());
+        }
+    }
+
+
     void Network::addUdpHandlers(network::UDPNetwork &network, ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager) {
         if (IS_SERVER) {
 
-            network.addHandler(network::CONNECT, [&network](std::unique_ptr<network::IPacket> packet, asio::ip::udp::endpoint endpoint) {
+            network.addHandler(network::CONNECT, [&network, &entityManager, &componentManager](std::unique_ptr<network::IPacket> packet, asio::ip::udp::endpoint endpoint) {
+
+                int playerId = 1;
                 network::PacketWelcome response;
 
-                for (auto player : _playerList) {
-                    network::PacketNewPlayer newPlayer;
+                if (!_playerList.empty()) {
+                    playerId = _playerList.back().first;
+                    playerId++;
+                }
+
+                for (const auto& player : _playerList) {
+                    network::PacketNewPlayer newPlayer(playerId);
+                    network::PacketNewPlayer oldPlayer(player.first);
 
                     network.sendPacket(newPlayer, player.second);
-                    network.sendPacket(newPlayer, endpoint);
+                    network.sendPacket(oldPlayer, endpoint);
                 }
 
-                if (_playerList.empty()) {
-                    _playerList.emplace_back(1, endpoint);
-                } else {
-                    int last_id = _playerList.back().first;
+                //TODO: fix this problem, should we use ifndef or the macro is_server
+                #ifndef RTYPE_IS_CLIENT
+                    rtype::entities::Player player {
+                        entityManager,
+                        componentManager,
+                        {0, 0, 0},
+                        {0, 0, 0},
+                        {64, 64},
+                        {playerId}
+                    };
+                #endif
 
-                    last_id++;
-                    _playerList.emplace_back(last_id, endpoint);
-                }
+                _playerList.emplace_back(playerId, endpoint);
                 network.sendPacket(response, endpoint);
+            });
+
+            network.addHandler(network::PLAYERS_DATA, [&network, &entityManager, &componentManager](std::unique_ptr<network::IPacket>
+            packet, asio::ip::udp::endpoint endpoint) {
+                auto* playersData = dynamic_cast<network::PacketPlayersData*>(packet.get());
+
+                if (playersData) {
+
+                } else {
+                    spdlog::error("Invalid packet players data received");
+                }
             });
 
         } else {
 
             network.addHandler(network::WELCOME, [](std::unique_ptr<network::IPacket> packet, asio::ip::udp::endpoint endpoint) {
-                network::PacketWelcome response;
-
                 spdlog::info("Server said welcome : successfully connected to the UDP game");
             });
 
@@ -70,16 +131,26 @@ namespace rtype::systems {
             network.addHandler(network::NEW_PLAYER, [&entityManager, &componentManager](std::unique_ptr<network::IPacket> packet,
             asio::ip::udp::endpoint
             endpoint) {
-                components::Sprite sprite2 = {{100, 100, 0}, {33, 17}, "assets/sprites/players.gif", {0}};
-                entities::Player player2(
-                        entityManager,
-                        componentManager,
-                        {0, 200, 0},
-                        {0, 0, 0},
-                        {64, 64},
-                        sprite2,
-                        {"", 0, 0}
-                );
+                auto* packetNewPlayer = dynamic_cast<network::PacketNewPlayer*>(packet.get());
+
+                if (packetNewPlayer) {
+                    int id = packetNewPlayer->id;
+
+                    components::Sprite sprite2 = {{100, 100, 0}, {33, 17}, "assets/sprites/players.gif", {0}};
+                    entities::Player player2(
+                            entityManager,
+                            componentManager,
+                            {0, 200, 0},
+                            {0, 0, 0},
+                            {64, 64},
+                            sprite2,
+                            {"", 0, 0},
+                            { id }
+                    );
+                    spdlog::info("New player with id: {}", std::to_string(id));
+                } else {
+                    spdlog::error("Bad packet NEW_PLAYER received");
+                }
             });
 
         #endif

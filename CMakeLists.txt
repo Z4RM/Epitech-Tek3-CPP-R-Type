@@ -46,6 +46,8 @@ set(RTYPE_SRC
         src/Network/Packets/Descriptors/PacketNewPlayer/PacketNewPlayer.cpp
         src/Network/Packets/Descriptors/PacketNewPlayer/PacketNewPlayer.hpp
         src/RType/Components/Shared/Network.hpp
+        src/Network/Packets/Descriptors/PacketPlayersData/PacketPlayersData.cpp
+        src/Network/Packets/Descriptors/PacketPlayersData/PacketPlayersData.hpp
 )
 
 set(CLIENT_SRC
@@ -77,6 +79,9 @@ set(CLIENT_SRC
         src/Network/Packets/Descriptors/PacketNewPlayer/PacketNewPlayer.cpp
         src/Network/Packets/Descriptors/PacketNewPlayer/PacketNewPlayer.hpp
         src/RType/Components/Shared/Network.hpp
+        src/Network/Packets/Descriptors/PacketPlayersData/PacketPlayersData.cpp
+        src/Network/Packets/Descriptors/PacketPlayersData/PacketPlayersData.hpp
+        src/RType/Models/PlayerData.hpp
 )
 
 set(RTYPE_HEADERS

@@ -19,9 +19,13 @@ namespace rtype::systems {
         static void addUdpHandlers(network::UDPNetwork &network, ecs::EntityManager& entityManager, ecs::ComponentManager&
         componentManager);
 
+        static void schedulePacketSending(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager,
+        network::UDPNetwork &network, std::shared_ptr<asio::steady_timer> timer);
+
 
         static void tcpProcess(ecs::EntityManager& entityManager, ecs::ComponentManager& componentManager);
 
+        //TODO: use directly entities in entitymanager with netid insteaad of this (and put the endpoint into the network component)
         static std::list<std::pair<int, asio::ip::udp::endpoint>> _playerList;
     };
 }

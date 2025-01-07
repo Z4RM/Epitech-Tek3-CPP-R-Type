@@ -49,6 +49,10 @@ namespace rtype::network {
 
         void addHandler(EPacketCode code, std::function<void(std::unique_ptr<IPacket>, asio::ip::udp::endpoint endpoint)> handler);
 
+         [[nodiscard]] asio::ip::udp::endpoint &getServerEndpoint() { return this->_serverEndpoint; };
+
+        asio::io_context &getIoContext() { return this->_ioContext; };
+
     private:
         unsigned short _port; ///< port of the server
         asio::io_context _ioContext; ///< asio context

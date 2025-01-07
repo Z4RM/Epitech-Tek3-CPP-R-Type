@@ -58,7 +58,7 @@ namespace rtype::entities {
                 components::Size size,
                 components::Sprite &sprite,
                 const components::Animation &animation,
-                components::Network network = {false}
+                components::Network network = { false }
         );
 
 #else
@@ -86,7 +86,8 @@ namespace rtype::entities {
                 rtype::ecs::ComponentManager &componentManager,
                 rtype::components::Position pos,
                 rtype::components::Velocity vel,
-                rtype::components::Size size
+                rtype::components::Size size,
+                rtype::components::Network network = { false }
         );
 
 #endif

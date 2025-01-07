@@ -10,6 +10,6 @@
 namespace rtype::components {
 
     struct Network {
-        bool online;
+        int netId = 0;
     };
 }

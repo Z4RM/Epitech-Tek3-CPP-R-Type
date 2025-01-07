@@ -8,6 +8,7 @@
 #include "Player.hpp"
 
 #include <iostream>
+#include <spdlog/spdlog.h>
 
 #include "RType/ModeManager/ModeManager.hpp"
 
@@ -39,10 +40,10 @@ rtype::entities::Player::Player(
     componentManager.addComponent<components::Velocity>(_id, vel);
     componentManager.addComponent<components::Size>(_id, size);
     componentManager.addComponent<components::Hitbox>(_id, {pos, size});
-
-    if (!network.online)
-        return;
     componentManager.addComponent<components::Network>(_id, network);
+
+    if (network.netId > 0)
+        return;
 
     size_t id = _id;
 
@@ -119,13 +120,15 @@ rtype::entities::Player::Player(
         rtype::ecs::ComponentManager &componentManager,
         const components::Position pos,
         const components::Velocity vel,
-        const components::Size size
+        const components::Size size,
+        const components::Network network
 ) {
     _id = entityManager.createEntity();
     componentManager.addComponent<components::Position>(_id, pos);
     componentManager.addComponent<components::Velocity>(_id, vel);
     componentManager.addComponent<components::Size>(_id, size);
     componentManager.addComponent<components::Hitbox>(_id, {pos, size});
+    componentManager.addComponent<components::Network>(_id, network);
 }
 
 #endif
