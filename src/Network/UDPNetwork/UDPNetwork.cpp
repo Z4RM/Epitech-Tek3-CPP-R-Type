@@ -80,7 +80,7 @@ namespace rtype::network {
         try {
             std::unique_ptr<IPacket> packet = PacketFactory::fromBuffer(buffer);
             std::string codeStr = std::to_string(packet->getCode());
-            spdlog::info("UDP Packet {}: received from {}:{}", codeStr, address, port);
+            //spdlog::info("UDP Packet {}: received from {}:{}", codeStr, address, port);
             for (auto& handler : _handlers) {
                 if (handler.first == packet->getCode()) {
                     handler.second(std::move(packet), endpoint);
@@ -105,7 +105,7 @@ namespace rtype::network {
                 int port = endpoint.port();
                 std::string codeStr = std::to_string(code);
 
-                spdlog::info("UDP Packet {}: successfully sent to: {}:{}", codeStr, address, port);
+                //spdlog::info("UDP Packet {}: successfully sent to: {}:{}", codeStr, address, port);
             }
         });
     }

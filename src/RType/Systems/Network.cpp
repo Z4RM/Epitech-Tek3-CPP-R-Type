@@ -26,10 +26,8 @@ namespace rtype::systems {
         if (!network.getStarted()) {
             try {
                 addUdpHandlers(network, entityManager, componentManager);
-                if (!IS_SERVER) {
                     auto timer = std::make_shared<asio::steady_timer>(network.getIoContext());
                     schedulePacketSending(entityManager, componentManager, network, timer);
-                }
                 network.start();
             } catch (std::exception &e) {
                 spdlog::error("Error while starting udp");
@@ -48,19 +46,29 @@ namespace rtype::systems {
                 const auto pos = componentManager.getComponent<components::Position>(entity);
                 const auto size = componentManager.getComponent<components::Size>(entity);
 
-                if (net && net->netId == 0 && vel && pos && size) {
+                if (net && vel && pos && size) {
                     PlayerData pdata{*pos, *vel, *size, *net};
-                    data.emplace_back(pdata);
+                    if (net->netId == 0 && !IS_SERVER)
+                        data.emplace_back(pdata);
+
+                    if (IS_SERVER && net->netId != 0) {
+                        data.emplace_back(pdata);
+                    }
                 }
             }
 
             if (!data.empty()) {
                 network::PacketPlayersData playersData(data);
-                network.sendPacket(playersData, network.getServerEndpoint());
-                spdlog::info("Sent player data");
+                if (!IS_SERVER)
+                    network.sendPacket(playersData, network.getServerEndpoint());
+                else {
+                    for (const auto &player : _playerList) {
+                        network.sendPacket(playersData, player.second);
+                    }
+                }
             }
 
-            timer->expires_after(std::chrono::seconds(1));
+            timer->expires_after(std::chrono::milliseconds(1));
             timer->async_wait([&entityManager, &componentManager, &network, timer](const asio::error_code& ec) {
                 if (!ec) {
                     schedulePacketSending(entityManager, componentManager, network, timer);
@@ -113,8 +121,26 @@ namespace rtype::systems {
             packet, asio::ip::udp::endpoint endpoint) {
                 auto* playersData = dynamic_cast<network::PacketPlayersData*>(packet.get());
 
+                /** UPDATING SERVER PLAYER LIST **/
                 if (playersData) {
+                    for (const auto &data: playersData->datas) {
+                        for (const auto &player : _playerList) {
+                            if (player.second == endpoint) {
+                                for (const auto &entity : entityManager.getEntities()) {
+                                    auto pos = componentManager.getComponent<components::Position>(entity);
+                                    auto vel = componentManager.getComponent<components::Velocity>(entity);
+                                    auto size = componentManager.getComponent<components::Size>(entity);
+                                    auto net = componentManager.getComponent<components::Network>(entity);
+                                    if (pos && vel && size && net && net->netId == player.first) {
+                                        *pos = data.pos;
+                                        //*vel = data.vel;
+                                        //*size = data.size;
+                                    }
 
+                                }
+                            }
+                        }
+                    }
                 } else {
                     spdlog::error("Invalid packet players data received");
                 }
@@ -124,6 +150,32 @@ namespace rtype::systems {
 
             network.addHandler(network::WELCOME, [](std::unique_ptr<network::IPacket> packet, asio::ip::udp::endpoint endpoint) {
                 spdlog::info("Server said welcome : successfully connected to the UDP game");
+            });
+
+            network.addHandler(network::PLAYERS_DATA, [&network, &entityManager, &componentManager](std::unique_ptr<network::IPacket>
+                packet, asio::ip::udp::endpoint endpoint) {
+                    auto* playersData = dynamic_cast<network::PacketPlayersData*>(packet.get());
+
+                    /** UPDATING SERVER PLAYER LIST **/
+                spdlog::warn("Player Data received");
+                    if (playersData) {
+                        for (const auto &entity : entityManager.getEntities()) {
+                            auto net = componentManager.getComponent<components::Network>(entity);
+
+                            if (net) {
+                                int netId = net->netId;
+                                for (const auto &data: playersData->datas) {
+                                    if (data.network.netId == netId && netId != 0) {
+                                        *componentManager.getComponent<components::Position>(entity) = data.pos;
+                                        //*componentManager.getComponent<components::Velocity>(entity) = data.vel;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        spdlog::error("Invalid packet players data received");
+                    }
             });
 
         #ifndef RTYPE_IS_SERVER

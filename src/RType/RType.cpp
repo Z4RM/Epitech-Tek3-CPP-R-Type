@@ -103,14 +103,6 @@ int rtype::RType::_run() {
         {"", 0, 0}
     );
 #else
-    rtype::entities::Player player(
-        entityManager,
-        componentManager,
-        {0, 0, 0},
-        {0, 0, 0},
-        {64, 64}
-        );
-
     rtype::entities::Enemy enemy(
         entityManager,
         componentManager,
