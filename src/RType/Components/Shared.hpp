@@ -8,7 +8,6 @@
 #pragma once
 
 #include "./Shared/Created.hpp"
-#include "./Shared/Hitbox.hpp"
 #include "./Shared/IA.hpp"
 #include "./Shared/Position.hpp"
 #include "./Shared/Size.hpp"

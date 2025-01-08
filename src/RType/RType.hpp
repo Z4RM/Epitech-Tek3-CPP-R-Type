@@ -8,6 +8,8 @@
 #ifndef RTYPE_RTYPE_HPP_
 #define RTYPE_RTYPE_HPP_
 
+#include "GameLoader.hpp"
+#include "ECS.hpp"
 #ifdef RTYPE_IS_CLIENT
 #include "Client/Client.hpp"
 #endif
@@ -34,6 +36,8 @@ namespace rtype {
          * @return The exit status of the program.
          */
         static int run();
+
+        static void createComponentViaConfig(GameLoader &gameLoader, size_t rtype, ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager);
 
 #ifdef RTYPE_IS_CLIENT
         // TODO: documentation

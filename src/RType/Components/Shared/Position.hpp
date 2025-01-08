@@ -6,9 +6,16 @@
 */
 
 #pragma once
+#include "IComponent.hpp"
+
 namespace rtype::components {
-    struct Position
+    struct Position : public IComponent
     {
+        void create(nlohmann::basic_json<>& value) override {
+            x = value["x"];
+            y = value["y"];
+            z = value["z"];
+        };
         float x;
         float y;
         float z;

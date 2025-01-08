@@ -8,14 +8,11 @@
 #include "ModeManager/ModeManager.hpp"
 #include "Config/Config.hpp"
 #include "ECS.hpp"
-#include "Entities/Enemy.hpp"
-#include "Entities/Player.hpp"
 #include "Systems.hpp"
 #include "RType.hpp"
+
+#include "Components.hpp"
 #include "Networks.hpp"
-#ifdef RTYPE_IS_CLIENT
-#include "Entities/Window.hpp"
-#endif
 
 int rtype::RType::run() {
     if (!Config::initialize())
@@ -54,69 +51,47 @@ rtype::RType::RType(unsigned short port) : _port(port) {}
 rtype::RType::RType(unsigned short port) : _port(port), _client(this) {}
 #endif
 
+bool isValidComponent(const std::string& component) {
+    return componentMap.find(component) != componentMap.end();
+}
+
+void rtype::RType::createComponentViaConfig(GameLoader &gameLoader, size_t rtype, ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager) {
+    for (const auto& entity : gameLoader.globalConfig.items()) {
+        std::cout << "Component: " << entity.key() << " => " << entity.value() << std::endl;
+        const size_t id = entityManager.createEntity();
+        for (const auto& comp : entity.value().items()) {
+            if (!isValidComponent(comp.key())) {
+                spdlog::error("Invalid component: {} in {}", comp.key(), entity.key());
+                continue;
+            }
+            try {
+                auto val = comp.value();
+                const auto&[creator, type, registerComponent] = componentMap.at(comp.key());
+                auto instance = creator();
+                instance->create(val);
+                registerComponent(componentManager, id, std::move(instance));
+                std::cout << "Component created: " << comp.key() << std::endl;
+            } catch (const std::out_of_range &e) {
+                spdlog::error("Component not found in map: {}", comp.key());
+            } catch (const std::bad_any_cast &e) {
+                spdlog::error("Failed to cast component: {}", comp.key());
+            } catch (const std::exception &e) {
+                spdlog::error("Exception while creating component {}: {}", comp.key(), e.what());
+            }
+        }
+    }
+}
+
 int rtype::RType::_run() {
     ecs::EntityManager entityManager;
     ecs::ComponentManager componentManager;
     ecs::SystemManager systemManager(entityManager, componentManager);
 
-    size_t rtype = entityManager.createEntity();
-#ifdef RTYPE_IS_CLIENT
-    systemManager.addSystem(rtype::systems::RenderWindowSys::createWindow);
-    components::String title;
-    title.s = "RType";
-    rtype::entities::RWindow renderWindow{};
-    rtype::entities::Mode mode;
-    mode.style.style = sf::Style::Default;
-    components::Sprite sprite1 = {{0, 0, 0}, {800, 600}, "assets/sprites/background.jpg", {-1}};
-    rtype::entities::Window window(
-            entityManager,
-            componentManager,
-            {800, 600},
-            {"RType"},
-            renderWindow,
-            mode,
-            sprite1
-    );
-    systemManager.addSystem(rtype::systems::RenderWindowSys::render);
-
-    components::Sprite sprite2 = {{100, 100, 0}, {33, 17}, "assets/sprites/players.gif", {0}};
-    rtype::entites::Player player(
-            entityManager,
-            componentManager,
-            {0, 0, 0},
-            {0, 0, 0},
-            {64, 64},
-            sprite2,
-            {"", 0, 0}
-    );
-
-    components::Sprite sprite3 = {{600, 100, 0}, {33, 36}, "assets/sprites/enemy.gif", {1}};
-    rtype::entites::Enemy enemy(
-        entityManager,
-        componentManager,
-        {600, 100, 0},
-        {0, 0, 0},
-        {64, 64},
-        sprite3,
-        {"", 0, 0}
-    );
-#else
-    rtype::entites::Player player(
-        entityManager,
-        componentManager,
-        {0, 0, 0},
-        {0, 0, 0},
-        {64, 64}
-        );
-
-    rtype::entites::Enemy enemy(
-        entityManager,
-        componentManager,
-        {600, 100, 0},
-        {0, 0, 0},
-        {64, 64}
-    );
-#endif
+    GameLoader gameLoader;
+    gameLoader.loadGlobalConfig("config/config.json");
+    std::cout << "Config: " << gameLoader.globalConfig << std::endl;
+    const size_t rtype = entityManager.createEntity();
+    this->createComponentViaConfig(gameLoader, rtype, entityManager, componentManager);
 
   // TODO: use mode manager and make good exceptions
     network::TCPNetwork tcpNetwork(_port);
@@ -131,6 +106,12 @@ int rtype::RType::_run() {
     }
 
     systemManager.addSystem(rtype::systems::Movement::move);
+
+#ifdef RTYPE_IS_CLIENT
+    systemManager.addSystem(rtype::systems::RenderWindowSys::createWindow);
+    systemManager.addSystem(rtype::systems::RenderWindowSys::render);
+#endif
+
     while (_running()) {
         systemManager.updateSystems();
 #ifdef RTYPE_IS_CLIENT

@@ -7,6 +7,7 @@
 
 #pragma once
 #include "ECS.hpp"
+#include "RType/Components/Client/Mode.hpp"
 
 /**
  * @namespace rtype::systems

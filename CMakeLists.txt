@@ -10,6 +10,7 @@ find_package(inih REQUIRED)
 find_package(spdlog REQUIRED)
 find_package(asio REQUIRED)
 find_package(SFML 2.6 COMPONENTS system window graphics network audio REQUIRED)
+find_package(nlohmann_json 3.2.0 REQUIRED)
 
 include_directories(include src)
 
@@ -19,10 +20,6 @@ set(RTYPE_SRC
         src/ECS/EntityManager.hpp
         src/ECS/SparseSet.hpp
         src/ECS/SystemManager.hpp
-        src/RType/Entities/Enemy.cpp
-        src/RType/Entities/Enemy.hpp
-        src/RType/Entities/Player.cpp
-        src/RType/Entities/Player.hpp
         src/RType/RType.cpp
         src/RType/RType.hpp
         src/RType/Config/Config.cpp
@@ -44,8 +41,6 @@ set(RTYPE_SRC
 set(CLIENT_SRC
         src/RType/Client/Client.cpp
         src/RType/Client/Client.hpp
-        src/RType/Entities/Window.cpp
-        src/RType/Entities/Window.hpp
         src/RType/Systems/RenderWindow.cpp
         src/RType/Systems/RenderWindow.hpp
         src/RType/Systems/InputSystem.cpp
@@ -75,7 +70,7 @@ set(RTYPE_HEADERS
         include/Networks.hpp
 )
 
-link_libraries(inih::inireader spdlog::spdlog asio::asio)
+link_libraries(inih::inireader spdlog::spdlog asio::asio nlohmann_json::nlohmann_json)
 
 #region Server
 add_executable(r-type_server ${RTYPE_SRC} ${RTYPE_HEADERS})

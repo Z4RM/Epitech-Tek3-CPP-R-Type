@@ -8,10 +8,14 @@
 #pragma once
 
 #include <string>
+#include "IComponent.hpp"
 
 namespace rtype::components {
-    struct String
+    struct String : public IComponent
     {
+        void create(nlohmann::basic_json<>& value) override {
+            s = value;
+        };
         std::string s;
     };
 }

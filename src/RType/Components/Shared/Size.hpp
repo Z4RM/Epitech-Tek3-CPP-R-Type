@@ -6,10 +6,15 @@
 */
 
 #pragma once
+#include "IComponent.hpp"
 
 namespace rtype::components {
-    struct Size
+    struct Size : public IComponent
     {
+        void create(nlohmann::basic_json<> &value) override {
+            width = value["width"];
+            height = value["height"];
+        }
         float width;
         float height;
     };

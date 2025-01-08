@@ -6,10 +6,14 @@
 */
 
 #pragma once
+#include "IComponent.hpp"
 
 namespace rtype::components {
-    struct ZIndex
+    struct ZIndex : IComponent
     {
+        void create(nlohmann::basic_json<> &value) override {
+            this->value = value;
+        }
         int value;
     };
 }

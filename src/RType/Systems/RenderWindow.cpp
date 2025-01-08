@@ -39,7 +39,8 @@ std::vector<rtype::ecs::Entity> getEntitiesSortedByZIndex(
 void rtype::systems::RenderWindowSys::render(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager)
 {
     for (const auto& entity : entityManager.getEntities()) {
-        auto renderWindow = componentManager.getComponent<rtype::entities::RWindow>(entity);
+        const auto renderWindow = componentManager.getComponent<rtype::components::RWindow>(entity);
+
         if (!renderWindow)
             continue;
         sf::Event event{};
@@ -68,14 +69,17 @@ void rtype::systems::RenderWindowSys::render(ecs::EntityManager &entityManager, 
 void rtype::systems::RenderWindowSys::createWindow(const ecs::EntityManager& entityManager, ecs::ComponentManager& componentManager)
 {
     for (const auto& entity : entityManager.getEntities()) {
-        const auto renderWindow = componentManager.getComponent<rtype::entities::RWindow>(entity);
-        const auto mode = componentManager.getComponent<rtype::entities::Mode>(entity);
+        const auto renderWindow = componentManager.getComponent<rtype::components::RWindow>(entity);
+        const auto mode = componentManager.getComponent<rtype::components::Mode>(entity);
         const auto size = componentManager.getComponent<components::Size>(entity);
         const auto title = componentManager.getComponent<components::String>(entity);
         const auto created = componentManager.getComponent<components::Created>(entity);
-        if (renderWindow && mode && size && title && !created->isCreate) {
-            renderWindow->window->create(mode->mode, title->s, mode->style.style);
-            renderWindow->window->setFramerateLimit(mode->limit);
+        const auto frameLimit = componentManager.getComponent<components::FrameLimit>(entity);
+        if (renderWindow && mode && size && title && frameLimit && !created->isCreate) {
+            if (!renderWindow->window)
+                renderWindow->window = new sf::RenderWindow();
+            renderWindow->window->create(sf::VideoMode(size->width, size->height), title->s, mode->style.style);
+            renderWindow->window->setFramerateLimit(frameLimit->limit);
             created->isCreate = true;
             componentManager.addComponent<components::Created>(entity, *created);
         }

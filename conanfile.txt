@@ -3,6 +3,7 @@ inih/58
 spdlog/1.15.0
 asio/1.32.0
 sfml/2.6.2
+nlohmann_json/3.2.0
 
 [generators]
 CMakeDeps

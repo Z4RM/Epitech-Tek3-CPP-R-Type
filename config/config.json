@@ -1,0 +1,70 @@
+{
+  "game_settings": {
+    "title": "RTYPE",
+    "resolution": {
+      "width": 1920,
+      "height": 1080
+    },
+    "sprite": {
+      "path": "./assets/sprites/background.jpg",
+      "priority": -1,
+      "size": {
+        "width": 1920,
+        "height": 1080
+      },
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": -1
+      }
+    },
+    "mode": {
+      "none": false,
+      "titleBar": false,
+      "resize": false,
+      "close": false,
+      "fullscreen": false,
+      "defaults": true
+    },
+    "fps_cap": 60,
+    "scrolling_speed": {
+        "x": 1,
+        "y": 0,
+        "z": 0
+    }
+  },
+  "player": {
+    "position": {
+      "x": 10,
+      "y": 0,
+      "z": 0
+    },
+    "max_health": 100,
+    "lives": 3,
+    "weapon": {
+      "type": "laser",
+      "damage": 10,
+      "fire_rate": 0.5,
+      "power_ups": [
+        "spread_shot",
+        "charge_laser",
+        "homing_missile"
+      ]
+    },
+    "speed": 8,
+    "hitbox": {
+      "width": 30,
+      "height": 30
+    },
+    "action": "config/actions/player.json"
+  },
+  "audio": {
+    "music_volume": 0.8,
+    "effects_volume": 0.9
+  },
+  "graphics": {
+    "particle_effects": true,
+    "shadows": false,
+    "v_sync": true
+  }
+}
