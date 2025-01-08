@@ -106,6 +106,7 @@ namespace rtype::components {
 
     void move(Position pos);
     void shoot(rtype::ecs::EntityManager &entityManager, rtype::ecs::ComponentManager &componentManager) const;
+    void updateProjectiles(rtype::ecs::ComponentManager &componentManager, std::vector<size_t> &projectileIds);
 
     private:
         /**
@@ -114,6 +115,7 @@ namespace rtype::components {
         size_t _id;
         mutable sf::Clock _shootClock;
         const float _shootCooldown = 0.8f;
+        bool _projectile = true;
 
 #ifdef RTYPE_IS_CLIENT
         InputHandler _inputs;

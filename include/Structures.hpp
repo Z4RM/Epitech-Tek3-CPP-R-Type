@@ -87,6 +87,7 @@ struct Projectile
 #ifdef RTYPE_IS_CLIENT
     Animation animation;
     Sprite sprite;
+    sf::Clock animationClock;
 };
 #endif
 

@@ -105,7 +105,10 @@ rtype::components::Player::Player(
     componentManager.addComponent<InputHandler>(_id, _inputs);
 }
 
-void rtype::components::Player::shoot(rtype::ecs::EntityManager &entityManager, rtype::ecs::ComponentManager &componentManager) const {
+void rtype::components::Player::shoot(
+    rtype::ecs::EntityManager &entityManager,
+    rtype::ecs::ComponentManager &componentManager
+) const {
     if (_shootClock.getElapsedTime().asSeconds() < _shootCooldown) {
         return;
     }
@@ -115,6 +118,7 @@ void rtype::components::Player::shoot(rtype::ecs::EntityManager &entityManager, 
     Position playerPos = *componentManager.getComponent<Position>(_id);
     Velocity projectileVel = {2.0f, 0.0f, 0.0f};
     Position projectilePos = {playerPos.x + 10.0f, playerPos.y, playerPos.z};
+
     Sprite projectileSprite = {
         projectilePos,
         {10.0f, 10.0f},
@@ -124,7 +128,6 @@ void rtype::components::Player::shoot(rtype::ecs::EntityManager &entityManager, 
         new sf::Sprite(),
         {true}
     };
-
     projectileSprite.texture->loadFromFile(projectileSprite.path);
     projectileSprite.sprite->setTexture(*projectileSprite.texture);
 
@@ -132,11 +135,48 @@ void rtype::components::Player::shoot(rtype::ecs::EntityManager &entityManager, 
     projectileSprite.sprite->setTextureRect(textureRect);
     projectileSprite.sprite->setPosition({projectilePos.x, projectilePos.y});
 
+    Animation projectileAnimation = {
+        "assets/sprites/projectile/player-shots.gif",
+        6,
+        10
+    };
+
     componentManager.addComponent<Sprite>(projectileId, projectileSprite);
     componentManager.addComponent<Position>(projectileId, projectilePos);
     componentManager.addComponent<Velocity>(projectileId, projectileVel);
     componentManager.addComponent<Size>(projectileId, {10.0f, 10.0f});
     componentManager.addComponent<Hitbox>(projectileId, {projectilePos, {10.0f, 10.0f}});
+    componentManager.addComponent<Animation>(projectileId, projectileAnimation);
+
+    Projectile projectile = {
+        projectilePos,
+        projectileVel,
+#ifdef RTYPE_IS_CLIENT
+        projectileAnimation,
+        projectileSprite
+#endif
+    };
+    componentManager.addComponent<Projectile>(projectileId, projectile);
+}
+void updateProjectiles(
+    rtype::ecs::ComponentManager &componentManager,
+    std::vector<size_t> &projectileIds
+) {
+    for (size_t projectileId : projectileIds) {
+        auto *projectile = componentManager.getComponent<Projectile>(projectileId);
+        if (!projectile) continue;
+
+#ifdef RTYPE_IS_CLIENT
+        float elapsedTime = projectile->animationClock.getElapsedTime().asSeconds();
+        int frame = static_cast<int>(elapsedTime * projectile->animation.frameRate) % projectile->animation.nbFrames;
+        int frameWidth = static_cast<int>(projectile->sprite.size.width);
+        sf::IntRect textureRect(frame * frameWidth, 0, frameWidth, static_cast<int>(projectile->sprite.size.height));
+        projectile->sprite.sprite->setTextureRect(textureRect);
+#endif
+        projectile->position.x += projectile->velocity.x;
+        projectile->position.y += projectile->velocity.y;
+        projectile->sprite.sprite->setPosition({projectile->position.x, projectile->position.y});
+    }
 }
 
 

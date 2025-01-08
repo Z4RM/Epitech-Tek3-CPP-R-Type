@@ -45,6 +45,8 @@ set(CLIENT_SRC
         src/Systems/RenderWindow.hpp
         src/Systems/InputSystem.cpp
         src/Systems/InputSystem.hpp
+        src/Systems/AnimationProjectile.cpp
+        src/Systems/AnimationProjectile.hpp
 )
 
 set(RTYPE_HEADERS

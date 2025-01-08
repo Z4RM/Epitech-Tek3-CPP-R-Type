@@ -11,6 +11,7 @@
 #include "Components/Enemy.hpp"
 #include "Components/Player.hpp"
 #include "Systems.hpp"
+#include "../Systems/AnimationProjectile.hpp"
 #include "RType.hpp"
 
 int rtype::RType::run() {
@@ -55,7 +56,10 @@ int rtype::RType::_run() {
     ecs::ComponentManager componentManager;
     ecs::SystemManager systemManager(entityManager, componentManager);
 
+    std::vector<size_t> projectileIds;
+
     size_t rtype = entityManager.createEntity();
+
 #ifdef RTYPE_IS_CLIENT
     systemManager.addSystem(rtype::systems::RenderWindowSys::createWindow);
     String title;
@@ -65,25 +69,25 @@ int rtype::RType::_run() {
     mode.style.style = sf::Style::Default;
     Sprite sprite1 = {{0, 0, 0}, {800, 600}, "assets/sprites/background.jpg", {-1}};
     rtype::components::Window window(
-            entityManager,
-            componentManager,
-            {800, 600},
-            {"RType"},
-            renderWindow,
-            mode,
-            sprite1
+        entityManager,
+        componentManager,
+        {800, 600},
+        {"RType"},
+        renderWindow,
+        mode,
+        sprite1
     );
     systemManager.addSystem(rtype::systems::RenderWindowSys::render);
 
     Sprite sprite2 = {{100, 100, 0}, {33, 17}, "assets/sprites/players.gif", {0}};
     rtype::components::Player player(
-            entityManager,
-            componentManager,
-            {0, 0, 0},
-            {0, 0, 0},
-            {64, 64},
-            sprite2,
-            {"", 0, 0}
+        entityManager,
+        componentManager,
+        {0, 0, 0},
+        {0, 0, 0},
+        {64, 64},
+        sprite2,
+        {"", 0, 0}
     );
 
     Sprite sprite3 = {{600, 100, 0}, {33, 36}, "assets/sprites/enemy.gif", {1}};
@@ -103,7 +107,7 @@ int rtype::RType::_run() {
         {0, 0, 0},
         {0, 0, 0},
         {64, 64}
-        );
+    );
 
     rtype::components::Enemy enemy(
         entityManager,
@@ -115,8 +119,14 @@ int rtype::RType::_run() {
 #endif
 
     systemManager.addSystem(rtype::systems::Movement::move);
+    systemManager.addSystem([&projectileIds](ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager) {
+    rtype::systems::UpdateProjectilesSystem::updateProjectiles(componentManager, projectileIds);
+});
+
+
     while (_running()) {
         systemManager.updateSystems();
+
 #ifdef RTYPE_IS_CLIENT
         //_client.iteration();
 #endif
