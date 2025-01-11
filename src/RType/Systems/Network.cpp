@@ -90,124 +90,92 @@ namespace rtype::systems {
 
     void Network::addUdpHandlers(network::UDPNetwork &network, ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager) {
         if (IS_SERVER) {
-            network.addHandler(network::CONNECT, [&network, &entityManager, &componentManager](std::unique_ptr<network::IPacket> packet, asio::ip::udp::endpoint endpoint) {
-
-                static int playerId = 0;
-                network::PacketWelcome response;
-
-                playerId++;
-
-                for (const auto& entity : entityManager.getEntities()) {
-                    auto netId = componentManager.getComponent<components::NetId>(entity);
-                    auto netCo = componentManager.getComponent<components::NetworkConnection>(entity);
-
-                    if (netId) {
-                        network::PacketNewPlayer newPlayer(playerId);
-                        network::PacketNewPlayer oldPlayer(netId->id);
-
-                        network.sendPacket(newPlayer, netCo->endpoint);
-                        network.sendPacket(oldPlayer, endpoint);
-                    }
-                }
-
-                //TODO: fix this problem, should we use ifndef or the macro is_server
-                #ifndef RTYPE_IS_CLIENT
-                    rtype::entities::Player player {
-                        entityManager,
-                        componentManager,
-                        {0, 0, 0},
-                        {0, 0, 0},
-                        {64, 64},
-                        {endpoint},
-                        { playerId }
-                    };
-                #endif
-
-                network.sendPacket(response, endpoint);
-            });
-
             network.addHandler(network::PLAYERS_DATA, [&network, &entityManager, &componentManager](std::unique_ptr<network::IPacket>
             packet, asio::ip::udp::endpoint endpoint) {
                 auto* playersData = dynamic_cast<network::PacketPlayersData*>(packet.get());
+                static int playerId = 0;
 
                 /** UPDATING SERVER PLAYER LIST **/
                 if (playersData) {
-                    for (const auto &data: playersData->datas) {
-                            for (const auto &entity : entityManager.getEntities()) {
-                                auto netCo = componentManager.getComponent<components::NetworkConnection>(entity);
-                                auto pos = componentManager.getComponent<components::Position>(entity);
-                                auto vel = componentManager.getComponent<components::Velocity>(entity);
-                                auto size = componentManager.getComponent<components::Size>(entity);
-                                auto net = componentManager.getComponent<components::NetId>(entity);
+                    for (auto &data : playersData->datas) {
+                        bool created = false;
+                        for (const auto &entity : entityManager.getEntities()) {
+                            auto netCo = componentManager.getComponent<components::NetworkConnection>(entity);
+                            auto pos = componentManager.getComponent<components::Position>(entity);
+                            auto vel = componentManager.getComponent<components::Velocity>(entity);
+                            auto size = componentManager.getComponent<components::Size>(entity);
+                            auto net = componentManager.getComponent<components::NetId>(entity);
 
-                                if (pos && vel && size && net && netCo && netCo->endpoint == endpoint) {
-                                    *pos = data.pos;
-                                    //*vel = data.vel;
-                                    *size = data.size;
-                                }
+                            if (pos && vel && size && net && netCo && netCo->endpoint == endpoint) {
+                                *pos = data.pos;
+                                //*vel = data.vel;
+                                *size = data.size;
+                                created = true;
                             }
+                        }
+                        if (!created) {
+                            playerId++;
+                            spdlog::info("New player with id: {}", playerId);
+                        #ifndef RTYPE_IS_CLIENT
+                                rtype::entities::Player player(
+                                entityManager,
+                                componentManager,
+                                {0, 0, 0},
+                                {0, 0, 0},
+                                {64, 64},
+                                {endpoint},
+                                { playerId });
+                        #endif
+                        }
                     }
-                } else {
+                }
+                else {
                     spdlog::error("Invalid packet players data received");
                 }
             });
 
         } else {
-
-            network.addHandler(network::WELCOME, [](std::unique_ptr<network::IPacket> packet, asio::ip::udp::endpoint endpoint) {
-                spdlog::info("Server said welcome : successfully connected to the UDP game");
-            });
-
             network.addHandler(network::PLAYERS_DATA, [&network, &entityManager, &componentManager](std::unique_ptr<network::IPacket>
                 packet, asio::ip::udp::endpoint endpoint) {
                     auto* playersData = dynamic_cast<network::PacketPlayersData*>(packet.get());
 
                     if (playersData) {
-                        for (const auto &entity : entityManager.getEntities()) {
-                            auto net = componentManager.getComponent<components::NetId>(entity);
+                        for (const auto &data: playersData->datas) {
+                            bool created = false;
 
-                            if (net) {
-                                int netId = net->id;
-                                for (const auto &data: playersData->datas) {
+                            for (const auto &entity : entityManager.getEntities()) {
+                                auto net = componentManager.getComponent<components::NetId>(entity);
+
+                                if (net) {
+                                    int netId = net->id;
+
                                     if (data.netId.id == netId && netId != 0) {
+                                        created = true;
                                         *componentManager.getComponent<components::Position>(entity) = data.pos;
                                         break;
                                     }
                                 }
+                            }
+                            if (!created) {
+                            #ifndef RTYPE_IS_SERVER
+                                components::Sprite sprite2 = {{100, 100, 0}, {33, 17}, "assets/sprites/players.gif", {0}};
+                                entities::Player player2(
+                                        entityManager,
+                                        componentManager,
+                                        {0, 200, 0},
+                                        {0, 0, 0},
+                                        {64, 64},
+                                        sprite2,
+                                        {"", 0, 0},
+                                        data.netId
+                                );
+                            #endif
                             }
                         }
                     } else {
                         spdlog::error("Invalid packet players data received");
                     }
             });
-
-        #ifndef RTYPE_IS_SERVER
-            network.addHandler(network::NEW_PLAYER, [&entityManager, &componentManager](std::unique_ptr<network::IPacket> packet,
-            asio::ip::udp::endpoint
-            endpoint) {
-                auto* packetNewPlayer = dynamic_cast<network::PacketNewPlayer*>(packet.get());
-
-                if (packetNewPlayer) {
-                    int id = packetNewPlayer->id;
-
-                    components::Sprite sprite2 = {{100, 100, 0}, {33, 17}, "assets/sprites/players.gif", {0}};
-                    entities::Player player2(
-                            entityManager,
-                            componentManager,
-                            {0, 200, 0},
-                            {0, 0, 0},
-                            {64, 64},
-                            sprite2,
-                            {"", 0, 0},
-                            { id }
-                    );
-                    spdlog::info("New player with id: {}", std::to_string(id));
-                } else {
-                    spdlog::error("Bad packet NEW_PLAYER received");
-                }
-            });
-
-        #endif
         }
     }
 
