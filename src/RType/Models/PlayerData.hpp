@@ -6,14 +6,17 @@
 */
 
 #pragma once
+
+#include <optional>
 #include "Components.hpp"
 
-namespace rtype {
+namespace rtype::models {
+    /** Represent the datas of a player **/
     struct PlayerData {
         components::Position pos{};
         components::Velocity vel{};
         components::Size size{};
-        components::Network network;
-
+        components::NetId netId;
+        std::optional<components::NetworkConnection> network;
     };
 }

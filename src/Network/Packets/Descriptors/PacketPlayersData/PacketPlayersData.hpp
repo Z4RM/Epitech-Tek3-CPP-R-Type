@@ -16,11 +16,12 @@ namespace rtype::network {
     class PacketPlayersData final : public APacket {
     public:
         ~PacketPlayersData() override = default;
-        explicit PacketPlayersData(std::vector<PlayerData> datas = {}) : APacket(EPacketCode::PLAYERS_DATA), datas(std::move(datas)) {};
+        explicit PacketPlayersData(std::vector<models::PlayerData> datas = {}) : APacket(EPacketCode::PLAYERS_DATA), datas(std::move
+        (datas)) {};
         [[nodiscard]] std::vector<char> bufferize() const override;
         void fillData(const std::vector<char> &buffer) override;
 
-        std::vector<PlayerData> datas {};
+        std::vector<models::PlayerData> datas {};
     };
 
 }

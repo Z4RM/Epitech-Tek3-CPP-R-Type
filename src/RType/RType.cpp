@@ -89,7 +89,7 @@ int rtype::RType::_run() {
             {64, 64},
             sprite2,
             {"", 0, 0},
-            { false }
+            { 0 }
     );
 
     components::Sprite sprite3 = {{600, 100, 0}, {33, 36}, "assets/sprites/enemy.gif", {1}};

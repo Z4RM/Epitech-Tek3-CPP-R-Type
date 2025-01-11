@@ -22,7 +22,7 @@ rtype::entities::Player::Player(
         const components::Size size,
         components::Sprite &sprite,
         const components::Animation &animation,
-        components::Network network
+        components::NetId network
 ) {
     _id = entityManager.createEntity();
     sprite.texture = new sf::Texture();
@@ -40,9 +40,9 @@ rtype::entities::Player::Player(
     componentManager.addComponent<components::Velocity>(_id, vel);
     componentManager.addComponent<components::Size>(_id, size);
     componentManager.addComponent<components::Hitbox>(_id, {pos, size});
-    componentManager.addComponent<components::Network>(_id, network);
+    componentManager.addComponent<components::NetId>(_id, network);
 
-    if (network.netId > 0)
+    if (network.id > 0)
         return;
 
     size_t id = _id;
@@ -121,14 +121,16 @@ rtype::entities::Player::Player(
         const components::Position pos,
         const components::Velocity vel,
         const components::Size size,
-        const components::Network network
+        const components::NetworkConnection network,
+        const components::NetId netId
 ) {
     _id = entityManager.createEntity();
     componentManager.addComponent<components::Position>(_id, pos);
     componentManager.addComponent<components::Velocity>(_id, vel);
     componentManager.addComponent<components::Size>(_id, size);
     componentManager.addComponent<components::Hitbox>(_id, {pos, size});
-    componentManager.addComponent<components::Network>(_id, network);
+    componentManager.addComponent<components::NetworkConnection>(_id, network);
+    componentManager.addComponent<components::NetId>(_id, netId);
 }
 
 #endif

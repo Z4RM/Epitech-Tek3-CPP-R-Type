@@ -24,8 +24,5 @@ namespace rtype::systems {
 
 
         static void tcpProcess(ecs::EntityManager& entityManager, ecs::ComponentManager& componentManager);
-
-        //TODO: use directly entities in entitymanager with netid insteaad of this (and put the endpoint into the network component)
-        static std::list<std::pair<int, asio::ip::udp::endpoint>> _playerList;
     };
 }

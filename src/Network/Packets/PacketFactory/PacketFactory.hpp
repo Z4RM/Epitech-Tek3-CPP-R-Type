@@ -18,7 +18,6 @@ namespace rtype::network {
         /** @brief Exception in the packet factory **/
         class PacketFactoryException : public std::exception {
         public:
-            // TODO: documentation
             PacketFactoryException() = default;
             [[nodiscard]] const char* what() const noexcept override {
                 return "Invalid packet type";

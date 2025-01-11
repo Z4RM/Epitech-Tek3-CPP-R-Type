@@ -6,10 +6,11 @@
 */
 
 #pragma once
-
+#include <asio.hpp>
 namespace rtype::components {
 
-    struct Network {
-        int netId = 0;
+    //TODO: endpoint should maybe be a shared_ptr
+    struct NetworkConnection {
+        asio::ip::udp::endpoint endpoint;
     };
 }
