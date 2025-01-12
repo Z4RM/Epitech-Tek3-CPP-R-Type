@@ -80,18 +80,6 @@ int rtype::RType::_run() {
     );
     systemManager.addSystem(rtype::systems::RenderWindowSys::render);
 
-    components::Sprite sprite2 = {{100, 100, 0}, {33, 17}, "assets/sprites/players.gif", {0}};
-    rtype::entities::Player player(
-            entityManager,
-            componentManager,
-            {0, 0, 0},
-            {0, 0, 0},
-            {64, 64},
-            sprite2,
-            {"", 0, 0},
-            { 0 }
-    );
-
     components::Sprite sprite3 = {{600, 100, 0}, {33, 36}, "assets/sprites/enemy.gif", {1}};
     rtype::entities::Enemy enemy(
         entityManager,

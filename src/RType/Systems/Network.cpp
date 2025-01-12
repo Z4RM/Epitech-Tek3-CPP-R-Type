@@ -22,6 +22,8 @@
 #include "RType/Entities/Player.hpp"
 
 namespace rtype::systems {
+    int Network::playerId = 0;
+
     void Network::udpProcess(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager) {
         static network::UDPNetwork network(Config::getInstance().getNetwork().server.port);
 
@@ -47,14 +49,15 @@ namespace rtype::systems {
                 const auto vel = componentManager.getComponent<components::Velocity>(entity);
                 const auto pos = componentManager.getComponent<components::Position>(entity);
                 const auto size = componentManager.getComponent<components::Size>(entity);
+                const auto actualPlayer = componentManager.getComponent<components::ActualPlayer>(entity);
 
                 if (vel && pos && size && netId) {
                     models::PlayerData pdata{*pos, *vel, *size, *netId};
 
-                    if (netId->id == 0 && !IS_SERVER)
+                    if (actualPlayer && actualPlayer->value == true && !IS_SERVER)
                         data.emplace_back(pdata);
 
-                    if (IS_SERVER && netId->id != 0) {
+                    if (IS_SERVER) {
                         data.emplace_back(pdata);
                     }
                 }
@@ -68,9 +71,10 @@ namespace rtype::systems {
                 else {
                     for (const auto &entity : entityManager.getEntities()) {
                         const auto net = componentManager.getComponent<components::NetworkConnection>(entity);
-
                         if (net) {
-                            network.sendPacket(playersData, net->endpoint);
+                            if (net->endpoint.has_value()) {
+                                network.sendPacket(playersData, net->endpoint.value());
+                            }
                         }
                     }
                 }
@@ -93,12 +97,10 @@ namespace rtype::systems {
             network.addHandler(network::PLAYERS_DATA, [&network, &entityManager, &componentManager](std::unique_ptr<network::IPacket>
             packet, asio::ip::udp::endpoint endpoint) {
                 auto* playersData = dynamic_cast<network::PacketPlayersData*>(packet.get());
-                static int playerId = 0;
 
-                /** UPDATING SERVER PLAYER LIST **/
+                /** UPDATING THE GAME **/
                 if (playersData) {
-                    for (auto &data : playersData->datas) {
-                        bool created = false;
+                    for (models::PlayerData &data : playersData->datas) {
                         for (const auto &entity : entityManager.getEntities()) {
                             auto netCo = componentManager.getComponent<components::NetworkConnection>(entity);
                             auto pos = componentManager.getComponent<components::Position>(entity);
@@ -106,26 +108,17 @@ namespace rtype::systems {
                             auto size = componentManager.getComponent<components::Size>(entity);
                             auto net = componentManager.getComponent<components::NetId>(entity);
 
-                            if (pos && vel && size && net && netCo && netCo->endpoint == endpoint) {
-                                *pos = data.pos;
-                                //*vel = data.vel;
-                                *size = data.size;
-                                created = true;
+                            if (pos && vel && size && net && netCo) {
+                                if (!netCo->endpoint.has_value() && net->id == data.netId.id) {
+                                    spdlog::info("New player in the udp game with net id: {}", net->id);
+                                    netCo->endpoint.emplace(endpoint);
+                                }
+                                if (netCo->endpoint.has_value() && netCo->endpoint == endpoint) {
+                                    *pos = data.pos;
+                                    //*vel = data.vel;
+                                    *size = data.size;
+                                }
                             }
-                        }
-                        if (!created) {
-                            playerId++;
-                            spdlog::info("New player with id: {}", playerId);
-                        #ifndef RTYPE_IS_CLIENT
-                                rtype::entities::Player player(
-                                entityManager,
-                                componentManager,
-                                {0, 0, 0},
-                                {0, 0, 0},
-                                {64, 64},
-                                {endpoint},
-                                { playerId });
-                        #endif
                         }
                     }
                 }
@@ -140,23 +133,27 @@ namespace rtype::systems {
                     auto* playersData = dynamic_cast<network::PacketPlayersData*>(packet.get());
 
                     if (playersData) {
-                        for (const auto &data: playersData->datas) {
+                        for (const models::PlayerData &data: playersData->datas) {
                             bool created = false;
 
                             for (const auto &entity : entityManager.getEntities()) {
                                 auto net = componentManager.getComponent<components::NetId>(entity);
+                                auto actualPlayer = componentManager.getComponent<components::ActualPlayer>(entity);
 
-                                if (net) {
+                                if (net && actualPlayer) {
                                     int netId = net->id;
 
-                                    if (data.netId.id == netId && netId != 0) {
+                                    if (data.netId.id == netId) {
                                         created = true;
-                                        *componentManager.getComponent<components::Position>(entity) = data.pos;
+                                        if (!actualPlayer->value)
+                                            *componentManager.getComponent<components::Position>(entity) = data.pos;
                                         break;
                                     }
                                 }
                             }
+
                             if (!created) {
+                            spdlog::info("Creating new player in game");
                             #ifndef RTYPE_IS_SERVER
                                 components::Sprite sprite2 = {{100, 100, 0}, {33, 17}, "assets/sprites/players.gif", {0}};
                                 entities::Player player2(
@@ -172,6 +169,21 @@ namespace rtype::systems {
                             #endif
                             }
                         }
+                        for (const auto entity : entityManager.getEntities()) {
+                            auto net = componentManager.getComponent<components::NetId>(entity);
+                            bool isDead = true;
+
+                            if (net && net->id != 0) {
+                                for (const models::PlayerData &data : playersData->datas) {
+                                    if (data.netId.id == net->id)
+                                        isDead = false;
+                                }
+                                if (isDead) {
+                                    spdlog::info("Destroying disconnected player");
+                                    entityManager.destroyEntity(entity);
+                                }
+                            }
+                        }
                     } else {
                         spdlog::error("Invalid packet players data received");
                     }
@@ -185,6 +197,61 @@ namespace rtype::systems {
 
         if (!network.getStarted()) {
             try {
+
+                network.registerOnPlayerDisconnect([&entityManager, &componentManager](std::shared_ptr<asio::ip::tcp::socket> socket) {
+                    std::string addressTcp = socket->remote_endpoint().address().to_string();
+                    int portTcp = socket->remote_endpoint().port();
+                    if (IS_SERVER)
+                        spdlog::info("Player destroyed: {}:{}", addressTcp, portTcp);
+                    else
+                        spdlog::info("Server have closed the connection");
+                });
+
+                network.addHandler(network::CONNECT, [&entityManager, &componentManager](std::unique_ptr<network::IPacket> packet,
+                    std::shared_ptr<asio::ip::tcp::socket> socket) {
+                        std::string addressTcp = socket->remote_endpoint().address().to_string();
+                        int portTcp = socket->remote_endpoint().port();
+
+                        Network::playerId++;
+                        #ifndef RTYPE_IS_CLIENT
+                            rtype::entities::Player player(
+                            entityManager,
+                            componentManager,
+                            {0, 0, 0},
+                            {0, 0, 0},
+                            {64, 64},
+                            {socket},
+                            { Network::playerId });
+                        #endif
+                        network::PacketWelcome welcome(Network::playerId);
+
+                        network.sendPacket(welcome, socket);
+                        spdlog::info("New player created with net id: {}, for: {}:{}", welcome.netId, addressTcp, portTcp);
+                });
+
+                network.addHandler(network::WELCOME, [&entityManager, &componentManager](std::unique_ptr<network::IPacket> packet,
+                std::shared_ptr<asio::ip::tcp::socket> socket) {
+                    auto* packetWelcome = dynamic_cast<network::PacketWelcome*>(packet.get());
+
+                    if (packetWelcome) {
+                        spdlog::info("Server said welcome, net id is: {}", packetWelcome->netId);
+                        #ifdef RTYPE_IS_CLIENT
+                        components::Sprite sprite2 = {{100, 100, 0}, {33, 17}, "assets/sprites/players.gif", {0}};
+                        entities::Player player2(
+                                entityManager,
+                                componentManager,
+                                {0, 200, 0},
+                                {0, 0, 0},
+                                {64, 64},
+                                sprite2,
+                                {"", 0, 0},
+                                {packetWelcome->netId},
+                                {true}
+                        );
+                        #endif
+                    }
+                });
+
                 network.start();
             } catch (std::exception &e) {
                 spdlog::error("Error while starting tcp");

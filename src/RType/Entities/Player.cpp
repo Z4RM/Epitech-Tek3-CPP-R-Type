@@ -22,7 +22,8 @@ rtype::entities::Player::Player(
         const components::Size size,
         components::Sprite &sprite,
         const components::Animation &animation,
-        components::NetId network
+        components::NetId network,
+        components::ActualPlayer actualPlayer
 ) {
     _id = entityManager.createEntity();
     sprite.texture = new sf::Texture();
@@ -41,8 +42,9 @@ rtype::entities::Player::Player(
     componentManager.addComponent<components::Size>(_id, size);
     componentManager.addComponent<components::Hitbox>(_id, {pos, size});
     componentManager.addComponent<components::NetId>(_id, network);
+    componentManager.addComponent<components::ActualPlayer>(_id, actualPlayer);
 
-    if (network.id > 0)
+    if (!actualPlayer.value)
         return;
 
     size_t id = _id;

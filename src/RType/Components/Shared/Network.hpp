@@ -2,15 +2,17 @@
 ** EPITECH PROJECT, 2025
 ** RType
 ** File description:
-** TODO: add description
+**
 */
 
 #pragma once
 #include <asio.hpp>
+#include <optional>
 namespace rtype::components {
 
     //TODO: endpoint should maybe be a shared_ptr
     struct NetworkConnection {
-        asio::ip::udp::endpoint endpoint;
+        std::shared_ptr<asio::ip::tcp::socket> socket;
+        std::optional<asio::ip::udp::endpoint> endpoint;
     };
 }

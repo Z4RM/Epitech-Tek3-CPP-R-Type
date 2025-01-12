@@ -36,8 +36,6 @@ namespace rtype::network {
             this->startReceive();
             spdlog::info("Server UDP network started on port: {}", this->_port);
         } else {
-            PacketConnect packet;
-            this->sendPacket(packet, _serverEndpoint);
             this->startReceive();
         }
 

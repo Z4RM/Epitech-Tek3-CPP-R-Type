@@ -9,6 +9,7 @@
 
 #include "Components.hpp"
 #include "ECS.hpp"
+#include "RType/Components/Shared/ActualPlayer.hpp"
 #ifdef RTYPE_IS_CLIENT
 #include "Components.hpp"
 #endif
@@ -58,7 +59,8 @@ namespace rtype::entities {
                 components::Size size,
                 components::Sprite &sprite,
                 const components::Animation &animation,
-                rtype::components::NetId = { false }
+                rtype::components::NetId = { false },
+                rtype::components::ActualPlayer = { false }
         );
 
 #else

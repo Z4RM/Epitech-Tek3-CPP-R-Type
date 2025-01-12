@@ -61,7 +61,7 @@ namespace rtype::network {
         asio::ip::udp::endpoint _serverEndpoint; ///< endpoint of the server
         std::optional<ThreadPool> _threadPool; ///< thread pool
         bool _started = false;
-        std::vector<std::pair<EPacketCode, std::function<void(std::unique_ptr<IPacket>, asio::ip::udp::endpoint endpoint)>>>
+        std::vector<std::pair<EPacketCode, std::function<void(std::unique_ptr<IPacket>, asio::ip::udp::endpoint)>>>
         _handlers;
     };
 

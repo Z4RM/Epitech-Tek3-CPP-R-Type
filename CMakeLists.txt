@@ -83,6 +83,7 @@ set(CLIENT_SRC
         src/Network/Packets/Descriptors/PacketPlayersData/PacketPlayersData.hpp
         src/RType/Models/PlayerData.hpp
         src/RType/Components/Shared/NetId.hpp
+        src/RType/Components/Shared/ActualPlayer.hpp
 )
 
 set(RTYPE_HEADERS
