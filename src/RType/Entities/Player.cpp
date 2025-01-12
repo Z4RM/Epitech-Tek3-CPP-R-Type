@@ -7,18 +7,23 @@
 
 #include "Player.hpp"
 
+#include <iostream>
+#include <spdlog/spdlog.h>
+
 #include "RType/ModeManager/ModeManager.hpp"
 
 #ifdef RTYPE_IS_CLIENT
 
-rtype::entites::Player::Player(
+rtype::entities::Player::Player(
         rtype::ecs::EntityManager &entityManager,
         rtype::ecs::ComponentManager &componentManager,
         const components::Position pos,
         const components::Velocity vel,
         const components::Size size,
         components::Sprite &sprite,
-        const components::Animation &animation
+        const components::Animation &animation,
+        components::NetId network,
+        components::ActualPlayer actualPlayer
 ) {
     _id = entityManager.createEntity();
     sprite.texture = new sf::Texture();
@@ -36,81 +41,98 @@ rtype::entites::Player::Player(
     componentManager.addComponent<components::Velocity>(_id, vel);
     componentManager.addComponent<components::Size>(_id, size);
     componentManager.addComponent<components::Hitbox>(_id, {pos, size});
+    componentManager.addComponent<components::NetId>(_id, network);
+    componentManager.addComponent<components::ActualPlayer>(_id, actualPlayer);
+
+    if (!actualPlayer.value)
+        return;
+
+    size_t id = _id;
 
     // Press
     _inputs.keyActions.insert({
         sf::Keyboard::Key::Z,
-        {sf::Event::KeyPressed, [this, pos, &componentManager]() {
-            componentManager.getComponent<components::Velocity>(_id)->y = -1;
+        {sf::Event::KeyPressed, [id, pos, &componentManager]() {
+            auto *vel = componentManager.getComponent<components::Velocity>(id);
+            if (vel != nullptr) {
+                vel->y = -1;
+            }
         }}
     });
 
     _inputs.keyActions.insert({
         sf::Keyboard::Key::S,
-        {sf::Event::KeyPressed, [this, &componentManager]() {
-            componentManager.getComponent<components::Velocity>(_id)->y = 1;
+        {sf::Event::KeyPressed, [id, &componentManager]() {
+            componentManager.getComponent<components::Velocity>(id)->y = 1;
         }}
     });
 
     _inputs.keyActions.insert({
         sf::Keyboard::Key::Q,
-        {sf::Event::KeyPressed, [this, &componentManager]() {
-            componentManager.getComponent<components::Velocity>(_id)->x = -1;
+        {sf::Event::KeyPressed, [id, &componentManager]() {
+            componentManager.getComponent<components::Velocity>(id)->x = -1;
         }}
     });
 
     _inputs.keyActions.insert({
         sf::Keyboard::Key::D,
-        {sf::Event::KeyPressed, [this, &componentManager]() {
-            componentManager.getComponent<components::Velocity>(_id)->x = 1;
+        {sf::Event::KeyPressed, [id, &componentManager]() {
+            componentManager.getComponent<components::Velocity>(id)->x = 1;
         }}
     });
 
     // Release
     _inputs.keyActions.insert({
         sf::Keyboard::Key::Z,
-        {sf::Event::KeyReleased, [this, pos, &componentManager]() {
-            componentManager.getComponent<components::Velocity>(_id)->y = 0;
+        {sf::Event::KeyReleased, [id, pos, &componentManager]() {
+            auto *vel = componentManager.getComponent<components::Velocity>(id);
+            if (vel != nullptr) {
+                vel->y = 0;
+            }
         }}
     });
 
     _inputs.keyActions.insert({
         sf::Keyboard::Key::S,
-        {sf::Event::KeyReleased, [this, &componentManager]() {
-            componentManager.getComponent<components::Velocity>(_id)->y = 0;
+        {sf::Event::KeyReleased, [id, &componentManager]() {
+            componentManager.getComponent<components::Velocity>(id)->y = 0;
         }}
     });
 
     _inputs.keyActions.insert({
         sf::Keyboard::Key::Q,
-        {sf::Event::KeyReleased, [this, &componentManager]() {
-            componentManager.getComponent<components::Velocity>(_id)->x = 0;
+        {sf::Event::KeyReleased, [id, &componentManager]() {
+            componentManager.getComponent<components::Velocity>(id)->x = 0;
         }}
     });
 
     _inputs.keyActions.insert({
         sf::Keyboard::Key::D,
-        {sf::Event::KeyReleased, [this, &componentManager]() {
-            componentManager.getComponent<components::Velocity>(_id)->x = 0;
+        {sf::Event::KeyReleased, [id, &componentManager]() {
+            componentManager.getComponent<components::Velocity>(id)->x = 0;
         }}
     });
-    componentManager.addComponent<components::InputHandler>(_id, _inputs);
+    componentManager.addComponent<components::InputHandler>(id, _inputs);
 }
 
 #else
 
-rtype::entites::Player::Player(
+rtype::entities::Player::Player(
         rtype::ecs::EntityManager &entityManager,
         rtype::ecs::ComponentManager &componentManager,
         const components::Position pos,
         const components::Velocity vel,
-        const components::Size size
+        const components::Size size,
+        const components::NetworkConnection network,
+        const components::NetId netId
 ) {
     _id = entityManager.createEntity();
     componentManager.addComponent<components::Position>(_id, pos);
     componentManager.addComponent<components::Velocity>(_id, vel);
     componentManager.addComponent<components::Size>(_id, size);
     componentManager.addComponent<components::Hitbox>(_id, {pos, size});
+    componentManager.addComponent<components::NetworkConnection>(_id, network);
+    componentManager.addComponent<components::NetId>(_id, netId);
 }
 
 #endif

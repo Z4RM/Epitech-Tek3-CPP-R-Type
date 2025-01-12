@@ -36,8 +36,6 @@ namespace rtype::network {
             this->startReceive();
             spdlog::info("Server UDP network started on port: {}", this->_port);
         } else {
-            PacketConnect packet;
-            this->sendPacket(packet, _serverEndpoint);
             this->startReceive();
         }
 
@@ -80,7 +78,14 @@ namespace rtype::network {
         try {
             std::unique_ptr<IPacket> packet = PacketFactory::fromBuffer(buffer);
             std::string codeStr = std::to_string(packet->getCode());
-            spdlog::info("UDP Packet {}: received from {}:{}", codeStr, address, port);
+            //spdlog::info("UDP Packet {}: received from {}:{}", codeStr, address, port);
+            for (auto& handler : _handlers) {
+                if (handler.first == packet->getCode()) {
+                    handler.second(std::move(packet), endpoint);
+                    return;
+                }
+            }
+            spdlog::warn("No handler found for packet code {}", codeStr);
         } catch (std::exception &e) {
             spdlog::error(e.what());
         }
@@ -98,8 +103,14 @@ namespace rtype::network {
                 int port = endpoint.port();
                 std::string codeStr = std::to_string(code);
 
-                spdlog::info("UDP Packet {}: successfully sent to: {}:{}", codeStr, address, port);
+                //spdlog::info("UDP Packet {}: successfully sent to: {}:{}", codeStr, address, port);
             }
         });
     }
+
+    void UDPNetwork::addHandler(EPacketCode code, std::function<void(std::unique_ptr<IPacket>, asio::ip::udp::endpoint endpoint)>
+    handler) {
+        this->_handlers.push_back({code, handler});
+    }
+
 }

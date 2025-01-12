@@ -41,6 +41,13 @@ set(RTYPE_SRC
         src/Network/Packets/PacketFactory/PacketFactory.cpp
         src/Network/Packets/PacketFactory/PacketFactory.hpp
         src/Network/Packets/Descriptors/PacketConnect/PacketConnect.cpp
+        src/Network/Packets/Descriptors/PacketWelcome/PacketWelcome.cpp
+        src/Network/Packets/Descriptors/PacketWelcome/PacketWelcome.hpp
+        src/Network/Packets/Descriptors/PacketNewPlayer/PacketNewPlayer.cpp
+        src/Network/Packets/Descriptors/PacketNewPlayer/PacketNewPlayer.hpp
+        src/RType/Components/Shared/Network.hpp
+        src/Network/Packets/Descriptors/PacketPlayersData/PacketPlayersData.cpp
+        src/Network/Packets/Descriptors/PacketPlayersData/PacketPlayersData.hpp
 )
 
 set(CLIENT_SRC
@@ -67,6 +74,16 @@ set(CLIENT_SRC
         src/Network/Packets/Descriptors/PacketConnect/PacketConnect.cpp
         include/Networks.hpp
         src/RType/Components/Client/Sprite.hpp
+        src/Network/Packets/Descriptors/PacketWelcome/PacketWelcome.cpp
+        src/Network/Packets/Descriptors/PacketWelcome/PacketWelcome.hpp
+        src/Network/Packets/Descriptors/PacketNewPlayer/PacketNewPlayer.cpp
+        src/Network/Packets/Descriptors/PacketNewPlayer/PacketNewPlayer.hpp
+        src/RType/Components/Shared/Network.hpp
+        src/Network/Packets/Descriptors/PacketPlayersData/PacketPlayersData.cpp
+        src/Network/Packets/Descriptors/PacketPlayersData/PacketPlayersData.hpp
+        src/RType/Models/PlayerData.hpp
+        src/RType/Components/Shared/NetId.hpp
+        src/RType/Components/Shared/ActualPlayer.hpp
 )
 
 set(RTYPE_HEADERS

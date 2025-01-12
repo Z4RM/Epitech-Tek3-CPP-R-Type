@@ -10,7 +10,7 @@
 
 #ifdef RTYPE_IS_CLIENT
 
-rtype::entites::Enemy::Enemy(
+rtype::entities::Enemy::Enemy(
     rtype::ecs::EntityManager &entityManager,
     rtype::ecs::ComponentManager &componentManager,
     components::Position pos,
@@ -47,7 +47,7 @@ rtype::entites::Enemy::Enemy(
 
 #else
 
-rtype::entites::Enemy::Enemy(
+rtype::entities::Enemy::Enemy(
     rtype::ecs::EntityManager &entityManager,
     rtype::ecs::ComponentManager &componentManager,
     components::Position pos,

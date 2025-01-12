@@ -14,3 +14,5 @@
 #include "./Shared/Size.hpp"
 #include "./Shared/String.hpp"
 #include "./Shared/Velocity.hpp"
+#include "./Shared/Network.hpp"
+#include "./Shared/NetId.hpp"

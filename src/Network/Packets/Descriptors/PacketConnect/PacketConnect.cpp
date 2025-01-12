@@ -16,7 +16,6 @@ namespace rtype::network {
     }
 
     void PacketConnect::fillData(const std::vector<char> &buffer) {
-        test = true;
     }
 
 
