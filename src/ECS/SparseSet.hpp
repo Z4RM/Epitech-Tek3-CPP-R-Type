@@ -22,8 +22,15 @@
  */
 namespace rtype::ecs
 {
+    class ISparseSet
+    {
+    public:
+        virtual ~ISparseSet() = default;
+        virtual void removeComponent(unsigned int entity) = 0;
+    };
+
     template <typename T>
-    class SparseSet {
+    class SparseSet : public ISparseSet {
     public:
         /**
          * @brief Adds a component for a given entity.

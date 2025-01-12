@@ -23,6 +23,7 @@
 
 namespace rtype::systems {
     int Network::playerId = 0;
+    std::mutex Network::playerIdMutex;
 
     void Network::udpProcess(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager) {
         static network::UDPNetwork network(Config::getInstance().getNetwork().server.port);
@@ -66,8 +67,9 @@ namespace rtype::systems {
             if (!data.empty()) {
                 network::PacketPlayersData playersData(data);
 
-                if (!IS_SERVER)
+                if (!IS_SERVER) {
                     network.sendPacket(playersData, network.getServerEndpoint());
+                }
                 else {
                     for (const auto &entity : entityManager.getEntities()) {
                         const auto net = componentManager.getComponent<components::NetworkConnection>(entity);
@@ -180,7 +182,7 @@ namespace rtype::systems {
                                 }
                                 if (isDead) {
                                     spdlog::info("Destroying disconnected player");
-                                    entityManager.destroyEntity(entity);
+                                    entityManager.destroyEntity(entity, componentManager);
                                 }
                             }
                         }
@@ -201,9 +203,17 @@ namespace rtype::systems {
                 network.registerOnPlayerDisconnect([&entityManager, &componentManager](std::shared_ptr<asio::ip::tcp::socket> socket) {
                     std::string addressTcp = socket->remote_endpoint().address().to_string();
                     int portTcp = socket->remote_endpoint().port();
-                    if (IS_SERVER)
+
+                    if (IS_SERVER) {
+                        for (auto &entity: entityManager.getEntities()) {
+                            auto netCo = componentManager.getComponent<components::NetworkConnection>(entity);
+
+                            if (netCo && netCo->socket == socket) {
+                                entityManager.destroyEntity(entity, componentManager);
+                            }
+                        }
                         spdlog::info("Player destroyed: {}:{}", addressTcp, portTcp);
-                    else
+                    } else
                         spdlog::info("Server have closed the connection");
                 });
 
@@ -212,6 +222,7 @@ namespace rtype::systems {
                         std::string addressTcp = socket->remote_endpoint().address().to_string();
                         int portTcp = socket->remote_endpoint().port();
 
+                        std::lock_guard guard(Network::playerIdMutex);
                         Network::playerId++;
                         #ifndef RTYPE_IS_CLIENT
                             rtype::entities::Player player(
@@ -226,7 +237,7 @@ namespace rtype::systems {
                         network::PacketWelcome welcome(Network::playerId);
 
                         network.sendPacket(welcome, socket);
-                        spdlog::info("New player created with net id: {}, for: {}:{}", welcome.netId, addressTcp, portTcp);
+                        spdlog::info("New player created with net id: {}, for: {}:{}", Network::playerId, addressTcp, portTcp);
                 });
 
                 network.addHandler(network::WELCOME, [&entityManager, &componentManager](std::unique_ptr<network::IPacket> packet,

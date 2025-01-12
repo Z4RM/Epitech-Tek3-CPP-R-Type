@@ -42,7 +42,7 @@ namespace rtype::ecs
             if (_componentSets.find(typeid(T)) == _componentSets.end()) {
                 _componentSets[typeid(T)] = std::make_shared<SparseSet<T>>();
             }
-            auto sparse_set = std::static_pointer_cast<SparseSet<T>>(_componentSets[typeid(T)]);
+            auto sparse_set = std::dynamic_pointer_cast<SparseSet<T>>(_componentSets[typeid(T)]);
             sparse_set->addComponent(entity, component);
         }
 
@@ -61,6 +61,14 @@ namespace rtype::ecs
             if (_componentSets.find(typeid(T)) != _componentSets.end()) {
                 auto sparse_set = std::static_pointer_cast<SparseSet<T>>(_componentSets[typeid(T)]);
                 sparse_set->removeComponent(entity);
+            }
+        }
+
+        void removeAllComponent(unsigned int entity) {
+            std::lock_guard lock(_componentsMutex);
+
+            for (auto &component: _componentSets) {
+                component.second->removeComponent(entity);
             }
         }
 
@@ -91,7 +99,7 @@ namespace rtype::ecs
          * The keys in the map are type indices (`std::type_index`), and the values are
          * shared pointers (`std::shared_ptr<void>`) to the corresponding sparse sets.
          */
-        std::unordered_map<std::type_index, std::shared_ptr<void>> _componentSets;
+        std::unordered_map<std::type_index, std::shared_ptr<ISparseSet>> _componentSets;
 
         mutable std::mutex _componentsMutex;
     };

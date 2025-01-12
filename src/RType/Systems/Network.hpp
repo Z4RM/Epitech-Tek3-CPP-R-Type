@@ -15,6 +15,7 @@ namespace rtype::systems {
     class Network {
     public:
         static int playerId;
+        static std::mutex playerIdMutex;
 
         static void udpProcess(ecs::EntityManager& entityManager, ecs::ComponentManager& componentManager);
         static void addUdpHandlers(network::UDPNetwork &network, ecs::EntityManager& entityManager, ecs::ComponentManager&

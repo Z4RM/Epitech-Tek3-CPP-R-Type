@@ -56,13 +56,15 @@ namespace rtype::ecs
          * and adds its ID to the queue of available IDs for future reuse.
          *
          * @param entity The unique ID of the entity to destroy.
+         * @param componentManager the component manager used for removing components of an entity
          */
-        void destroyEntity(unsigned int entity) {
+        void destroyEntity(unsigned int entity, ComponentManager &componentManager) {
             std::lock_guard lock(_entitiesMutex);
             if (_activeEntities.find(entity) != _activeEntities.end()) {
                 _activeEntities.erase(entity);
                 _availableIds.push(entity);
             }
+            componentManager.removeAllComponent(entity);
         }
 
         /**
