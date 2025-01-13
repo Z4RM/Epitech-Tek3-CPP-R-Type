@@ -26,6 +26,7 @@
 #include "RType/Components/Client/Mode.hpp"
 #include "RType/Components/Client/FrameLimit.hpp"
 #include "RType/Components/Client/RWindow.hpp"
+#include "RType/Components/Client/Speed.hpp"
 #endif
 
 /**
@@ -98,6 +99,16 @@ const std::unordered_map<std::string, ComponentFactory> componentMap = {
             auto velocity = dynamic_cast<rtype::components::Velocity*>(instance.get());
             if (velocity) {
                 manager.addComponent<rtype::components::Velocity>(entityId, *velocity);
+            }
+        }
+    }},
+    {"speed", {
+        []() { return std::make_unique<rtype::components::Speed>(); },
+        typeid(rtype::components::Speed),
+        [](rtype::ecs::ComponentManager& manager, const size_t entityId, const std::unique_ptr<rtype::components::IComponent> &instance) {
+            auto speed = dynamic_cast<rtype::components::Speed*>(instance.get());
+            if (speed) {
+                manager.addComponent<rtype::components::Speed>(entityId, *speed);
             }
         }
     }},

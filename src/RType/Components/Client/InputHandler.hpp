@@ -25,6 +25,7 @@
 #include "IComponent.hpp"
 #include "GameLoader.hpp"
 #include "spdlog/spdlog.h"
+#include "Speed.hpp"
 
 namespace rtype::components {
     /**
@@ -52,16 +53,36 @@ namespace rtype::components {
 
         const std::unordered_map<std::string, std::function<void(ecs::ComponentManager& componentManager, size_t id)>> functionMap = {
             {"goUp", [this](ecs::ComponentManager& componentManager, size_t id) {
-                componentManager.getComponent<Velocity>(id)->y = -1;
+                auto speed = componentManager.getComponent<Speed>(id);
+                if (speed) {
+                    componentManager.getComponent<Velocity>(id)->y = -(speed->value);
+                } else {
+                    componentManager.getComponent<Velocity>(id)->y = -1;
+                }
             }},
             {"goDown", [this](ecs::ComponentManager& componentManager, size_t id) {
-                componentManager.getComponent<Velocity>(id)->y = 1;
+                auto speed = componentManager.getComponent<Speed>(id);
+                if (speed) {
+                    componentManager.getComponent<Velocity>(id)->y = speed->value;
+                } else {
+                    componentManager.getComponent<Velocity>(id)->y = 1;
+                }
             }},
             {"goLeft", [this](ecs::ComponentManager& componentManager, size_t id) {
-                componentManager.getComponent<Velocity>(id)->x = -1;
+                auto speed = componentManager.getComponent<Speed>(id);
+                if (speed) {
+                    componentManager.getComponent<Velocity>(id)->x = -(speed->value);
+                } else {
+                    componentManager.getComponent<Velocity>(id)->x = -1;
+                }
             }},
             {"goRight", [this](ecs::ComponentManager& componentManager, size_t id) {
-                componentManager.getComponent<Velocity>(id)->x = 1;
+                auto speed = componentManager.getComponent<Speed>(id);
+                if (speed) {
+                    componentManager.getComponent<Velocity>(id)->x = (speed->value);
+                } else {
+                    componentManager.getComponent<Velocity>(id)->x = 1;
+                }
             }},
             {"stopX", [this](ecs::ComponentManager& componentManager, size_t id) {
                 componentManager.getComponent<Velocity>(id)->x = 0;

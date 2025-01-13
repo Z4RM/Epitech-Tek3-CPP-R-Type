@@ -54,7 +54,7 @@
         "homing_missile"
       ]
     },
-    "speed": 8,
+    "speed": 5,
     "hitbox": {
       "width": 30,
       "height": 30
