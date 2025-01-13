@@ -27,6 +27,7 @@
 #include "RType/Components/Client/FrameLimit.hpp"
 #include "RType/Components/Client/RWindow.hpp"
 #include "RType/Components/Client/Speed.hpp"
+#include "RType/Components/Client/Music.hpp"
 #endif
 
 /**
@@ -39,7 +40,7 @@ struct ComponentFactory {
     std::function<void(rtype::ecs::ComponentManager&, size_t, std::unique_ptr<rtype::components::IComponent>)> registerComponent;
 };
 
-// TODO: Add documentation for the list ad separate components of the client and server.
+// TODO: Add documentation for the list and separate components of the client and server.
 const std::unordered_map<std::string, ComponentFactory> componentMap = {
     {"position", {
         []() { return std::make_unique<rtype::components::Position>(); },
@@ -59,16 +60,6 @@ const std::unordered_map<std::string, ComponentFactory> componentMap = {
             auto title = dynamic_cast<rtype::components::String*>(instance.get());
             if (title) {
                 manager.addComponent<rtype::components::String>(entityId, *title);
-            }
-        }
-    }},
-    {"action", {
-        []() { return std::make_unique<rtype::components::InputHandler>(); },
-        typeid(rtype::components::InputHandler),
-        [](rtype::ecs::ComponentManager& manager, const size_t entityId, const std::unique_ptr<rtype::components::IComponent> &instance) {
-            auto action = dynamic_cast<rtype::components::InputHandler*>(instance.get());
-            if (action) {
-                manager.addComponent<rtype::components::InputHandler>(entityId, *action);
             }
         }
     }},
@@ -102,17 +93,27 @@ const std::unordered_map<std::string, ComponentFactory> componentMap = {
             }
         }
     }},
-    {"speed", {
-        []() { return std::make_unique<rtype::components::Speed>(); },
-        typeid(rtype::components::Speed),
-        [](rtype::ecs::ComponentManager& manager, const size_t entityId, const std::unique_ptr<rtype::components::IComponent> &instance) {
-            auto speed = dynamic_cast<rtype::components::Speed*>(instance.get());
-            if (speed) {
-                manager.addComponent<rtype::components::Speed>(entityId, *speed);
-            }
-        }
-    }},
 #ifdef RTYPE_IS_CLIENT
+{"speed", {
+    []() { return std::make_unique<rtype::components::Speed>(); },
+    typeid(rtype::components::Speed),
+    [](rtype::ecs::ComponentManager& manager, const size_t entityId, const std::unique_ptr<rtype::components::IComponent> &instance) {
+        auto speed = dynamic_cast<rtype::components::Speed*>(instance.get());
+        if (speed) {
+            manager.addComponent<rtype::components::Speed>(entityId, *speed);
+        }
+    }
+}},
+{"action", {
+    []() { return std::make_unique<rtype::components::InputHandler>(); },
+    typeid(rtype::components::InputHandler),
+    [](rtype::ecs::ComponentManager& manager, const size_t entityId, const std::unique_ptr<rtype::components::IComponent> &instance) {
+        auto action = dynamic_cast<rtype::components::InputHandler*>(instance.get());
+        if (action) {
+            manager.addComponent<rtype::components::InputHandler>(entityId, *action);
+        }
+    }
+}},
 {"sprite", {
     []() { return std::make_unique<rtype::components::Sprite>(); },
     typeid(rtype::components::Sprite),
@@ -144,8 +145,18 @@ const std::unordered_map<std::string, ComponentFactory> componentMap = {
             manager.addComponent<rtype::components::RWindow>(entityId, rtype::components::RWindow());
             manager.addComponent<rtype::components::Created>(entityId, rtype::components::Created());
         }
-    }
+    },
 }},
+{"music", {
+    []() { return std::make_unique<rtype::components::Music>(); },
+    typeid(rtype::components::Music),
+    [](rtype::ecs::ComponentManager& manager, const size_t entityId, const std::unique_ptr<rtype::components::IComponent> &instance) {
+        auto music = dynamic_cast<rtype::components::Music*>(instance.get());
+        if (music) {
+            manager.addComponent<rtype::components::Music>(entityId, *music);
+        }
+    }
+}}
 #endif
 };
 

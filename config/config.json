@@ -23,7 +23,7 @@
     },
     "fps_cap": 60,
     "scrolling_speed": {
-        "x": 1,
+        "x": 0,
         "y": 0,
         "z": 0
     }
@@ -35,11 +35,15 @@
       "z": 0
     },
     "sprite": {
-      "path": "./assets/sprites/players.gif",
+      "path": "./assets/sprites/player1.png",
       "priority": 999,
       "size": {
         "width": 166,
-        "height": 86
+        "height": 17
+      },
+      "rect": {
+        "width": 33,
+        "height": 17
       }
     },
     "max_health": 100,

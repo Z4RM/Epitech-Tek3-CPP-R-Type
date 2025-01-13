@@ -2,123 +2,131 @@
   "level": {
     "name": "Nebula Outskirts",
     "background": "nebula.png",
-    "music": "level_1_theme.mp3",
-    "scrolling_speed": 3
-  },
-  "waves": [
-    {
-      "wave_id": 1,
-      "start_time": 2,
-      "enemies": [
-        {
-          "type": "basic_fighter",
-          "spawn_position": [2000, 300],
-          "movement_pattern": "linear",
-          "speed": 5,
-          "fire_rate": 2,
-          "projectile": {
-            "type": "small_bullet",
-            "damage": 5,
-            "speed": 8
-          }
-        },
-        {
-          "type": "basic_fighter",
-          "spawn_position": [2200, 600],
-          "movement_pattern": "linear",
-          "speed": 5,
-          "fire_rate": 2,
-          "projectile": {
-            "type": "small_bullet",
-            "damage": 5,
-            "speed": 8
-          }
-        }
-      ]
+    "music": {
+      "path": "assets/level_1.ogg",
+      "loop": true,
+      "volume": 100
     },
-    {
-      "wave_id": 2,
-      "start_time": 10,
-      "enemies": [
-        {
-          "type": "suicide_drone",
-          "spawn_position": [2000, 400],
-          "movement_pattern": "sine_wave",
-          "speed": 6,
-          "explosion_damage": 15
-        },
-        {
-          "type": "shielded_fighter",
-          "spawn_position": [2400, 500],
-          "movement_pattern": "linear",
-          "speed": 3,
-          "health": 50,
-          "fire_rate": 1.5,
-          "projectile": {
-            "type": "plasma_bullet",
-            "damage": 10,
-            "speed": 5
-          }
-        }
-      ]
-    }
-  ],
-  "power_ups": [
-    {
-      "type": "shield",
-      "spawn_time": 15,
-      "position": [1000, 500]
+    "scrolling_speed": {
+      "x": 3,
+      "y": 0,
+      "z": 0
     },
-    {
-      "type": "laser_upgrade",
-      "spawn_time": 30,
-      "position": [1500, 200]
-    }
-  ],
-  "boss": {
-    "name": "Nebula Warden",
-    "spawn_time": 60,
-    "position": [2000, 400],
-    "health": 500,
-    "phases": [
+    "waves": [
       {
-        "phase_id": 1,
-        "pattern": "linear",
-        "movement_speed": 2,
-        "attacks": [
+        "wave_id": 1,
+        "start_time": 2,
+        "enemies": [
           {
-            "type": "spread_shot",
-            "fire_rate": 3,
+            "type": "basic_fighter",
+            "spawn_position": [2000, 300],
+            "movement_pattern": "linear",
+            "speed": 5,
+            "fire_rate": 2,
             "projectile": {
-              "type": "large_bullet",
-              "damage": 15,
-              "speed": 6
+              "type": "small_bullet",
+              "damage": 5,
+              "speed": 8
+            }
+          },
+          {
+            "type": "basic_fighter",
+            "spawn_position": [2200, 600],
+            "movement_pattern": "linear",
+            "speed": 5,
+            "fire_rate": 2,
+            "projectile": {
+              "type": "small_bullet",
+              "damage": 5,
+              "speed": 8
             }
           }
         ]
       },
       {
-        "phase_id": 2,
-        "pattern": "zigzag",
-        "movement_speed": 4,
-        "attacks": [
+        "wave_id": 2,
+        "start_time": 10,
+        "enemies": [
           {
-            "type": "homing_missiles",
-            "fire_rate": 5,
-            "projectile": {
-              "type": "missile",
-              "damage": 20,
-              "speed": 4
-            }
+            "type": "suicide_drone",
+            "spawn_position": [2000, 400],
+            "movement_pattern": "sine_wave",
+            "speed": 6,
+            "explosion_damage": 15
           },
           {
-            "type": "laser_beam",
-            "fire_rate": 10,
-            "beam_duration": 2,
-            "damage": 25
+            "type": "shielded_fighter",
+            "spawn_position": [2400, 500],
+            "movement_pattern": "linear",
+            "speed": 3,
+            "health": 50,
+            "fire_rate": 1.5,
+            "projectile": {
+              "type": "plasma_bullet",
+              "damage": 10,
+              "speed": 5
+            }
           }
         ]
       }
-    ]
+    ],
+    "power_ups": [
+      {
+        "type": "shield",
+        "spawn_time": 15,
+        "position": [1000, 500]
+      },
+      {
+        "type": "laser_upgrade",
+        "spawn_time": 30,
+        "position": [1500, 200]
+      }
+    ],
+    "boss": {
+      "name": "Nebula Warden",
+      "spawn_time": 60,
+      "position": [2000, 400],
+      "health": 500,
+      "phases": [
+        {
+          "phase_id": 1,
+          "pattern": "linear",
+          "movement_speed": 2,
+          "attacks": [
+            {
+              "type": "spread_shot",
+              "fire_rate": 3,
+              "projectile": {
+                "type": "large_bullet",
+                "damage": 15,
+                "speed": 6
+              }
+            }
+          ]
+        },
+        {
+          "phase_id": 2,
+          "pattern": "zigzag",
+          "movement_speed": 4,
+          "attacks": [
+            {
+              "type": "homing_missiles",
+              "fire_rate": 5,
+              "projectile": {
+                "type": "missile",
+                "damage": 20,
+                "speed": 4
+              }
+            },
+            {
+              "type": "laser_beam",
+              "fire_rate": 10,
+              "beam_duration": 2,
+              "damage": 25
+            }
+          ]
+        }
+      ]
+    }
   }
 }

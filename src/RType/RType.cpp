@@ -93,6 +93,13 @@ int rtype::RType::_run() {
     const size_t rtype = entityManager.createEntity();
     this->createComponentViaConfig(gameLoader, rtype, entityManager, componentManager);
 
+    GameLoader levelLoader;
+    levelLoader.loadGlobalConfig("config/levels/level_1.json");
+    std::cout << "Level: " << levelLoader.globalConfig << std::endl;
+    const size_t level = entityManager.createEntity();
+    this->createComponentViaConfig(levelLoader, level, entityManager, componentManager);
+
+
   // TODO: use mode manager and make good exceptions
     network::TCPNetwork tcpNetwork(_port);
     network::UDPNetwork udpNetwork(_port);
