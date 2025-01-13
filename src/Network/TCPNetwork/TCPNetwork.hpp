@@ -8,6 +8,7 @@
 #pragma once
 
 #include <optional>
+#include <utility>
 #include "ThreadPool/ThreadPool.hpp"
 #include "asio.hpp"
 #include "Packets.hpp"
@@ -61,6 +62,14 @@ namespace rtype::network {
             socket) const;
 
             inline bool getStarted() const { return this->_started; };
+
+            void registerOnPlayerDisconnect(std::function<void(std::shared_ptr<asio::ip::tcp::socket>)> fn) { this->_onPlayerDisconnect =
+            std::move(fn); }
+
+            void addHandler(EPacketCode code, std::function<void(std::unique_ptr<IPacket>, std::shared_ptr<asio::ip::tcp::socket>
+            socket)>
+            handler);
+
         private:
             unsigned short _port; ///< port of the server
             std::optional<asio::ip::tcp::acceptor> _acceptor; ///< asio acceptor for the server
@@ -68,6 +77,9 @@ namespace rtype::network {
             std::shared_ptr<asio::ip::tcp::socket> _socket; ///< client socket
             asio::io_context _ioContext; ///< asio context
             bool _started = false;
+            std::function<void(std::shared_ptr<asio::ip::tcp::socket>)> _onPlayerDisconnect;
+            std::vector<std::pair<EPacketCode, std::function<void(std::unique_ptr<IPacket>, std::shared_ptr<asio::ip::tcp::socket>)
+            >>> _handlers;
     };
 
 }

@@ -9,6 +9,7 @@
 
 #include "Components.hpp"
 #include "ECS.hpp"
+#include "RType/Components/Shared/ActualPlayer.hpp"
 #ifdef RTYPE_IS_CLIENT
 #include "Components.hpp"
 #endif
@@ -19,7 +20,7 @@
  *
  * This class encapsulates the player entity and its associated components in the ECS architecture.
  */
-namespace rtype::entites {
+namespace rtype::entities {
     class Player {
     public:
 #ifdef RTYPE_IS_CLIENT
@@ -57,7 +58,10 @@ namespace rtype::entites {
                 components::Velocity vel,
                 components::Size size,
                 components::Sprite &sprite,
-                const components::Animation &animation
+                const components::Animation &animation,
+                rtype::components::NetId = { false },
+                rtype::components::ActualPlayer = { false },
+                rtype::components::Speed = {100}
         );
 
 #else
@@ -85,7 +89,10 @@ namespace rtype::entites {
                 rtype::ecs::ComponentManager &componentManager,
                 rtype::components::Position pos,
                 rtype::components::Velocity vel,
-                rtype::components::Size size
+                rtype::components::Size size,
+                rtype::components::NetworkConnection network,
+                rtype::components::NetId = { false },
+                rtype::components::Speed speed = {1}
         );
 
 #endif

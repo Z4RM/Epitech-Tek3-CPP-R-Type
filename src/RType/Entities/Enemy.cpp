@@ -10,14 +10,15 @@
 
 #ifdef RTYPE_IS_CLIENT
 
-rtype::entites::Enemy::Enemy(
+rtype::entities::Enemy::Enemy(
     rtype::ecs::EntityManager &entityManager,
     rtype::ecs::ComponentManager &componentManager,
     components::Position pos,
     components::Velocity vel,
     components::Size size,
     components::Sprite &sprite,
-    const components::Animation &animation
+    const components::Animation &animation,
+    components::Speed speed
 ) {
     _id = entityManager.createEntity();
     sprite.texture = new sf::Texture();
@@ -35,6 +36,7 @@ rtype::entites::Enemy::Enemy(
     componentManager.addComponent<components::Velocity>(_id, vel);
     componentManager.addComponent<components::Size>(_id, size);
     componentManager.addComponent<components::Hitbox>(_id, {pos, size});
+    componentManager.addComponent<components::Speed>(_id, speed);
 
 
     std::unordered_map<float, components::Velocity> move;
@@ -47,18 +49,20 @@ rtype::entites::Enemy::Enemy(
 
 #else
 
-rtype::entites::Enemy::Enemy(
+rtype::entities::Enemy::Enemy(
     rtype::ecs::EntityManager &entityManager,
     rtype::ecs::ComponentManager &componentManager,
     components::Position pos,
     components::Velocity vel,
-    components::Size size
+    components::Size size,
+    components::Speed speed
 ) {
     _id = entityManager.createEntity();
     componentManager.addComponent<components::Position>(_id, pos);
     componentManager.addComponent<components::Velocity>(_id, vel);
     componentManager.addComponent<components::Size>(_id, size);
     componentManager.addComponent<components::Hitbox>(_id, {pos, size});
+    componentManager.addComponent<components::Speed>(_id, speed);
 }
 
 #endif
