@@ -1,6 +1,7 @@
 #include "Movement.hpp"
 #include "Components.hpp"
 #include <complex>
+#include <spdlog/spdlog.h>
 
 #include "RType/ModeManager/ModeManager.hpp"
 
@@ -45,11 +46,6 @@ void rtype::systems::Movement::handleCollisions(unsigned int entity, components:
             float dz = pos->z - colliderPos->z;
             float distance = std::sqrt(dx * dx + dy * dy + dz * dz);
 
-
-            if (entityHealthBar && colliderDamage) {
-                entityHealthBar->takeDamage(colliderDamage->collisionDamage);
-            }
-
             if (distance > 0.0f) {
                 dx /= distance;
                 dy /= distance;
@@ -64,6 +60,10 @@ void rtype::systems::Movement::handleCollisions(unsigned int entity, components:
                 vel->x -= (1.0f + bounceFactor) * dotProduct * dx;
                 vel->y -= (1.0f + bounceFactor) * dotProduct * dy;
                 vel->z -= (1.0f + bounceFactor) * dotProduct * dz;
+
+                if (entityHealthBar && colliderDamage) {
+                    entityHealthBar->takeDamage(colliderDamage->collisionDamage);
+                }
             }
         }
     }
@@ -95,9 +95,9 @@ void rtype::systems::Movement::move(const rtype::ecs::EntityManager& entityManag
             auto newPosZ = vel->z * elapsedTime.count();
 
             if (speed) {
-                    newPosX *= speed->value;
-                    newPosY *= speed->value;
-                    newPosZ *= speed->value;
+                newPosX *= speed->value;
+                newPosY *= speed->value;
+                newPosZ *= speed->value;
             }
 
             pos->x += newPosX;

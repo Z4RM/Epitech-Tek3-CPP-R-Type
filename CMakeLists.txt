@@ -48,6 +48,8 @@ set(RTYPE_SRC
         src/RType/Components/Shared/Network.hpp
         src/Network/Packets/Descriptors/PacketPlayersData/PacketPlayersData.cpp
         src/Network/Packets/Descriptors/PacketPlayersData/PacketPlayersData.hpp
+        src/Network/Packets/Descriptors/PacketEnemiesData/PacketEnemiesData.cpp
+        src/Network/Packets/Descriptors/PacketEnemiesData/PacketEnemiesData.hpp
 )
 
 set(CLIENT_SRC
@@ -86,6 +88,9 @@ set(CLIENT_SRC
         src/RType/Components/Shared/ActualPlayer.hpp
         src/RType/Components/Shared/Speed.hpp
         src/RType/Components/Shared/Damage.hpp
+        src/Network/Packets/Descriptors/PacketEnemiesData/PacketEnemiesData.cpp
+        src/Network/Packets/Descriptors/PacketEnemiesData/PacketEnemiesData.hpp
+        src/RType/Models/EnemyData.hpp
 )
 
 set(RTYPE_HEADERS

@@ -28,9 +28,13 @@ std::vector<rtype::ecs::Entity> getEntitiesSortedByZIndex(
 
     std::sort(renderableEntities.begin(), renderableEntities.end(),
               [&componentManager](const rtype::ecs::Entity a, const rtype::ecs::Entity b) {
-                  auto zIndexA = componentManager.getComponent<rtype::components::Sprite>(a.id)->priority.value;
-                  auto zIndexB = componentManager.getComponent<rtype::components::Sprite>(b.id)->priority.value;
-                  return zIndexA < zIndexB;
+                  auto spriteA = componentManager.getComponent<rtype::components::Sprite>(a.id);
+                  auto spriteB = componentManager.getComponent<rtype::components::Sprite>(b.id);
+
+                  if (spriteA && spriteB) {
+                      return spriteA->priority.value < spriteB->priority.value;
+                  }
+                  return spriteA != nullptr;
               });
 
     return renderableEntities;
@@ -56,7 +60,7 @@ void rtype::systems::RenderWindowSys::render(ecs::EntityManager &entityManager, 
             auto sprite = componentManager.getComponent<components::Sprite>(e.id);
             auto health = componentManager.getComponent<components::Health>(e.id);
 
-            if (health) {
+            if (health && health->created) {
                 renderWindow->window->draw(health->bgBar);
                 renderWindow->window->draw(health->healthBar);
             }

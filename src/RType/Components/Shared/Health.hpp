@@ -19,6 +19,12 @@ namespace rtype::components {
             if (value < 0)
                 value = 0;
         }
+
+        void setHealth(int amount) {
+            value = amount;
+            if (value < 0)
+                value = 0;
+        }
     };
 #else
 #include <SFML/Graphics/RectangleShape.hpp>
@@ -27,6 +33,7 @@ namespace rtype::components {
         int max;
         sf::RectangleShape bgBar;
         sf::RectangleShape healthBar;
+        bool created = false;
 
         Health(int maxHealth, sf::Vector2f position, Size entitySize)
             : value(maxHealth), max(maxHealth) {
@@ -40,10 +47,27 @@ namespace rtype::components {
             healthBar.setSize(size);
             healthBar.setFillColor(sf::Color::Green);
             healthBar.setPosition(position);
+            created = true;
         }
 
         void takeDamage(int amount) {
             this->value -= amount;
+
+            if (value < 0)
+                value = 0;
+
+            auto size = healthBar.getSize();
+
+            float sizeX = this->value * 50 / this->max;
+
+            if (sizeX < 0)
+                sizeX = 0;
+
+            healthBar.setSize({sizeX, size.y});
+        }
+
+        void setHealth(int amount) {
+            this->value = amount;
 
             if (value < 0)
                 value = 0;

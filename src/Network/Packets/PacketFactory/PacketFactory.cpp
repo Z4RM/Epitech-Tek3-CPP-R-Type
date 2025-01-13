@@ -11,6 +11,7 @@
 #include <spdlog/spdlog.h>
 
 #include "Network/Packets/Descriptors/PacketConnect/PacketConnect.hpp"
+#include "Network/Packets/Descriptors/PacketEnemiesData/PacketEnemiesData.hpp"
 #include "Network/Packets/Descriptors/PacketNewPlayer/PacketNewPlayer.hpp"
 #include "Network/Packets/Descriptors/PacketPlayersData/PacketPlayersData.hpp"
 #include "Network/Packets/Descriptors/PacketWelcome/PacketWelcome.hpp"
@@ -33,6 +34,9 @@ namespace rtype::network {
                 break;
             case PLAYERS_DATA:
                 packet = std::make_unique<PacketPlayersData>();
+                break;
+            case ENEMIES_DATA:
+                packet = std::make_unique<PacketEnemiesData>();
                 break;
             default:
                 throw PacketFactoryException();

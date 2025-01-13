@@ -139,6 +139,9 @@ rtype::entities::Player::Player(
     componentManager.addComponent<components::NetworkConnection>(_id, network);
     componentManager.addComponent<components::NetId>(_id, netId);
     componentManager.addComponent<components::Speed>(_id, speed);
+
+    components::Health health = {1000};
+    componentManager.addComponent<components::Health>(_id, health);
 }
 
 #endif

@@ -15,6 +15,8 @@ namespace rtype::network {
         WELCOME = 101,
 
         NEW_PLAYER = 200,
-        PLAYERS_DATA = 201
+        PLAYERS_DATA = 201,
+
+        ENEMIES_DATA = 301
     };
 }
