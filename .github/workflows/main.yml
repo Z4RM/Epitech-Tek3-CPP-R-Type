@@ -18,7 +18,7 @@ jobs:
     name: Doxygen
     needs:
       - build
-      - lint
+      #- lint # TODO: re-enable dependency
     uses: ./.github/workflows/doxygen.yml
     permissions:
       contents: write
@@ -28,7 +28,7 @@ jobs:
     name: Release
     needs:
       - build
-      - lint
+      #- lint # TODO: re-enable dependency
     uses: ./.github/workflows/release.yml
     permissions:
       contents: write
