@@ -38,27 +38,22 @@ void rtype::systems::Movement::handleCollisions(unsigned int entity, components:
             continue;
 
         if (isColliding(pos, hitBox, colliderPos, colliderHitBox)) {
-            // Calculate collision normal
             float dx = pos->x - colliderPos->x;
             float dy = pos->y - colliderPos->y;
             float dz = pos->z - colliderPos->z;
             float distance = std::sqrt(dx * dx + dy * dy + dz * dz);
 
             if (distance > 0.0f) {
-                // Normalize the direction vector
                 dx /= distance;
                 dy /= distance;
                 dz /= distance;
 
-                // Apply a small offset to separate the entities
                 pos->x += dx * minSeparation;
                 pos->y += dy * minSeparation;
                 pos->z += dz * minSeparation;
 
-                // Calculate the dot product of velocity with the collision normal
                 float dotProduct = vel->x * dx + vel->y * dy + vel->z * dz;
 
-                // Reverse the velocity in the collision direction and apply bounce
                 vel->x -= (1.0f + bounceFactor) * dotProduct * dx;
                 vel->y -= (1.0f + bounceFactor) * dotProduct * dy;
                 vel->z -= (1.0f + bounceFactor) * dotProduct * dz;
