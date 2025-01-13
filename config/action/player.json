@@ -1,0 +1,47 @@
+{
+  "input1": {
+    "key": "Z",
+    "type": "Pressed",
+    "action": "goUp"
+  },
+  "input2": {
+    "key": "S",
+    "type": "Pressed",
+    "action": "goDown"
+  },
+  "input3": {
+    "key": "Q",
+    "type": "Pressed",
+    "action": "goLeft"
+  },
+  "input4": {
+    "key": "D",
+    "type": "Pressed",
+    "action": "goRight"
+  },
+  "input5": {
+    "key": "Space",
+    "type": "Pressed",
+    "action": "shoot"
+  },
+  "input6": {
+    "key": "Z",
+    "type": "Released",
+    "action": "stopY"
+  },
+  "input7": {
+    "key": "S",
+    "type": "Released",
+    "action": "stopY"
+  },
+  "input8": {
+    "key": "Q",
+    "type": "Released",
+    "action": "stopX"
+  },
+  "input9": {
+    "key": "D",
+    "type": "Released",
+    "action": "stopX"
+  }
+}

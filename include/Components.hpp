@@ -62,12 +62,12 @@ const std::unordered_map<std::string, ComponentFactory> componentMap = {
         }
     }},
     {"action", {
-        []() { return std::make_unique<rtype::components::String>(); },
-        typeid(rtype::components::String),
+        []() { return std::make_unique<rtype::components::InputHandler>(); },
+        typeid(rtype::components::InputHandler),
         [](rtype::ecs::ComponentManager& manager, const size_t entityId, const std::unique_ptr<rtype::components::IComponent> &instance) {
-            auto action = dynamic_cast<rtype::components::String*>(instance.get());
+            auto action = dynamic_cast<rtype::components::InputHandler*>(instance.get());
             if (action) {
-                manager.addComponent<rtype::components::String>(entityId, *action);
+                manager.addComponent<rtype::components::InputHandler>(entityId, *action);
             }
         }
     }},

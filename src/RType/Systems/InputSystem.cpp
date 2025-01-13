@@ -19,7 +19,7 @@ void rtype::systems::InputSystem::handleInput(ecs::EntityManager &entityManager,
         auto action = inputHandler->keyActions.equal_range(event.key.code);
         for (auto& todo = action.first; todo != action.second; todo++) {
             if (event.type == todo->second.first)
-                todo->second.second();
+                todo->second.second(componentManager, entity);
         }
     }
 }
