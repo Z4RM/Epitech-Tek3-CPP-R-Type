@@ -15,8 +15,8 @@ namespace rtype::systems {
     class UpdateProjectilesSystem {
     public:
         static void updateProjectiles(
-            ecs::ComponentManager &componentManager,
-            std::vector<size_t> &projectileIds
+        ecs::EntityManager &entityManager,
+        ecs::ComponentManager &componentManager
         );
     };
 }

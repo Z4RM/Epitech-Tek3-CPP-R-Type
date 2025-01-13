@@ -100,6 +100,9 @@ int rtype::RType::_run() {
         sprite3,
         {"", 0, 0}
     );
+
+    // Correctif
+    systemManager.addSystem(rtype::systems::UpdateProjectilesSystem::updateProjectiles);
 #else
     rtype::components::Player player(
         entityManager,
@@ -120,7 +123,6 @@ int rtype::RType::_run() {
 
     systemManager.addSystem(rtype::systems::Movement::move);
     systemManager.addSystem([&projectileIds](ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager) {
-    rtype::systems::UpdateProjectilesSystem::updateProjectiles(componentManager, projectileIds);
 });
 
 

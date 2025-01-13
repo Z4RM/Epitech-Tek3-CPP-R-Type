@@ -8,9 +8,18 @@
 #include "AnimationProjectile.hpp"
 
 void rtype::systems::UpdateProjectilesSystem::updateProjectiles(
-    ecs::ComponentManager &componentManager,
-    std::vector<size_t> &projectileIds
+    ecs::EntityManager &entityManager,
+    ecs::ComponentManager &componentManager
 ) {
+    // Correctif
+    std::vector<size_t> projectileIds;
+
+    for (auto& entity : entityManager.getEntities()) {
+        if (componentManager.getComponent<Projectile>(entity)) {
+            projectileIds.push_back(entity);
+        }
+    }
+
     auto it = projectileIds.begin();
     while (it != projectileIds.end()) {
         auto *projectile = componentManager.getComponent<Projectile>(*it);
