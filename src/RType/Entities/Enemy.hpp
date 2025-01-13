@@ -12,6 +12,8 @@
 #include "Components.hpp"
 #include "ECS.hpp"
 
+#define BASIC_ENEMY_SPEED 80
+
 namespace rtype::entities {
     /**
      * @class Enemy
@@ -47,7 +49,7 @@ namespace rtype::entities {
               components::Size size,
               components::Sprite &sprite,
               const components::Animation &animation,
-              components::Speed speed = {80}
+              components::Speed speed = {BASIC_ENEMY_SPEED }
         );
 #else
         /**
@@ -69,7 +71,7 @@ namespace rtype::entities {
               components::Position pos,
               components::Velocity vel,
               components::Size size,
-              components::Speed speed = {80}
+              components::Speed speed = {BASIC_ENEMY_SPEED }
         );
 #endif
 
