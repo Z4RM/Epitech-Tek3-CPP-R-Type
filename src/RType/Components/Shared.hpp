@@ -17,3 +17,5 @@
 #include "./Shared/Network.hpp"
 #include "./Shared/NetId.hpp"
 #include "./Shared/Speed.hpp"
+#include "./Shared/Health.hpp"
+#include "./Shared/Damage.hpp"

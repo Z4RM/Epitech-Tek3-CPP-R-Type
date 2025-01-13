@@ -54,6 +54,13 @@ void rtype::systems::RenderWindowSys::render(ecs::EntityManager &entityManager, 
 
         for (auto e : sortedEntities) {
             auto sprite = componentManager.getComponent<components::Sprite>(e.id);
+            auto health = componentManager.getComponent<components::Health>(e.id);
+
+            if (health) {
+                renderWindow->window->draw(health->bgBar);
+                renderWindow->window->draw(health->healthBar);
+            }
+
             if (sprite && sprite->sprite) {
                 auto pos = componentManager.getComponent<components::Position>(e.id);
                 if (pos)

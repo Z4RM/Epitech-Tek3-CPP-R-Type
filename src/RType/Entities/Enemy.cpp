@@ -38,6 +38,12 @@ rtype::entities::Enemy::Enemy(
     componentManager.addComponent<components::Hitbox>(_id, {pos, size});
     componentManager.addComponent<components::Speed>(_id, speed);
 
+    components::Health health(100, {sprite.pos.x, sprite.pos.y}, size);
+    componentManager.addComponent<components::Health>(_id, health);
+
+    components::Damage damage = {15, 10};
+    componentManager.addComponent<components::Damage>(_id, damage);
+
 
     std::unordered_map<float, components::Velocity> move;
     move.insert({

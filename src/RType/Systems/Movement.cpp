@@ -33,6 +33,8 @@ void rtype::systems::Movement::handleCollisions(unsigned int entity, components:
 
         const auto colliderPos = componentManager.getComponent<components::Position>(collisionEntity);
         const auto colliderHitBox = componentManager.getComponent<components::Hitbox>(collisionEntity);
+        const auto entityHealthBar = componentManager.getComponent<components::Health>(entity);
+        const auto colliderDamage = componentManager.getComponent<components::Damage>(collisionEntity);
 
         if (!colliderPos || !colliderHitBox)
             continue;
@@ -42,6 +44,11 @@ void rtype::systems::Movement::handleCollisions(unsigned int entity, components:
             float dy = pos->y - colliderPos->y;
             float dz = pos->z - colliderPos->z;
             float distance = std::sqrt(dx * dx + dy * dy + dz * dz);
+
+
+            if (entityHealthBar && colliderDamage) {
+                entityHealthBar->takeDamage(colliderDamage->collisionDamage);
+            }
 
             if (distance > 0.0f) {
                 dx /= distance;
@@ -76,6 +83,7 @@ void rtype::systems::Movement::move(const rtype::ecs::EntityManager& entityManag
         const auto vel = componentManager.getComponent<components::Velocity>(entity);
         const auto hitBox = componentManager.getComponent<components::Hitbox>(entity);
         const auto speed = componentManager.getComponent<components::Speed>(entity);
+        const auto health = componentManager.getComponent<components::Health>(entity);
 
         if (pos && vel) {
             if (hitBox) {
@@ -95,6 +103,14 @@ void rtype::systems::Movement::move(const rtype::ecs::EntityManager& entityManag
             pos->x += newPosX;
             pos->y += newPosY;
             pos->z += newPosZ;
+
+        #ifndef RTYPE_IS_SERVER
+            if (health && hitBox) {
+                health->bgBar.setPosition({pos->x + hitBox->size.width / 5, pos->y});
+                health->healthBar.setPosition({pos->x + hitBox->size.width / 5, pos->y});
+            }
+        #endif
+
         }
 
         const auto ia = componentManager.getComponent<components::IA>(entity);
@@ -119,6 +135,14 @@ void rtype::systems::Movement::move(const rtype::ecs::EntityManager& entityManag
             pos2->x += newPosX;
             pos2->y += newPosY;
             pos2->z += newPosZ;
+
+        #ifndef RTYPE_IS_SERVER
+            if (health && hitBox) {
+                health->bgBar.setPosition({pos2->x + hitBox->size.width / 5, pos2->y});
+                health->healthBar.setPosition({pos2->x + hitBox->size.width / 5, pos2->y});
+            }
+        #endif
+
         }
     }
 }

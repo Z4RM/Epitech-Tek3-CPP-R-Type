@@ -85,6 +85,7 @@ set(CLIENT_SRC
         src/RType/Components/Shared/NetId.hpp
         src/RType/Components/Shared/ActualPlayer.hpp
         src/RType/Components/Shared/Speed.hpp
+        src/RType/Components/Shared/Damage.hpp
 )
 
 set(RTYPE_HEADERS

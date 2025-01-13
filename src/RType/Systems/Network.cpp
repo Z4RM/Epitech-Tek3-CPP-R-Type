@@ -147,21 +147,21 @@ namespace rtype::systems {
 
                                     if (data.netId.id == netId) {
                                         created = true;
-                                        if (!actualPlayer->value)
-                                            *componentManager.getComponent<components::Position>(entity) = data.pos;
-                                        else {
-                                            const auto localPos = componentManager.getComponent<components::Position>(entity);
-                                            if (localPos) {
-                                                float distance = std::sqrt(
-                                                    std::pow(data.pos.x - localPos->x, 2) +
-                                                    std::pow(data.pos.y - localPos->y, 2) +
-                                                    std::pow(data.pos.z - localPos->z, 2)
-                                                );
-                                                const float positionThreshold = 0.1f;
-                                                if (distance > positionThreshold) {
-                                                    *localPos = data.pos;
-                                                }
+                                        const auto localPos = componentManager.getComponent<components::Position>(entity);
+                                        const auto vel = componentManager.getComponent<components::Velocity>(entity);
+                                        if (localPos) {
+                                            float distance = std::sqrt(
+                                            std::pow(data.pos.x - localPos->x, 2) +
+                                            std::pow(data.pos.y - localPos->y, 2) +
+                                            std::pow(data.pos.z - localPos->z, 2)
+                                            );
+                                            const float positionThreshold = 0.1f;
+                                            if (distance > positionThreshold) {
+                                                *localPos = data.pos;
                                             }
+                                        }
+                                        if (!actualPlayer->value) {
+                                            *vel = data.vel;
                                         }
                                         break;
                                     }
