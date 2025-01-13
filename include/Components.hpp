@@ -81,41 +81,6 @@ const std::unordered_map<std::string, ComponentFactory> componentMap = {
             }
         }
     }},
-#ifdef RTYPE_IS_CLIENT
-    {"sprite", {
-        []() { return std::make_unique<rtype::components::Sprite>(); },
-        typeid(rtype::components::Sprite),
-        [](rtype::ecs::ComponentManager& manager, const size_t entityId, const std::unique_ptr<rtype::components::IComponent> &instance) {
-            auto sprite = dynamic_cast<rtype::components::Sprite*>(instance.get());
-            if (sprite) {
-                manager.addComponent<rtype::components::Sprite>(entityId, *sprite);
-                manager.addComponent<rtype::components::Created>(entityId, sprite->created);
-            }
-        }
-    }},
-    {"fps_cap", {
-        []() { return std::make_unique<rtype::components::FrameLimit>(); },
-        typeid(rtype::components::FrameLimit),
-        [](rtype::ecs::ComponentManager& manager, const size_t entityId, const std::unique_ptr<rtype::components::IComponent> &instance) {
-            auto fpsCap = dynamic_cast<rtype::components::FrameLimit*>(instance.get());
-            if (fpsCap) {
-                manager.addComponent<rtype::components::FrameLimit>(entityId, *fpsCap);
-            }
-        }
-    }},
-    {"mode", {
-        []() { return std::make_unique<rtype::components::Mode>(); },
-        typeid(rtype::components::Mode),
-        [](rtype::ecs::ComponentManager& manager, const size_t entityId, const std::unique_ptr<rtype::components::IComponent> &instance) {
-            auto mode = dynamic_cast<rtype::components::Mode*>(instance.get());
-            if (mode) {
-                manager.addComponent<rtype::components::Mode>(entityId, *mode);
-                manager.addComponent<rtype::components::RWindow>(entityId, rtype::components::RWindow());
-                manager.addComponent<rtype::components::Created>(entityId, rtype::components::Created());
-            }
-        }
-    }},
-#endif
     {"resolution", {
         []() { return std::make_unique<rtype::components::Size>(); },
         typeid(rtype::components::Size),
@@ -135,7 +100,42 @@ const std::unordered_map<std::string, ComponentFactory> componentMap = {
                 manager.addComponent<rtype::components::Velocity>(entityId, *velocity);
             }
         }
-    }}
+    }},
+#ifdef RTYPE_IS_CLIENT
+{"sprite", {
+    []() { return std::make_unique<rtype::components::Sprite>(); },
+    typeid(rtype::components::Sprite),
+    [](rtype::ecs::ComponentManager& manager, const size_t entityId, const std::unique_ptr<rtype::components::IComponent> &instance) {
+        auto sprite = dynamic_cast<rtype::components::Sprite*>(instance.get());
+        if (sprite) {
+            manager.addComponent<rtype::components::Sprite>(entityId, *sprite);
+            manager.addComponent<rtype::components::Created>(entityId, sprite->created);
+        }
+    }
+}},
+{"fps_cap", {
+    []() { return std::make_unique<rtype::components::FrameLimit>(); },
+    typeid(rtype::components::FrameLimit),
+    [](rtype::ecs::ComponentManager& manager, const size_t entityId, const std::unique_ptr<rtype::components::IComponent> &instance) {
+        auto fpsCap = dynamic_cast<rtype::components::FrameLimit*>(instance.get());
+        if (fpsCap) {
+            manager.addComponent<rtype::components::FrameLimit>(entityId, *fpsCap);
+        }
+    }
+}},
+{"mode", {
+    []() { return std::make_unique<rtype::components::Mode>(); },
+    typeid(rtype::components::Mode),
+    [](rtype::ecs::ComponentManager& manager, const size_t entityId, const std::unique_ptr<rtype::components::IComponent> &instance) {
+        auto mode = dynamic_cast<rtype::components::Mode*>(instance.get());
+        if (mode) {
+            manager.addComponent<rtype::components::Mode>(entityId, *mode);
+            manager.addComponent<rtype::components::RWindow>(entityId, rtype::components::RWindow());
+            manager.addComponent<rtype::components::Created>(entityId, rtype::components::Created());
+        }
+    }
+}},
+#endif
 };
 
 #endif //STRUCTURE_HPP
