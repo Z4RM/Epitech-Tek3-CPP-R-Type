@@ -11,6 +11,9 @@
 #include "ECS.hpp"
 #include "Network/UDPNetwork/UDPNetwork.hpp"
 #include "RType/ModeManager/ModeManager.hpp"
+
+#define PLAYER_SPEED 100
+
 namespace rtype::systems {
     /**
      * @brief Network systems class

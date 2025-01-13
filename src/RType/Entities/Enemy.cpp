@@ -17,7 +17,8 @@ rtype::entities::Enemy::Enemy(
     components::Velocity vel,
     components::Size size,
     components::Sprite &sprite,
-    const components::Animation &animation
+    const components::Animation &animation,
+    components::Speed speed
 ) {
     _id = entityManager.createEntity();
     sprite.texture = new sf::Texture();
@@ -35,6 +36,7 @@ rtype::entities::Enemy::Enemy(
     componentManager.addComponent<components::Velocity>(_id, vel);
     componentManager.addComponent<components::Size>(_id, size);
     componentManager.addComponent<components::Hitbox>(_id, {pos, size});
+    componentManager.addComponent<components::Speed>(_id, speed);
 
 
     std::unordered_map<float, components::Velocity> move;
@@ -52,13 +54,15 @@ rtype::entities::Enemy::Enemy(
     rtype::ecs::ComponentManager &componentManager,
     components::Position pos,
     components::Velocity vel,
-    components::Size size
+    components::Size size,
+    components::Speed speed
 ) {
     _id = entityManager.createEntity();
     componentManager.addComponent<components::Position>(_id, pos);
     componentManager.addComponent<components::Velocity>(_id, vel);
     componentManager.addComponent<components::Size>(_id, size);
     componentManager.addComponent<components::Hitbox>(_id, {pos, size});
+    componentManager.addComponent<components::Speed>(_id, speed);
 }
 
 #endif

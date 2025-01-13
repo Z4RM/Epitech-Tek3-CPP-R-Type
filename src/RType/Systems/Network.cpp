@@ -116,8 +116,8 @@ namespace rtype::systems {
                                     netCo->endpoint.emplace(endpoint);
                                 }
                                 if (netCo->endpoint.has_value() && netCo->endpoint == endpoint) {
-                                    *pos = data.pos;
-                                    //*vel = data.vel;
+                                    //*pos = data.pos;
+                                    *vel = data.vel;
                                     *size = data.size;
                                 }
                             }
@@ -149,6 +149,20 @@ namespace rtype::systems {
                                         created = true;
                                         if (!actualPlayer->value)
                                             *componentManager.getComponent<components::Position>(entity) = data.pos;
+                                        else {
+                                            const auto localPos = componentManager.getComponent<components::Position>(entity);
+                                            if (localPos) {
+                                                float distance = std::sqrt(
+                                                    std::pow(data.pos.x - localPos->x, 2) +
+                                                    std::pow(data.pos.y - localPos->y, 2) +
+                                                    std::pow(data.pos.z - localPos->z, 2)
+                                                );
+                                                const float positionThreshold = 0.1f;
+                                                if (distance > positionThreshold) {
+                                                    *localPos = data.pos;
+                                                }
+                                            }
+                                        }
                                         break;
                                     }
                                 }
@@ -232,7 +246,7 @@ namespace rtype::systems {
                             {0, 0, 0},
                             {64, 64},
                             {socket},
-                            { Network::playerId });
+                            { Network::playerId }, {PLAYER_SPEED});
                         #endif
                         network::PacketWelcome welcome(Network::playerId);
 

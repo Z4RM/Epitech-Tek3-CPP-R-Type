@@ -84,6 +84,7 @@ set(CLIENT_SRC
         src/RType/Models/PlayerData.hpp
         src/RType/Components/Shared/NetId.hpp
         src/RType/Components/Shared/ActualPlayer.hpp
+        src/RType/Components/Shared/Speed.hpp
 )
 
 set(RTYPE_HEADERS

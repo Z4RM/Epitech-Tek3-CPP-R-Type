@@ -22,8 +22,9 @@ rtype::entities::Player::Player(
         const components::Size size,
         components::Sprite &sprite,
         const components::Animation &animation,
-        components::NetId network,
-        components::ActualPlayer actualPlayer
+        const components::NetId network,
+        components::ActualPlayer actualPlayer,
+        const components::Speed speed
 ) {
     _id = entityManager.createEntity();
     sprite.texture = new sf::Texture();
@@ -43,6 +44,7 @@ rtype::entities::Player::Player(
     componentManager.addComponent<components::Hitbox>(_id, {pos, size});
     componentManager.addComponent<components::NetId>(_id, network);
     componentManager.addComponent<components::ActualPlayer>(_id, actualPlayer);
+    componentManager.addComponent<components::Speed>(_id, speed);
 
     if (!actualPlayer.value)
         return;
@@ -124,7 +126,8 @@ rtype::entities::Player::Player(
         const components::Velocity vel,
         const components::Size size,
         const components::NetworkConnection network,
-        const components::NetId netId
+        const components::NetId netId,
+        const components::Speed speed
 ) {
     _id = entityManager.createEntity();
     componentManager.addComponent<components::Position>(_id, pos);
@@ -133,6 +136,7 @@ rtype::entities::Player::Player(
     componentManager.addComponent<components::Hitbox>(_id, {pos, size});
     componentManager.addComponent<components::NetworkConnection>(_id, network);
     componentManager.addComponent<components::NetId>(_id, netId);
+    componentManager.addComponent<components::Speed>(_id, speed);
 }
 
 #endif
