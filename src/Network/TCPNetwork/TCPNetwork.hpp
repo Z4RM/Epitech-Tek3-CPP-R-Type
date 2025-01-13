@@ -42,7 +42,7 @@ namespace rtype::network {
              * @brief Connect to the given server endpoint
              * @param endpoint to endpoint to connect to
              * **/
-            void connect(const asio::ip::tcp::endpoint& endpoint);
+            void connect(const asio::ip::tcp::endpoint& endpoint); // glibchecker-ignore
 
             // SHARED //
 
