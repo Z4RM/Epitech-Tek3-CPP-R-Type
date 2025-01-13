@@ -60,7 +60,8 @@ namespace rtype::entities {
                 components::Sprite &sprite,
                 const components::Animation &animation,
                 rtype::components::NetId = { false },
-                rtype::components::ActualPlayer = { false }
+                rtype::components::ActualPlayer = { false },
+                rtype::components::Speed = {100}
         );
 
 #else
@@ -90,7 +91,8 @@ namespace rtype::entities {
                 rtype::components::Velocity vel,
                 rtype::components::Size size,
                 rtype::components::NetworkConnection network,
-                rtype::components::NetId = { false }
+                rtype::components::NetId = { false },
+                rtype::components::Speed speed = {1}
         );
 
 #endif

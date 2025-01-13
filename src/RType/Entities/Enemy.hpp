@@ -46,7 +46,8 @@ namespace rtype::entities {
               components::Velocity vel,
               components::Size size,
               components::Sprite &sprite,
-              const components::Animation &animation
+              const components::Animation &animation,
+              components::Speed speed = {80}
         );
 #else
         /**
@@ -67,7 +68,8 @@ namespace rtype::entities {
               rtype::ecs::ComponentManager &componentManager,
               components::Position pos,
               components::Velocity vel,
-              components::Size size
+              components::Size size,
+              components::Speed speed = {80}
         );
 #endif
 

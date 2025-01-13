@@ -16,3 +16,4 @@
 #include "./Shared/Velocity.hpp"
 #include "./Shared/Network.hpp"
 #include "./Shared/NetId.hpp"
+#include "./Shared/Speed.hpp"
