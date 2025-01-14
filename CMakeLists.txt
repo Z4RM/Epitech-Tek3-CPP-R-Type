@@ -52,6 +52,7 @@ set(RTYPE_SRC
         src/RType/Components/Shared/Network.hpp
         src/Network/Packets/Descriptors/PacketPlayersData/PacketPlayersData.cpp
         src/Network/Packets/Descriptors/PacketPlayersData/PacketPlayersData.hpp
+        src/RType/Components/Shared/Running.hpp
 )
 
 set(CLIENT_SRC
