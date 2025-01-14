@@ -54,7 +54,7 @@ else
 endif
 
 .PHONY:	re
-re:	fclean all
+re:	clean all
 
 .PHONY:	fclean
 fclean:	clean
