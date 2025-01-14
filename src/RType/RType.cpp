@@ -79,19 +79,6 @@ int rtype::RType::_run() {
             sprite1
     );
     systemManager.addSystem(rtype::systems::RenderWindowSys::render);
-
-    components::Sprite sprite3 = {{600, 100, 0}, {33, 36}, "assets/sprites/enemy.gif", {1}};
-    /*rtype::entities::Enemy enemy(
-        entityManager,
-        componentManager,
-        {600, 100, 0},
-        {0, 0, 0},
-        {64, 64},
-        sprite3,
-        {"", 0, 0}
-    );*/
-#else
-
 #endif
     systemManager.addSystem(rtype::systems::Movement::move);
     systemManager.addSystem(rtype::systems::Network::udpProcess);
