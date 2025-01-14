@@ -5,13 +5,15 @@
 ## Makefile
 ##
 
-# TODO: test Windows compatibility
-
+ifeq ($(OS), Windows_NT)
+CONAN			:= $(shell where conan)
+else
 CONAN			:= $(shell command -v conan)
-
-BUILD_DIR		:= build
+endif
 
 CONAN_PRESET	:= conan-release
+
+BUILD_DIR		:= build
 
 BUILD_TYPE		:= Release
 
@@ -29,7 +31,11 @@ install:	check_conan
 
 .PHONY:	configure
 configure:
+ifeq ($(OS), Windows_NT)
+	@cmake --preset conan-default -DCMAKE_BUILD_TYPE=$(BUILD_TYPE)
+else
 	@cmake --preset $(CONAN_PRESET) -DCMAKE_BUILD_TYPE=$(BUILD_TYPE)
+endif
 
 .PHONY:	build
 build:	install configure
@@ -41,16 +47,26 @@ tests_run:
 
 .PHONY:	clean
 clean:
+ifeq ($(OS), Windows_NT)
+	@if exist build (rmdir /s /q build)
+else
 	@rm -rf $(BUILD_DIR)
+endif
 
 .PHONY:	re
 re:	fclean all
 
 .PHONY:	fclean
 fclean:	clean
+ifeq ($(OS), Windows_NT)
+	@if exist CMakeUserPresets.json (del /q CMakeUserPresets.json)
+	@if exist conan_provider.cmake (del /q conan_provider.cmake)
+	@if exist Testing (rmdir /s /q Testing)
+else
 	@rm -f CMakeUserPresets.json
 	@rm -f conan_provider.cmake
 	@rm -rf Testing
+endif
 
 .PHONY:	help
 help:
@@ -69,5 +85,5 @@ help:
 check_conan:
 ifndef CONAN
 	@echo "Conan not found, trying to install it..."
-	@pip install conan || (echo "Could not install Conan, please install it manually: https://conan.io/downloads."; exit 1)
+	@pip install conan || (echo "Could not install Conan, please install it manually: https://conan.io/downloads." && exit 1)
 endif
