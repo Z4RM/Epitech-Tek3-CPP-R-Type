@@ -14,6 +14,7 @@
 #include "RType.hpp"
 #include "Networks.hpp"
 #include "Systems/Network.hpp"
+#include "Components.hpp"
 #ifdef RTYPE_IS_CLIENT
 #include "Entities/Window.hpp"
 #endif
@@ -57,6 +58,9 @@ int rtype::RType::_run() {
     ecs::SystemManager systemManager(entityManager, componentManager);
 
     size_t rtype = entityManager.createEntity();
+
+    componentManager.addComponent<components::Running>(rtype, {true});
+
 #ifdef RTYPE_IS_CLIENT
     systemManager.addSystem(rtype::systems::RenderWindowSys::createWindow);
     components::String title;
@@ -95,20 +99,13 @@ int rtype::RType::_run() {
         {64, 64}
     );
 #endif
+
     systemManager.addSystem(rtype::systems::Movement::move);
     systemManager.addSystem(rtype::systems::Network::udpProcess);
     systemManager.addSystem(rtype::systems::Network::tcpProcess);
-    while (_running()) {
+
+    while (componentManager.getComponent<components::Running>(rtype)->running) {
         systemManager.updateSystems();
     }
     return 0;
-}
-
-bool rtype::RType::_running() {
-#ifdef RTYPE_IS_SERVER
-    return true; // TODO
-#endif
-#ifdef RTYPE_IS_CLIENT
-    return _client.running();
-#endif
 }

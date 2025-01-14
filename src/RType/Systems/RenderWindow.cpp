@@ -5,13 +5,11 @@
 ** RenderWindow.cpp
 */
 
-#include "RenderWindow.hpp"
-
-#include <iostream>
-
+#include <spdlog/spdlog.h>
 #include "InputSystem.hpp"
 #include "Components.hpp"
 #include "RType/Entities/Window.hpp"
+#include "RenderWindow.hpp"
 
 std::vector<rtype::ecs::Entity> getEntitiesSortedByZIndex(
     const rtype::ecs::EntityManager& entityManager,
@@ -42,14 +40,24 @@ void rtype::systems::RenderWindowSys::render(ecs::EntityManager &entityManager, 
         auto renderWindow = componentManager.getComponent<rtype::entities::RWindow>(entity);
         if (!renderWindow)
             continue;
+
         sf::Event event{};
+
         while (renderWindow->window->pollEvent(event)) {
             if (event.type == sf::Event::Closed) {
                 renderWindow->window->close();
+                for (const auto &entity : entityManager.getEntities()) {
+                    auto component = componentManager.getComponent<components::Running>(entity);
+                    if (component) {
+                        component->running = false;
+                        break;
+                    }
+                }
                 return;
             }
             rtype::systems::InputSystem::handleInput(entityManager, componentManager, event);
         }
+
         auto sortedEntities = getEntitiesSortedByZIndex(entityManager, componentManager);
 
         for (auto e : sortedEntities) {
