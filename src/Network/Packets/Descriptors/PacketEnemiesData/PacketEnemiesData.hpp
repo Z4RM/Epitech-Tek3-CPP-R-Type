@@ -12,6 +12,7 @@
 
 namespace rtype::network {
 
+    /** @brief represent a packet who represent all enemies data **/
     class PacketEnemiesData final : public APacket {
     public:
         ~PacketEnemiesData() override = default;
