@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2024
 ** RType
 ** File description:
-** TODO: add description
+** Network.cpp
 */
 
 #include "Network.hpp"

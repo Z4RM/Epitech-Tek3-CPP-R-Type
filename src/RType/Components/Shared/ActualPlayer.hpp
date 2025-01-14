@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2025
 ** RType
 ** File description:
-**
+** ActualPlayer.hpp
 */
 
 #pragma once
