@@ -49,11 +49,7 @@ void rtype::RType::stopServer() {
 
 #endif
 
-#ifndef RTYPE_IS_CLIENT
 rtype::RType::RType(unsigned short port) : _port(port) {}
-#else
-rtype::RType::RType(unsigned short port) : _port(port), _client(this) {}
-#endif
 
 int rtype::RType::_run() {
     ecs::EntityManager entityManager;
@@ -104,9 +100,6 @@ int rtype::RType::_run() {
     systemManager.addSystem(rtype::systems::Network::tcpProcess);
     while (_running()) {
         systemManager.updateSystems();
-#ifdef RTYPE_IS_CLIENT
-        //_client.iteration();
-#endif
     }
     return 0;
 }

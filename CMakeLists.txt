@@ -55,8 +55,6 @@ set(RTYPE_SRC
 )
 
 set(CLIENT_SRC
-        src/RType/Client/Client.cpp
-        src/RType/Client/Client.hpp
         src/RType/Entities/Window.cpp
         src/RType/Entities/Window.hpp
         src/RType/Systems/RenderWindow.cpp
