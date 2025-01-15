@@ -59,6 +59,8 @@ set(RTYPE_SRC
         src/ECS/Scene/AScene.hpp
         src/RType/Scenes/Game/Game.cpp
         src/RType/Scenes/Game/Game.hpp
+        src/RType/Entities/Button.cpp
+        src/RType/Entities/Button.hpp
 )
 
 set(CLIENT_SRC
@@ -115,6 +117,9 @@ set(CLIENT_SRC
         src/ECS/AEntity.hpp
         src/RType/Scenes/Game/Game.cpp
         src/RType/Scenes/Game/Game.hpp
+        src/RType/Components/Client/OnClick.hpp
+        src/RType/Entities/Button.cpp
+        src/RType/Entities/Button.hpp
 )
 
 set(RTYPE_HEADERS

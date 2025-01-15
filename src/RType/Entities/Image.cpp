@@ -15,10 +15,7 @@
 
 namespace rtype::entities {
     Image::Image(ecs::ComponentManager &componentManager, ecs::EntityManager &entityManager, components::Sprite sprite, bool
-    isBackground) :
-    AEntity(entityManager) {
-        this->_id = entityManager.createEntity();
-
+    isBackground) : AEntity(entityManager) {
         sprite.texture = new sf::Texture();
         sprite.sprite = new sf::Sprite();
         const int width = static_cast<int>(sprite.size.width);

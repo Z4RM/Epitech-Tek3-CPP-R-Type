@@ -16,7 +16,5 @@ namespace rtype::entities {
     public:
         Image(ecs::ComponentManager &componentManager, ecs::EntityManager &entityManager, components::Sprite sprite, bool isBg
         = false);
-    private:
-        size_t _id;
     };
 }

@@ -94,8 +94,6 @@ int rtype::RType::_run() {
     std::shared_ptr<scenes::Game> game = std::make_shared<scenes::Game>(entityManager, componentManager);
     sceneManager.registerScene(1, std::move(game));
 
-    sceneManager.changeScene(1, true);
-
     while (_running()) {
         sceneManager.updateCurrentScene(systemManager);
 
