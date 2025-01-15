@@ -14,7 +14,8 @@
 namespace rtype::entities {
     class Image : public ecs::AEntity {
     public:
-        Image(ecs::ComponentManager &componentManager, ecs::EntityManager &entityManager, components::Sprite sprite);
+        Image(ecs::ComponentManager &componentManager, ecs::EntityManager &entityManager, components::Sprite sprite, bool isBg
+        = false);
     private:
         size_t _id;
     };

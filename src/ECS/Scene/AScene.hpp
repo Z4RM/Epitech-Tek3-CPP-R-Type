@@ -27,10 +27,11 @@ namespace rtype::ecs {
 
         bool isLoaded() final { return this->_loaded; }
 
-        bool _loaded = false;
+        void load() override { this->_loaded = true; };
 
         EntityManager &_entityManager;
         ComponentManager &_componentManager;
+        bool _loaded = false;
     private:
         std::vector<unsigned int> _entities;
     };

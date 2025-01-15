@@ -14,6 +14,7 @@
 #include "RType.hpp"
 #include "Networks.hpp"
 #include "ECS/Scene/SceneManager.hpp"
+#include "Scenes/Game/Game.hpp"
 #include "Scenes/Menu/Menu.hpp"
 #include "Systems/Network.hpp"
 #ifdef RTYPE_IS_CLIENT
@@ -63,9 +64,6 @@ int rtype::RType::_run() {
     ecs::SystemManager systemManager;
     ecs::SceneManager sceneManager;
 
-    std::shared_ptr<scenes::Menu> menu = std::make_shared<scenes::Menu>(entityManager, componentManager);
-    sceneManager.registerScene(0, std::move(menu));
-
     size_t rtype = entityManager.createEntity();
 #ifdef RTYPE_IS_CLIENT
     systemManager.addSystem(rtype::systems::RenderWindowSys::createWindow);
@@ -74,22 +72,29 @@ int rtype::RType::_run() {
     rtype::entities::RWindow renderWindow{};
     rtype::entities::Mode mode;
     mode.style.style = sf::Style::Default;
-    components::Sprite sprite1 = {{0, 0, 0}, {800, 600}, "assets/sprites/background.jpg", {-1}};
     rtype::entities::Window window(
             entityManager,
             componentManager,
             {800, 600},
             {"RType"},
             renderWindow,
-            mode,
-            sprite1
+            mode
     );
+
     systemManager.addSystem(rtype::systems::RenderWindowSys::render);
 #endif
 
     systemManager.addSystem(rtype::systems::Movement::move);
     systemManager.addSystem(rtype::systems::Network::udpProcess);
     systemManager.addSystem(rtype::systems::Network::tcpProcess);
+
+    std::shared_ptr<scenes::Menu> menu = std::make_shared<scenes::Menu>(entityManager, componentManager);
+    sceneManager.registerScene(0, std::move(menu));
+
+    std::shared_ptr<scenes::Game> game = std::make_shared<scenes::Game>(entityManager, componentManager);
+    sceneManager.registerScene(1, std::move(game));
+
+    sceneManager.changeScene(1);
 
     while (_running()) {
         sceneManager.updateCurrentScene(systemManager);
