@@ -18,7 +18,6 @@
 namespace rtype::ecs {
     class SceneManager {
     public:
-       SceneManager() = default;
 
        static SceneManager &getInstance() {
            static SceneManager instance;
@@ -49,6 +48,7 @@ namespace rtype::ecs {
        }
 
     private:
+        SceneManager() = default;
         int _currentScene = 0;
         std::map<int, std::shared_ptr<IScene>> _scenes {};
     };

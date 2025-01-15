@@ -12,13 +12,22 @@
 void rtype::scenes::Menu::load() {
 
 #ifdef RTYPE_IS_CLIENT
-    components::Sprite bg;
-    bg.pos = {0, 0};
-    bg.size = {525, 186};
-    bg.priority = { 0 };
-    bg.path = "./assets/logo.png";
+    components::Sprite logo;
+    logo.pos = {120, 0};
+    logo.size = {-1, -1};
+    logo.priority = { 0 };
+    logo.path = "./assets/logo.png";
+    entities::Image logoImage(this->_componentManager, this->_entityManager, logo);
 
-    entities::Image backgroundImage(this->_componentManager, this->_entityManager, bg);
+    components::Sprite bg;
+    bg.path = "./assets/backgroundMenu.jpg";
+    bg.size = {-1, -1};
+    bg.priority = {-1};
+    bg.pos = {0, 0};
+    entities::Image backgroundImage(this->_componentManager, this->_entityManager, bg, true);
     this->registerEntity(backgroundImage);
+    this->registerEntity(logoImage);
+
+    AScene::load();
 #endif
 }

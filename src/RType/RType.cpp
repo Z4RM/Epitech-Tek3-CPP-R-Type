@@ -62,7 +62,7 @@ int rtype::RType::_run() {
     ecs::EntityManager entityManager;
     ecs::ComponentManager componentManager;
     ecs::SystemManager systemManager;
-    ecs::SceneManager sceneManager;
+    ecs::SceneManager &sceneManager = ecs::SceneManager::getInstance();
 
     size_t rtype = entityManager.createEntity();
 #ifdef RTYPE_IS_CLIENT
@@ -94,7 +94,7 @@ int rtype::RType::_run() {
     std::shared_ptr<scenes::Game> game = std::make_shared<scenes::Game>(entityManager, componentManager);
     sceneManager.registerScene(1, std::move(game));
 
-    sceneManager.changeScene(1);
+    sceneManager.changeScene(1, true);
 
     while (_running()) {
         sceneManager.updateCurrentScene(systemManager);
