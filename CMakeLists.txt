@@ -56,6 +56,10 @@ set(RTYPE_SRC
         src/RType/Components/Shared/GameState.hpp
         src/ECS/Scene/SceneManager.hpp
         src/ECS/Scene/SceneManager.hpp
+        src/RType/Scenes/Menu/Menu.cpp
+        src/RType/Scenes/Menu/Menu.hpp
+        src/ECS/Scene/AScene.hpp
+        src/RType/Entities/Image.cpp
 )
 
 set(CLIENT_SRC
@@ -104,6 +108,14 @@ set(CLIENT_SRC
         src/ECS/Scene/SceneManager.hpp
         src/ECS/Scene/SceneManager.hpp
         src/ECS/Scene/IScene.hpp
+        src/RType/Scenes/Menu/Menu.cpp
+        src/RType/Scenes/Menu/Menu.hpp
+        src/ECS/Scene/AScene.hpp
+        src/RType/Entities/Image.cpp
+        src/RType/Entities/Image.hpp
+        src/ECS/IEntity.hpp
+        src/ECS/AEntity.hpp
+        src/ECS/AEntity.hpp
 )
 
 set(RTYPE_HEADERS

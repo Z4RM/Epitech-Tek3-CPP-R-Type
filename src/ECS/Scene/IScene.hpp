@@ -7,14 +7,17 @@
 
 #pragma once
 #include "ECS/SystemManager.hpp"
+#include "ECS/IEntity.hpp"
 
 namespace rtype::ecs {
     class IScene {
       public:
-        virtual void load();
-        virtual void unload();
-        virtual void update(SystemManager &sysMg);
-        virtual bool isLoaded();
+        virtual ~IScene() = default;
+        virtual void load() = 0;
+        virtual void unload() = 0;
+        virtual void update(SystemManager &sysMg) = 0;
+        virtual bool isLoaded() = 0;
+        virtual void registerEntity(IEntity &entity) = 0;
     };
 
 }

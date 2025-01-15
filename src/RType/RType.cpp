@@ -13,6 +13,8 @@
 #include "Systems.hpp"
 #include "RType.hpp"
 #include "Networks.hpp"
+#include "ECS/Scene/SceneManager.hpp"
+#include "Scenes/Menu/Menu.hpp"
 #include "Systems/Network.hpp"
 #ifdef RTYPE_IS_CLIENT
 #include "Entities/Window.hpp"
@@ -59,6 +61,10 @@ int rtype::RType::_run() {
     ecs::EntityManager entityManager;
     ecs::ComponentManager componentManager;
     ecs::SystemManager systemManager;
+    ecs::SceneManager sceneManager;
+
+    std::shared_ptr<scenes::Menu> menu = std::make_shared<scenes::Menu>(entityManager, componentManager);
+    sceneManager.registerScene(0, std::move(menu));
 
     size_t rtype = entityManager.createEntity();
 #ifdef RTYPE_IS_CLIENT
@@ -80,11 +86,14 @@ int rtype::RType::_run() {
     );
     systemManager.addSystem(rtype::systems::RenderWindowSys::render);
 #endif
+
     systemManager.addSystem(rtype::systems::Movement::move);
     systemManager.addSystem(rtype::systems::Network::udpProcess);
     systemManager.addSystem(rtype::systems::Network::tcpProcess);
+
     while (_running()) {
-        systemManager.updateSystems(entityManager, componentManager);
+        sceneManager.updateCurrentScene(systemManager);
+
 #ifdef RTYPE_IS_CLIENT
         //_client.iteration();
 #endif
