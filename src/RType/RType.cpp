@@ -58,7 +58,7 @@ rtype::RType::RType(unsigned short port) : _port(port), _client(this) {}
 int rtype::RType::_run() {
     ecs::EntityManager entityManager;
     ecs::ComponentManager componentManager;
-    ecs::SystemManager systemManager(entityManager, componentManager);
+    ecs::SystemManager systemManager;
 
     size_t rtype = entityManager.createEntity();
 #ifdef RTYPE_IS_CLIENT
@@ -84,7 +84,7 @@ int rtype::RType::_run() {
     systemManager.addSystem(rtype::systems::Network::udpProcess);
     systemManager.addSystem(rtype::systems::Network::tcpProcess);
     while (_running()) {
-        systemManager.updateSystems();
+        systemManager.updateSystems(entityManager, componentManager);
 #ifdef RTYPE_IS_CLIENT
         //_client.iteration();
 #endif

@@ -50,6 +50,12 @@ set(RTYPE_SRC
         src/Network/Packets/Descriptors/PacketPlayersData/PacketPlayersData.hpp
         src/Network/Packets/Descriptors/PacketEnemiesData/PacketEnemiesData.cpp
         src/Network/Packets/Descriptors/PacketEnemiesData/PacketEnemiesData.hpp
+        src/RType/Entities/Game.cpp
+        src/RType/Entities/Game.hpp
+        src/RType/Models/Scene.hpp
+        src/RType/Components/Shared/GameState.hpp
+        src/ECS/Scene/SceneManager.hpp
+        src/ECS/Scene/SceneManager.hpp
 )
 
 set(CLIENT_SRC
@@ -91,6 +97,13 @@ set(CLIENT_SRC
         src/Network/Packets/Descriptors/PacketEnemiesData/PacketEnemiesData.cpp
         src/Network/Packets/Descriptors/PacketEnemiesData/PacketEnemiesData.hpp
         src/RType/Models/EnemyData.hpp
+        src/RType/Entities/Game.cpp
+        src/RType/Entities/Game.hpp
+        src/RType/Models/Scene.hpp
+        src/RType/Components/Shared/GameState.hpp
+        src/ECS/Scene/SceneManager.hpp
+        src/ECS/Scene/SceneManager.hpp
+        src/ECS/Scene/IScene.hpp
 )
 
 set(RTYPE_HEADERS

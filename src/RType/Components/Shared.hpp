@@ -19,3 +19,4 @@
 #include "./Shared/Speed.hpp"
 #include "./Shared/Health.hpp"
 #include "./Shared/Damage.hpp"
+#include "./Shared/GameState.hpp"
