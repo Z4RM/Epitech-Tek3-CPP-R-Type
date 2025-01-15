@@ -31,3 +31,18 @@ void rtype::systems::Movement::move(const rtype::ecs::EntityManager& entityManag
         }
     }
 }
+
+void rtype::systems::Movement::startMove(const rtype::ecs::EntityManager& entityManager, rtype::ecs::ComponentManager& componentManager)
+{
+    for (auto& entity : entityManager.getEntities()) {
+        const auto enemy = componentManager.getComponent<components::Enemy>(entity);
+        const auto pos = componentManager.getComponent<components::Position>(entity);
+        if (enemy && pos) {
+            enemy->time = std::clock();
+            if (((float)enemy->time)/CLOCKS_PER_SEC >= enemy->spawn_time) {
+                const auto vel = componentManager.getComponent<components::Velocity>(entity);
+                vel->x = -1;
+            }
+        }
+    }
+}

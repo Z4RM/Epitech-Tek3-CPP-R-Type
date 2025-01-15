@@ -103,13 +103,13 @@ const std::unordered_map<std::string, ComponentFactory> componentMap = {
                     size_t newEntity = entityManager.createEntity();
                     componentManager.addComponent<rtype::components::Enemy>(newEntity, enemy);
                     componentManager.addComponent<rtype::components::Position>(newEntity, enemy.spawn_position);
-                    componentManager.addComponent<rtype::components::Velocity>(newEntity, rtype::components::Velocity());
+                    componentManager.addComponent<rtype::components::Velocity>(newEntity, enemy.velocity);
                     componentManager.addComponent<rtype::components::Size>(newEntity, rtype::components::Size());
                     componentManager.addComponent<rtype::components::Projectile>(newEntity, enemy.projectile);
                     componentManager.addComponent<rtype::components::Movement>(newEntity, enemy.movement_pattern);
                     componentManager.addComponent<rtype::components::Created>(newEntity, rtype::components::Created());
 #ifdef RTYPE_IS_CLIENT
-                    componentManager.addComponent<rtype::components::Sprite>(newEntity, rtype::components::Sprite());
+                    componentManager.addComponent<rtype::components::Sprite>(newEntity, enemy.sprite);
 #endif
                 }
                 componentManager.addComponent<rtype::components::Waves>(entityId, *waves);

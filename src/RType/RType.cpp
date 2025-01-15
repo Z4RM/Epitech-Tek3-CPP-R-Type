@@ -113,6 +113,7 @@ int rtype::RType::_run() {
     }
 
     systemManager.addSystem(rtype::systems::Movement::move);
+    systemManager.addSystem(rtype::systems::Movement::startMove);
 
 #ifdef RTYPE_IS_CLIENT
     systemManager.addSystem(rtype::systems::RenderWindowSys::createWindow);

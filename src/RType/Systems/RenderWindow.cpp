@@ -55,7 +55,19 @@ void rtype::systems::RenderWindowSys::render(ecs::EntityManager &entityManager, 
 
         for (auto e : sortedEntities) {
             auto sprite = componentManager.getComponent<components::Sprite>(e.id);
+            auto enemy = componentManager.getComponent<components::Enemy>(e.id);
             if (sprite && sprite->sprite) {
+                if (enemy) {
+                    enemy->time = std::clock();
+                    if (((float)enemy->time)/CLOCKS_PER_SEC >= enemy->spawn_time) {
+                        auto pos = componentManager.getComponent<components::Position>(e.id);
+                        if (pos)
+                            sprite->sprite->setPosition({pos->x, pos->y});
+                        renderWindow->window->draw(*sprite->sprite);
+                    } else {
+                        continue;
+                    }
+                }
                 auto pos = componentManager.getComponent<components::Position>(e.id);
                 if (pos)
                     sprite->sprite->setPosition({pos->x, pos->y});

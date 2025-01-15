@@ -55,6 +55,7 @@ namespace rtype::components {
 #endif
             data = value;
             time = std::clock();
+            velocity = Velocity();
         }
 
         nlohmann::basic_json<> data;
@@ -68,6 +69,7 @@ namespace rtype::components {
         int explosion_damage;
         Projectile projectile;
         int health;
+        Velocity velocity;
         std::clock_t time;
 #ifdef RTYPE_IS_CLIENT
         Sprite sprite;
@@ -91,7 +93,6 @@ namespace rtype::components {
             data = value;
 
             for (const auto& wave : data.items()) {
-                std::cout << "Wave: " << wave.key() << std::endl;
                 for (const auto& enemy : wave.value().items()) {
                     if (enemy.key() == "wave_id") {
                         id = enemy.value();

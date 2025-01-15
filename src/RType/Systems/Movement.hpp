@@ -43,5 +43,6 @@ namespace rtype::systems
          *        manages all components in the ECS system.
          */
         static void move(const ecs::EntityManager& entityManager, ecs::ComponentManager& componentManager);
+        static void startMove(const ecs::EntityManager& entityManager, ecs::ComponentManager& componentManager);
     };
 }
