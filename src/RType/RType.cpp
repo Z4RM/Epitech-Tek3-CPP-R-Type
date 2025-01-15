@@ -69,7 +69,7 @@ void rtype::RType::createComponentViaConfig(GameLoader &gameLoader, size_t rtype
                 const auto&[creator, type, registerComponent] = componentMap.at(comp.key());
                 auto instance = creator();
                 instance->create(val);
-                registerComponent(componentManager, id, std::move(instance));
+                registerComponent(entityManager, componentManager, id, std::move(instance));
                 std::cout << "Component created: " << comp.key() << std::endl;
             } catch (const std::out_of_range &e) {
                 spdlog::error("Component not found in map: {}", comp.key());

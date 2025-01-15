@@ -20,7 +20,7 @@ namespace rtype::components {
         void create(nlohmann::basic_json<> &value) override {
             path = value["path"];
             priority.create(value["priority"]);
-            created.isCreate = false;
+            created.isCreate = true;
             texture = new sf::Texture();
             sprite = new sf::Sprite();
             rect = new sf::RectangleShape();
