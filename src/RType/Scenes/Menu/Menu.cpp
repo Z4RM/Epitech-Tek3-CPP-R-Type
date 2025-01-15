@@ -10,6 +10,8 @@
 #include "RType/Entities/Image.hpp"
 
 void rtype::scenes::Menu::load() {
+
+#ifdef RTYPE_IS_CLIENT
     components::Sprite bg;
     bg.pos = {0, 0};
     bg.size = {525, 186};
@@ -18,4 +20,5 @@ void rtype::scenes::Menu::load() {
 
     entities::Image backgroundImage(this->_componentManager, this->_entityManager, bg);
     this->registerEntity(backgroundImage);
+#endif
 }

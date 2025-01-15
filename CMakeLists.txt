@@ -59,7 +59,6 @@ set(RTYPE_SRC
         src/RType/Scenes/Menu/Menu.cpp
         src/RType/Scenes/Menu/Menu.hpp
         src/ECS/Scene/AScene.hpp
-        src/RType/Entities/Image.cpp
 )
 
 set(CLIENT_SRC
