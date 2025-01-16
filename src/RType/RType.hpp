@@ -37,6 +37,18 @@ namespace rtype {
          */
         static int run();
 
+        /**
+         * @brief Creates components for entities based on the configuration file.
+         * This function iterates through the global configuration, creates entities,
+         * and assigns components to them using the specified data in the configuration.
+         * Each component is created using the corresponding creator function from
+         * the component map and registered with the entity and component managers.
+         *
+         * @param gameLoader The loader responsible for reading the game configuration.
+         * @param rtype The identifier for the current RType instance.
+         * @param entityManager The entity manager responsible for managing entities.
+         * @param componentManager The component manager responsible for managing components.
+         */
         static void createComponentViaConfig(GameLoader &gameLoader, size_t rtype, ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager);
 
 #ifdef RTYPE_IS_CLIENT

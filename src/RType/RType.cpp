@@ -51,13 +51,23 @@ rtype::RType::RType(unsigned short port) : _port(port) {}
 rtype::RType::RType(unsigned short port) : _port(port), _client(this) {}
 #endif
 
+/**
+ * @brief Checks if a component is valid by verifying its existence in the component map.
+ *
+ * This function checks whether a component, identified by its name, is registered
+ * in the component map. It returns `true` if the component is found, indicating
+ * that it is a valid component. Otherwise, it returns `false`.
+ *
+ * @param component The name of the component to be checked.
+ *
+ * @return `true` if the component exists in the component map, otherwise `false`.
+ */
 bool isValidComponent(const std::string& component) {
     return componentMap.find(component) != componentMap.end();
 }
 
 void rtype::RType::createComponentViaConfig(GameLoader &gameLoader, size_t rtype, ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager) {
     for (const auto& entity : gameLoader.globalConfig.items()) {
-        std::cout << "Component: " << entity.key() << " => " << entity.value() << std::endl;
         const size_t id = entityManager.createEntity();
         for (const auto& comp : entity.value().items()) {
             if (!isValidComponent(comp.key())) {
@@ -70,7 +80,6 @@ void rtype::RType::createComponentViaConfig(GameLoader &gameLoader, size_t rtype
                 auto instance = creator();
                 instance->create(val);
                 registerComponent(entityManager, componentManager, id, std::move(instance));
-                std::cout << "Component created: " << comp.key() << std::endl;
             } catch (const std::out_of_range &e) {
                 spdlog::error("Component not found in map: {}", comp.key());
             } catch (const std::bad_any_cast &e) {
@@ -89,13 +98,11 @@ int rtype::RType::_run() {
 
     GameLoader gameLoader;
     gameLoader.loadGlobalConfig("config/config.json");
-    std::cout << "Config: " << gameLoader.globalConfig << std::endl;
     const size_t rtype = entityManager.createEntity();
     this->createComponentViaConfig(gameLoader, rtype, entityManager, componentManager);
 
     GameLoader levelLoader;
     levelLoader.loadGlobalConfig("config/levels/level_1.json");
-    std::cout << "Level: " << levelLoader.globalConfig << std::endl;
     const size_t level = entityManager.createEntity();
     this->createComponentViaConfig(levelLoader, level, entityManager, componentManager);
 

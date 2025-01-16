@@ -31,16 +31,38 @@
 #endif
 
 /**
- * Declaration of a component in componentsMap:
- * {"[NAME]", []() {return [LINKED_COMPONENT];}},
+ * @brief Structure used to dynamically create and register components in the ECS engine.
  */
 struct ComponentFactory {
+    /**
+     * @brief Function to create a unique instance of a component.
+     * For example: for a "position" component, this function creates a rtype::components::Position.
+     */
     std::function<std::unique_ptr<rtype::components::IComponent>()> creator;
+    /**
+     * @brief Exact type of the component for identification within the ECS engine.
+     * This ensures proper type management and avoids type-related errors.
+     */
     std::type_index type;
+    /**
+     * @brief Function to register the component within the EntityManager and ComponentManager.
+     * This function can also initialize related components if required.
+     * For example: when registering a "position" component, it can also add a default "velocity" component to the entity.
+     */
     std::function<void(rtype::ecs::EntityManager&, rtype::ecs::ComponentManager&, size_t, std::unique_ptr<rtype::components::IComponent>)> registerComponent;
 };
 
-// TODO: Add documentation for the list and separate components of the client and server.
+/**
+ * @brief Map that associates component names with their respective factories.
+ * This map is used to dynamically manage components in the ECS engine.
+ *
+ * Each entry consists of:
+ * - A key: The name of the component (e.g., "position", "sprite"). (c.f. Wiki about the available key)
+ * - A value: A ComponentFactory containing:
+ *   - A function to create the component (creator).
+ *   - The exact type of the component (type).
+ *   - A function to register the component in the engine (registerComponent).
+ */
 const std::unordered_map<std::string, ComponentFactory> componentMap = {
     {"position", {
         []() { return std::make_unique<rtype::components::Position>(); },

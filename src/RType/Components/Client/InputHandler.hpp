@@ -32,12 +32,18 @@ namespace rtype::components {
      * @struct InputHandler
      * @brief Manages keyboard input actions for entities.
      *
-     * The `InputHandler` component allows associating keyboard keys with
-     * specific actions using a map. This enables easy handling of input-driven
-     * behavior in the RType game.
+     * The `InputHandler` component enables entities to respond to keyboard inputs.
+     * It maps keyboard keys to specific actions and associates those actions
+     * with event types (e.g., key press or release) and their corresponding
+     * behaviors.
      */
     struct InputHandler : public IComponent {
-
+        /**
+         * @brief Mapping of string keys to `sf::Keyboard::Key` values.
+         *
+         * This map allows configuration files to refer to keys by their string names
+         * (e.g., "Z", "Space") and converts them to SFML's `sf::Keyboard::Key` values.
+         */
         const std::unordered_map<std::string, sf::Keyboard::Key> keyMap = {
             {"Z", sf::Keyboard::Key::Z},
             {"S", sf::Keyboard::Key::S},
@@ -46,11 +52,24 @@ namespace rtype::components {
             {"Space", sf::Keyboard::Key::Space}
         };
 
+        /**
+         * @brief Mapping of string event types to `sf::Event::EventType`.
+         *
+         * This map enables configuration files to specify event types
+         * like "Pressed" or "Released", which are then mapped to the corresponding
+         * SFML event types.
+         */
         const std::unordered_map<std::string, sf::Event::EventType> eventMap = {
             {"Pressed", sf::Event::EventType::KeyPressed},
             {"Released", sf::Event::EventType::KeyReleased}
         };
 
+        /**
+         * @brief Mapping of string actions to their corresponding functions.
+         *
+         * This map binds action names (e.g., "goUp", "goDown") to lambda functions
+         * that execute the desired behavior for an entity when the action is triggered.
+         */
         const std::unordered_map<std::string, std::function<void(ecs::ComponentManager& componentManager, size_t id)>> functionMap = {
             {"goUp", [this](ecs::ComponentManager& componentManager, size_t id) {
                 auto speed = componentManager.getComponent<Speed>(id);
@@ -92,6 +111,14 @@ namespace rtype::components {
             }}
         };
 
+        /**
+         * @brief Initializes the `InputHandler` component from a JSON configuration.
+         *
+         * Reads key mappings, event types, and associated actions from a JSON object,
+         * and populates the `keyActions` map with the corresponding behaviors.
+         *
+         * @param value A JSON object containing input configurations.
+         */
         void create(nlohmann::basic_json<> &value) override {
             GameLoader inputLoader;
             inputLoader.loadGlobalConfig(value);
@@ -113,8 +140,8 @@ namespace rtype::components {
          * @brief A multimap associating keyboard keys with actions.
          *
          * Each key in the map corresponds to an `sf::Keyboard::Key`, and each action
-         * is represented as a pair of `sf::Event::EventType` `std::function<void()>`. This allows flexible handling
-         * of key presses, binding specific functions to them.
+         * is represented as a pair of `sf::Event::EventType` and a `std::function`
+         * to execute the action.
          */
         std::unordered_multimap<sf::Keyboard::Key, std::pair<sf::Event::EventType, std::function<void(ecs::ComponentManager& componentManager, size_t id)>>> keyActions;
     };

@@ -43,6 +43,16 @@ namespace rtype::systems
          *        manages all components in the ECS system.
          */
         static void move(const ecs::EntityManager& entityManager, ecs::ComponentManager& componentManager);
+
+        /**
+         * @brief Initiates movement for entities by updating their velocity.
+         * This function iterates through all entities in the game, checks their
+         * associated movement components, and updates their velocity based on
+         * the movement type and associated parameters.
+         *
+         * @param entityManager The entity manager responsible for managing entities.
+         * @param componentManager The component manager responsible for managing components.
+         */
         static void startMove(const ecs::EntityManager& entityManager, ecs::ComponentManager& componentManager);
     };
 }
