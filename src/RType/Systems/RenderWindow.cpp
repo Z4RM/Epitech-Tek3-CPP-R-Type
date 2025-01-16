@@ -11,7 +11,6 @@
 
 #include "InputSystem.hpp"
 #include "Components.hpp"
-#include "RType/Entities/Window.hpp"
 
 std::vector<rtype::ecs::Entity> getEntitiesSortedByZIndex(
     const rtype::ecs::EntityManager& entityManager,
