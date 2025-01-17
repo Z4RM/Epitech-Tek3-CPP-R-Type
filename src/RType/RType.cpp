@@ -11,7 +11,6 @@
 #include "Components/Enemy.hpp"
 #include "Components/Player.hpp"
 #include "Systems.hpp"
-#include "../Systems/AnimationProjectile.hpp"
 #include "RType.hpp"
 
 int rtype::RType::run() {
