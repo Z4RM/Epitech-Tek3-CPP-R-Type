@@ -8,8 +8,7 @@
 #ifndef ANIMATIONPROJECTILE_HPP
 #define ANIMATIONPROJECTILE_HPP
 
-#include "../../include/ECS.hpp"
-#include "../../include/Structures.hpp"
+#include "ECS.hpp"
 
 namespace rtype::systems {
     class UpdateProjectilesSystem {
