@@ -106,7 +106,6 @@ namespace rtype::components {
 
     void move(Position pos);
     void shoot(rtype::ecs::EntityManager &entityManager, rtype::ecs::ComponentManager &componentManager) const;
-    void updateProjectiles(rtype::ecs::ComponentManager &componentManager, std::vector<size_t> &projectileIds);
 
     private:
         /**

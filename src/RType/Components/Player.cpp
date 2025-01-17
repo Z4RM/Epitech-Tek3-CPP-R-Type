@@ -121,7 +121,7 @@ void rtype::components::Player::shoot(
 
     Sprite projectileSprite = {
         projectilePos,
-        {10.0f, 10.0f},
+        {82.0f, 18.0f},
         "assets/sprites/projectile/player-shots.gif",
         {1},
         new sf::Texture(),
@@ -131,13 +131,13 @@ void rtype::components::Player::shoot(
     projectileSprite.texture->loadFromFile(projectileSprite.path);
     projectileSprite.sprite->setTexture(*projectileSprite.texture);
 
-    sf::IntRect textureRect(80, 150, 85, 50);
+    sf::IntRect textureRect(82, 165, 82, 18);
     projectileSprite.sprite->setTextureRect(textureRect);
     projectileSprite.sprite->setPosition({projectilePos.x, projectilePos.y});
 
     Animation projectileAnimation = {
         "assets/sprites/projectile/player-shots.gif",
-        6,
+        2,
         10
     };
 
@@ -158,27 +158,6 @@ void rtype::components::Player::shoot(
     };
     componentManager.addComponent<Projectile>(projectileId, projectile);
 }
-void updateProjectiles(
-    rtype::ecs::ComponentManager &componentManager,
-    std::vector<size_t> &projectileIds
-) {
-    for (size_t projectileId : projectileIds) {
-        auto *projectile = componentManager.getComponent<Projectile>(projectileId);
-        if (!projectile) continue;
-
-#ifdef RTYPE_IS_CLIENT
-        float elapsedTime = projectile->animationClock.getElapsedTime().asSeconds();
-        int frame = static_cast<int>(elapsedTime * projectile->animation.frameRate) % projectile->animation.nbFrames;
-        int frameWidth = static_cast<int>(projectile->sprite.size.width);
-        sf::IntRect textureRect(frame * frameWidth, 0, frameWidth, static_cast<int>(projectile->sprite.size.height));
-        projectile->sprite.sprite->setTextureRect(textureRect);
-#endif
-        projectile->position.x += projectile->velocity.x;
-        projectile->position.y += projectile->velocity.y;
-        projectile->sprite.sprite->setPosition({projectile->position.x, projectile->position.y});
-    }
-}
-
 
 #else
 
