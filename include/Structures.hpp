@@ -88,8 +88,8 @@ struct Projectile
     Animation animation;
     Sprite sprite;
     sf::Clock animationClock;
-};
 #endif
+};
 
 
 #endif //STRUCTURE_HPP
