@@ -39,7 +39,6 @@ void rtype::systems::UpdateProjectilesSystem::updateProjectiles(
                 ++it;
             }
 
-#ifdef RTYPE_IS_CLIENT
         float elapsedTime = projectile->animationClock.getElapsedTime().asSeconds();
         int frame = static_cast<int>(elapsedTime * projectile->animation.frameRate) % projectile->animation.nbFrames;
         std::cout << "frame " << frame << std::endl;
@@ -53,6 +52,5 @@ void rtype::systems::UpdateProjectilesSystem::updateProjectiles(
         projectile->sprite.sprite->setTextureRect(textureRect);
 
         projectile->sprite.sprite->setPosition({projectile->position.x, projectile->position.y});
-#endif
     }
 }
