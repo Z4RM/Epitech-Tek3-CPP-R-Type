@@ -14,86 +14,67 @@
 #endif
 
 /**
- * @class Player
- * @brief Represents a player in the game with position, velocity, size, sprite, and animation components.
- *
- * This class encapsulates the player entity and its associated components in the ECS architecture.
+ * @namespace rtype::components
+ * @brief Namespace containing all components used in the R_Type game.
  */
 namespace rtype::components {
+
+    /**
+     * @class Player
+     * @brief Represents a player in the game with various components like position, velocity, size, sprite, and animation.
+     *
+     * The Player class encapsulates a player entity and manages its properties in the ECS architecture.
+     */
     class Player {
     public:
 #ifdef RTYPE_IS_CLIENT
-
         /**
-         * @brief Constructs a new Player object.
+         * @brief Constructs a new Player object (Client version).
          *
-         * Initializes a player entity with its components in the ECS (Entity-Component-System) architecture.
+         * Initializes a player entity with position, velocity, size, sprite, and animation components.
          *
-         * @param entityManager The entity manager responsible for handling entities.
-         * @param componentManager The component manager responsible for handling components.
-         * @param pos The initial position of the player.
-         *        - x: The x-coordinate in the game world.
-         *        - y: The y-coordinate in the game world.
-         *        - z: The z-coordinate (depth) in the game world.
-         * @param vel The initial velocity of the player.
-         *        - x: Horizontal velocity of the player.
-         *        - y: Vertical velocity of the player.
-         * @param size The size of the player.
-         *        - width: The width of the player.
-         *        - height: The height of the player.
-         * @param sprite The sprite used to render the player.
-         *        - pos: The position of the sprite in the game world.
-         *        - size: The dimensions of the sprite.
-         *        - path: The file path to the sprite image.
-         * @param animation The animation details of the player.
-         *        - path: The file path to the animation data.
-         *        - nbFrames: The total number of frames in the animation.
-         *        - frameRate: The frame rate of the animation.
+         * @param entityManager The entity manager handling game entities.
+         * @param componentManager The component manager handling game components.
+         * @param pos Initial position of the player.
+         * @param vel Initial velocity of the player.
+         * @param size Size of the player.
+         * @param sprite The sprite used for rendering the player.
+         * @param animation Animation details of the player.
          */
         Player(
-                rtype::ecs::EntityManager &entityManager,
-                rtype::ecs::ComponentManager &componentManager,
-                Position pos,
-                Velocity vel,
-                Size size,
-                Sprite &sprite,
-                const Animation &animation
+            rtype::ecs::EntityManager &entityManager,
+            rtype::ecs::ComponentManager &componentManager,
+            Position pos,
+            Velocity vel,
+            Size size,
+            Sprite &sprite,
+            const Animation &animation
         );
-
 #else
-
         /**
-         * @brief Constructs a new Player object.
+         * @brief Constructs a new Player object (Server version).
          *
-         * Initializes a player entity with its components in the ECS (Entity-Component-System) architecture.
+         * Initializes a player entity with position, velocity, and size components.
          *
-         * @param entityManager The entity manager responsible for handling entities.
-         * @param componentManager The component manager responsible for handling components.
-         * @param pos The initial position of the player.
-         *        - x: The x-coordinate in the game world.
-         *        - y: The y-coordinate in the game world.
-         *        - z: The z-coordinate (depth) in the game world.
-         * @param vel The initial velocity of the player.
-         *        - x: Horizontal velocity of the player.
-         *        - y: Vertical velocity of the player.
-         * @param size The size of the player.
-         *        - width: The width of the player.
-         *        - height: The height of the player.
+         * @param entityManager The entity manager handling game entities.
+         * @param componentManager The component manager handling game components.
+         * @param pos Initial position of the player.
+         * @param vel Initial velocity of the player.
+         * @param size Size of the player.
          */
         Player(
-                rtype::ecs::EntityManager &entityManager,
-                rtype::ecs::ComponentManager &componentManager,
-                Position pos,
-                Velocity vel,
-                Size size
+            rtype::ecs::EntityManager &entityManager,
+            rtype::ecs::ComponentManager &componentManager,
+            Position pos,
+            Velocity vel,
+            Size size
         );
-
 #endif
 
         /**
-         * @brief Default destructor.
+         * @brief Destructor for the Player class.
          *
-         * Cleans up resources associated with the Player object.
+         * Cleans up resources associated with the player object.
          */
         ~Player() = default;
 
@@ -102,21 +83,48 @@ namespace rtype::components {
          *
          * @return The unique identifier of the player entity.
          */
-        [[nodiscard]] size_t getId() const { return _id; };
+        [[nodiscard]] size_t getId() const;
 
-    void move(Position pos);
-    void shoot(rtype::ecs::EntityManager &entityManager, rtype::ecs::ComponentManager &componentManager) const;
+        /**
+         * @brief Moves the player to a new position.
+         *
+         * @param pos The new position for the player.
+         */
+        void move(Position pos);
+
+        /**
+         * @brief Allows the player to shoot a projectile.
+         *
+         * @param entityManager The entity manager for creating the projectile entity.
+         * @param componentManager The component manager for managing projectile components.
+         */
+        void shoot(rtype::ecs::EntityManager &entityManager, rtype::ecs::ComponentManager &componentManager) const;
 
     private:
         /**
-         * @brief The unique identifier for the player entity.
+         * @brief Unique identifier for the player entity.
          */
         size_t _id;
+
+        /**
+         * @brief Clock for managing shooting cooldowns.
+         */
         mutable sf::Clock _shootClock;
+
+        /**
+         * @brief The cooldown duration for shooting, in seconds.
+         */
         const float _shootCooldown = 0.8f;
+
+        /**
+         * @brief Flag to determine if the player can shoot projectiles.
+         */
         bool _projectile = true;
 
 #ifdef RTYPE_IS_CLIENT
+        /**
+         * @brief Handles player input on the client side.
+         */
         InputHandler _inputs;
 #endif
     };
