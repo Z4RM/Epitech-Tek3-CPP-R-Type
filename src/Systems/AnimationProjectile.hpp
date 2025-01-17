@@ -9,6 +9,7 @@
 #define ANIMATIONPROJECTILE_HPP
 
 #include "ECS.hpp"
+#include "Structures.hpp"
 
 namespace rtype::systems {
     class UpdateProjectilesSystem {
