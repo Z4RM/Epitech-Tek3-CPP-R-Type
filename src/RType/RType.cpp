@@ -80,7 +80,6 @@ int rtype::RType::_run() {
             renderWindow,
             mode
     );
-
     systemManager.addSystem(rtype::systems::RenderWindowSys::render);
 #endif
 

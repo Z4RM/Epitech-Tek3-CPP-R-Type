@@ -12,7 +12,7 @@
 #include "Components.hpp"
 #include "ECS.hpp"
 
-#define BASIC_ENEMY_SPEED 80
+#define BASIC_ENEMY_SPEED 20
 
 namespace rtype::entities {
     /**
