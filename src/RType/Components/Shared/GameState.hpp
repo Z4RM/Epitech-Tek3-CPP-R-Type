@@ -12,7 +12,6 @@
 
 namespace rtype::components {
     struct GameState {
-        std::map<int, models::Scene> _scenes;
-        int currentScene;
+        bool isStarted = true;
     };
 }

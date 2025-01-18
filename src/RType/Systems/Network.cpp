@@ -14,11 +14,13 @@
 #ifndef RTYPE_IS_SERVER
 #include "RType/Components/Client/Sprite.hpp"
 #endif
+#include "ECS/Scene/SceneManager.hpp"
 
 #include "RType/Config/Config.hpp"
 #include "Components.hpp"
 #include "Network/Packets/Descriptors/PacketPlayersData/PacketPlayersData.hpp"
 #include "Network/Packets/Descriptors/PacketEnemiesData/PacketEnemiesData.hpp"
+#include "Network/Packets/Descriptors/PacketStartGame/PacketStartGame.hpp"
 #include "RType/Entities/Enemy.hpp"
 #include "RType/Entities/Player.hpp"
 
@@ -325,9 +327,21 @@ namespace rtype::systems {
 
     void Network::tcpProcess(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager) {
         static network::TCPNetwork network(Config::getInstance().getNetwork().server.port);
+        static bool networkStartingSended = false;
+        static std::map<int, std::shared_ptr<asio::ip::tcp::socket>> playersToSayWelcome = {};
+
+        if (!IS_SERVER && network.getStarted() && !networkStartingSended) {
+            for (auto &entity : entityManager.getEntities()) {
+                auto gameSate = componentManager.getComponent<components::GameState>(entity);
+                if (gameSate && gameSate->isStarted) {
+                    networkStartingSended = true;
+                    network::PacketStartGame packet;
+                    network.sendPacket(packet);
+                }
+            }
+        }
 
         if (!network.getStarted()) {
-
             #ifndef RTYPE_IS_CLIENT
                         playerId++;
                         rtype::entities::Enemy enemy(
@@ -360,51 +374,69 @@ namespace rtype::systems {
                     }
                 });
 
-                network.addHandler(network::CONNECT, [&entityManager, &componentManager](std::unique_ptr<network::IPacket> packet,
-                    std::shared_ptr<asio::ip::tcp::socket> socket) {
-                        std::string addressTcp = socket->remote_endpoint().address().to_string();
-                        int portTcp = socket->remote_endpoint().port();
+                if (IS_SERVER) {
+                    network.addHandler(network::CONNECT, [&entityManager, &componentManager](std::unique_ptr<network::IPacket> packet,
+                        std::shared_ptr<asio::ip::tcp::socket> socket) {
+                            std::string addressTcp = socket->remote_endpoint().address().to_string();
+                            int portTcp = socket->remote_endpoint().port();
 
-                        std::lock_guard guard(Network::playerIdMutex);
-                        Network::playerId++;
-                        #ifndef RTYPE_IS_CLIENT
-                            rtype::entities::Player player(
+                            std::lock_guard guard(Network::playerIdMutex);
+                            Network::playerId++;
+                            playersToSayWelcome[playerId] = socket;
+                            spdlog::info("New player created with net id: {}, for: {}:{}", Network::playerId, addressTcp, portTcp);
+                    });
+
+                    network.addHandler(network::START_GAME, [&entityManager, &componentManager]
+                    (std::unique_ptr<network::IPacket> packet, std::shared_ptr<asio::ip::tcp::socket> socket) {
+                        for (auto &entity: entityManager.getEntities()) {
+                            auto gameState = componentManager.getComponent<components::GameState>(entity);
+                            if (gameState) {
+                                if (gameState->isStarted)
+                                    return;
+                                gameState->isStarted = true;
+                            }
+                        }
+                        for (auto &player : playersToSayWelcome) {
+                            #ifndef RTYPE_IS_CLIENT
+                            rtype::entities::Player playerShip(
                             entityManager,
                             componentManager,
                             {0, 0, 0},
                             {0, 0, 0},
                             {64, 64},
                             {socket},
-                            { Network::playerId }, {PLAYER_SPEED});
-                        #endif
-                        network::PacketWelcome welcome(Network::playerId);
+                            { player.first }, {PLAYER_SPEED});
 
-                        network.sendPacket(welcome, socket);
-                        spdlog::info("New player created with net id: {}, for: {}:{}", Network::playerId, addressTcp, portTcp);
-                });
+                            network::PacketWelcome welcome(player.first);
+                            network.sendPacket(welcome, player.second);
+                            #endif
+                        }
+                    });
+                } else {
+                    network.addHandler(network::WELCOME, [&entityManager, &componentManager](std::unique_ptr<network::IPacket> packet,
+                    std::shared_ptr<asio::ip::tcp::socket> socket) {
+                        auto* packetWelcome = dynamic_cast<network::PacketWelcome*>(packet.get());
 
-                network.addHandler(network::WELCOME, [&entityManager, &componentManager](std::unique_ptr<network::IPacket> packet,
-                std::shared_ptr<asio::ip::tcp::socket> socket) {
-                    auto* packetWelcome = dynamic_cast<network::PacketWelcome*>(packet.get());
-
-                    if (packetWelcome) {
-                        spdlog::info("Server said welcome, net id is: {}", packetWelcome->netId);
-                        #ifdef RTYPE_IS_CLIENT
-                        components::Sprite sprite2 = {{100, 100, 0}, {33, 17}, "assets/sprites/players.gif", {0}};
-                        entities::Player player2(
-                                entityManager,
-                                componentManager,
-                                {0, 200, 0},
-                                {0, 0, 0},
-                                {64, 64},
-                                sprite2,
-                                {"", 0, 0},
-                                {packetWelcome->netId},
-                                {true}
-                        );
-                        #endif
-                    }
-                });
+                        if (packetWelcome) {
+                            spdlog::info("Server said welcome, net id is: {}", packetWelcome->netId);
+                            ecs::SceneManager::getInstance().changeScene(1, true);
+                            #ifdef RTYPE_IS_CLIENT
+                            components::Sprite sprite2 = {{100, 100, 0}, {33, 17}, "assets/sprites/players.gif", {0}};
+                            entities::Player player2(
+                                    entityManager,
+                                    componentManager,
+                                    {0, 200, 0},
+                                    {0, 0, 0},
+                                    {64, 64},
+                                    sprite2,
+                                    {"", 0, 0},
+                                    {packetWelcome->netId},
+                                    {true}
+                            );
+                            #endif
+                        }
+                    });
+                }
 
                 network.start();
             } catch (std::exception &e) {

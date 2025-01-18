@@ -59,8 +59,10 @@ set(RTYPE_SRC
         src/ECS/Scene/AScene.hpp
         src/RType/Scenes/Game/Game.cpp
         src/RType/Scenes/Game/Game.hpp
-        src/RType/Entities/Button.cpp
-        src/RType/Entities/Button.hpp
+        src/RType/Entities/Game.cpp
+        src/RType/Entities/Game.hpp
+        src/Network/Packets/Descriptors/PacketStartGame/PacketStartGame.cpp
+        src/Network/Packets/Descriptors/PacketStartGame/PacketStartGame.hpp
 )
 
 set(CLIENT_SRC
@@ -120,7 +122,14 @@ set(CLIENT_SRC
         src/RType/Components/Client/OnClick.hpp
         src/RType/Entities/Button.cpp
         src/RType/Entities/Button.hpp
-        src/RType/Components/Client/sfText.hpp
+        src/RType/Components/Client/SfText.hpp
+        src/RType/Entities/PlayerCounter.cpp
+        src/RType/Entities/PlayerCounter.hpp
+        src/RType/Components/Shared/Counter.hpp
+        src/RType/Entities/Game.cpp
+        src/RType/Entities/Game.hpp
+        src/Network/Packets/Descriptors/PacketStartGame/PacketStartGame.cpp
+        src/Network/Packets/Descriptors/PacketStartGame/PacketStartGame.hpp
 )
 
 set(RTYPE_HEADERS

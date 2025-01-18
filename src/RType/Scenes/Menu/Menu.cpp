@@ -10,6 +10,7 @@
 #include "ECS/Scene/SceneManager.hpp"
 #include "RType/Entities/Image.hpp"
 #include "RType/Components/Client/OnClick.hpp"
+#include "RType/Components/Shared/GameState.hpp"
 #include "RType/Entities/Button.hpp"
 
 void rtype::scenes::Menu::load() {
@@ -30,8 +31,13 @@ void rtype::scenes::Menu::load() {
     entities::Image backgroundImage(this->_componentManager, this->_entityManager, bg, true);
 
     components::OnClick onClick;
-    onClick.fn = []() {
-        ecs::SceneManager::getInstance().changeScene(1, true);
+    onClick.fn = [this]() {
+        for (auto &entity : _entityManager.getEntities()) {
+            auto gameState = _componentManager.getComponent<components::GameState>(entity);
+            if (gameState) {
+                gameState->isStarted = true;
+            }
+        }
     };
     components::SfText startButtonText("START", "./assets/fonts/Starborn.ttf", sf::Color::White, 50, {300, 300});
     entities::Button startButton(_componentManager, _entityManager, onClick, startButtonText);

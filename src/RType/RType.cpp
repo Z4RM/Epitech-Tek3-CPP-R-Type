@@ -14,6 +14,7 @@
 #include "RType.hpp"
 #include "Networks.hpp"
 #include "ECS/Scene/SceneManager.hpp"
+#include "Entities/Game.hpp"
 #include "Scenes/Game/Game.hpp"
 #include "Scenes/Menu/Menu.hpp"
 #include "Systems/Network.hpp"
@@ -93,6 +94,8 @@ int rtype::RType::_run() {
 
     std::shared_ptr<scenes::Game> game = std::make_shared<scenes::Game>(entityManager, componentManager);
     sceneManager.registerScene(1, std::move(game));
+
+    entities::Game gameSate(componentManager, entityManager);
 
     while (_running()) {
         sceneManager.updateCurrentScene(systemManager);
