@@ -6,18 +6,23 @@
 */
 
 #include "Game.hpp"
+
+#ifdef RTYPE_IS_CLIENT
+
 #include "Components.hpp"
 #include "RType/Entities/Image.hpp"
 
+#endif
+
 namespace rtype::scenes {
     void Game::load() {
-    #ifdef RTYPE_IS_CLIENT
+#ifdef RTYPE_IS_CLIENT
 
         components::Sprite backgroundSprite = {{0, 0, 0}, {-1, -1}, "assets/sprites/background.jpg", {-1}};
         entities::Image img(this->_componentManager, this->_entityManager, backgroundSprite, true);
 
         this->registerEntity(img);
-    #endif
+#endif
         AScene::load();
     }
 }
