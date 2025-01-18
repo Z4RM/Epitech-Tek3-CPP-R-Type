@@ -2,16 +2,14 @@
 ** EPITECH PROJECT, 2025
 ** RType
 ** File description:
-** PacketPlayersData.cpp
+** TODO: add description
 */
 
-#include "PacketPlayersData.hpp"
-
-#include <spdlog/spdlog.h>
+#include "PacketEnemiesData.hpp"
 
 namespace rtype::network {
 
-    std::vector<char> PacketPlayersData::bufferize() const {
+    std::vector<char> PacketEnemiesData::bufferize() const {
         size_t size = 0;
         int dataCount = datas.size();
 
@@ -49,7 +47,7 @@ namespace rtype::network {
         return buffer;
     }
 
-    void PacketPlayersData::fillData(const std::vector<char> &buffer) {
+    void PacketEnemiesData::fillData(const std::vector<char> &buffer) {
         size_t currentSize = sizeof(this->_code) + sizeof(int);
         int dataCount = 0;
         std::memcpy(&dataCount, buffer.data() + sizeof(this->_code), sizeof(dataCount));

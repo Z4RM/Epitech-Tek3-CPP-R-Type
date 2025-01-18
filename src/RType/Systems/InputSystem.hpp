@@ -12,6 +12,8 @@
 
 #include <SFML/Window/Event.hpp>
 
+#include "RType/Entities/Window.hpp"
+
 namespace rtype::systems {
     /**
      * @class InputSystem
@@ -40,7 +42,8 @@ namespace rtype::systems {
          *        access the components of the entities.
          * @param event The input event (e.g., keyboard key press) to process.
          */
-        static void handleInput(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager, const sf::Event &event);
+        static void handleInput(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager, const sf::Event
+        &event, entities::RWindow *window);
     };
 }
 

@@ -6,10 +6,11 @@
 */
 
 #include <spdlog/spdlog.h>
+#include "RenderWindow.hpp"
+#include <iostream>
 #include "InputSystem.hpp"
 #include "Components.hpp"
 #include "RType/Entities/Window.hpp"
-#include "RenderWindow.hpp"
 
 std::vector<rtype::ecs::Entity> getEntitiesSortedByZIndex(
     const rtype::ecs::EntityManager& entityManager,
@@ -26,9 +27,13 @@ std::vector<rtype::ecs::Entity> getEntitiesSortedByZIndex(
 
     std::sort(renderableEntities.begin(), renderableEntities.end(),
               [&componentManager](const rtype::ecs::Entity a, const rtype::ecs::Entity b) {
-                  auto zIndexA = componentManager.getComponent<rtype::components::Sprite>(a.id)->priority.value;
-                  auto zIndexB = componentManager.getComponent<rtype::components::Sprite>(b.id)->priority.value;
-                  return zIndexA < zIndexB;
+                  auto spriteA = componentManager.getComponent<rtype::components::Sprite>(a.id);
+                  auto spriteB = componentManager.getComponent<rtype::components::Sprite>(b.id);
+
+                  if (spriteA && spriteB) {
+                      return spriteA->priority.value < spriteB->priority.value;
+                  }
+                  return spriteA != nullptr;
               });
 
     return renderableEntities;
@@ -55,18 +60,33 @@ void rtype::systems::RenderWindowSys::render(ecs::EntityManager &entityManager, 
                 }
                 return;
             }
-            rtype::systems::InputSystem::handleInput(entityManager, componentManager, event);
+            rtype::systems::InputSystem::handleInput(entityManager, componentManager, event, renderWindow);
         }
 
         auto sortedEntities = getEntitiesSortedByZIndex(entityManager, componentManager);
 
         for (auto e : sortedEntities) {
             auto sprite = componentManager.getComponent<components::Sprite>(e.id);
+            auto health = componentManager.getComponent<components::Health>(e.id);
+
+            if (health && health->created) {
+                renderWindow->window->draw(health->bgBar);
+                renderWindow->window->draw(health->healthBar);
+            }
+
+            //TODO: dont setPos if its already set maybe
             if (sprite && sprite->sprite) {
                 auto pos = componentManager.getComponent<components::Position>(e.id);
                 if (pos)
                     sprite->sprite->setPosition({pos->x, pos->y});
                 renderWindow->window->draw(*sprite->sprite);
+            }
+        }
+
+        for (auto e: entityManager.getEntities()) {
+            auto text = componentManager.getComponent<components::SfText>(e);
+            if (text) {
+                renderWindow->window->draw(text->text);
             }
         }
         renderWindow->window->display();
