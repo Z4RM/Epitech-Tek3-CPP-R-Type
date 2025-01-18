@@ -20,6 +20,7 @@ namespace rtype::components {
         Size size;
         std::string path;
         ZIndex priority;
+        sf::Vector2f scale = {1, 1};
         sf::Texture* texture;
         sf::Sprite* sprite;
         Created created;

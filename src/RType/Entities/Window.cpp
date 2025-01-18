@@ -13,8 +13,7 @@ rtype::entities::Window::Window(
     const components::Size size,
     const components::String& title,
     const RWindow& renderWindow,
-    Mode mode,
-    components::Sprite& backgroundSprite
+    Mode mode
     )
 {
     _id = entityManager.createEntity();
@@ -29,19 +28,9 @@ rtype::entities::Window::Window(
     const int width = static_cast<int>(size.width);
     const int height = static_cast<int>(size.height);
     mode.mode = sf::VideoMode(width, height);
-    backgroundSprite.texture = new sf::Texture();
-    backgroundSprite.sprite = new sf::Sprite();
-    backgroundSprite.texture->loadFromFile(backgroundSprite.path);
-    backgroundSprite.sprite->setTexture(*backgroundSprite.texture);
-    backgroundSprite.sprite->setPosition({0, 0});
-    backgroundSprite.sprite->setScale(
-        size.width / backgroundSprite.sprite->getGlobalBounds().width,
-        size.height / backgroundSprite.sprite->getGlobalBounds().height
-        );
     componentManager.addComponent<components::Size>(_id, size);
     componentManager.addComponent<components::String>(_id, title);
     componentManager.addComponent<RWindow>(_id, renderWindow);
     componentManager.addComponent<Mode>(_id, mode);
-    componentManager.addComponent<components::Sprite>(_id, backgroundSprite);
     componentManager.addComponent<components::Created>(_id, components::Created{false});
 }
