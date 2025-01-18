@@ -8,6 +8,7 @@
 #include "RenderWindow.hpp"
 
 #include <iostream>
+#include <spdlog/spdlog.h>
 
 #include "InputSystem.hpp"
 #include "Components.hpp"
@@ -52,7 +53,7 @@ void rtype::systems::RenderWindowSys::render(ecs::EntityManager &entityManager, 
                 renderWindow->window->close();
                 return;
             }
-            rtype::systems::InputSystem::handleInput(entityManager, componentManager, event);
+            rtype::systems::InputSystem::handleInput(entityManager, componentManager, event, renderWindow);
         }
         auto sortedEntities = getEntitiesSortedByZIndex(entityManager, componentManager);
 
@@ -65,11 +66,19 @@ void rtype::systems::RenderWindowSys::render(ecs::EntityManager &entityManager, 
                 renderWindow->window->draw(health->healthBar);
             }
 
+            //TODO: dont setPos if its already set maybe
             if (sprite && sprite->sprite) {
                 auto pos = componentManager.getComponent<components::Position>(e.id);
                 if (pos)
                     sprite->sprite->setPosition({pos->x, pos->y});
                 renderWindow->window->draw(*sprite->sprite);
+            }
+        }
+
+        for (auto e: entityManager.getEntities()) {
+            auto text = componentManager.getComponent<components::SfText>(e);
+            if (text) {
+                renderWindow->window->draw(text->text);
             }
         }
         renderWindow->window->display();

@@ -120,6 +120,7 @@ set(CLIENT_SRC
         src/RType/Components/Client/OnClick.hpp
         src/RType/Entities/Button.cpp
         src/RType/Entities/Button.hpp
+        src/RType/Components/Client/sfText.hpp
 )
 
 set(RTYPE_HEADERS

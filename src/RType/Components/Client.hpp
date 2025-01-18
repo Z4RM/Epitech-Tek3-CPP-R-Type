@@ -11,3 +11,5 @@
 #include "./Client/ZIndex.hpp"
 #include "./Client/Sprite.hpp"
 #include "./Client/InputHandler.hpp"
+#include "./Client/SfText.hpp"
+#include "./Client/OnClick.hpp"

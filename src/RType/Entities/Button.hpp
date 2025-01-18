@@ -8,9 +8,12 @@
 #pragma once
 #include "ECS/AEntity.hpp"
 #include "RType/Components/Client/OnClick.hpp"
+#include "RType/Components/Client/SfText.hpp"
 
 namespace rtype::entities {
     class Button final : public ecs::AEntity {
-        Button(ecs::ComponentManager &componentManager, ecs::EntityManager &entityManager, components::OnClick);
+    public:
+        Button(ecs::ComponentManager &componentManager, ecs::EntityManager &entityManager, components::OnClick,
+        components::SfText text);
     };
 }

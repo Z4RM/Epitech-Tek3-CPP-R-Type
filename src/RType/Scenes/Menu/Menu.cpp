@@ -2,12 +2,15 @@
 ** EPITECH PROJECT, 2025
 ** RType
 ** File description:
-** TODO: add description
+** Menu scene implementation
 */
 
 #include "Menu.hpp"
 
+#include "ECS/Scene/SceneManager.hpp"
 #include "RType/Entities/Image.hpp"
+#include "RType/Components/Client/OnClick.hpp"
+#include "RType/Entities/Button.hpp"
 
 void rtype::scenes::Menu::load() {
 
@@ -25,6 +28,15 @@ void rtype::scenes::Menu::load() {
     bg.priority = {-1};
     bg.pos = {0, 0};
     entities::Image backgroundImage(this->_componentManager, this->_entityManager, bg, true);
+
+    components::OnClick onClick;
+    onClick.fn = []() {
+        ecs::SceneManager::getInstance().changeScene(1, true);
+    };
+    components::SfText startButtonText("START", "./assets/fonts/Starborn.ttf", sf::Color::White, 50, {300, 300});
+    entities::Button startButton(_componentManager, _entityManager, onClick, startButtonText);
+
+    this->registerEntity(startButton);
     this->registerEntity(backgroundImage);
     this->registerEntity(logoImage);
 
