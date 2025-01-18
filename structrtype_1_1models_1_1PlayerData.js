@@ -1,5 +1,6 @@
 var structrtype_1_1models_1_1PlayerData =
 [
+    [ "health", "structrtype_1_1models_1_1PlayerData.html#aba37eb421a78435fe2f0d1ca5df5b56f", null ],
     [ "netId", "structrtype_1_1models_1_1PlayerData.html#aef273821036ae27de72cf9377801e1ce", null ],
     [ "network", "structrtype_1_1models_1_1PlayerData.html#a9f20636a63464c8a8db816988934257e", null ],
     [ "pos", "structrtype_1_1models_1_1PlayerData.html#a291c0d4eb49486fd67958d1a0869a705", null ],

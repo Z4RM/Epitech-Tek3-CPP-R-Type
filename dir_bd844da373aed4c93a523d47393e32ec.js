@@ -2,6 +2,8 @@ var dir_bd844da373aed4c93a523d47393e32ec =
 [
     [ "ActualPlayer.hpp", "ActualPlayer_8hpp.html", "ActualPlayer_8hpp" ],
     [ "Created.hpp", "Created_8hpp.html", "Created_8hpp" ],
+    [ "Damage.hpp", "Damage_8hpp.html", "Damage_8hpp" ],
+    [ "Health.hpp", "Health_8hpp.html", "Health_8hpp" ],
     [ "Hitbox.hpp", "Hitbox_8hpp.html", "Hitbox_8hpp" ],
     [ "IA.hpp", "IA_8hpp.html", "IA_8hpp" ],
     [ "NetId.hpp", "NetId_8hpp.html", "NetId_8hpp" ],

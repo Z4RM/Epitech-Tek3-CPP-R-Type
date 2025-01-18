@@ -5,6 +5,8 @@ var annotated_dup =
         [ "ActualPlayer", "structrtype_1_1components_1_1ActualPlayer.html", "structrtype_1_1components_1_1ActualPlayer" ],
         [ "Animation", "structrtype_1_1components_1_1Animation.html", "structrtype_1_1components_1_1Animation" ],
         [ "Created", "structrtype_1_1components_1_1Created.html", "structrtype_1_1components_1_1Created" ],
+        [ "Damage", "structrtype_1_1components_1_1Damage.html", "structrtype_1_1components_1_1Damage" ],
+        [ "Health", "structrtype_1_1components_1_1Health.html", "structrtype_1_1components_1_1Health" ],
         [ "Hitbox", "structrtype_1_1components_1_1Hitbox.html", "structrtype_1_1components_1_1Hitbox" ],
         [ "IA", "structrtype_1_1components_1_1IA.html", "structrtype_1_1components_1_1IA" ],
         [ "InputHandler", "structrtype_1_1components_1_1InputHandler.html", "structrtype_1_1components_1_1InputHandler" ],
@@ -35,12 +37,14 @@ var annotated_dup =
         [ "Window", "classrtype_1_1entities_1_1Window.html", "classrtype_1_1entities_1_1Window" ]
       ] ],
       [ "models", "namespacertype_1_1models.html", [
+        [ "EnemyData", "structrtype_1_1models_1_1EnemyData.html", "structrtype_1_1models_1_1EnemyData" ],
         [ "PlayerData", "structrtype_1_1models_1_1PlayerData.html", "structrtype_1_1models_1_1PlayerData" ]
       ] ],
       [ "network", "namespacertype_1_1network.html", [
         [ "APacket", "classrtype_1_1network_1_1APacket.html", "classrtype_1_1network_1_1APacket" ],
         [ "IPacket", "classrtype_1_1network_1_1IPacket.html", "classrtype_1_1network_1_1IPacket" ],
         [ "PacketConnect", "classrtype_1_1network_1_1PacketConnect.html", "classrtype_1_1network_1_1PacketConnect" ],
+        [ "PacketEnemiesData", "classrtype_1_1network_1_1PacketEnemiesData.html", "classrtype_1_1network_1_1PacketEnemiesData" ],
         [ "PacketFactory", "classrtype_1_1network_1_1PacketFactory.html", "classrtype_1_1network_1_1PacketFactory" ],
         [ "PacketNewPlayer", "classrtype_1_1network_1_1PacketNewPlayer.html", "classrtype_1_1network_1_1PacketNewPlayer" ],
         [ "PacketPlayersData", "classrtype_1_1network_1_1PacketPlayersData.html", "classrtype_1_1network_1_1PacketPlayersData" ],

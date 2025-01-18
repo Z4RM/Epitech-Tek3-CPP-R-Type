@@ -3,6 +3,8 @@ var namespacertype_1_1components =
     [ "ActualPlayer", "structrtype_1_1components_1_1ActualPlayer.html", "structrtype_1_1components_1_1ActualPlayer" ],
     [ "Animation", "structrtype_1_1components_1_1Animation.html", "structrtype_1_1components_1_1Animation" ],
     [ "Created", "structrtype_1_1components_1_1Created.html", "structrtype_1_1components_1_1Created" ],
+    [ "Damage", "structrtype_1_1components_1_1Damage.html", "structrtype_1_1components_1_1Damage" ],
+    [ "Health", "structrtype_1_1components_1_1Health.html", "structrtype_1_1components_1_1Health" ],
     [ "Hitbox", "structrtype_1_1components_1_1Hitbox.html", "structrtype_1_1components_1_1Hitbox" ],
     [ "IA", "structrtype_1_1components_1_1IA.html", "structrtype_1_1components_1_1IA" ],
     [ "InputHandler", "structrtype_1_1components_1_1InputHandler.html", "structrtype_1_1components_1_1InputHandler" ],
