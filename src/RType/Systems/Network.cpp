@@ -342,18 +342,6 @@ namespace rtype::systems {
         }
 
         if (!network.getStarted()) {
-            #ifndef RTYPE_IS_CLIENT
-                        playerId++;
-                        rtype::entities::Enemy enemy(
-                            entityManager,
-                            componentManager,
-                            {600, 100, 0},
-                            {0, 0, 0},
-                            {64, 64},
-                            {playerId}
-                        );
-            #endif
-
             try {
 
                 network.registerOnPlayerDisconnect([&entityManager, &componentManager](std::shared_ptr<asio::ip::tcp::socket> socket) {
@@ -396,6 +384,16 @@ namespace rtype::systems {
                                 gameState->isStarted = true;
                             }
                         }
+
+                        playerId++;
+                            rtype::entities::Enemy enemy(
+                                entityManager,
+                                componentManager,
+                                {600, 100, 0},
+                                {0, 0, 0},
+                                {64, 64},
+                                {playerId}
+                            );
                         for (auto &player : playersToSayWelcome) {
                             #ifndef RTYPE_IS_CLIENT
                             rtype::entities::Player playerShip(
