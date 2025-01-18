@@ -12,6 +12,9 @@ namespace rtype::network {
     enum EPacketCode {
         //SHARED
         CONNECT = 100,
-        WELCOME = 101
+        WELCOME = 101,
+
+        NEW_PLAYER = 200,
+        PLAYERS_DATA = 201
     };
 }

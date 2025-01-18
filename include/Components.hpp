@@ -26,7 +26,7 @@
 #include "RType/Components/Client/Mode.hpp"
 #include "RType/Components/Client/FrameLimit.hpp"
 #include "RType/Components/Client/RWindow.hpp"
-#include "RType/Components/Client/Speed.hpp"
+#include "RType/Components/Shared/Speed.hpp"
 #include "RType/Components/Client/Music.hpp"
 #endif
 

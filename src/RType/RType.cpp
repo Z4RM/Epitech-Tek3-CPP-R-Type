@@ -13,9 +13,10 @@
 
 #include "Components.hpp"
 #include "Networks.hpp"
+#include "Systems/Network.hpp"
 
 int rtype::RType::run() {
-    if (!Config::initialize())
+    if (!Config::initialize("../config.ini"))
         return 84;
 
     RType rtype(Config::getInstance().getNetwork().server.port);
@@ -97,12 +98,12 @@ int rtype::RType::_run() {
     ecs::SystemManager systemManager(entityManager, componentManager);
 
     GameLoader gameLoader;
-    gameLoader.loadGlobalConfig("config/config.json");
+    gameLoader.loadGlobalConfig("../config/config.json");
     const size_t rtype = entityManager.createEntity();
     this->createComponentViaConfig(gameLoader, rtype, entityManager, componentManager);
 
     GameLoader levelLoader;
-    levelLoader.loadGlobalConfig("config/levels/level_1.json");
+    levelLoader.loadGlobalConfig("../config/levels/level_1.json");
     const size_t level = entityManager.createEntity();
     this->createComponentViaConfig(levelLoader, level, entityManager, componentManager);
 
@@ -127,6 +128,8 @@ int rtype::RType::_run() {
     systemManager.addSystem(rtype::systems::RenderWindowSys::render);
 #endif
 
+    systemManager.addSystem(rtype::systems::Network::udpProcess);
+    systemManager.addSystem(rtype::systems::Network::tcpProcess);
     while (_running()) {
         systemManager.updateSystems();
 #ifdef RTYPE_IS_CLIENT

@@ -1,0 +1,38 @@
+name: Create a new release
+
+on:
+  workflow_call:
+
+jobs:
+  release:
+    name: Create a new release
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/')
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download all built binaries from artifacts
+        uses: actions/download-artifact@v4
+        with:
+          merge-multiple: true
+
+      - name: Create an archive containing the game assets
+        run: tar -zcvf assets.tar.gz assets
+
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          body: "Auto-generated release from tag ${{ github.ref_name }}"
+          files: |
+            r-type_client
+            r-type_client.exe
+            r-type_server
+            r-type_server.exe
+            assets.tar.gz
+            config.ini.example
+          preserve_order: true
+          fail_on_unmatched_files: true
+          generate_release_notes: true

@@ -38,8 +38,9 @@ namespace rtype::components {
          * to the standard error stream, and playback is not started.
          */
         void create(nlohmann::basic_json<> &value) override {
-            if (!music->openFromFile(value["path"])) {
-                std::string tmp = value["path"];
+            std::string tmp = "../";
+            tmp.append(value["path"]);
+            if (!music->openFromFile(tmp)) {
                 spdlog::error("Error loading music from {}", tmp);
                 return;
             }

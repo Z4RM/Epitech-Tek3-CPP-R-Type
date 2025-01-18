@@ -37,7 +37,9 @@ namespace rtype::components {
          * - `size` (object): A JSON object with `width` and `height` fields for the sprite size.
          */
         void create(nlohmann::basic_json<> &value) override {
-            path = value["path"];
+            std::string tmp = "../";
+            tmp.append(value["path"]);
+            path = tmp;
             priority.create(value["priority"]);
             created.isCreate = true;
             texture = new sf::Texture();

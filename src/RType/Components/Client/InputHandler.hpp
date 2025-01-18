@@ -25,7 +25,7 @@
 #include "IComponent.hpp"
 #include "GameLoader.hpp"
 #include "spdlog/spdlog.h"
-#include "Speed.hpp"
+#include "RType/Components/Shared/Speed.hpp"
 
 namespace rtype::components {
     /**
@@ -44,7 +44,7 @@ namespace rtype::components {
          * This map allows configuration files to refer to keys by their string names
          * (e.g., "Z", "Space") and converts them to SFML's `sf::Keyboard::Key` values.
          */
-        const std::unordered_map<std::string, sf::Keyboard::Key> keyMap = {
+        std::unordered_map<std::string, sf::Keyboard::Key> keyMap = {
             {"Z", sf::Keyboard::Key::Z},
             {"S", sf::Keyboard::Key::S},
             {"Q", sf::Keyboard::Key::Q},
@@ -59,7 +59,7 @@ namespace rtype::components {
          * like "Pressed" or "Released", which are then mapped to the corresponding
          * SFML event types.
          */
-        const std::unordered_map<std::string, sf::Event::EventType> eventMap = {
+        std::unordered_map<std::string, sf::Event::EventType> eventMap = {
             {"Pressed", sf::Event::EventType::KeyPressed},
             {"Released", sf::Event::EventType::KeyReleased}
         };
@@ -70,7 +70,7 @@ namespace rtype::components {
          * This map binds action names (e.g., "goUp", "goDown") to lambda functions
          * that execute the desired behavior for an entity when the action is triggered.
          */
-        const std::unordered_map<std::string, std::function<void(ecs::ComponentManager& componentManager, size_t id)>> functionMap = {
+        std::unordered_map<std::string, std::function<void(ecs::ComponentManager& componentManager, size_t id)>> functionMap = {
             {"goUp", [this](ecs::ComponentManager& componentManager, size_t id) {
                 auto speed = componentManager.getComponent<Speed>(id);
                 if (speed) {

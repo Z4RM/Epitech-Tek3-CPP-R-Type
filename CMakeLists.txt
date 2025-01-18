@@ -4,7 +4,11 @@ project(RType VERSION 0.0.1 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR})
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/build)
+foreach (OUTPUT_CONFIG ${CMAKE_CONFIGURATION_TYPES})
+    string(TOUPPER ${OUTPUT_CONFIG} OUTPUT_CONFIG)
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_${OUTPUT_CONFIG} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+endforeach ()
 
 find_package(inih REQUIRED)
 find_package(spdlog REQUIRED)
@@ -32,10 +36,19 @@ set(RTYPE_SRC
         src/Network/UDPNetwork/UDPNetwork.hpp
         src/Network/TCPNetwork/TCPNetwork.cpp
         src/Network/TCPNetwork/TCPNetwork.hpp
+        src/RType/Systems/Network.cpp
+        src/RType/Systems/Network.hpp
         src/ThreadPool/ThreadPool.cpp
         src/Network/Packets/PacketFactory/PacketFactory.cpp
         src/Network/Packets/PacketFactory/PacketFactory.hpp
-        src/Network/Packets/PacketConnect/PacketConnect.cpp
+        src/Network/Packets/Descriptors/PacketConnect/PacketConnect.cpp
+        src/Network/Packets/Descriptors/PacketWelcome/PacketWelcome.cpp
+        src/Network/Packets/Descriptors/PacketWelcome/PacketWelcome.hpp
+        src/Network/Packets/Descriptors/PacketNewPlayer/PacketNewPlayer.cpp
+        src/Network/Packets/Descriptors/PacketNewPlayer/PacketNewPlayer.hpp
+        src/RType/Components/Shared/Network.hpp
+        src/Network/Packets/Descriptors/PacketPlayersData/PacketPlayersData.cpp
+        src/Network/Packets/Descriptors/PacketPlayersData/PacketPlayersData.hpp
 )
 
 set(CLIENT_SRC
@@ -57,9 +70,19 @@ set(CLIENT_SRC
         src/Network/Packets/IPacket.hpp
         src/Network/Packets/PacketFactory/PacketFactory.cpp
         src/Network/Packets/PacketFactory/PacketFactory.hpp
-        src/Network/Packets/PacketConnect/PacketConnect.cpp
+        src/Network/Packets/Descriptors/PacketConnect/PacketConnect.cpp
         include/Networks.hpp
         src/RType/Components/Client/Sprite.hpp
+        src/Network/Packets/Descriptors/PacketWelcome/PacketWelcome.cpp
+        src/Network/Packets/Descriptors/PacketWelcome/PacketWelcome.hpp
+        src/Network/Packets/Descriptors/PacketNewPlayer/PacketNewPlayer.cpp
+        src/Network/Packets/Descriptors/PacketNewPlayer/PacketNewPlayer.hpp
+        src/RType/Components/Shared/Network.hpp
+        src/Network/Packets/Descriptors/PacketPlayersData/PacketPlayersData.cpp
+        src/Network/Packets/Descriptors/PacketPlayersData/PacketPlayersData.hpp
+        src/RType/Models/PlayerData.hpp
+        src/RType/Components/Shared/NetId.hpp
+        src/RType/Components/Shared/ActualPlayer.hpp
 )
 
 set(RTYPE_HEADERS
@@ -71,6 +94,10 @@ set(RTYPE_HEADERS
 )
 
 link_libraries(inih::inireader spdlog::spdlog asio::asio nlohmann_json::nlohmann_json)
+
+if(WIN32)
+    add_compile_definitions(_WIN32_WINNT=0x0A00)
+endif()
 
 #region Server
 add_executable(r-type_server ${RTYPE_SRC} ${RTYPE_HEADERS})
