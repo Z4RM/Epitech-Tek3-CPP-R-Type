@@ -7,19 +7,18 @@
 
 #include "Menu.hpp"
 
-#include "ECS/Scene/SceneManager.hpp"
+#ifdef RTYPE_IS_CLIENT
+
+#include "RType/Entities/Button.hpp"
 #include "RType/Entities/Image.hpp"
 #include "RType/Components/Client/OnClick.hpp"
 #include "RType/Components/Shared/GameState.hpp"
-#include "RType/Entities/Button.hpp"
 
 void rtype::scenes::Menu::load() {
-
-#ifdef RTYPE_IS_CLIENT
     components::Sprite logo;
     logo.pos = {120, 0};
     logo.size = {-1, -1};
-    logo.priority = { 0 };
+    logo.priority = {0};
     logo.path = "./assets/logo.png";
     entities::Image logoImage(this->_componentManager, this->_entityManager, logo);
 
@@ -32,7 +31,7 @@ void rtype::scenes::Menu::load() {
 
     components::OnClick onClick;
     onClick.fn = [this]() {
-        for (auto &entity : _entityManager.getEntities()) {
+        for (auto &entity: _entityManager.getEntities()) {
             auto gameState = _componentManager.getComponent<components::GameState>(entity);
             if (gameState) {
                 gameState->isStarted = true;
@@ -47,5 +46,8 @@ void rtype::scenes::Menu::load() {
     this->registerEntity(logoImage);
 
     AScene::load();
-#endif
 }
+
+#else
+void rtype::scenes::Menu::load() {}
+#endif
