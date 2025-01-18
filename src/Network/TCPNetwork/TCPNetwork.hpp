@@ -42,7 +42,7 @@ namespace rtype::network {
              * @brief Connect to the given server endpoint
              * @param endpoint to endpoint to connect to
              * **/
-            void connect(const asio::ip::tcp::endpoint& endpoint); // glibchecker-ignore
+            void connect(asio::ip::tcp::endpoint endpoint); // glibchecker-ignore
 
             // SHARED //
 
@@ -70,6 +70,9 @@ namespace rtype::network {
             socket)>
             handler);
 
+            void setStop(bool state);
+            bool getStop();
+
         private:
             unsigned short _port; ///< port of the server
             std::optional<asio::ip::tcp::acceptor> _acceptor; ///< asio acceptor for the server
@@ -80,6 +83,9 @@ namespace rtype::network {
             std::function<void(std::shared_ptr<asio::ip::tcp::socket>)> _onPlayerDisconnect;
             std::vector<std::pair<EPacketCode, std::function<void(std::unique_ptr<IPacket>, std::shared_ptr<asio::ip::tcp::socket>)
             >>> _handlers;
+
+            std::mutex _stopMutex;
+            bool _stop = false;
     };
 
 }

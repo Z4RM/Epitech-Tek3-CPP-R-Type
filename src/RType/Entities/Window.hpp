@@ -86,8 +86,7 @@ namespace rtype::entities
             components::Size size,
             const components::String &title,
             const RWindow& renderWindow,
-            Mode mode,
-            components::Sprite &backgroundSprite
+            Mode mode
             );
 
         /**

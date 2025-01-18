@@ -14,6 +14,7 @@
 #include "Network/Packets/Descriptors/PacketEnemiesData/PacketEnemiesData.hpp"
 #include "Network/Packets/Descriptors/PacketNewPlayer/PacketNewPlayer.hpp"
 #include "Network/Packets/Descriptors/PacketPlayersData/PacketPlayersData.hpp"
+#include "Network/Packets/Descriptors/PacketStartGame/PacketStartGame.hpp"
 #include "Network/Packets/Descriptors/PacketWelcome/PacketWelcome.hpp"
 
 namespace rtype::network {
@@ -37,6 +38,9 @@ namespace rtype::network {
                 break;
             case ENEMIES_DATA:
                 packet = std::make_unique<PacketEnemiesData>();
+                break;
+            case START_GAME:
+                packet = std::make_unique<PacketStartGame>();
                 break;
             default:
                 throw PacketFactoryException();

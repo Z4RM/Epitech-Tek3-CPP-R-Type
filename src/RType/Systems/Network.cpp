@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2024
 ** RType
 ** File description:
-** TODO: add description
+** Network.cpp
 */
 
 #include "Network.hpp"
@@ -14,11 +14,13 @@
 #ifndef RTYPE_IS_SERVER
 #include "RType/Components/Client/Sprite.hpp"
 #endif
+#include "ECS/Scene/SceneManager.hpp"
 
 #include "RType/Config/Config.hpp"
 #include "Components.hpp"
 #include "Network/Packets/Descriptors/PacketPlayersData/PacketPlayersData.hpp"
 #include "Network/Packets/Descriptors/PacketEnemiesData/PacketEnemiesData.hpp"
+#include "Network/Packets/Descriptors/PacketStartGame/PacketStartGame.hpp"
 #include "RType/Entities/Enemy.hpp"
 #include "RType/Entities/Player.hpp"
 
@@ -28,8 +30,11 @@ namespace rtype::systems {
 
     void Network::udpProcess(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager) {
         static network::UDPNetwork network(Config::getInstance().getNetwork().server.port);
+        static auto udp = entityManager.createEntity();
 
         if (!network.getStarted()) {
+            components::Running running = { true };
+            componentManager.addComponent(udp, running);
             try {
                 addUdpHandlers(network, entityManager, componentManager);
                     auto timer = std::make_shared<asio::steady_timer>(network.getIoContext());
@@ -37,6 +42,17 @@ namespace rtype::systems {
                 network.start();
             } catch (std::exception &e) {
                 spdlog::error("Error while starting udp");
+            }
+        } else {
+            for (auto &entity : entityManager.getEntities()) {
+                auto stop = componentManager.getComponent<components::Running>(entity);
+
+                if (stop && !network.getStop()) {
+                    if (!stop->running) {
+                        network.setStop(true);
+                        componentManager.getComponent<components::Running>(udp)->running = false;
+                    }
+                }
             }
         }
     }
@@ -325,21 +341,25 @@ namespace rtype::systems {
 
     void Network::tcpProcess(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager) {
         static network::TCPNetwork network(Config::getInstance().getNetwork().server.port);
+        static bool networkStartingSended = false;
+        static std::map<int, std::shared_ptr<asio::ip::tcp::socket>> playersToSayWelcome = {};
+        static auto tcp = entityManager.createEntity();
+
+        if (!IS_SERVER && network.getStarted() && !networkStartingSended) {
+            for (auto &entity : entityManager.getEntities()) {
+                auto gameSate = componentManager.getComponent<components::GameState>(entity);
+                if (gameSate && gameSate->isStarted) {
+                    networkStartingSended = true;
+                    network::PacketStartGame packet;
+                    network.sendPacket(packet);
+                }
+            }
+        }
 
         if (!network.getStarted()) {
 
-            #ifndef RTYPE_IS_CLIENT
-                        playerId++;
-                        rtype::entities::Enemy enemy(
-                            entityManager,
-                            componentManager,
-                            {600, 100, 0},
-                            {0, 0, 0},
-                            {64, 64},
-                            {playerId}
-                        );
-            #endif
-
+            components::Running running = { true };
+            componentManager.addComponent(tcp, running);
             try {
 
                 network.registerOnPlayerDisconnect([&entityManager, &componentManager](std::shared_ptr<asio::ip::tcp::socket> socket) {
@@ -360,55 +380,96 @@ namespace rtype::systems {
                     }
                 });
 
-                network.addHandler(network::CONNECT, [&entityManager, &componentManager](std::unique_ptr<network::IPacket> packet,
-                    std::shared_ptr<asio::ip::tcp::socket> socket) {
-                        std::string addressTcp = socket->remote_endpoint().address().to_string();
-                        int portTcp = socket->remote_endpoint().port();
+                if (IS_SERVER) {
+                    network.addHandler(network::CONNECT, [&entityManager, &componentManager](std::unique_ptr<network::IPacket> packet,
+                        std::shared_ptr<asio::ip::tcp::socket> socket) {
+                            std::string addressTcp = socket->remote_endpoint().address().to_string();
+                            int portTcp = socket->remote_endpoint().port();
 
-                        std::lock_guard guard(Network::playerIdMutex);
-                        Network::playerId++;
-                        #ifndef RTYPE_IS_CLIENT
-                            rtype::entities::Player player(
+                            std::lock_guard guard(Network::playerIdMutex);
+                            Network::playerId++;
+                            playersToSayWelcome[playerId] = socket;
+                            spdlog::info("New player created with net id: {}, for: {}:{}", Network::playerId, addressTcp, portTcp);
+                    });
+
+                    network.addHandler(network::START_GAME, [&entityManager, &componentManager]
+                    (std::unique_ptr<network::IPacket> packet, std::shared_ptr<asio::ip::tcp::socket> socket) {
+                        for (auto &entity: entityManager.getEntities()) {
+                            auto gameState = componentManager.getComponent<components::GameState>(entity);
+                            if (gameState) {
+                                if (gameState->isStarted)
+                                    return;
+                                gameState->isStarted = true;
+                            }
+                        }
+
+                        playerId++;
+#ifndef RTYPE_IS_CLIENT
+                            rtype::entities::Enemy enemy(
+                                entityManager,
+                                componentManager,
+                                {600, 100, 0},
+                                {0, 0, 0},
+                                {64, 64},
+                                {playerId}
+                            );
+#endif
+                        for (auto &player : playersToSayWelcome) {
+                            #ifndef RTYPE_IS_CLIENT
+                            rtype::entities::Player playerShip(
                             entityManager,
                             componentManager,
                             {0, 0, 0},
                             {0, 0, 0},
                             {64, 64},
                             {socket},
-                            { Network::playerId }, {PLAYER_SPEED});
-                        #endif
-                        network::PacketWelcome welcome(Network::playerId);
+                            { player.first }, {PLAYER_SPEED});
 
-                        network.sendPacket(welcome, socket);
-                        spdlog::info("New player created with net id: {}, for: {}:{}", Network::playerId, addressTcp, portTcp);
-                });
+                            network::PacketWelcome welcome(player.first);
+                            network.sendPacket(welcome, player.second);
+                            #endif
+                        }
+                    });
+                } else {
+                    network.addHandler(network::WELCOME, [&entityManager, &componentManager](std::unique_ptr<network::IPacket> packet,
+                    std::shared_ptr<asio::ip::tcp::socket> socket) {
+                        auto* packetWelcome = dynamic_cast<network::PacketWelcome*>(packet.get());
 
-                network.addHandler(network::WELCOME, [&entityManager, &componentManager](std::unique_ptr<network::IPacket> packet,
-                std::shared_ptr<asio::ip::tcp::socket> socket) {
-                    auto* packetWelcome = dynamic_cast<network::PacketWelcome*>(packet.get());
-
-                    if (packetWelcome) {
-                        spdlog::info("Server said welcome, net id is: {}", packetWelcome->netId);
-                        #ifdef RTYPE_IS_CLIENT
-                        components::Sprite sprite2 = {{100, 100, 0}, {33, 17}, "assets/sprites/players.gif", {0}};
-                        entities::Player player2(
-                                entityManager,
-                                componentManager,
-                                {0, 200, 0},
-                                {0, 0, 0},
-                                {64, 64},
-                                sprite2,
-                                {"", 0, 0},
-                                {packetWelcome->netId},
-                                {true}
-                        );
-                        #endif
-                    }
-                });
+                        if (packetWelcome) {
+                            spdlog::info("Server said welcome, net id is: {}", packetWelcome->netId);
+                            ecs::SceneManager::getInstance().changeScene(1, true);
+                            #ifdef RTYPE_IS_CLIENT
+                            components::Sprite sprite2 = {{100, 100, 0}, {33, 17}, "assets/sprites/players.gif", {0}};
+                            entities::Player player2(
+                                    entityManager,
+                                    componentManager,
+                                    {0, 200, 0},
+                                    {0, 0, 0},
+                                    {64, 64},
+                                    sprite2,
+                                    {"", 0, 0},
+                                    {packetWelcome->netId},
+                                    {true}
+                            );
+                            #endif
+                        }
+                    });
+                }
 
                 network.start();
             } catch (std::exception &e) {
                 spdlog::error("Error while starting tcp");
+            }
+        } else {
+            for (auto &entity : entityManager.getEntities()) {
+                auto stop = componentManager.getComponent<components::Running>(entity);
+
+                if (stop && !network.getStop()) {
+                    if (!stop->running) {
+                        network.setStop(true);
+                        componentManager.getComponent<components::Running>(tcp)->running = false;
+                    }
+                }
             }
         }
     }

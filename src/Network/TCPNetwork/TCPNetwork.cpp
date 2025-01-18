@@ -16,9 +16,7 @@ namespace rtype::network {
 
     //TODO: numThread should be configurable in .ini
 
-    TCPNetwork::TCPNetwork(unsigned short port) : _port(port) {
-        this->_ioContext.restart();
-
+    TCPNetwork::TCPNetwork(unsigned short port) : _port(port), _ioContext() {
         if (IS_SERVER) {
             this->_acceptor = asio::ip::tcp::acceptor(this->_ioContext, asio::ip::tcp::endpoint(asio::ip::tcp::v4(), port));
         } else {
@@ -50,7 +48,9 @@ namespace rtype::network {
         for (int i = 0; i < numThreads; i++) {
             this->_threadPool->addTask([this] {
                 try {
-                    this->_ioContext.run();
+                    while (!this->_ioContext.stopped()) {
+                        this->_ioContext.run_one();
+                    }
                 } catch (std::exception &e) {
                     spdlog::error("Exception in a TCP IO Thread: {}", e.what());
                 }
@@ -59,7 +59,10 @@ namespace rtype::network {
         this->_started = true;
     }
 
-    TCPNetwork::~TCPNetwork() = default;
+    TCPNetwork::~TCPNetwork() {
+        this->setStop(true);
+        this->_socket->close();
+    };
 
 
     void TCPNetwork::startAccept() {
@@ -85,7 +88,10 @@ namespace rtype::network {
     [this, socket, buffer](const asio::error_code& error, std::size_t bytes_transferred) {
         std::string address = socket->remote_endpoint().address().to_string();
         int port = socket->remote_endpoint().port();
-
+            if (!socket->is_open()) {
+                spdlog::warn("Socket closed before read operation.");
+                return;
+            }
             if (!error) {
                 handlePacket(*buffer, socket);
                 handleClient(socket);
@@ -100,7 +106,7 @@ namespace rtype::network {
         });
     }
 
-    void TCPNetwork::connect(const asio::ip::tcp::endpoint& endpoint) {
+    void TCPNetwork::connect(const asio::ip::tcp::endpoint endpoint) {
         this->_socket->async_connect(endpoint, [this](const asio::error_code& ec) {
             if (ec) {
                 spdlog::error("TCP connect failed: {}", ec.message());
@@ -157,6 +163,20 @@ namespace rtype::network {
     void TCPNetwork::addHandler(EPacketCode code, std::function<void(std::unique_ptr<IPacket>,
         std::shared_ptr<asio::ip::tcp::socket> socket)> handler) {
         this->_handlers.push_back({code, handler});
+    }
+
+    void TCPNetwork::setStop(bool state) {
+        std::lock_guard<std::mutex> lock(this->_stopMutex);
+        this->_stop = state;
+
+        if (state) {
+            this->_ioContext.stop();
+        }
+    }
+
+    bool TCPNetwork::getStop() {
+        std::lock_guard<std::mutex> lock(this->_stopMutex);
+        return this->_stop;
     }
 
 }

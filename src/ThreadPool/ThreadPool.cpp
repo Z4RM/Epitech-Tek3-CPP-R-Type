@@ -16,12 +16,37 @@ namespace rtype {
     }
 
     ThreadPool::~ThreadPool() {
-        _stop = true;
+        {
+            std::lock_guard<std::mutex> lock(_mutex);
+            if (_stop == true) {
+                return;
+            }
+            _stop = true;
+        }
+
         _condition.notify_all();
+
+        waitForTasksToComplete();
+    }
+
+    void ThreadPool::stop() {
+        {
+            std::lock_guard<std::mutex> lock(_mutex);
+            if (_stop == true) {
+                return;
+            }
+            _stop = true;
+        }
+
+        _condition.notify_all();
+
         for (auto &thread : _threads) {
-            thread.join();
+            if (thread.joinable()) {
+                thread.join();
+            }
         }
     }
+
 
     void ThreadPool::addTask(std::function<void()> task) {
         {
@@ -39,10 +64,24 @@ namespace rtype {
                 _condition.wait(lock, [this] { return !_tasks.empty() || _stop; });
                 if (_stop && _tasks.empty())
                     return;
-                task = _tasks.front();
+                task = std::move(_tasks.front());
                 _tasks.pop();
             }
             task();
         }
     }
+
+    void ThreadPool::waitForTasksToComplete() {
+        {
+            std::unique_lock<std::mutex> lock(_mutex);
+            _condition.wait(lock, [this] { return _tasks.empty(); });
+        }
+
+        for (auto &thread : _threads) {
+            if (thread.joinable()) {
+                thread.join();
+            }
+        }
+    }
+
 }

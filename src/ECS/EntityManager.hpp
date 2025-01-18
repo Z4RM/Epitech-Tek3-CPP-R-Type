@@ -10,6 +10,7 @@
 #include <unordered_set>
 #include <queue>
 #include <mutex>
+#include "ComponentManager.hpp"
 
 /**
  * @class EntityManager

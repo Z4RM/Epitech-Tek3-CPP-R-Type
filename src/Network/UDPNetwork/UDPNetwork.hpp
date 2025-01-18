@@ -53,6 +53,9 @@ namespace rtype::network {
 
         asio::io_context &getIoContext() { return this->_ioContext; };
 
+        void setStop(bool state);
+        bool getStop();
+
     private:
         unsigned short _port; ///< port of the server
         asio::io_context _ioContext; ///< asio context
@@ -63,6 +66,8 @@ namespace rtype::network {
         bool _started = false;
         std::vector<std::pair<EPacketCode, std::function<void(std::unique_ptr<IPacket>, asio::ip::udp::endpoint)>>>
         _handlers;
+        std::mutex _stopMutex;
+        bool _stop = false;
     };
 
 }
