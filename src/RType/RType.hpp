@@ -8,10 +8,6 @@
 #ifndef RTYPE_RTYPE_HPP_
 #define RTYPE_RTYPE_HPP_
 
-#ifdef RTYPE_IS_CLIENT
-#include "Client/Client.hpp"
-#endif
-
 namespace rtype {
     /**
      * @class RType
@@ -55,11 +51,6 @@ namespace rtype {
 
         // TODO: documentation
         unsigned short _port;
-
-#ifdef RTYPE_IS_CLIENT
-        // TODO: documentation
-        Client _client;
-#endif
     };
 }
 

@@ -6,9 +6,8 @@
 */
 
 #pragma once
-
-namespace rtype::components {
 #ifndef RTYPE_IS_CLIENT
+namespace rtype::components {
     struct Health {
         int value;
         int max;
@@ -26,8 +25,10 @@ namespace rtype::components {
                 value = 0;
         }
     };
+}
 #else
-#include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/Graphics.hpp>
+namespace rtype::components {
     struct Health {
         int value;
         int max;
@@ -82,6 +83,5 @@ namespace rtype::components {
             healthBar.setSize({sizeX, size.y});
         }
     };
-#endif
-
 }
+#endif

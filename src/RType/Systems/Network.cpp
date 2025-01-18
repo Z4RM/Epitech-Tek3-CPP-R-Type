@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2024
 ** RType
 ** File description:
-** TODO: add description
+** Network.cpp
 */
 
 #include "Network.hpp"
@@ -30,8 +30,11 @@ namespace rtype::systems {
 
     void Network::udpProcess(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager) {
         static network::UDPNetwork network(Config::getInstance().getNetwork().server.port);
+        static auto udp = entityManager.createEntity();
 
         if (!network.getStarted()) {
+            components::Running running = { true };
+            componentManager.addComponent(udp, running);
             try {
                 addUdpHandlers(network, entityManager, componentManager);
                     auto timer = std::make_shared<asio::steady_timer>(network.getIoContext());
@@ -39,6 +42,17 @@ namespace rtype::systems {
                 network.start();
             } catch (std::exception &e) {
                 spdlog::error("Error while starting udp");
+            }
+        } else {
+            for (auto &entity : entityManager.getEntities()) {
+                auto stop = componentManager.getComponent<components::Running>(entity);
+
+                if (stop && !network.getStop()) {
+                    if (!stop->running) {
+                        network.setStop(true);
+                        componentManager.getComponent<components::Running>(udp)->running = false;
+                    }
+                }
             }
         }
     }
@@ -329,6 +343,7 @@ namespace rtype::systems {
         static network::TCPNetwork network(Config::getInstance().getNetwork().server.port);
         static bool networkStartingSended = false;
         static std::map<int, std::shared_ptr<asio::ip::tcp::socket>> playersToSayWelcome = {};
+        static auto tcp = entityManager.createEntity();
 
         if (!IS_SERVER && network.getStarted() && !networkStartingSended) {
             for (auto &entity : entityManager.getEntities()) {
@@ -342,6 +357,9 @@ namespace rtype::systems {
         }
 
         if (!network.getStarted()) {
+
+            components::Running running = { true };
+            componentManager.addComponent(tcp, running);
             try {
 
                 network.registerOnPlayerDisconnect([&entityManager, &componentManager](std::shared_ptr<asio::ip::tcp::socket> socket) {
@@ -441,6 +459,17 @@ namespace rtype::systems {
                 network.start();
             } catch (std::exception &e) {
                 spdlog::error("Error while starting tcp");
+            }
+        } else {
+            for (auto &entity : entityManager.getEntities()) {
+                auto stop = componentManager.getComponent<components::Running>(entity);
+
+                if (stop && !network.getStop()) {
+                    if (!stop->running) {
+                        network.setStop(true);
+                        componentManager.getComponent<components::Running>(tcp)->running = false;
+                    }
+                }
             }
         }
     }

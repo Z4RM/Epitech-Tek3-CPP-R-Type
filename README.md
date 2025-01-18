@@ -2,6 +2,8 @@
 
 # R-Type
 
+[![CI](https://github.com/Z4RM/Epitech-Tek3-CPP-R-Type/actions/workflows/main.yml/badge.svg)](https://github.com/Z4RM/Epitech-Tek3-CPP-R-Type/actions)
+
 This game is informally called a Horizontal Shmup (or simply, a *Shoot’em’up*), and while **R-Type** is not the first one of its category, it has been a huge success amongst gamers in the 90’s, and had several ports, spin-offs, and 3D remakes on modern systems.
 
 Other similar and well-known games are the **Gradius** series and **Blazing Star** on **Neo Geo**.
@@ -49,6 +51,25 @@ Start the server and/or the client
   ./r-type_server
   ./r-type_client
 ```
+
+## Continuous Integration (CI)
+
+This repository uses GitHub Actions for Continuous Integration (CI) to ensure the quality and stability of the codebase. 
+
+### Key Features
+
+- Automated testing and linting on every push.
+- Build verification to confirm successful project compilation.
+
+### Documentation
+
+For a detailed overview of the CI workflows, see the [CI Workflows README](.github/workflows/README.md).
+
+This documentation includes:
+- A breakdown of CI pipeline steps.
+- A schema of the workflow.
+
+Refer to the [`.github/workflows/README.md`](.github/workflows/README.md) for guidance on extending or troubleshooting the CI setup.
 
 ## Contributing
 

@@ -33,6 +33,7 @@ namespace rtype::ecs
     class SparseSet : public ISparseSet {
     public:
         SparseSet() = default;
+        ~SparseSet() override = default;
         /**
          * @brief Adds a component for a given entity.
          *

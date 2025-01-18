@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2025
 ** RType
 ** File description:
-** TODO: add description
+** Shared.hpp
 */
 
 #pragma once
@@ -17,6 +17,7 @@
 #include "./Shared/Network.hpp"
 #include "./Shared/NetId.hpp"
 #include "./Shared/Speed.hpp"
-#include "./Shared/Health.hpp"
+#include "./Shared/Running.hpp"
 #include "./Shared/Damage.hpp"
 #include "./Shared/GameState.hpp"
+#include "./Shared/Health.hpp"

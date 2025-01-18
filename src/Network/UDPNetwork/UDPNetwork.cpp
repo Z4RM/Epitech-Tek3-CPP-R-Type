@@ -13,9 +13,7 @@
 
 namespace rtype::network {
 
-    UDPNetwork::UDPNetwork(unsigned short port) : _port(port) {
-        this->_ioContext.restart();
-
+    UDPNetwork::UDPNetwork(unsigned short port) : _port(port), _ioContext() {
         if (IS_SERVER) {
             this->_socket = std::make_shared<asio::ip::udp::socket>(this->_ioContext, asio::ip::udp::endpoint(asio::ip::udp::v4(), port));
         } else {
@@ -42,7 +40,9 @@ namespace rtype::network {
         for (int i = 0; i < numThreads; i++) {
             this->_threadPool->addTask([this] {
                 try {
-                    this->_ioContext.run();
+                    while (!this->_ioContext.stopped()) {
+                        this->_ioContext.run_one();
+                    }
                 } catch (std::exception &e) {
                     spdlog::error("Exception in a UDP IO Thread: {}", e.what());
                 }
@@ -51,7 +51,9 @@ namespace rtype::network {
         this->_started = true;
     }
 
-    UDPNetwork::~UDPNetwork() = default;
+    UDPNetwork::~UDPNetwork() {
+        this->setStop(true);
+    }
 
     void UDPNetwork::startReceive() {
         auto buffer = std::make_shared<std::vector<char>>(BUFFER_SIZE);
@@ -111,6 +113,20 @@ namespace rtype::network {
     void UDPNetwork::addHandler(EPacketCode code, std::function<void(std::unique_ptr<IPacket>, asio::ip::udp::endpoint endpoint)>
     handler) {
         this->_handlers.push_back({code, handler});
+    }
+
+    void UDPNetwork::setStop(bool state) {
+        std::lock_guard<std::mutex> lock(this->_stopMutex);
+        this->_stop = state;
+
+        if (state) {
+            this->_ioContext.stop();
+        }
+    }
+
+    bool UDPNetwork::getStop() {
+        std::lock_guard<std::mutex> lock(this->_stopMutex);
+        return this->_stop;
     }
 
 }

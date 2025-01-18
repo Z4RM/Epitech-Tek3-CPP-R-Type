@@ -34,6 +34,10 @@ namespace rtype {
         **/
         void workerThread();
 
+        void waitForTasksToComplete();
+
+        void stop();
+
     private:
         std::vector<std::thread> _threads; ///< Vector of worker threads
         std::queue<std::function<void()>> _tasks; ///< Queue of tasks

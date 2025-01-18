@@ -1,0 +1,42 @@
+name: R-Type CI
+
+on:
+  push:
+
+jobs:
+  build:
+    name: Build
+    uses: ./.github/workflows/build.yml
+    with:
+      EXECUTABLES: "build/r-type_server,build/r-type_client"
+
+  lint:
+    name: Lint
+    uses: ./.github/workflows/lint.yml
+
+  doxygen:
+    name: Doxygen
+    needs:
+      - build
+      #- lint # TODO: re-enable dependency
+    uses: ./.github/workflows/doxygen.yml
+    permissions:
+      contents: write
+    secrets: inherit
+
+  release:
+    name: Release
+    needs:
+      - build
+      #- lint # TODO: re-enable dependency
+    uses: ./.github/workflows/release.yml
+    permissions:
+      contents: write
+    secrets: inherit
+
+  mirror:
+    name: Mirror
+    needs:
+      - doxygen
+    uses: ./.github/workflows/mirror.yml
+    secrets: inherit

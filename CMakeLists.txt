@@ -5,6 +5,10 @@ project(RType VERSION 0.0.1 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR})
+foreach (OUTPUT_CONFIG ${CMAKE_CONFIGURATION_TYPES})
+    string(TOUPPER ${OUTPUT_CONFIG} OUTPUT_CONFIG)
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_${OUTPUT_CONFIG} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+endforeach ()
 
 find_package(inih REQUIRED)
 find_package(spdlog REQUIRED)
@@ -66,8 +70,6 @@ set(RTYPE_SRC
 )
 
 set(CLIENT_SRC
-        src/RType/Client/Client.cpp
-        src/RType/Client/Client.hpp
         src/RType/Entities/Window.cpp
         src/RType/Entities/Window.hpp
         src/RType/Systems/RenderWindow.cpp
@@ -141,6 +143,10 @@ set(RTYPE_HEADERS
 )
 
 link_libraries(inih::inireader spdlog::spdlog asio::asio)
+
+if(WIN32)
+    add_compile_definitions(_WIN32_WINNT=0x0A00)
+endif()
 
 #region Server
 add_executable(r-type_server ${RTYPE_SRC} ${RTYPE_HEADERS})

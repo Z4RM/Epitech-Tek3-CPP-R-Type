@@ -1,7 +1,6 @@
 #include "Movement.hpp"
 #include "Components.hpp"
 #include <complex>
-#include <spdlog/spdlog.h>
 
 #include "RType/ModeManager/ModeManager.hpp"
 

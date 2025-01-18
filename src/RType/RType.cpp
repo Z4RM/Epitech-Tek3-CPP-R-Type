@@ -53,11 +53,7 @@ void rtype::RType::stopServer() {
 
 #endif
 
-#ifndef RTYPE_IS_CLIENT
 rtype::RType::RType(unsigned short port) : _port(port) {}
-#else
-rtype::RType::RType(unsigned short port) : _port(port), _client(this) {}
-#endif
 
 int rtype::RType::_run() {
     ecs::EntityManager entityManager;
@@ -66,6 +62,9 @@ int rtype::RType::_run() {
     ecs::SceneManager &sceneManager = ecs::SceneManager::getInstance();
 
     size_t rtype = entityManager.createEntity();
+
+    componentManager.addComponent<components::Running>(rtype, {true});
+
 #ifdef RTYPE_IS_CLIENT
     systemManager.addSystem(rtype::systems::RenderWindowSys::createWindow);
     components::String title;
@@ -97,21 +96,23 @@ int rtype::RType::_run() {
 
     entities::Game gameSate(componentManager, entityManager);
 
-    while (_running()) {
-        sceneManager.updateCurrentScene(systemManager);
+    while (true) {
+        int runningStoppedCount = 0;
 
-#ifdef RTYPE_IS_CLIENT
-        //_client.iteration();
-#endif
+        for (auto &entity: entityManager.getEntities()) {
+            if (entity == rtype)
+                continue;
+            auto run = componentManager.getComponent<components::Running>(entity);
+            if (run && !run->running) {
+                runningStoppedCount += 1;
+            }
+        }
+
+        if (runningStoppedCount > 0) {
+            spdlog::warn("stop");
+            break;
+        }
+        sceneManager.updateCurrentScene(systemManager);
     }
     return 0;
-}
-
-bool rtype::RType::_running() {
-#ifdef RTYPE_IS_SERVER
-    return true; // TODO
-#endif
-#ifdef RTYPE_IS_CLIENT
-    return _client.running();
-#endif
 }

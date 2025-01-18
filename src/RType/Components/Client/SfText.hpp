@@ -11,7 +11,7 @@
 namespace rtype::components {
     struct SfText {
         sf::Text text;
-       std::shared_ptr<sf::Font> font;
+        std::shared_ptr<sf::Font> font;
         SfText(std::string str, std::string fontPath, sf::Color color, int charSize, sf::Vector2f position) {
             font = std::make_shared<sf::Font>();
             if (!font->loadFromFile(fontPath)) {
@@ -24,5 +24,6 @@ namespace rtype::components {
             text.setStyle(sf::Text::Bold);
             text.setPosition(position);
         }
+        ~SfText() = default;
     };
 }
