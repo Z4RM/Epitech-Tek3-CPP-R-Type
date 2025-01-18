@@ -45,8 +45,6 @@ rtype::entities::Player::Player(
     componentManager.addComponent<components::NetId>(_id, network);
     componentManager.addComponent<components::ActualPlayer>(_id, actualPlayer);
     componentManager.addComponent<components::Speed>(_id, speed);
-    components::Health health(1000, {pos.x, pos.y}, size);
-    componentManager.addComponent<components::Health>(_id, health);
 
     if (!actualPlayer.value)
         return;
@@ -139,9 +137,6 @@ rtype::entities::Player::Player(
     componentManager.addComponent<components::NetworkConnection>(_id, network);
     componentManager.addComponent<components::NetId>(_id, netId);
     componentManager.addComponent<components::Speed>(_id, speed);
-
-    components::Health health = {1000};
-    componentManager.addComponent<components::Health>(_id, health);
 }
 
 #endif

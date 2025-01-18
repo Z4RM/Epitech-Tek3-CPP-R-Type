@@ -34,7 +34,7 @@ namespace rtype::ecs
          * @param entityManager A reference to the `EntityManager` responsible for managing entities.
          * @param componentManager A reference to the `ComponentManager` responsible for managing components.
          */
-        SystemManager() = default;
+        SystemManager(EntityManager &entityManager, ComponentManager &componentManager) : _entityManager(entityManager), _componentManager(componentManager) {}
 
         /**
          * @brief Adds a new system to the manager.
@@ -53,9 +53,9 @@ namespace rtype::ecs
          *
          * Executes each system function in the order they were added.
          */
-        void updateSystems(EntityManager& entityManager, ComponentManager& componentManager) {
+        void updateSystems() {
             for (auto& system : _systems) {
-                system(entityManager, componentManager);
+                system(_entityManager, _componentManager);
             }
         }
     private:
@@ -65,6 +65,24 @@ namespace rtype::ecs
          * Stores all systems as callable objects (`std::function<void(EntityManager& entityManager, ComponentManager& componentManager)>`) to be executed during updates.
          */
         std::vector<std::function<void(EntityManager& entityManager, ComponentManager& componentManager)>> _systems;
+
+        /**
+         * @brief Reference to the `EntityManager` used to manage entities.
+         *
+         * The `EntityManager` is responsible for creating, deleting, and keeping track
+         * of all entities in the ECS framework. This reference allows the `SystemManager`
+         * to interact with the entities it manages.
+         */
+        EntityManager& _entityManager;
+
+        /**
+         * @brief Reference to the `ComponentManager` used to manage components.
+         *
+         * The `ComponentManager` is responsible for creating, deleting, and managing
+         * all components associated with entities. This reference enables the `SystemManager`
+         * to interact with the components linked to entities in the ECS framework.
+         */
+        ComponentManager& _componentManager;
     };
 }
 

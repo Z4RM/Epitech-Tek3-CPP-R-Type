@@ -19,7 +19,6 @@ namespace rtype::entities
      *
      * The `RWindow` structure provides a mutable pointer to an `sf::RenderWindow`,
      * allowing flexibility in managing the rendering window.
-     * //TODO: put this into components folder
      */
     struct RWindow
     {
@@ -87,7 +86,8 @@ namespace rtype::entities
             components::Size size,
             const components::String &title,
             const RWindow& renderWindow,
-            Mode mode
+            Mode mode,
+            components::Sprite &backgroundSprite
             );
 
         /**

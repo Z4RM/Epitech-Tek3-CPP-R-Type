@@ -17,7 +17,6 @@ namespace rtype::models {
         components::Velocity vel{};
         components::Size size{};
         components::NetId netId;
-        int health = 0;
         std::optional<components::NetworkConnection> network;
     };
 }

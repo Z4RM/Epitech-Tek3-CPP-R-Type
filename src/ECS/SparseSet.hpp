@@ -32,7 +32,6 @@ namespace rtype::ecs
     template <typename T>
     class SparseSet : public ISparseSet {
     public:
-        SparseSet() = default;
         /**
          * @brief Adds a component for a given entity.
          *
@@ -86,21 +85,9 @@ namespace rtype::ecs
          * @return A pointer to the component, or `nullptr` if the entity does not have a component.
          */
         T* getComponent(unsigned int entity) {
-            std::lock_guard<std::mutex> lock(_mutex);
-
-            try {
-                if ((_sparse.count(entity) <= 0))
-                    return nullptr;
-                auto sparseIt = _sparse.find(entity);
-                if (sparseIt != _sparse.end()) {
-                    auto index = sparseIt->second;
-
-                    if (index < _components.size()) {
-                        return &_components[index];
-                    }
-                }
-            } catch (std::exception &e) {
-                return nullptr;
+            std::lock_guard lock(_mutex);
+            if (_sparse.find(entity) != _sparse.end()) {
+                return &_components[_sparse[entity]];
             }
             return nullptr;
         }
