@@ -32,7 +32,7 @@ void rtype::systems::InputSystem::handleInput(ecs::EntityManager &entityManager,
                 }
                 text->text.setFillColor(sf::Color::Red);
             } else {
-                sf::Color color = text->text.getColor();
+                sf::Color color = text->text.getFillColor();
                 if (color == sf::Color::Red)
                     text->text.setFillColor(sf::Color::White);
             }
