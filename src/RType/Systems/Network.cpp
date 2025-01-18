@@ -18,6 +18,7 @@
 #include "RType/Config/Config.hpp"
 #include "Components.hpp"
 #include "Network/Packets/Descriptors/PacketPlayersData/PacketPlayersData.hpp"
+#include "Network/Packets/Descriptors/PacketEnemiesData/PacketEnemiesData.hpp"
 #include "RType/Entities/Enemy.hpp"
 #include "RType/Entities/Player.hpp"
 
@@ -43,7 +44,8 @@ namespace rtype::systems {
     void Network::schedulePacketSending(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager,
         network::UDPNetwork &network, std::shared_ptr<asio::steady_timer> timer) {
         try {
-            std::vector<models::PlayerData> data;
+            std::vector<models::PlayerData> playerDatas;
+            std::vector<models::EnemyData> enemyDatas;
 
             for (const auto& entity : entityManager.getEntities()) {
                 const auto netId = componentManager.getComponent<components::NetId>(entity);
@@ -51,32 +53,49 @@ namespace rtype::systems {
                 const auto pos = componentManager.getComponent<components::Position>(entity);
                 const auto size = componentManager.getComponent<components::Size>(entity);
                 const auto actualPlayer = componentManager.getComponent<components::ActualPlayer>(entity);
+                const auto health = componentManager.getComponent<components::Health>(entity);
+                const auto ai = componentManager.getComponent<components::IA>(entity);
 
-                if (vel && pos && size && netId) {
-                    models::PlayerData pdata{*pos, *vel, *size, *netId};
+                if (vel && pos && size && netId && health) {
+                    models::PlayerData pdata{*pos, *vel, *size, *netId, health->value};
+                    models::EnemyData edata{*pos, *vel, *size, *netId, health->value};
 
                     if (actualPlayer && actualPlayer->value == true && !IS_SERVER)
-                        data.emplace_back(pdata);
+                        playerDatas.emplace_back(pdata);
 
-                    if (IS_SERVER) {
-                        data.emplace_back(pdata);
+                    if (IS_SERVER && !ai) {
+                        playerDatas.emplace_back(pdata);
+                    } else if (IS_SERVER && ai) {
+                        enemyDatas.emplace_back(edata);
                     }
                 }
             }
 
-            if (!data.empty()) {
-                network::PacketPlayersData playersData(data);
+            if (!playerDatas.empty()) {
+                network::PacketPlayersData packetPlayersData(playerDatas);
 
                 if (!IS_SERVER) {
-                    network.sendPacket(playersData, network.getServerEndpoint());
+                    network.sendPacket(packetPlayersData, network.getServerEndpoint());
                 }
                 else {
                     for (const auto &entity : entityManager.getEntities()) {
                         const auto net = componentManager.getComponent<components::NetworkConnection>(entity);
                         if (net) {
                             if (net->endpoint.has_value()) {
-                                network.sendPacket(playersData, net->endpoint.value());
+                                network.sendPacket(packetPlayersData, net->endpoint.value());
                             }
+                        }
+                    }
+                }
+            }
+
+            if (!enemyDatas.empty() && IS_SERVER) {
+                network::PacketEnemiesData packetEnemyDatas(enemyDatas);
+                for (const auto &entity : entityManager.getEntities()) {
+                    const auto net = componentManager.getComponent<components::NetworkConnection>(entity);
+                    if (net) {
+                        if (net->endpoint.has_value()) {
+                            network.sendPacket(packetEnemyDatas, net->endpoint.value());
                         }
                     }
                 }
@@ -147,21 +166,30 @@ namespace rtype::systems {
 
                                     if (data.netId.id == netId) {
                                         created = true;
-                                        if (!actualPlayer->value)
-                                            *componentManager.getComponent<components::Position>(entity) = data.pos;
-                                        else {
-                                            const auto localPos = componentManager.getComponent<components::Position>(entity);
-                                            if (localPos) {
-                                                float distance = std::sqrt(
-                                                    std::pow(data.pos.x - localPos->x, 2) +
-                                                    std::pow(data.pos.y - localPos->y, 2) +
-                                                    std::pow(data.pos.z - localPos->z, 2)
-                                                );
-                                                const float positionThreshold = 0.1f;
-                                                if (distance > positionThreshold) {
-                                                    *localPos = data.pos;
-                                                }
+                                        const auto localPos = componentManager.getComponent<components::Position>(entity);
+                                        const auto vel = componentManager.getComponent<components::Velocity>(entity);
+                                        const auto health = componentManager.getComponent<components::Health>(entity);
+
+                                        if (health) {
+                                            if (data.health != health->value) {
+                                                health->setHealth(data.health);
                                             }
+                                        }
+
+                                        if (localPos) {
+                                            float distance = std::sqrt(
+                                            std::pow(data.pos.x - localPos->x, 2) +
+                                            std::pow(data.pos.y - localPos->y, 2) +
+                                            std::pow(data.pos.z - localPos->z, 2)
+                                            );
+                                            const float positionThreshold = 0.1f;
+                                            if (distance > positionThreshold) {
+                                                *localPos = data.pos;
+                                            }
+                                        }
+
+                                        if (!actualPlayer->value) {
+                                            *vel = data.vel;
                                         }
                                         break;
                                     }
@@ -187,15 +215,102 @@ namespace rtype::systems {
                         }
                         for (const auto entity : entityManager.getEntities()) {
                             auto net = componentManager.getComponent<components::NetId>(entity);
+                            auto actualPlayer = componentManager.getComponent<components::ActualPlayer>(entity);
                             bool isDead = true;
 
-                            if (net && net->id != 0) {
+                            if (net && actualPlayer) {
                                 for (const models::PlayerData &data : playersData->datas) {
                                     if (data.netId.id == net->id)
                                         isDead = false;
                                 }
                                 if (isDead) {
                                     spdlog::info("Destroying disconnected player");
+                                    entityManager.destroyEntity(entity, componentManager);
+                                }
+                            }
+                        }
+                    } else {
+                        spdlog::error("Invalid packet players data received");
+                    }
+            });
+
+
+            network.addHandler(network::ENEMIES_DATA, [&network, &entityManager, &componentManager](std::unique_ptr<network::IPacket>
+                packet, asio::ip::udp::endpoint endpoint) {
+                    auto* enemiesData = dynamic_cast<network::PacketEnemiesData*>(packet.get());
+
+                    if (enemiesData) {
+                        for (const models::EnemyData &data: enemiesData->datas) {
+                            bool created = false;
+
+                            for (const auto &entity : entityManager.getEntities()) {
+                                auto net = componentManager.getComponent<components::NetId>(entity);
+                                auto ai = componentManager.getComponent<components::IA>(entity);
+
+                                if (net && ai) {
+                                    int netId = net->id;
+
+                                    if (data.netId.id == netId) {
+                                        created = true;
+                                        const auto localPos = componentManager.getComponent<components::Position>(entity);
+                                        const auto vel = componentManager.getComponent<components::Velocity>(entity);
+                                        const auto health = componentManager.getComponent<components::Health>(entity);
+
+                                        if (health) {
+                                            if (data.health != health->value) {
+                                                health->value = data.health;
+                                                health->takeDamage(0);
+                                            }
+                                        }
+
+                                        if (localPos) {
+                                            float distance = std::sqrt(
+                                            std::pow(data.pos.x - localPos->x, 2) +
+                                            std::pow(data.pos.y - localPos->y, 2) +
+                                            std::pow(data.pos.z - localPos->z, 2)
+                                            );
+                                            const float positionThreshold = 0.1f;
+                                            if (distance > positionThreshold) {
+                                                *localPos = data.pos;
+                                            }
+                                        }
+                                        *vel = data.vel;
+                                        break;
+                                    }
+                                }
+                            }
+
+                            if (!created) {
+                            spdlog::info("Creating new enemy in game");
+                            #ifndef RTYPE_IS_SERVER
+                                components::Sprite sprite3 = {{600, 100, 0}, {33, 36}, "assets/sprites/enemy.gif", {1}};
+                                rtype::entities::Enemy enemy(
+                                    entityManager,
+                                    componentManager,
+                                    {600, 100, 0},
+                                    {0, 0, 0},
+                                    {64, 64},
+                                    sprite3,
+                                    {"", 0, 0},
+                                    data.netId
+                                );
+                            #endif
+                                continue;
+                            }
+                        }
+                        for (const auto entity : entityManager.getEntities()) {
+                            auto net = componentManager.getComponent<components::NetId>(entity);
+                            auto ai = componentManager.getComponent<components::IA>(entity);
+
+                            bool isDead = true;
+
+                            if (net && net->id != 0 && ai) {
+                                for (const models::EnemyData &data : enemiesData->datas) {
+                                    if (data.netId.id == net->id)
+                                        isDead = false;
+                                }
+                                if (isDead) {
+                                    spdlog::info("Destroying disconnected enemy");
                                     entityManager.destroyEntity(entity, componentManager);
                                 }
                             }
@@ -212,6 +327,19 @@ namespace rtype::systems {
         static network::TCPNetwork network(Config::getInstance().getNetwork().server.port);
 
         if (!network.getStarted()) {
+
+            #ifndef RTYPE_IS_CLIENT
+                        playerId++;
+                        rtype::entities::Enemy enemy(
+                            entityManager,
+                            componentManager,
+                            {600, 100, 0},
+                            {0, 0, 0},
+                            {64, 64},
+                            {playerId}
+                        );
+            #endif
+
             try {
 
                 network.registerOnPlayerDisconnect([&entityManager, &componentManager](std::shared_ptr<asio::ip::tcp::socket> socket) {
@@ -227,8 +355,9 @@ namespace rtype::systems {
                             }
                         }
                         spdlog::info("Player destroyed: {}:{}", addressTcp, portTcp);
-                    } else
+                    } else {
                         spdlog::info("Server have closed the connection");
+                    }
                 });
 
                 network.addHandler(network::CONNECT, [&entityManager, &componentManager](std::unique_ptr<network::IPacket> packet,
