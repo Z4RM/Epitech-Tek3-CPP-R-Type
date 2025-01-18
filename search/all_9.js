@@ -15,8 +15,9 @@ var searchData=
   ['enforcement_20responsibilities_12',['Enforcement Responsibilities',['../md_CODE__OF__CONDUCT.html#autotoc_md3',1,'']]],
   ['entity_13',['Entity',['../structrtype_1_1ecs_1_1Entity.html',1,'rtype::ecs']]],
   ['entitymanager_14',['EntityManager',['../classEntityManager.html',1,'EntityManager'],['../classrtype_1_1ecs_1_1EntityManager.html',1,'rtype::ecs::EntityManager']]],
-  ['entitymanager_2ehpp_15',['EntityManager.hpp',['../EntityManager_8hpp.html',1,'']]],
-  ['epacketcode_16',['EPacketCode',['../namespacertype_1_1network.html#a6e33dcdcd158a1e8ce1f13336651a3f8',1,'rtype::network']]],
-  ['epacketcode_2ehpp_17',['EPacketCode.hpp',['../EPacketCode_8hpp.html',1,'']]],
-  ['example_18',['Example',['../md_CONTRIBUTING.html#autotoc_md18',1,'']]]
+  ['entitymanager_15',['entityManager',['../structrtype_1_1models_1_1Scene.html#a25ceaededdb46d4c2fad4cad8ac275c2',1,'rtype::models::Scene']]],
+  ['entitymanager_2ehpp_16',['EntityManager.hpp',['../EntityManager_8hpp.html',1,'']]],
+  ['epacketcode_17',['EPacketCode',['../namespacertype_1_1network.html#a6e33dcdcd158a1e8ce1f13336651a3f8',1,'rtype::network']]],
+  ['epacketcode_2ehpp_18',['EPacketCode.hpp',['../EPacketCode_8hpp.html',1,'']]],
+  ['example_19',['Example',['../md_CONTRIBUTING.html#autotoc_md18',1,'']]]
 ];

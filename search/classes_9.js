@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['renderwindowsys_0',['RenderWindowSys',['../classrtype_1_1systems_1_1RenderWindowSys.html',1,'rtype::systems']]],
-  ['rtype_1',['RType',['../classrtype_1_1RType.html',1,'rtype']]],
-  ['rwindow_2',['RWindow',['../structrtype_1_1entities_1_1RWindow.html',1,'rtype::entities']]]
+  ['netid_0',['NetId',['../structrtype_1_1components_1_1NetId.html',1,'rtype::components']]],
+  ['network_1',['Network',['../classrtype_1_1systems_1_1Network.html',1,'rtype::systems']]],
+  ['networkconnection_2',['NetworkConnection',['../structrtype_1_1components_1_1NetworkConnection.html',1,'rtype::components']]]
 ];

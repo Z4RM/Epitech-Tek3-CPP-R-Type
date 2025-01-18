@@ -116,16 +116,16 @@ $(function(){initNavTree('classrtype_1_1systems_1_1InputSystem.html',''); initRe
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:abba188757c360340520bd3b46e32166d" id="r_abba188757c360340520bd3b46e32166d"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abba188757c360340520bd3b46e32166d">handleInput</a> (<a class="el" href="classrtype_1_1ecs_1_1EntityManager.html">ecs::EntityManager</a> &amp;entityManager, <a class="el" href="classrtype_1_1ecs_1_1ComponentManager.html">ecs::ComponentManager</a> &amp;componentManager, const sf::Event &amp;event)</td></tr>
-<tr class="memdesc:abba188757c360340520bd3b46e32166d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handles the input event and triggers actions for entities.  <br /></td></tr>
-<tr class="separator:abba188757c360340520bd3b46e32166d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a37229ef16355ca76bdaf429a469dd0f7" id="r_a37229ef16355ca76bdaf429a469dd0f7"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a37229ef16355ca76bdaf429a469dd0f7">handleInput</a> (<a class="el" href="classrtype_1_1ecs_1_1EntityManager.html">ecs::EntityManager</a> &amp;entityManager, <a class="el" href="classrtype_1_1ecs_1_1ComponentManager.html">ecs::ComponentManager</a> &amp;componentManager, const sf::Event &amp;event, <a class="el" href="structrtype_1_1entities_1_1RWindow.html">entities::RWindow</a> *window)</td></tr>
+<tr class="memdesc:a37229ef16355ca76bdaf429a469dd0f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handles the input event and triggers actions for entities.  <br /></td></tr>
+<tr class="separator:a37229ef16355ca76bdaf429a469dd0f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Handles input events and triggers corresponding actions. </p>
 <p>The <code><a class="el" href="classrtype_1_1systems_1_1InputSystem.html" title="Handles input events and triggers corresponding actions.">InputSystem</a></code> class is responsible for processing input events, such as key presses, and invoking appropriate actions based on the input. It interacts with the entity and component managers to access the game entities and their associated input handlers. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="abba188757c360340520bd3b46e32166d" name="abba188757c360340520bd3b46e32166d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abba188757c360340520bd3b46e32166d">&#9670;&#160;</a></span>handleInput()</h2>
+<a id="a37229ef16355ca76bdaf429a469dd0f7" name="a37229ef16355ca76bdaf429a469dd0f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a37229ef16355ca76bdaf429a469dd0f7">&#9670;&#160;</a></span>handleInput()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -146,7 +146,12 @@ Static Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const sf::Event &amp;</td>          <td class="paramname"><span class="paramname"><em>event</em></span>&#160;)</td>
+          <td class="paramtype">const sf::Event &amp;</td>          <td class="paramname"><span class="paramname"><em>event</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structrtype_1_1entities_1_1RWindow.html">entities::RWindow</a> *</td>          <td class="paramname"><span class="paramname"><em>window</em></span>&#160;)</td>
         </tr>
       </table>
   </td>

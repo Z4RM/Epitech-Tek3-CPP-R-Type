@@ -134,20 +134,26 @@ $(function(){initNavTree('src_2ThreadPool_2ThreadPool_8hpp_source.html',''); ini
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span></div>
 <div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>        <span class="keywordtype">void</span> <a class="code hl_function" href="classrtype_1_1ThreadPool.html#a67412cf17597fed5725f722ef48cc34d">workerThread</a>();</div>
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>        std::vector&lt;std::thread&gt; _threads; </div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>        std::queue&lt;std::function&lt;void()&gt;&gt; _tasks; </div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>        std::mutex _mutex; </div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>        std::condition_variable _condition; </div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        std::atomic&lt;bool&gt; _stop = <span class="keyword">false</span>; </div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    };</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>        <span class="keywordtype">void</span> <a class="code hl_function" href="classrtype_1_1ThreadPool.html#a6e974406b68ef56efcc708850aad5630">waitForTasksToComplete</a>();</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>        <span class="keywordtype">void</span> <a class="code hl_function" href="classrtype_1_1ThreadPool.html#ad6e1826c0c29c6dd1749b935f5f967cb">stop</a>();</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        std::vector&lt;std::thread&gt; _threads; </div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        std::queue&lt;std::function&lt;void()&gt;&gt; _tasks; </div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        std::mutex _mutex; </div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>        std::condition_variable _condition; </div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>        std::atomic&lt;bool&gt; _stop = <span class="keyword">false</span>; </div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    };</div>
 </div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>}</div>
-<div class="ttc" id="aclassrtype_1_1ThreadPool_html_a67412cf17597fed5725f722ef48cc34d"><div class="ttname"><a href="classrtype_1_1ThreadPool.html#a67412cf17597fed5725f722ef48cc34d">rtype::ThreadPool::workerThread</a></div><div class="ttdeci">void workerThread()</div><div class="ttdoc">Worker thread function.</div><div class="ttdef"><b>Definition</b> ThreadPool.cpp:34</div></div>
-<div class="ttc" id="aclassrtype_1_1ThreadPool_html_a7b5d73e21974162595687e42ef7cad62"><div class="ttname"><a href="classrtype_1_1ThreadPool.html#a7b5d73e21974162595687e42ef7cad62">rtype::ThreadPool::addTask</a></div><div class="ttdeci">void addTask(std::function&lt; void()&gt; task)</div><div class="ttdoc">Add a task to the thread pool.</div><div class="ttdef"><b>Definition</b> ThreadPool.cpp:26</div></div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>}</div>
+<div class="ttc" id="aclassrtype_1_1ThreadPool_html_a67412cf17597fed5725f722ef48cc34d"><div class="ttname"><a href="classrtype_1_1ThreadPool.html#a67412cf17597fed5725f722ef48cc34d">rtype::ThreadPool::workerThread</a></div><div class="ttdeci">void workerThread()</div><div class="ttdoc">Worker thread function.</div><div class="ttdef"><b>Definition</b> ThreadPool.cpp:59</div></div>
+<div class="ttc" id="aclassrtype_1_1ThreadPool_html_a6e974406b68ef56efcc708850aad5630"><div class="ttname"><a href="classrtype_1_1ThreadPool.html#a6e974406b68ef56efcc708850aad5630">rtype::ThreadPool::waitForTasksToComplete</a></div><div class="ttdeci">void waitForTasksToComplete()</div><div class="ttdef"><b>Definition</b> ThreadPool.cpp:74</div></div>
+<div class="ttc" id="aclassrtype_1_1ThreadPool_html_a7b5d73e21974162595687e42ef7cad62"><div class="ttname"><a href="classrtype_1_1ThreadPool.html#a7b5d73e21974162595687e42ef7cad62">rtype::ThreadPool::addTask</a></div><div class="ttdeci">void addTask(std::function&lt; void()&gt; task)</div><div class="ttdoc">Add a task to the thread pool.</div><div class="ttdef"><b>Definition</b> ThreadPool.cpp:51</div></div>
 <div class="ttc" id="aclassrtype_1_1ThreadPool_html_a8cc6701434c503856de2cc74854a276c"><div class="ttname"><a href="classrtype_1_1ThreadPool.html#a8cc6701434c503856de2cc74854a276c">rtype::ThreadPool::~ThreadPool</a></div><div class="ttdeci">~ThreadPool()</div><div class="ttdef"><b>Definition</b> ThreadPool.cpp:18</div></div>
 <div class="ttc" id="aclassrtype_1_1ThreadPool_html_ab0a52cf0f18836ea448a910916f871be"><div class="ttname"><a href="classrtype_1_1ThreadPool.html#ab0a52cf0f18836ea448a910916f871be">rtype::ThreadPool::ThreadPool</a></div><div class="ttdeci">ThreadPool(int numThreads)</div><div class="ttdef"><b>Definition</b> ThreadPool.cpp:12</div></div>
-<div class="ttc" id="anamespacertype_html"><div class="ttname"><a href="namespacertype.html">rtype</a></div><div class="ttdef"><b>Definition</b> ComponentManager.hpp:25</div></div>
+<div class="ttc" id="aclassrtype_1_1ThreadPool_html_ad6e1826c0c29c6dd1749b935f5f967cb"><div class="ttname"><a href="classrtype_1_1ThreadPool.html#ad6e1826c0c29c6dd1749b935f5f967cb">rtype::ThreadPool::stop</a></div><div class="ttdeci">void stop()</div><div class="ttdef"><b>Definition</b> ThreadPool.cpp:32</div></div>
+<div class="ttc" id="anamespacertype_html"><div class="ttname"><a href="namespacertype.html">rtype</a></div><div class="ttdef"><b>Definition</b> AEntity.hpp:12</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

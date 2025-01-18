@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['window_0',['Window',['../classrtype_1_1entities_1_1Window.html',1,'rtype::entities']]]
+  ['tcpnetwork_0',['TCPNetwork',['../classrtype_1_1network_1_1TCPNetwork.html',1,'rtype::network']]],
+  ['threadpool_1',['ThreadPool',['../classrtype_1_1ThreadPool.html',1,'rtype']]]
 ];
