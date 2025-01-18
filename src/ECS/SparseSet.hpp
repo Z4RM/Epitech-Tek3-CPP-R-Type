@@ -7,6 +7,7 @@
 
 #ifndef SPARSESET_HPP
 #define SPARSESET_HPP
+#include <iostream>
 
 #include <vector>
 #include <unordered_map>
@@ -61,11 +62,13 @@ namespace rtype::ecs
          * @param entity The unique ID of the entity.
          */
         void removeComponent(unsigned int entity) {
-            std::lock_guard lock(_mutex);
-            if (_sparse.find(entity) != _sparse.end()) {
-                size_t index = _sparse[entity];
-                unsigned int last_entity = _dense.back();
+            std::lock_guard<std::mutex> lock(_mutex);
 
+            auto it = _sparse.find(entity);
+            if (it != _sparse.end()) {
+                size_t index = it->second;
+
+                unsigned int last_entity = _dense.back();
                 _dense[index] = last_entity;
                 _sparse[last_entity] = index;
 
@@ -73,7 +76,7 @@ namespace rtype::ecs
                 _components[index] = _components.back();
                 _components.pop_back();
 
-                _sparse.erase(entity);
+                _sparse.erase(it);
             }
         }
 
@@ -83,14 +86,14 @@ namespace rtype::ecs
          * If the entity has an associated component, a unique pointer to the component is returned.
          * Otherwise, returns `nullptr`.
          *
-         * @param entity The unique ID of the entity.
+         * @param entity The unique ID of the entity.result = {std::unordered_map<unsigned int, unsigned long>} {2 elements}
          * @return A pointer to the component, or `nullptr` if the entity does not have a component.
          */
         T* getComponent(unsigned int entity) {
             std::lock_guard<std::mutex> lock(_mutex);
 
             try {
-                if ((_sparse.count(entity) <= 0))
+                if (_sparse.empty() || _sparse.count(entity) <= 0)
                     return nullptr;
                 auto sparseIt = _sparse.find(entity);
                 if (sparseIt != _sparse.end()) {

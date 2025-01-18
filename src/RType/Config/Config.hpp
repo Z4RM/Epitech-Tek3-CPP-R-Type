@@ -57,7 +57,7 @@ namespace rtype {
          *
          * @return Reference to the Config singleton instance.
          */
-        static Config &getInstance(const std::string &filename = "config.ini") {
+        static Config &getInstance(const std::string &filename = "../config.ini") {
             static Config instance(filename);
 
             return instance;
