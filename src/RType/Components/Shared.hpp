@@ -22,3 +22,5 @@
 #include "./Shared/GameState.hpp"
 #include "./Shared/Health.hpp"
 #include "./Shared/Projectile.hpp"
+#include "./Shared/NoDamageToPlayer.hpp"
+#include "./Shared/ActualPlayer.hpp"

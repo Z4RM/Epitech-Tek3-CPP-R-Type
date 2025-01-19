@@ -72,6 +72,8 @@ set(RTYPE_SRC
         src/RType/Entities/PlayerCounter.cpp
         src/RType/Entities/PlayerCounter.hpp
         src/RType/Components/Shared/Projectile.hpp
+        src/Network/Packets/Descriptors/PacketPlayerShoot/PacketPlayerShoot.cpp
+        src/Network/Packets/Descriptors/PacketPlayerShoot/PacketPlayerShoot.hpp
 )
 
 set(CLIENT_SRC
@@ -138,6 +140,7 @@ set(CLIENT_SRC
         src/RType/Components/Client/SlidingBg.hpp
         src/RType/Systems/AnimationProjectile.cpp
         src/RType/Systems/AnimationProjectile.hpp
+        src/RType/Components/Shared/NoDamageToPlayer.hpp
 )
 
 set(RTYPE_HEADERS

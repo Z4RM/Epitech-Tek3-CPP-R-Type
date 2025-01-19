@@ -9,6 +9,7 @@
 
 #include "Components.hpp"
 #include "ECS.hpp"
+#include "Network/TCPNetwork/TCPNetwork.hpp"
 #include "RType/Components/Shared/ActualPlayer.hpp"
 #ifdef RTYPE_IS_CLIENT
 #include "Components.hpp"
@@ -23,11 +24,11 @@
 namespace rtype::entities {
     class Player {
     public:
-        void shoot(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager, size_t id);
-        std::chrono::steady_clock::time_point _elaspedShoot;
-        double _shootCooldown = 0.8;
 #ifdef RTYPE_IS_CLIENT
-
+        bool shoot(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager, size_t id,
+        std::chrono::steady_clock::time_point &clock);
+        std::chrono::steady_clock::time_point _elaspedShoot= std::chrono::steady_clock::now();
+        double _shootCooldown = 0.8;
         /**
          * @brief Constructs a new Player object.
          *
@@ -62,6 +63,7 @@ namespace rtype::entities {
                 components::Size size,
                 components::Sprite &sprite,
                 const components::Animation &animation,
+                std::function<void(int id)> shootFn,
                 rtype::components::NetId = { false },
                 rtype::components::ActualPlayer = { false },
                 rtype::components::Speed = {200}

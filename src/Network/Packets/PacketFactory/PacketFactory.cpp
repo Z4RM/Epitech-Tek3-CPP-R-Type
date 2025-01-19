@@ -15,6 +15,7 @@
 #include "Network/Packets/Descriptors/PacketNewPlayer/PacketNewPlayer.hpp"
 #include "Network/Packets/Descriptors/PacketPlayerCounter/PacketPlayerCounter.hpp"
 #include "Network/Packets/Descriptors/PacketPlayersData/PacketPlayersData.hpp"
+#include "Network/Packets/Descriptors/PacketPlayerShoot/PacketPlayerShoot.hpp"
 #include "Network/Packets/Descriptors/PacketStartGame/PacketStartGame.hpp"
 #include "Network/Packets/Descriptors/PacketWelcome/PacketWelcome.hpp"
 
@@ -45,6 +46,9 @@ namespace rtype::network {
                 break;
             case PLAYER_COUNT:
                 packet = std::make_unique<PacketPlayerCounter>();
+                break;
+            case PLAYER_SHOOT:
+                packet = std::make_unique<PacketPlayerShoot>();
                 break;
             default:
                 throw PacketFactoryException();

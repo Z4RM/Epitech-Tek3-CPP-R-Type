@@ -17,6 +17,7 @@ namespace rtype::network {
 
         NEW_PLAYER = 200,
         PLAYERS_DATA = 201,
+        PLAYER_SHOOT = 202,
 
         ENEMIES_DATA = 301,
 

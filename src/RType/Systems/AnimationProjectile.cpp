@@ -40,7 +40,6 @@ void rtype::systems::UpdateProjectilesSystem::updateProjectiles(
             componentManager.addComponent<components::Sprite>(entity, *sprite);
         }
 
-
         if (!projectile || !sprite || !pos)
             continue;
 

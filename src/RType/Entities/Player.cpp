@@ -22,6 +22,7 @@ rtype::entities::Player::Player(
         const components::Size size,
         components::Sprite &sprite,
         const components::Animation &animation,
+        std::function<void(int id)> shootFn,
         const components::NetId network,
         components::ActualPlayer actualPlayer,
         const components::Speed speed
@@ -57,8 +58,12 @@ rtype::entities::Player::Player(
 
     _inputs.keyActions.insert({
         sf::Keyboard::Key::Space,
-        {sf::Event::KeyPressed, [this, &entityManager, &componentManager, id]() {
-            this->shoot(entityManager, componentManager, id);
+        {sf::Event::KeyPressed, [this, &entityManager, &componentManager, id, shootFn, network]() {
+            static auto clock = std::chrono::steady_clock::now();
+            bool result = this->shoot(entityManager, componentManager, id, clock);
+            if (result) {
+                shootFn(network.id);
+            }
         }}
     });
 
@@ -142,48 +147,22 @@ rtype::entities::Player::Player(
     componentManager.addComponent<components::InputHandler>(id, _inputs);
 }
 
-#else
-
-rtype::entities::Player::Player(
-        rtype::ecs::EntityManager &entityManager,
-        rtype::ecs::ComponentManager &componentManager,
-        const components::Position pos,
-        const components::Velocity vel,
-        const components::Size size,
-        const components::NetworkConnection network,
-        const components::NetId netId,
-        const components::Speed speed
-) {
-    _id = entityManager.createEntity();
-    componentManager.addComponent<components::Position>(_id, pos);
-    componentManager.addComponent<components::Velocity>(_id, vel);
-    componentManager.addComponent<components::Size>(_id, size);
-    componentManager.addComponent<components::Hitbox>(_id, {pos, size});
-    componentManager.addComponent<components::NetworkConnection>(_id, network);
-    componentManager.addComponent<components::NetId>(_id, netId);
-    componentManager.addComponent<components::Speed>(_id, speed);
-
-    components::Health health = {1000};
-    componentManager.addComponent<components::Health>(_id, health);
-}
-
-#endif
-
-void rtype::entities::Player::shoot(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager, size_t id) {
+bool rtype::entities::Player::shoot(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager, size_t id,
+std::chrono::steady_clock::time_point &clock) {
     auto now = std::chrono::steady_clock::now();
-    std::chrono::duration<double> elapsed = now - _elaspedShoot;
+    std::chrono::duration<double> elapsed = now - clock;
 
-    if (elapsed.count() < _shootCooldown) {
-        return;
+    if (elapsed.count() < 0.8) {
+        return false;
     }
-    _shootCooldown = 0.8;
-    _elaspedShoot = std::chrono::steady_clock::now();
+    clock = std::chrono::steady_clock::now();
     size_t projectileId = entityManager.createEntity();
 
     auto playerPos = componentManager.getComponent<components::Position>(id);
+    auto netId = componentManager.getComponent<components::NetId>(id);
 
     if (!playerPos) {
-        return;
+        return false;
     }
     components::Velocity vel = {2.0, 0.0, 0.0};
     components::Position pos = {playerPos->x + 10.0f, playerPos->y, playerPos->z};
@@ -226,5 +205,35 @@ void rtype::entities::Player::shoot(ecs::EntityManager &entityManager, ecs::Comp
 #endif
     };
     componentManager.addComponent<components::Projectile>(projectileId, projectile);
+
+    network::PacketPlayerShoot packet(netId->id);
+    return true;
 }
+
+#else
+
+rtype::entities::Player::Player(
+        rtype::ecs::EntityManager &entityManager,
+        rtype::ecs::ComponentManager &componentManager,
+        const components::Position pos,
+        const components::Velocity vel,
+        const components::Size size,
+        const components::NetworkConnection network,
+        const components::NetId netId,
+        const components::Speed speed
+) {
+    _id = entityManager.createEntity();
+    componentManager.addComponent<components::Position>(_id, pos);
+    componentManager.addComponent<components::Velocity>(_id, vel);
+    componentManager.addComponent<components::Size>(_id, size);
+    componentManager.addComponent<components::Hitbox>(_id, {pos, size});
+    componentManager.addComponent<components::NetworkConnection>(_id, network);
+    componentManager.addComponent<components::NetId>(_id, netId);
+    componentManager.addComponent<components::Speed>(_id, speed);
+
+    components::Health health = {1000};
+    componentManager.addComponent<components::Health>(_id, health);
+}
+
+#endif
 

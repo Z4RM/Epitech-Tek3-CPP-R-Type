@@ -36,6 +36,8 @@ void rtype::systems::Movement::handleCollisions(unsigned int entity, components:
         const auto colliderHitBox = componentManager.getComponent<components::Hitbox>(collisionEntity);
         const auto entityHealthBar = componentManager.getComponent<components::Health>(entity);
         const auto colliderDamage = componentManager.getComponent<components::Damage>(collisionEntity);
+        const auto peaceful = componentManager.getComponent<components::NoDamageToPlayer>(collisionEntity);
+        const auto player = componentManager.getComponent<components::NetworkConnection>(entity);
 
         if (!colliderPos || !colliderHitBox)
             continue;
@@ -47,9 +49,11 @@ void rtype::systems::Movement::handleCollisions(unsigned int entity, components:
             float distance = std::sqrt(dx * dx + dy * dy + dz * dz);
 
             if (entityHealthBar && colliderDamage && IS_SERVER) {
+                if (player && peaceful) {
+                    continue;
+                }
                 auto now = std::chrono::steady_clock::now();
                 std::chrono::duration<double> elapsed = now - entityHealthBar->_elapsedDamage;
-
                 if (elapsed.count() > 0.8) {
                     entityHealthBar->takeDamage(colliderDamage->collisionDamage);
                     entityHealthBar->_elapsedDamage = now;
