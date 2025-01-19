@@ -10,6 +10,7 @@
 #include <Network/Packets/EPacketCode.hpp>
 #include "RType/ModeManager/ModeManager.hpp"
 #include "Packets.hpp"
+#include "RType/Config/Config.hpp"
 
 namespace rtype::network {
 
@@ -19,9 +20,9 @@ namespace rtype::network {
         } else {
             this->_socket = std::make_shared<asio::ip::udp::socket>(this->_ioContext, asio::ip::udp::endpoint(asio::ip::udp::v4(), 0));
             try {
-                this->_serverEndpoint = asio::ip::udp::endpoint(asio::ip::make_address("127.0.0.1"), port);
+                this->_serverEndpoint = asio::ip::udp::endpoint(asio::ip::make_address(Config::getInstance().getNetwork().server.address), port);
             } catch (std::exception &e) {
-                spdlog::error("Error while creating server endpoint", port);
+                spdlog::error("Error while creating server endpoint");
             }
         }
     }

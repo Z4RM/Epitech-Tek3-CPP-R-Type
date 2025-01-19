@@ -61,7 +61,7 @@ namespace rtype::ecs
          *
          * @param entity The unique ID of the entity.
          */
-        void removeComponent(unsigned int entity) {
+        void removeComponent(unsigned int entity) override {
             std::lock_guard<std::mutex> lock(_mutex);
 
             auto it = _sparse.find(entity);

@@ -35,12 +35,11 @@ namespace rtype {
              * @brief The server configuration.
              */
             struct {
-#ifdef RTYPE_IS_CLIENT
                 /**
                  * @brief The address of the server.
                  */
                 std::string address;
-#endif
+
                 /**
                  * @brief The port of the server.
                  */
