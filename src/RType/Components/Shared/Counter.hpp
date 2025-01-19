@@ -35,13 +35,13 @@
 
 namespace rtype::components {
         struct Counter {
-            std::shared_ptr<std::atomic<int>> count = 0;
+            int count = 0;
             int max = 0;
             std::string name;
             components::SfText text;
 
             Counter(int iniCount, int max, std::string &name, const sf::Vector2f pos, int charSize) : count
-            (std::make_shared<std::atomic<int>>(iniCount)),
+            (iniCount),
              max
             (max), name
             (name),
@@ -51,12 +51,12 @@ namespace rtype::components {
             }
 
             int getCount() {
-                return count->load();
+                return count;
             }
 
             void update(int newCount) {
-                count->store(newCount);
-                const std::string newStr = std::to_string(count->load()) + "/" + std::to_string(max) + " " + name;
+                count = newCount;
+                const std::string newStr = std::to_string(count) + "/" + std::to_string(max) + " " + name;
                 this->text.text.setString(newStr);
             }
         };

@@ -14,7 +14,7 @@ namespace rtype::models {
     /** Represent the datas of a player **/
     struct PlayerData {
         components::Position pos{};
-        components::Velocity vel{};
+        components::Velocity vel{0, 0, 0};
         components::Size size{};
         components::NetId netId;
         int health = 0;

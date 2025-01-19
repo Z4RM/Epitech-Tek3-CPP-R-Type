@@ -38,7 +38,7 @@ namespace rtype::ecs
          * @return The unique ID of the newly created entity.
          */
         unsigned int createEntity() {
-            std::lock_guard lock(_entitiesMutex);
+            std::unique_lock lock(_entitiesMutex);
             unsigned int entity;
             if (!_availableIds.empty()) {
                 entity = _availableIds.front();
@@ -77,7 +77,7 @@ namespace rtype::ecs
          * @return `true` if the entity is active, otherwise `false`.
          */
         bool isEntityActive(unsigned int entity) const {
-            std::lock_guard lock(_entitiesMutex);
+            std::unique_lock lock(_entitiesMutex);
             return _activeEntities.find(entity) != _activeEntities.end();
         }
 
@@ -91,7 +91,7 @@ namespace rtype::ecs
          *         of all active entities.
         */
         std::unordered_set<unsigned int> getEntities() const {
-            std::lock_guard lock(_entitiesMutex);
+            std::unique_lock lock(_entitiesMutex);
             return _activeEntities;
         }
 

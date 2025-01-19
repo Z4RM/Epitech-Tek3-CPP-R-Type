@@ -40,7 +40,7 @@ void rtype::systems::Movement::handleCollisions(unsigned int entity, components:
         if (!colliderPos || !colliderHitBox)
             continue;
 
-        if (isColliding(pos, hitBox, colliderPos, colliderHitBox)) {
+        if (isColliding(pos, hitBox, colliderPos.get(), colliderHitBox.get())) {
             float dx = pos->x - colliderPos->x;
             float dy = pos->y - colliderPos->y;
             float dz = pos->z - colliderPos->z;
@@ -63,7 +63,9 @@ void rtype::systems::Movement::handleCollisions(unsigned int entity, components:
 
                 if (entityHealthBar && colliderDamage) {
                     entityHealthBar->takeDamage(colliderDamage->collisionDamage);
+                    componentManager.addComponent<components::Health>(entity, *entityHealthBar);
                 }
+                componentManager.addComponent<components::Velocity>(entity, *vel);
             }
         }
     }
@@ -87,7 +89,7 @@ void rtype::systems::Movement::move(const rtype::ecs::EntityManager& entityManag
 
         if (pos && vel) {
             if (hitBox) {
-                handleCollisions(entity, pos, hitBox, entities, componentManager, vel);
+                handleCollisions(entity, pos.get(), hitBox.get(), entities, componentManager, vel.get());
             }
 
             auto newPosX = vel->x * elapsedTime.count();
@@ -104,10 +106,13 @@ void rtype::systems::Movement::move(const rtype::ecs::EntityManager& entityManag
             pos->y += newPosY;
             pos->z += newPosZ;
 
+            componentManager.addComponent<components::Position>(entity, *pos);
+
         #ifndef RTYPE_IS_SERVER
             if (health && hitBox) {
                 health->bgBar.setPosition({pos->x + hitBox->size.width / 5, pos->y});
                 health->healthBar.setPosition({pos->x + hitBox->size.width / 5, pos->y});
+                componentManager.addComponent<components::Health>(entity, *health);
             }
         #endif
 
@@ -120,7 +125,7 @@ void rtype::systems::Movement::move(const rtype::ecs::EntityManager& entityManag
             components::Velocity velTarget = move->second;
 
             if (hitBox) {
-                handleCollisions(entity, pos2, hitBox, entities, componentManager, &velTarget);
+                handleCollisions(entity, pos2.get(), hitBox.get(), entities, componentManager, &velTarget);
             }
 
             auto newPosX = velTarget.x * elapsedTime.count();
@@ -136,10 +141,12 @@ void rtype::systems::Movement::move(const rtype::ecs::EntityManager& entityManag
             pos2->y += newPosY;
             pos2->z += newPosZ;
 
+            componentManager.addComponent<components::Position>(entity, *pos2);
         #ifndef RTYPE_IS_SERVER
             if (health && hitBox) {
                 health->bgBar.setPosition({pos2->x + hitBox->size.width / 5, pos2->y});
                 health->healthBar.setPosition({pos2->x + hitBox->size.width / 5, pos2->y});
+                componentManager.addComponent<components::Health>(entity, *health);
             }
         #endif
 

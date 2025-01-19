@@ -52,7 +52,9 @@ namespace rtype::systems {
                 if (stop && !network.getStop()) {
                     if (!stop->running) {
                         network.setStop(true);
-                        componentManager.getComponent<components::Running>(udp)->running = false;
+                        auto r = componentManager.getComponent<components::Running>(udp);
+                        r->running = false;
+                        componentManager.addComponent<components::Running>(udp, *r);
                     }
                 }
             }
@@ -150,12 +152,14 @@ namespace rtype::systems {
                             if (pos && vel && size && net && netCo) {
                                 if (!netCo->endpoint.has_value() && net->id == data.netId.id) {
                                     spdlog::info("New player in the udp game with net id: {}", net->id);
-                                    netCo->endpoint.emplace(endpoint);
+                                    componentManager.addComponent<components::NetworkConnection>(entity, {netCo->socket, endpoint});
                                 }
                                 if (netCo->endpoint.has_value() && netCo->endpoint == endpoint) {
                                     //*pos = data.pos;
                                     *vel = data.vel;
                                     *size = data.size;
+                                    componentManager.addComponent<components::Velocity>(entity, *vel);
+                                    componentManager.addComponent<components::Size>(entity, *size);
                                 }
                             }
                         }
@@ -191,6 +195,7 @@ namespace rtype::systems {
                                         if (health) {
                                             if (data.health != health->value) {
                                                 health->setHealth(data.health);
+                                                componentManager.addComponent<components::Health>(entity, *health);
                                             }
                                         }
 
@@ -203,11 +208,13 @@ namespace rtype::systems {
                                             const float positionThreshold = 0.1f;
                                             if (distance > positionThreshold) {
                                                 *localPos = data.pos;
+                                                componentManager.addComponent<components::Position>(entity, *localPos);
                                             }
                                         }
 
                                         if (!actualPlayer->value) {
                                             *vel = data.vel;
+                                            componentManager.addComponent<components::Velocity>(entity, *vel);
                                         }
                                         break;
                                     }
@@ -238,8 +245,9 @@ namespace rtype::systems {
 
                             if (net && actualPlayer) {
                                 for (const models::PlayerData &data : playersData->datas) {
-                                    if (data.netId.id == net->id)
+                                    if (data.netId.id == net->id) {
                                         isDead = false;
+                                    }
                                 }
                                 if (isDead) {
                                     spdlog::info("Destroying disconnected player");
@@ -278,6 +286,7 @@ namespace rtype::systems {
                                             if (data.health != health->value) {
                                                 health->value = data.health;
                                                 health->takeDamage(0);
+                                                componentManager.addComponent<components::Health>(entity, *health);
                                             }
                                         }
 
@@ -290,9 +299,11 @@ namespace rtype::systems {
                                             const float positionThreshold = 0.1f;
                                             if (distance > positionThreshold) {
                                                 *localPos = data.pos;
+                                                componentManager.addComponent<components::Position>(entity, *localPos);
                                             }
                                         }
                                         *vel = data.vel;
+                                        componentManager.addComponent<components::Velocity>(entity, *vel);
                                         break;
                                     }
                                 }
@@ -370,6 +381,8 @@ namespace rtype::systems {
                             auto netCo = componentManager.getComponent<components::NetworkConnection>(entity);
                             if (netCo && netCo->socket == socket) {
                                 entityManager.destroyEntity(entity, componentManager);
+                                spdlog::info("Player destroyed");
+                                break;
                             }
                         }
                         for (auto it = playersToSayWelcome.begin(); it != playersToSayWelcome.end(); ) {
@@ -384,7 +397,6 @@ namespace rtype::systems {
                         for (auto &p : playersToSayWelcome) {
                             network.sendPacket(packetPCount, p.second);
                         }
-                        spdlog::info("Player destroyed");
                     } else {
                         spdlog::info("Server have closed the connection");
                     }
@@ -409,7 +421,7 @@ namespace rtype::systems {
                                 for (auto &p : playersToSayWelcome) {
                                     network.sendPacket(playerCount, p.second);
                                 }
-                                spdlog::info("New player created with net id: {}");
+                                spdlog::info("New player created with net id: {}", playerId);
                             } else {
                                 //todo: send packet game already started to the client
                             }
@@ -445,7 +457,7 @@ namespace rtype::systems {
                             {0, 0, 0},
                             {0, 0, 0},
                             {64, 64},
-                            {socket},
+                            {player.second},
                             { player.first }, {PLAYER_SPEED});
 
                             network::PacketWelcome welcome(player.first);
@@ -491,12 +503,11 @@ namespace rtype::systems {
                                 auto gameState = componentManager.getComponent<components::GameState>(entity);
                                 auto playerCount = componentManager.getComponent<components::Counter>(entity);
                                 if (gameState && gameState->isStarted) {
-                                    spdlog::info("New player joined the game but the game is already started");
                                     return;
                                 }
                                 if (playerCount && playerCount->name == "players") {
-                                    spdlog::warn(packetPlayerCounter->_count);
                                     playerCount->update(packetPlayerCounter->_count);
+                                    componentManager.addComponent<components::Counter>(entity, *playerCount);
                                 }
                             }
                         }
@@ -514,7 +525,10 @@ namespace rtype::systems {
                 if (stop && !network.getStop()) {
                     if (!stop->running) {
                         network.setStop(true);
-                        componentManager.getComponent<components::Running>(tcp)->running = false;
+                        auto r = componentManager.getComponent<components::Running>(tcp);
+                        r->running = false;
+
+                        componentManager.addComponent<components::Running>(tcp, *r);
                     }
                 }
             }

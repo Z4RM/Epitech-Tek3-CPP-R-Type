@@ -37,6 +37,7 @@ void rtype::scenes::Menu::load() {
             auto gameState = _componentManager.getComponent<components::GameState>(entity);
             if (gameState) {
                 gameState->isStarted = true;
+                _componentManager.addComponent<components::GameState>(entity, *gameState);
             }
         }
     };

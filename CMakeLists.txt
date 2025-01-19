@@ -134,6 +134,7 @@ set(CLIENT_SRC
         src/RType/Entities/Game.hpp
         src/Network/Packets/Descriptors/PacketStartGame/PacketStartGame.cpp
         src/Network/Packets/Descriptors/PacketStartGame/PacketStartGame.hpp
+        src/RType/Components/Client/SlidingBg.hpp
 )
 
 set(RTYPE_HEADERS

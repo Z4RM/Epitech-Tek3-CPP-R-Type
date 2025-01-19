@@ -15,6 +15,6 @@ namespace rtype::entities {
     class Image : public ecs::AEntity {
     public:
         Image(ecs::ComponentManager &componentManager, ecs::EntityManager &entityManager, components::Sprite sprite, bool isBg
-        = false);
+        = false, bool isSlide = false);
     };
 }

@@ -66,11 +66,11 @@ namespace rtype::ecs
 
         void removeAllComponent(unsigned int entity) {
             std::lock_guard lock(_componentsMutex);
-
             for (auto &component: _componentSets) {
                 component.second->removeComponent(entity);
             }
         }
+
 
         /**
          * @brief Retrieves a component associated with an entity.
@@ -83,14 +83,14 @@ namespace rtype::ecs
          * @return A pointer to the component, or `nullptr` if the entity does not have a component of this type.
          */
         template <typename T>
-        T* getComponent(unsigned int entity) {
+        std::shared_ptr<T> getComponent(unsigned int entity) {
             std::lock_guard lock(_componentsMutex);
             if (_componentSets.find(typeid(T)) != _componentSets.end()) {
                 auto sparse_set = std::dynamic_pointer_cast<SparseSet<T>>(_componentSets[typeid(T)]);
-                if (!sparse_set) {
-                    return nullptr;
-                } else
+
+                if (sparse_set) {
                     return sparse_set->getComponent(entity);
+                }
             }
             return nullptr;
         }

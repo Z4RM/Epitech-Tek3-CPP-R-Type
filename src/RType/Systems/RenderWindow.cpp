@@ -11,6 +11,7 @@
 #include "RType/Entities/Window.hpp"
 #include "RenderWindow.hpp"
 
+#include "RType/Components/Client/SlidingBg.hpp"
 #include "RType/Components/Shared/Counter.hpp"
 
 std::vector<rtype::ecs::Entity> getEntitiesSortedByZIndex(
@@ -42,6 +43,11 @@ std::vector<rtype::ecs::Entity> getEntitiesSortedByZIndex(
 
 void rtype::systems::RenderWindowSys::render(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager)
 {
+    static auto lastUpdateTime = std::chrono::steady_clock::now();
+    auto currentTime = std::chrono::steady_clock::now();
+    std::chrono::duration<float> elapsedTime = currentTime - lastUpdateTime;
+    lastUpdateTime = currentTime;
+
     for (const auto& entity : entityManager.getEntities()) {
         auto renderWindow = componentManager.getComponent<rtype::entities::RWindow>(entity);
         if (!renderWindow)
@@ -54,12 +60,13 @@ void rtype::systems::RenderWindowSys::render(ecs::EntityManager &entityManager, 
                     auto component = componentManager.getComponent<components::Running>(entity);
                     if (component) {
                         component->running = false;
+                        componentManager.addComponent<components::Running>(entity, *component);
                         break;
                     }
                 }
                 return;
             }
-            rtype::systems::InputSystem::handleInput(entityManager, componentManager, event, renderWindow);
+            rtype::systems::InputSystem::handleInput(entityManager, componentManager, event, renderWindow.get());
         }
 
         auto sortedEntities = getEntitiesSortedByZIndex(entityManager, componentManager);
@@ -76,8 +83,22 @@ void rtype::systems::RenderWindowSys::render(ecs::EntityManager &entityManager, 
             //TODO: dont setPos if its already set maybe
             if (sprite && sprite->sprite) {
                 auto pos = componentManager.getComponent<components::Position>(e.id);
-                if (pos)
+                auto slide = componentManager.getComponent<components::SlidingBg>(e.id);
+
+                if (slide) {
+                    auto position = sprite->sprite->getPosition();
+                    position.x -= 150 * elapsedTime.count();
+
+                    //TODO: make it with sprite size
+                    if (position.x <= -800) {
+                        position.x = 800;
+                    }
+                    sprite->sprite->setPosition(position);
+                }
+
+                if (pos) {
                     sprite->sprite->setPosition({pos->x, pos->y});
+                }
                 renderWindow->window->draw(*sprite->sprite);
             }
         }

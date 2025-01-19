@@ -131,7 +131,7 @@ namespace rtype::network {
             } else {
                 std::string codeStr = std::to_string(code);
 
-                spdlog::info("TCP Packet {}: successfully sended to");
+                spdlog::info("TCP Packet {}: successfully sended", codeStr);
             }
         });
     }

@@ -6,12 +6,14 @@
 */
 
 #pragma once
+#include <atomic>
+#include <memory>
 
 namespace rtype::components {
     struct Velocity
     {
-        float x;
-        float y;
-        float z;
+        float x = 0;
+        float y = 0;
+        float z = 0;
     };
 }
