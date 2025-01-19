@@ -125,7 +125,7 @@ namespace rtype::ecs
         /**
          * @brief A mapping from entity IDs to their indices in the dense array.
          */
-        std::unordered_map<unsigned int, size_t> _sparse;
+        std::unordered_map<unsigned int, size_t> _sparse {};
 
         /**
          * @brief A dense array of entity IDs.

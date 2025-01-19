@@ -86,8 +86,11 @@ namespace rtype::ecs
         T* getComponent(unsigned int entity) {
             std::lock_guard lock(_componentsMutex);
             if (_componentSets.find(typeid(T)) != _componentSets.end()) {
-                auto sparse_set = std::static_pointer_cast<SparseSet<T>>(_componentSets[typeid(T)]);
-                return sparse_set->getComponent(entity);
+                auto sparse_set = std::dynamic_pointer_cast<SparseSet<T>>(_componentSets[typeid(T)]);
+                if (!sparse_set) {
+                    return nullptr;
+                } else
+                    return sparse_set->getComponent(entity);
             }
             return nullptr;
         }

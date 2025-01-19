@@ -54,6 +54,5 @@ void rtype::scenes::Menu::load() {
 }
 
 #else
-void rtype::scenes::Menu::load() {
-}
+void rtype::scenes::Menu::load() {}
 #endif
