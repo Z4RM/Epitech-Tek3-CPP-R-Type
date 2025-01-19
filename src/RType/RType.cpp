@@ -100,7 +100,6 @@ int rtype::RType::_run() {
         {"", 0, 0}
     );
 
-    // Correctif
     systemManager.addSystem(rtype::systems::UpdateProjectilesSystem::updateProjectiles);
 #else
     rtype::components::Player player(

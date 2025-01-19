@@ -11,7 +11,6 @@ void rtype::systems::UpdateProjectilesSystem::updateProjectiles(
     ecs::EntityManager &entityManager,
     ecs::ComponentManager &componentManager
 ) {
-    // Correctif
     std::vector<size_t> projectileIds;
 
     for (auto& entity : entityManager.getEntities()) {
