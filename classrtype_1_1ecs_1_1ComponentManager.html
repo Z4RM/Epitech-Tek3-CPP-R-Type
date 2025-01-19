@@ -123,10 +123,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a06b2ea546dcbacdc35c7992ec373f447"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3f41307240b0eea408fa4286e8c557cb" id="r_a3f41307240b0eea408fa4286e8c557cb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3f41307240b0eea408fa4286e8c557cb">removeAllComponent</a> (unsigned int entity)</td></tr>
 <tr class="separator:a3f41307240b0eea408fa4286e8c557cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab4cb5b400842ef8e5a82737f1b554693" id="r_ab4cb5b400842ef8e5a82737f1b554693"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
-<tr class="memitem:ab4cb5b400842ef8e5a82737f1b554693"><td class="memTemplItemLeft" align="right" valign="top">T *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ab4cb5b400842ef8e5a82737f1b554693">getComponent</a> (unsigned int entity)</td></tr>
-<tr class="memdesc:ab4cb5b400842ef8e5a82737f1b554693"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves a component associated with an entity.  <br /></td></tr>
-<tr class="separator:ab4cb5b400842ef8e5a82737f1b554693"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2cdb3d0364c255c3495bce093f6d4e7c" id="r_a2cdb3d0364c255c3495bce093f6d4e7c"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
+<tr class="memitem:a2cdb3d0364c255c3495bce093f6d4e7c"><td class="memTemplItemLeft" align="right" valign="top">std::shared_ptr&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a2cdb3d0364c255c3495bce093f6d4e7c">getComponent</a> (unsigned int entity)</td></tr>
+<tr class="memdesc:a2cdb3d0364c255c3495bce093f6d4e7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves a component associated with an entity.  <br /></td></tr>
+<tr class="separator:a2cdb3d0364c255c3495bce093f6d4e7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="a621de9a68f98d9543ed59c0cf61d3032" name="a621de9a68f98d9543ed59c0cf61d3032"></a>
@@ -176,8 +176,8 @@ template&lt;typename T&gt; </div>
 
 </div>
 </div>
-<a id="ab4cb5b400842ef8e5a82737f1b554693" name="ab4cb5b400842ef8e5a82737f1b554693"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab4cb5b400842ef8e5a82737f1b554693">&#9670;&#160;</a></span>getComponent()</h2>
+<a id="a2cdb3d0364c255c3495bce093f6d4e7c" name="a2cdb3d0364c255c3495bce093f6d4e7c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2cdb3d0364c255c3495bce093f6d4e7c">&#9670;&#160;</a></span>getComponent()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -188,7 +188,7 @@ template&lt;typename T&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">T * rtype::ecs::ComponentManager::getComponent </td>
+          <td class="memname">std::shared_ptr&lt; T &gt; rtype::ecs::ComponentManager::getComponent </td>
           <td>(</td>
           <td class="paramtype">unsigned int</td>          <td class="paramname"><span class="paramname"><em>entity</em></span></td><td>)</td>
           <td></td>

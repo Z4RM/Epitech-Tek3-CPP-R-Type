@@ -153,42 +153,45 @@ $(function(){initNavTree('ComponentManager_8hpp_source.html',''); initResizable(
 <div class="foldopen" id="foldopen00067" data-start="{" data-end="}">
 <div class="line"><a id="l00067" name="l00067"></a><span class="lineno"><a class="line" href="classrtype_1_1ecs_1_1ComponentManager.html#a3f41307240b0eea408fa4286e8c557cb">   67</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="classrtype_1_1ecs_1_1ComponentManager.html#a3f41307240b0eea408fa4286e8c557cb">removeAllComponent</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> entity) {</div>
 <div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>            std::lock_guard lock(_componentsMutex);</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span> </div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>            <span class="keywordflow">for</span> (<span class="keyword">auto</span> &amp;component: _componentSets) {</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>                component.second-&gt;removeComponent(entity);</div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>            }</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        }</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>            <span class="keywordflow">for</span> (<span class="keyword">auto</span> &amp;component: _componentSets) {</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>                component.second-&gt;removeComponent(entity);</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>            }</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>        }</div>
 </div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span> </div>
 <div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span></div>
 <div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
 <div class="foldopen" id="foldopen00086" data-start="{" data-end="}">
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno"><a class="line" href="classrtype_1_1ecs_1_1ComponentManager.html#ab4cb5b400842ef8e5a82737f1b554693">   86</a></span>        T* <a class="code hl_function" href="classrtype_1_1ecs_1_1ComponentManager.html#ab4cb5b400842ef8e5a82737f1b554693">getComponent</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> entity) {</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno"><a class="line" href="classrtype_1_1ecs_1_1ComponentManager.html#a2cdb3d0364c255c3495bce093f6d4e7c">   86</a></span>        std::shared_ptr&lt;T&gt; <a class="code hl_function" href="classrtype_1_1ecs_1_1ComponentManager.html#a2cdb3d0364c255c3495bce093f6d4e7c">getComponent</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> entity) {</div>
 <div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>            std::lock_guard lock(_componentsMutex);</div>
 <div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>            <span class="keywordflow">if</span> (_componentSets.find(<span class="keyword">typeid</span>(T)) != _componentSets.end()) {</div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>                <span class="keyword">auto</span> sparse_set = std::static_pointer_cast&lt;SparseSet&lt;T&gt;&gt;(_componentSets[<span class="keyword">typeid</span>(T)]);</div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>                <span class="keywordflow">return</span> sparse_set-&gt;getComponent(entity);</div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>            }</div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>            <span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>        }</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>                <span class="keyword">auto</span> sparse_set = std::dynamic_pointer_cast&lt;SparseSet&lt;T&gt;&gt;(_componentSets[<span class="keyword">typeid</span>(T)]);</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span> </div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>                <span class="keywordflow">if</span> (sparse_set) {</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>                    <span class="keywordflow">return</span> sparse_set-&gt;getComponent(entity);</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>                }</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>            }</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>            <span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>        }</div>
 </div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span> </div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>    <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>        std::unordered_map&lt;std::type_index, std::shared_ptr&lt;ISparseSet&gt;&gt; _componentSets;</div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span> </div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>        <span class="keyword">mutable</span> std::mutex _componentsMutex;</div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>    };</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span> </div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>    <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>        std::unordered_map&lt;std::type_index, std::shared_ptr&lt;ISparseSet&gt;&gt; _componentSets;</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span> </div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>        <span class="keyword">mutable</span> std::mutex _componentsMutex;</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>    };</div>
 </div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>}</div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span> </div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span> </div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span><span class="preprocessor">#endif </span><span class="comment">//COMPONENTMANAGER_HPP</span></div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>}</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span> </div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span> </div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span><span class="preprocessor">#endif </span><span class="comment">//COMPONENTMANAGER_HPP</span></div>
 <div class="ttc" id="aSparseSet_8hpp_html"><div class="ttname"><a href="SparseSet_8hpp.html">SparseSet.hpp</a></div></div>
 <div class="ttc" id="aclassrtype_1_1ecs_1_1ComponentManager_html"><div class="ttname"><a href="classrtype_1_1ecs_1_1ComponentManager.html">rtype::ecs::ComponentManager</a></div><div class="ttdef"><b>Definition</b> ComponentManager.hpp:26</div></div>
 <div class="ttc" id="aclassrtype_1_1ecs_1_1ComponentManager_html_a06b2ea546dcbacdc35c7992ec373f447"><div class="ttname"><a href="classrtype_1_1ecs_1_1ComponentManager.html#a06b2ea546dcbacdc35c7992ec373f447">rtype::ecs::ComponentManager::removeComponent</a></div><div class="ttdeci">void removeComponent(unsigned int entity)</div><div class="ttdoc">Removes a component from an entity.</div><div class="ttdef"><b>Definition</b> ComponentManager.hpp:59</div></div>
+<div class="ttc" id="aclassrtype_1_1ecs_1_1ComponentManager_html_a2cdb3d0364c255c3495bce093f6d4e7c"><div class="ttname"><a href="classrtype_1_1ecs_1_1ComponentManager.html#a2cdb3d0364c255c3495bce093f6d4e7c">rtype::ecs::ComponentManager::getComponent</a></div><div class="ttdeci">std::shared_ptr&lt; T &gt; getComponent(unsigned int entity)</div><div class="ttdoc">Retrieves a component associated with an entity.</div><div class="ttdef"><b>Definition</b> ComponentManager.hpp:86</div></div>
 <div class="ttc" id="aclassrtype_1_1ecs_1_1ComponentManager_html_a3f41307240b0eea408fa4286e8c557cb"><div class="ttname"><a href="classrtype_1_1ecs_1_1ComponentManager.html#a3f41307240b0eea408fa4286e8c557cb">rtype::ecs::ComponentManager::removeAllComponent</a></div><div class="ttdeci">void removeAllComponent(unsigned int entity)</div><div class="ttdef"><b>Definition</b> ComponentManager.hpp:67</div></div>
 <div class="ttc" id="aclassrtype_1_1ecs_1_1ComponentManager_html_a621de9a68f98d9543ed59c0cf61d3032"><div class="ttname"><a href="classrtype_1_1ecs_1_1ComponentManager.html#a621de9a68f98d9543ed59c0cf61d3032">rtype::ecs::ComponentManager::addComponent</a></div><div class="ttdeci">void addComponent(unsigned int entity, const T &amp;component)</div><div class="ttdoc">Adds a component to an entity.</div><div class="ttdef"><b>Definition</b> ComponentManager.hpp:39</div></div>
-<div class="ttc" id="aclassrtype_1_1ecs_1_1ComponentManager_html_ab4cb5b400842ef8e5a82737f1b554693"><div class="ttname"><a href="classrtype_1_1ecs_1_1ComponentManager.html#ab4cb5b400842ef8e5a82737f1b554693">rtype::ecs::ComponentManager::getComponent</a></div><div class="ttdeci">T * getComponent(unsigned int entity)</div><div class="ttdoc">Retrieves a component associated with an entity.</div><div class="ttdef"><b>Definition</b> ComponentManager.hpp:86</div></div>
-<div class="ttc" id="aclassrtype_1_1ecs_1_1SparseSet_html"><div class="ttname"><a href="classrtype_1_1ecs_1_1SparseSet.html">rtype::ecs::SparseSet</a></div><div class="ttdef"><b>Definition</b> SparseSet.hpp:33</div></div>
+<div class="ttc" id="aclassrtype_1_1ecs_1_1SparseSet_html"><div class="ttname"><a href="classrtype_1_1ecs_1_1SparseSet.html">rtype::ecs::SparseSet</a></div><div class="ttdef"><b>Definition</b> SparseSet.hpp:35</div></div>
 <div class="ttc" id="anamespacertype_1_1ecs_html"><div class="ttname"><a href="namespacertype_1_1ecs.html">rtype::ecs</a></div><div class="ttdef"><b>Definition</b> AEntity.hpp:12</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

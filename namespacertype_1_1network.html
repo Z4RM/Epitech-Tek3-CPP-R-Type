@@ -128,7 +128,11 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrtype_1_1network_1_1PacketNewPlayer.html">PacketNewPlayer</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrtype_1_1network_1_1PacketPlayerCounter.html">PacketPlayerCounter</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrtype_1_1network_1_1PacketPlayersData.html">PacketPlayersData</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrtype_1_1network_1_1PacketPlayerShoot.html">PacketPlayerShoot</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrtype_1_1network_1_1PacketStartGame.html">PacketStartGame</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -146,10 +150,12 @@ Enumerations</h2></td></tr>
 <tr class="memitem:a6e33dcdcd158a1e8ce1f13336651a3f8" id="r_a6e33dcdcd158a1e8ce1f13336651a3f8"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6e33dcdcd158a1e8ce1f13336651a3f8">EPacketCode</a> { <br />
 &#160;&#160;<a class="el" href="#a6e33dcdcd158a1e8ce1f13336651a3f8adff6185f34813e53d87684312e1bc746">CONNECT</a> = 100
 , <a class="el" href="#a6e33dcdcd158a1e8ce1f13336651a3f8a71c0c2c8e649ed667a74980ee5d5bf51">WELCOME</a> = 101
+, <a class="el" href="#a6e33dcdcd158a1e8ce1f13336651a3f8ab8b06a024d3da63238c0652702f254d9">PLAYER_COUNT</a> = 102
 , <a class="el" href="#a6e33dcdcd158a1e8ce1f13336651a3f8a94683292f7e9d7237e8d447b03d3d08a">NEW_PLAYER</a> = 200
-, <a class="el" href="#a6e33dcdcd158a1e8ce1f13336651a3f8ac622dc3e2c639993b60f4a1d7c0bf120">PLAYERS_DATA</a> = 201
 , <br />
-&#160;&#160;<a class="el" href="#a6e33dcdcd158a1e8ce1f13336651a3f8ae472978035378367864d3026534a18db">ENEMIES_DATA</a> = 301
+&#160;&#160;<a class="el" href="#a6e33dcdcd158a1e8ce1f13336651a3f8ac622dc3e2c639993b60f4a1d7c0bf120">PLAYERS_DATA</a> = 201
+, <a class="el" href="#a6e33dcdcd158a1e8ce1f13336651a3f8a7ebe525a7107860a63e5687b25de4d3e">PLAYER_SHOOT</a> = 202
+, <a class="el" href="#a6e33dcdcd158a1e8ce1f13336651a3f8ae472978035378367864d3026534a18db">ENEMIES_DATA</a> = 301
 , <a class="el" href="#a6e33dcdcd158a1e8ce1f13336651a3f8a82c5d4d920c04c96cf80bf400d5b6973">START_GAME</a> = 400
 <br />
  }</td></tr>
@@ -173,8 +179,10 @@ Enumerations</h2></td></tr>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a6e33dcdcd158a1e8ce1f13336651a3f8adff6185f34813e53d87684312e1bc746" name="a6e33dcdcd158a1e8ce1f13336651a3f8adff6185f34813e53d87684312e1bc746"></a>CONNECT&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a6e33dcdcd158a1e8ce1f13336651a3f8a71c0c2c8e649ed667a74980ee5d5bf51" name="a6e33dcdcd158a1e8ce1f13336651a3f8a71c0c2c8e649ed667a74980ee5d5bf51"></a>WELCOME&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a6e33dcdcd158a1e8ce1f13336651a3f8ab8b06a024d3da63238c0652702f254d9" name="a6e33dcdcd158a1e8ce1f13336651a3f8ab8b06a024d3da63238c0652702f254d9"></a>PLAYER_COUNT&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a6e33dcdcd158a1e8ce1f13336651a3f8a94683292f7e9d7237e8d447b03d3d08a" name="a6e33dcdcd158a1e8ce1f13336651a3f8a94683292f7e9d7237e8d447b03d3d08a"></a>NEW_PLAYER&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a6e33dcdcd158a1e8ce1f13336651a3f8ac622dc3e2c639993b60f4a1d7c0bf120" name="a6e33dcdcd158a1e8ce1f13336651a3f8ac622dc3e2c639993b60f4a1d7c0bf120"></a>PLAYERS_DATA&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a6e33dcdcd158a1e8ce1f13336651a3f8a7ebe525a7107860a63e5687b25de4d3e" name="a6e33dcdcd158a1e8ce1f13336651a3f8a7ebe525a7107860a63e5687b25de4d3e"></a>PLAYER_SHOOT&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a6e33dcdcd158a1e8ce1f13336651a3f8ae472978035378367864d3026534a18db" name="a6e33dcdcd158a1e8ce1f13336651a3f8ae472978035378367864d3026534a18db"></a>ENEMIES_DATA&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a6e33dcdcd158a1e8ce1f13336651a3f8a82c5d4d920c04c96cf80bf400d5b6973" name="a6e33dcdcd158a1e8ce1f13336651a3f8a82c5d4d920c04c96cf80bf400d5b6973"></a>START_GAME&#160;</td><td class="fielddoc"></td></tr>
 </table>

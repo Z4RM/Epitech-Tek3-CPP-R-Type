@@ -5,7 +5,7 @@ var searchData=
   ['enableserver_2',['enableServer',['../classrtype_1_1ModeManager.html#a3837974c7c77e5db6978331be9143d46',1,'rtype::ModeManager']]],
   ['endpoint_3',['endpoint',['../structrtype_1_1components_1_1NetworkConnection.html#a933df7478b78c6b3d26281819cda74a5',1,'rtype::components::NetworkConnection']]],
   ['enemies_5fdata_4',['ENEMIES_DATA',['../namespacertype_1_1network.html#a6e33dcdcd158a1e8ce1f13336651a3f8ae472978035378367864d3026534a18db',1,'rtype::network']]],
-  ['enemy_5',['Enemy',['../classrtype_1_1entities_1_1Enemy.html',1,'rtype::entities::Enemy'],['../classrtype_1_1entities_1_1Enemy.html#a0f760384050a6b3f28e8a620736aeca3',1,'rtype::entities::Enemy::Enemy()']]],
+  ['enemy_5',['Enemy',['../classrtype_1_1entities_1_1Enemy.html',1,'rtype::entities::Enemy'],['../classrtype_1_1entities_1_1Enemy.html#a8e03692ba215a1b6d8e4c8760115e97b',1,'rtype::entities::Enemy::Enemy()']]],
   ['enemy_2ecpp_6',['Enemy.cpp',['../Enemy_8cpp.html',1,'']]],
   ['enemy_2ehpp_7',['Enemy.hpp',['../Enemy_8hpp.html',1,'']]],
   ['enemydata_8',['EnemyData',['../structrtype_1_1models_1_1EnemyData.html',1,'rtype::models']]],

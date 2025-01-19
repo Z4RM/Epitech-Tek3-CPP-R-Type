@@ -6,6 +6,6 @@ var structrtype_1_1components_1_1Sprite =
     [ "priority", "structrtype_1_1components_1_1Sprite.html#a8f8193ba798783f453fa76b034d2f106", null ],
     [ "scale", "structrtype_1_1components_1_1Sprite.html#a8c7325539cab9454fdd7b792c4fe43c4", null ],
     [ "size", "structrtype_1_1components_1_1Sprite.html#a015b96ebf2d8cdb5142f7ee68b94227c", null ],
-    [ "sprite", "structrtype_1_1components_1_1Sprite.html#a6b8f2c2b1934fe35821111e65d769ffe", null ],
-    [ "texture", "structrtype_1_1components_1_1Sprite.html#afc0ded8cc4608fc03e206300ee54f567", null ]
+    [ "sprite", "structrtype_1_1components_1_1Sprite.html#a1248ca92bb5f998821a524f43f262f38", null ],
+    [ "texture", "structrtype_1_1components_1_1Sprite.html#a4147c310d7a36de058a3534c73cfe07d", null ]
 ];

@@ -103,6 +103,7 @@ $(function(){initNavTree('structrtype_1_1components_1_1Counter.html',''); initRe
 
 <div class="header">
   <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="structrtype_1_1components_1_1Counter-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">rtype::components::Counter Struct Reference</div></div>
@@ -111,22 +112,133 @@ $(function(){initNavTree('structrtype_1_1components_1_1Counter.html',''); initRe
 
 <p><code>#include &lt;<a class="el" href="Counter_8hpp_source.html">Counter.hpp</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a97e0e5e94d3baa03f9a1ad0a3cadb188" id="r_a97e0e5e94d3baa03f9a1ad0a3cadb188"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a97e0e5e94d3baa03f9a1ad0a3cadb188">Counter</a> (int iniCount, int <a class="el" href="#aae9e4fd8f568e6b1b9aca2d9332cce2d">max</a>, std::string &amp;<a class="el" href="#a1754d5657c5cdb5455382ecac672216d">name</a>)</td></tr>
+<tr class="separator:a97e0e5e94d3baa03f9a1ad0a3cadb188"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd9cb26c0e35c556f57674ec809e091f" id="r_afd9cb26c0e35c556f57674ec809e091f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afd9cb26c0e35c556f57674ec809e091f">getCount</a> ()</td></tr>
+<tr class="separator:afd9cb26c0e35c556f57674ec809e091f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00b283ea37c8b77a6997240cacbacacd" id="r_a00b283ea37c8b77a6997240cacbacacd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a00b283ea37c8b77a6997240cacbacacd">update</a> (int newCount)</td></tr>
+<tr class="separator:a00b283ea37c8b77a6997240cacbacacd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a331f16a7fbfacd242ee0d9fc7be7abae" id="r_a331f16a7fbfacd242ee0d9fc7be7abae"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a331f16a7fbfacd242ee0d9fc7be7abae">count</a> = 0</td></tr>
-<tr class="separator:a331f16a7fbfacd242ee0d9fc7be7abae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d2ecce12d1c706fa39f4c93c815e9d4" id="r_a6d2ecce12d1c706fa39f4c93c815e9d4"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; std::atomic&lt; int &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6d2ecce12d1c706fa39f4c93c815e9d4">count</a> = 0</td></tr>
+<tr class="separator:a6d2ecce12d1c706fa39f4c93c815e9d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae9e4fd8f568e6b1b9aca2d9332cce2d" id="r_aae9e4fd8f568e6b1b9aca2d9332cce2d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aae9e4fd8f568e6b1b9aca2d9332cce2d">max</a> = 0</td></tr>
+<tr class="separator:aae9e4fd8f568e6b1b9aca2d9332cce2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1754d5657c5cdb5455382ecac672216d" id="r_a1754d5657c5cdb5455382ecac672216d"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1754d5657c5cdb5455382ecac672216d">name</a></td></tr>
 <tr class="separator:a1754d5657c5cdb5455382ecac672216d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a97e0e5e94d3baa03f9a1ad0a3cadb188" name="a97e0e5e94d3baa03f9a1ad0a3cadb188"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a97e0e5e94d3baa03f9a1ad0a3cadb188">&#9670;&#160;</a></span>Counter()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">rtype::components::Counter::Counter </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>iniCount</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>max</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>name</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="afd9cb26c0e35c556f57674ec809e091f" name="afd9cb26c0e35c556f57674ec809e091f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afd9cb26c0e35c556f57674ec809e091f">&#9670;&#160;</a></span>getCount()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int rtype::components::Counter::getCount </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a00b283ea37c8b77a6997240cacbacacd" name="a00b283ea37c8b77a6997240cacbacacd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a00b283ea37c8b77a6997240cacbacacd">&#9670;&#160;</a></span>update()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void rtype::components::Counter::update </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>newCount</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a id="a331f16a7fbfacd242ee0d9fc7be7abae" name="a331f16a7fbfacd242ee0d9fc7be7abae"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a331f16a7fbfacd242ee0d9fc7be7abae">&#9670;&#160;</a></span>count</h2>
+<a id="a6d2ecce12d1c706fa39f4c93c815e9d4" name="a6d2ecce12d1c706fa39f4c93c815e9d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6d2ecce12d1c706fa39f4c93c815e9d4">&#9670;&#160;</a></span>count</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int rtype::components::Counter::count = 0</td>
+          <td class="memname">std::shared_ptr&lt;std::atomic&lt;int&gt; &gt; rtype::components::Counter::count = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aae9e4fd8f568e6b1b9aca2d9332cce2d" name="aae9e4fd8f568e6b1b9aca2d9332cce2d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aae9e4fd8f568e6b1b9aca2d9332cce2d">&#9670;&#160;</a></span>max</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int rtype::components::Counter::max = 0</td>
         </tr>
       </table>
 </div><div class="memdoc">
