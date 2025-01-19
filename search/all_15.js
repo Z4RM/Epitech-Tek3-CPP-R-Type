@@ -36,7 +36,7 @@ var searchData=
   ['string_2ehpp_33',['String.hpp',['../String_8hpp.html',1,'']]],
   ['style_34',['Style',['../structrtype_1_1entities_1_1Style.html',1,'rtype::entities']]],
   ['style_35',['style',['../structrtype_1_1entities_1_1Style.html#acbdfcfe911b89a7d39182b8bbbfa33e1',1,'rtype::entities::Style::style'],['../structrtype_1_1entities_1_1Mode.html#a9cf4078acf5056b18e1f4b514a056ab7',1,'rtype::entities::Mode::style']]],
-  ['support_36',['Support',['../md_README.html#autotoc_md34',1,'']]],
+  ['support_36',['Support',['../md_README.html#autotoc_md33',1,'']]],
   ['switch_5fserver_37',['SWITCH_SERVER',['../ModeManager_8hpp.html#a0a26447dba0121f4991f1774e30cba60',1,'ModeManager.hpp']]],
   ['switchserver_38',['switchServer',['../classrtype_1_1ModeManager.html#abd31748daae8246749bfb09faf69059c',1,'rtype::ModeManager']]],
   ['systemmanager_39',['SystemManager',['../classrtype_1_1ecs_1_1SystemManager.html',1,'rtype::ecs::SystemManager'],['../classSystemManager.html',1,'SystemManager'],['../classrtype_1_1ecs_1_1SystemManager.html#a53c9b5b7503e261e3206b26bab372c71',1,'rtype::ecs::SystemManager::SystemManager()']]],

@@ -60,14 +60,15 @@ var NAVTREE =
         [ "Tech Stack", "md_README.html#autotoc_md26", null ],
         [ "Configuration", "md_README.html#autotoc_md27", null ],
         [ "Run Locally", "md_README.html#autotoc_md28", null ],
-        [ "Continuous Integration (CI)", "md_README.html#autotoc_md29", [
-          [ "Key Features", "md_README.html#autotoc_md30", null ],
-          [ "Documentation", "md_README.html#autotoc_md31", null ]
+        [ "Linting", "md_README.html#autotoc_md29", null ],
+        [ "Continuous Integration (CI)", "md_README.html#autotoc_md30", [
+          [ "Key Features", "md_README.html#autotoc_md31", null ],
+          [ "Documentation", "md_README.html#autotoc_md32", null ]
         ] ],
-        [ "Contributing", "md_README.html#autotoc_md32", null ],
-        [ "Authors", "md_README.html#autotoc_md33", null ],
-        [ "Support", "md_README.html#autotoc_md34", null ],
-        [ "License", "md_README.html#autotoc_md35", null ]
+        [ "Support", "md_README.html#autotoc_md33", null ],
+        [ "Contributing", "md_README.html#autotoc_md34", null ],
+        [ "License", "md_README.html#autotoc_md35", null ],
+        [ "Authors", "md_README.html#autotoc_md36", null ]
       ] ]
     ] ],
     [ "Namespaces", "namespaces.html", [

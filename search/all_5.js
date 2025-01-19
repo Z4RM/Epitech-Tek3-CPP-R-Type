@@ -16,5 +16,5 @@ var searchData=
   ['ascene_13',['AScene',['../classrtype_1_1ecs_1_1AScene.html',1,'rtype::ecs::AScene'],['../classrtype_1_1ecs_1_1AScene.html#aa1fb5babdb056ef9bb844a0a21112738',1,'rtype::ecs::AScene::AScene()']]],
   ['ascene_2ehpp_14',['AScene.hpp',['../AScene_8hpp.html',1,'']]],
   ['attribution_15',['Attribution',['../md_CODE__OF__CONDUCT.html#autotoc_md11',1,'']]],
-  ['authors_16',['Authors',['../md_README.html#autotoc_md33',1,'']]]
+  ['authors_16',['Authors',['../md_README.html#autotoc_md36',1,'']]]
 ];

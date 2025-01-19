@@ -1,7 +1,7 @@
 var searchData=
 [
   ['changescene_0',['changeScene',['../classrtype_1_1ecs_1_1SceneManager.html#a6d28eaf3f9aecc3fe45d6840a8c5013e',1,'rtype::ecs::SceneManager']]],
-  ['ci_1',['Continuous Integration (CI)',['../md_README.html#autotoc_md29',1,'']]],
+  ['ci_1',['Continuous Integration (CI)',['../md_README.html#autotoc_md30',1,'']]],
   ['client_2ehpp_2',['Client.hpp',['../Client_8hpp.html',1,'']]],
   ['close_3',['close',['../structrtype_1_1entities_1_1Style.html#a7522c7024d7930d1b8e191b739bc0524',1,'rtype::entities::Style']]],
   ['code_20of_20conduct_4',['Contributor Covenant Code of Conduct',['../md_CODE__OF__CONDUCT.html',1,'']]],
@@ -21,8 +21,8 @@ var searchData=
   ['configuration_18',['Configuration',['../md_README.html#autotoc_md27',1,'']]],
   ['connect_19',['CONNECT',['../namespacertype_1_1network.html#a6e33dcdcd158a1e8ce1f13336651a3f8adff6185f34813e53d87684312e1bc746',1,'rtype::network']]],
   ['connect_20',['connect',['../classrtype_1_1network_1_1TCPNetwork.html#a386a34817636f915d07be1a26c418de5',1,'rtype::network::TCPNetwork']]],
-  ['continuous_20integration_20ci_21',['Continuous Integration (CI)',['../md_README.html#autotoc_md29',1,'']]],
-  ['contributing_22',['Contributing',['../md_CONTRIBUTING.html',1,'Contributing'],['../md_README.html#autotoc_md32',1,'Contributing']]],
+  ['continuous_20integration_20ci_21',['Continuous Integration (CI)',['../md_README.html#autotoc_md30',1,'']]],
+  ['contributing_22',['Contributing',['../md_CONTRIBUTING.html',1,'Contributing'],['../md_README.html#autotoc_md34',1,'Contributing']]],
   ['contributing_2emd_23',['CONTRIBUTING.md',['../CONTRIBUTING_8md.html',1,'']]],
   ['contributor_20covenant_20code_20of_20conduct_24',['Contributor Covenant Code of Conduct',['../md_CODE__OF__CONDUCT.html',1,'']]],
   ['conventions_25',['Conventions',['../md_CONTRIBUTING.html#autotoc_md13',1,'Branch Naming Conventions'],['../md_CONTRIBUTING.html#autotoc_md19',1,'Commit Message Conventions']]],

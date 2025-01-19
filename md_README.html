@@ -109,67 +109,86 @@ $(function(){initNavTree('md_README.html',''); initResizable(true); });
 <h1><a class="anchor" id="autotoc_md24"></a>
 R-Type</h1>
 <p><a href="https://github.com/Z4RM/Epitech-Tek3-CPP-R-Type/actions"><img src="https://github.com/Z4RM/Epitech-Tek3-CPP-R-Type/actions/workflows/main.yml/badge.svg" alt="CI" style="pointer-events: none;" class="inline"/></a></p>
-<p>This game is informally called a Horizontal Shmup (or simply, a <em>Shoot’em’up</em>), and while <b>R-Type</b> is not the first one of its category, it has been a huge success amongst gamers in the 90’s, and had several ports, spin-offs, and 3D remakes on modern systems.</p>
+<p>This game is informally called a "Horizontal Shmup" (or simply, a <em>Shoot’em’up</em>), and while <b>R-Type</b> is not the first one of its category, it has been a huge success amongst gamers in the 90’s, and had several ports, spin-offs, and 3D remakes on modern systems.</p>
 <p>Other similar and well-known games are the <b>Gradius</b> series and <b>Blazing Star</b> on <b>Neo Geo</b>.</p>
-<p>This project is a new version of <b>R-Type</b>, with additional features not featured in the original game:</p><ul>
-<li>It's a networked game, where several players are able to fight the evil Bydos</li>
-<li>Its internal design demonstrates architectural features of a real game engine</li>
+<p>This project is a new version of <b>R-Type</b>, with additional features not featured in the original game:</p>
+<ul>
+<li>It's a networked game, where several players are able to fight the evil Bydos.</li>
+<li>Its internal design demonstrates architectural features of a real game engine.</li>
 </ul>
 <h2><a class="anchor" id="autotoc_md25"></a>
 Documentation</h2>
-<p>You can consult the documentation <a href="https://github.com/Z4RM/Epitech-Tek3-CPP-R-Type/wiki">here</a>.</p>
+<p>You can consult the documentation (for users/players and developers) <a href="https://github.com/Z4RM/Epitech-Tek3-CPP-R-Type/wiki">here</a>.</p>
 <h2><a class="anchor" id="autotoc_md26"></a>
 Tech Stack</h2>
 <ul>
+<li><b>Supported platforms:</b><ul>
+<li>Linux</li>
+<li>Windows</li>
+<li>macOS (not tested, but it should definitely work due to common points between Linux and macOS)</li>
+</ul>
+</li>
 <li><b>Language:</b> C++ 17</li>
 <li><b>Package manager:</b> Conan</li>
-<li><b>Build system:</b> CMake</li>
+<li><b>Build tool:</b> CMake</li>
+<li><b>External libraries used:</b><ul>
+<li>SFML (2.6.2) - Graphic library used by our game</li>
+<li>Asio - Cross-platform library for network and low-level I/O programming</li>
+<li>inih - <a href="https://wikipedia.org/wiki/INI_file">.INI file</a> parser</li>
+<li>nlohmann's json - <a href="https://wikipedia.org/wiki/JavaScript_Object_Notation">.JSON file</a> parser</li>
+<li>spdlog - Fast C++ logging library</li>
+</ul>
+</li>
 </ul>
 <h2><a class="anchor" id="autotoc_md27"></a>
 Configuration</h2>
 <p>To configure some parts of the <b>R-Type</b> you can provide a <code>config.ini</code> file containing specifics configuration keys.</p>
-<p>To do this, you can copy the <code>config.ini.example</code> file to <code>config.ini</code> and configure each key.\ All the keys and their possible values are explained in the example file.</p>
+<p>To do this, you can copy the <code>config.ini.example</code> file to <code>config.ini</code> and configure each key. All the keys and their possible values are explained in the example file.</p>
 <h2><a class="anchor" id="autotoc_md28"></a>
 Run Locally</h2>
-<p>Clone the project </p><div class="fragment"><div class="line">git clone https://github.com/Z4RM/Epitech-Tek3-CPP-R-Type.git</div>
-</div><!-- fragment --><p>Go to the project directory </p><div class="fragment"><div class="line">cd Epitech-Tek3-CPP-R-Type</div>
+<p>Clone the project</p>
+<div class="fragment"><div class="line">git clone https://github.com/Z4RM/Epitech-Tek3-CPP-R-Type.git</div>
+</div><!-- fragment --><p>Go to the project directory</p>
+<div class="fragment"><div class="line">cd Epitech-Tek3-CPP-R-Type</div>
 </div><!-- fragment --><p>Follow the installation steps on the wiki: <a href="https://github.com/Z4RM/Epitech-Tek3-CPP-R-Type/wiki/Build-and-manage-packages">Build and manage packages</a>.</p>
-<p>Start the server and/or the client </p><div class="fragment"><div class="line">./r-type_server</div>
-<div class="line">./r-type_client</div>
+<p>Start the server and/or the client</p>
+<div class="fragment"><div class="line">build/r-type_server</div>
+<div class="line">build/r-type_client</div>
 </div><!-- fragment --><h2><a class="anchor" id="autotoc_md29"></a>
+Linting</h2>
+<p>We use <a href="https://github.com/super-linter/super-linter"><b>Super-Linter</b></a> to ensure that the codebase is clean and consistent.</p>
+<p>To run it locally, you can use the following command:</p>
+<div class="fragment"><div class="line">docker run --rm \</div>
+<div class="line">           -e RUN_LOCAL=true \</div>
+<div class="line">           --env-file &quot;.github/super-linter.env&quot; \</div>
+<div class="line">           -v &quot;$(pwd)&quot;:/tmp/lint \</div>
+<div class="line">           ghcr.io/super-linter/super-linter:latest</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md30"></a>
 Continuous Integration (CI)</h2>
 <p>This repository uses GitHub Actions for Continuous Integration (CI) to ensure the quality and stability of the codebase.</p>
-<h3><a class="anchor" id="autotoc_md30"></a>
+<h3><a class="anchor" id="autotoc_md31"></a>
 Key Features</h3>
 <ul>
 <li>Automated testing and linting on every push.</li>
 <li>Build verification to confirm successful project compilation.</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md31"></a>
+<h3><a class="anchor" id="autotoc_md32"></a>
 Documentation</h3>
 <p>For a detailed overview of the CI workflows, see the CI Workflows README.</p>
-<p>This documentation includes:</p><ul>
+<p>This documentation includes:</p>
+<ul>
 <li>A breakdown of CI pipeline steps.</li>
 <li>A schema of the workflow.</li>
 </ul>
 <p>Refer to the <code>.github/workflows/README.md</code> for guidance on extending or troubleshooting the CI setup.</p>
-<h2><a class="anchor" id="autotoc_md32"></a>
+<h2><a class="anchor" id="autotoc_md33"></a>
+Support</h2>
+<p>For support, you can <a href="https://github.com/Z4RM/Epitech-Tek3-CPP-R-Type/issues/new/choose">open an issue</a>.</p>
+<h2><a class="anchor" id="autotoc_md34"></a>
 Contributing</h2>
 <p>Contributions are always welcome!</p>
 <p>See <a class="el" href="md_CONTRIBUTING.html">CONTRIBUTING.md</a> for ways to get started. Please follow the guidelines to contribute to the project.</p>
 <p>Please adhere to this project's <a class="el" href="md_CODE__OF__CONDUCT.html">code of conduct</a>.</p>
-<h2><a class="anchor" id="autotoc_md33"></a>
-Authors</h2>
-<ul>
-<li><a href="https://github.com/Clement-Z4RM">@Clement-Z4RM</a> | <a href="https://github.com/Z4RM">@Z4RM</a></li>
-<li><a href="https://github.com/josephinecr">@josephinecr</a></li>
-<li><a href="https://github.com/MathisZUCCHERO">@MathisZUCCHERO</a></li>
-<li><a href="https://github.com/pablo-1610">@pablo-1610</a></li>
-<li><a href="https://github.com/RemFdz">@RemFdz</a></li>
-</ul>
-<h2><a class="anchor" id="autotoc_md34"></a>
-Support</h2>
-<p>For support, you can <a href="https://github.com/Z4RM/Epitech-Tek3-CPP-R-Type/issues/new/choose">open an issue</a>.</p>
 <h2><a class="anchor" id="autotoc_md35"></a>
 License</h2>
 <p><a href="https://choosealicense.com/licenses/gpl-3.0">GNU GPL</a></p>
@@ -177,6 +196,15 @@ License</h2>
 <blockquote class="doxtable">
 <p>&zwj;Ce projet est une réalisation académique créée dans le cadre d'un projet pour <b>Epitech</b>. Il n'est en aucun cas affilié ou approuvé par <b>Irem</b> ou les détenteurs des droits de "**R-Type**". Tous les éléments du projet sont conçus indépendamment, sans utiliser les ressources ou le code de l'œuvre originale. </p>
 </blockquote>
+<h2><a class="anchor" id="autotoc_md36"></a>
+Authors</h2>
+<ul>
+<li><a href="https://github.com/Clement-Z4RM">@Clement-Z4RM</a> | <a href="https://github.com/Z4RM">@Z4RM</a></li>
+<li><a href="https://github.com/josephinecr">@josephinecr</a></li>
+<li><a href="https://github.com/MathisZUCCHERO">@MathisZUCCHERO</a></li>
+<li><a href="https://github.com/pablo-1610">@pablo-1610</a></li>
+<li><a href="https://github.com/RemFdz">@RemFdz</a> </li>
+</ul>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->
