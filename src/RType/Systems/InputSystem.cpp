@@ -36,6 +36,7 @@ void rtype::systems::InputSystem::handleInput(ecs::EntityManager &entityManager,
                 if (color == sf::Color::Red)
                     text->text.setFillColor(sf::Color::White);
             }
+            componentManager.addComponent<components::SfText>(entity, *text);
         }
 
         if (!inputHandler)

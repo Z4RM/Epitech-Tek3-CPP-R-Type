@@ -2,13 +2,13 @@
 ** EPITECH PROJECT, 2025
 ** RType
 ** File description:
-**
+** Sliding background
 */
 
 #pragma once
 
 namespace rtype::components {
-    struct Damage {
-        int collisionDamage = 0;
+    struct SlidingBg {
+        bool value = true;
     };
 }

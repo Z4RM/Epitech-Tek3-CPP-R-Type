@@ -17,6 +17,8 @@
 #include "Entities/Game.hpp"
 #include "Scenes/Game/Game.hpp"
 #include "Scenes/Menu/Menu.hpp"
+#include "Systems/AnimationProjectile.hpp"
+#include "Systems/MonsterSpawner.hpp"
 #include "Systems/Network.hpp"
 #ifdef RTYPE_IS_CLIENT
 #include "Entities/Window.hpp"
@@ -73,8 +75,10 @@ int rtype::RType::run() {
             mode
     );
     systemManager.addSystem(rtype::systems::RenderWindowSys::render);
+    systemManager.addSystem(rtype::systems::UpdateProjectilesSystem::updateProjectiles);
+#else
+    systemManager.addSystem(systems::MonsterSpawner::spawnMonster);
 #endif
-
     systemManager.addSystem(rtype::systems::Movement::move);
     systemManager.addSystem(rtype::systems::Network::udpProcess);
     systemManager.addSystem(rtype::systems::Network::tcpProcess);
@@ -86,6 +90,7 @@ int rtype::RType::run() {
     sceneManager.registerScene(1, std::move(game));
 
     entities::Game gameSate(componentManager, entityManager);
+
 
     while (true) {
         int runningStoppedCount = 0;

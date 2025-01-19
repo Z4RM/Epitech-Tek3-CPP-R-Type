@@ -22,8 +22,8 @@ rtype::entities::Enemy::Enemy(
     components::Speed speed
 ) {
     _id = entityManager.createEntity();
-    sprite.texture = new sf::Texture();
-    sprite.sprite = new sf::Sprite();
+    sprite.texture = std::make_shared<sf::Texture>();
+    sprite.sprite = std::make_shared<sf::Sprite>();
     const int width = static_cast<int>(sprite.size.width);
     const int height = static_cast<int>(sprite.size.height);
     const sf::IntRect rect(0, 0, width, height);
@@ -40,10 +40,10 @@ rtype::entities::Enemy::Enemy(
     componentManager.addComponent<components::Speed>(_id, speed);
     componentManager.addComponent<components::NetId>(_id, netId);
 
-    components::Health health(100, {sprite.pos.x, sprite.pos.y}, size);
+    components::Health health(50, {sprite.pos.x, sprite.pos.y}, size);
     componentManager.addComponent<components::Health>(_id, health);
 
-    components::Damage damage = {15, 10};
+    components::Damage damage = {200};
     componentManager.addComponent<components::Damage>(_id, damage);
 
 
@@ -74,10 +74,10 @@ rtype::entities::Enemy::Enemy(
     componentManager.addComponent<components::Speed>(_id, speed);
     componentManager.addComponent<components::NetId>(_id, netId);
 
-    components::Health health = { 100 };
+    components::Health health = { 50, 50};
     componentManager.addComponent<components::Health>(_id, health);
 
-    components::Damage damage = {15, 10};
+    components::Damage damage = {200};
     componentManager.addComponent<components::Damage>(_id, damage);
 
     std::unordered_map<float, components::Velocity> move;

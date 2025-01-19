@@ -12,7 +12,7 @@ namespace rtype::models {
 
     struct EnemyData {
         components::Position pos{};
-        components::Velocity vel{};
+        components::Velocity vel{0, 0, 0};
         components::Size size{};
         components::NetId netId;
         int health = 0;

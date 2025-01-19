@@ -21,8 +21,8 @@ namespace rtype::components {
         std::string path;
         ZIndex priority;
         sf::Vector2f scale = {1, 1};
-        sf::Texture* texture;
-        sf::Sprite* sprite;
+        std::shared_ptr<sf::Texture> texture;
+        std::shared_ptr<sf::Sprite> sprite;
         Created created;
     };
 }

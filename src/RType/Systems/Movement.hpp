@@ -45,7 +45,7 @@ namespace rtype::systems
          * @param componentManager A reference to the `ComponentManager` that
          *        manages all components in the ECS system.
          */
-        static void move(const ecs::EntityManager& entityManager, ecs::ComponentManager& componentManager);
+        static void move(ecs::EntityManager& entityManager, ecs::ComponentManager& componentManager);
 
         /**
          * @brief Handle all the possible collisions with other entities
@@ -60,7 +60,7 @@ namespace rtype::systems
         static void
         handleCollisions(unsigned int entity, components::Position *pos, components::Hitbox *hitBox,
                          const std::unordered_set<unsigned int> &entities, ecs::ComponentManager &componentManager,
-                         components::Velocity *vel);
+                         components::Velocity *vel, ecs::EntityManager &entityManager);
 
         /**
          * @brief Check if an entity is colliding with another one

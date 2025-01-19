@@ -67,6 +67,15 @@ set(RTYPE_SRC
         src/RType/Entities/Game.hpp
         src/Network/Packets/Descriptors/PacketStartGame/PacketStartGame.cpp
         src/Network/Packets/Descriptors/PacketStartGame/PacketStartGame.hpp
+        src/Network/Packets/Descriptors/PacketPlayerCounter/PacketPlayerCounter.cpp
+        src/Network/Packets/Descriptors/PacketPlayerCounter/PacketPlayerCounter.hpp
+        src/RType/Entities/PlayerCounter.cpp
+        src/RType/Entities/PlayerCounter.hpp
+        src/RType/Components/Shared/Projectile.hpp
+        src/Network/Packets/Descriptors/PacketPlayerShoot/PacketPlayerShoot.cpp
+        src/Network/Packets/Descriptors/PacketPlayerShoot/PacketPlayerShoot.hpp
+        src/RType/Systems/MonsterSpawner.cpp
+        src/RType/Systems/MonsterSpawner.hpp
 )
 
 set(CLIENT_SRC
@@ -125,13 +134,15 @@ set(CLIENT_SRC
         src/RType/Entities/Button.cpp
         src/RType/Entities/Button.hpp
         src/RType/Components/Client/SfText.hpp
-        src/RType/Entities/PlayerCounter.cpp
-        src/RType/Entities/PlayerCounter.hpp
         src/RType/Components/Shared/Counter.hpp
         src/RType/Entities/Game.cpp
         src/RType/Entities/Game.hpp
         src/Network/Packets/Descriptors/PacketStartGame/PacketStartGame.cpp
         src/Network/Packets/Descriptors/PacketStartGame/PacketStartGame.hpp
+        src/RType/Components/Client/SlidingBg.hpp
+        src/RType/Systems/AnimationProjectile.cpp
+        src/RType/Systems/AnimationProjectile.hpp
+        src/RType/Components/Shared/NoDamageToPlayer.hpp
 )
 
 set(RTYPE_HEADERS

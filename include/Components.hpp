@@ -10,6 +10,7 @@
 
 #include <string>
 #include <unordered_map>
+
 #include "RType/Components/Shared.hpp"
 
 #ifdef RTYPE_IS_CLIENT

@@ -7,6 +7,8 @@
 
 #include "Menu.hpp"
 
+#include "RType/Entities/PlayerCounter.hpp"
+
 #ifdef RTYPE_IS_CLIENT
 
 #include "RType/Entities/Button.hpp"
@@ -35,12 +37,16 @@ void rtype::scenes::Menu::load() {
             auto gameState = _componentManager.getComponent<components::GameState>(entity);
             if (gameState) {
                 gameState->isStarted = true;
+                _componentManager.addComponent<components::GameState>(entity, *gameState);
             }
         }
     };
     components::SfText startButtonText("START", "./assets/fonts/Starborn.ttf", sf::Color::White, 50, {300, 300});
     entities::Button startButton(_componentManager, _entityManager, onClick, startButtonText);
 
+    entities::PlayerCounter playerCounter(_componentManager, _entityManager, {250, 400});
+
+    this->registerEntity(playerCounter);
     this->registerEntity(startButton);
     this->registerEntity(backgroundImage);
     this->registerEntity(logoImage);

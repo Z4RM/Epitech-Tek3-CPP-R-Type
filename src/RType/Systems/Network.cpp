@@ -20,7 +20,9 @@
 #include "Components.hpp"
 #include "Network/Packets/Descriptors/PacketPlayersData/PacketPlayersData.hpp"
 #include "Network/Packets/Descriptors/PacketEnemiesData/PacketEnemiesData.hpp"
+#include "Network/Packets/Descriptors/PacketPlayerCounter/PacketPlayerCounter.hpp"
 #include "Network/Packets/Descriptors/PacketStartGame/PacketStartGame.hpp"
+#include "RType/Components/Shared/Counter.hpp"
 #include "RType/Entities/Enemy.hpp"
 #include "RType/Entities/Player.hpp"
 
@@ -50,7 +52,9 @@ namespace rtype::systems {
                 if (stop && !network.getStop()) {
                     if (!stop->running) {
                         network.setStop(true);
-                        componentManager.getComponent<components::Running>(udp)->running = false;
+                        auto r = componentManager.getComponent<components::Running>(udp);
+                        r->running = false;
+                        componentManager.addComponent<components::Running>(udp, *r);
                     }
                 }
             }
@@ -148,12 +152,14 @@ namespace rtype::systems {
                             if (pos && vel && size && net && netCo) {
                                 if (!netCo->endpoint.has_value() && net->id == data.netId.id) {
                                     spdlog::info("New player in the udp game with net id: {}", net->id);
-                                    netCo->endpoint.emplace(endpoint);
+                                    componentManager.addComponent<components::NetworkConnection>(entity, {netCo->socket, endpoint});
                                 }
                                 if (netCo->endpoint.has_value() && netCo->endpoint == endpoint) {
                                     //*pos = data.pos;
                                     *vel = data.vel;
                                     *size = data.size;
+                                    componentManager.addComponent<components::Velocity>(entity, *vel);
+                                    componentManager.addComponent<components::Size>(entity, *size);
                                 }
                             }
                         }
@@ -189,6 +195,8 @@ namespace rtype::systems {
                                         if (health) {
                                             if (data.health != health->value) {
                                                 health->setHealth(data.health);
+                                                health->_elapsedDamage = std::chrono::steady_clock::now();
+                                                componentManager.addComponent<components::Health>(entity, *health);
                                             }
                                         }
 
@@ -201,11 +209,13 @@ namespace rtype::systems {
                                             const float positionThreshold = 0.1f;
                                             if (distance > positionThreshold) {
                                                 *localPos = data.pos;
+                                                componentManager.addComponent<components::Position>(entity, *localPos);
                                             }
                                         }
 
                                         if (!actualPlayer->value) {
                                             *vel = data.vel;
+                                            componentManager.addComponent<components::Velocity>(entity, *vel);
                                         }
                                         break;
                                     }
@@ -224,6 +234,7 @@ namespace rtype::systems {
                                         {64, 64},
                                         sprite2,
                                         {"", 0, 0},
+                                        [](size_t id) {},
                                         data.netId
                                 );
                             #endif
@@ -236,8 +247,9 @@ namespace rtype::systems {
 
                             if (net && actualPlayer) {
                                 for (const models::PlayerData &data : playersData->datas) {
-                                    if (data.netId.id == net->id)
+                                    if (data.netId.id == net->id) {
                                         isDead = false;
+                                    }
                                 }
                                 if (isDead) {
                                     spdlog::info("Destroying disconnected player");
@@ -276,6 +288,7 @@ namespace rtype::systems {
                                             if (data.health != health->value) {
                                                 health->value = data.health;
                                                 health->takeDamage(0);
+                                                componentManager.addComponent<components::Health>(entity, *health);
                                             }
                                         }
 
@@ -288,9 +301,11 @@ namespace rtype::systems {
                                             const float positionThreshold = 0.1f;
                                             if (distance > positionThreshold) {
                                                 *localPos = data.pos;
+                                                componentManager.addComponent<components::Position>(entity, *localPos);
                                             }
                                         }
                                         *vel = data.vel;
+                                        componentManager.addComponent<components::Velocity>(entity, *vel);
                                         break;
                                     }
                                 }
@@ -344,6 +359,7 @@ namespace rtype::systems {
         static bool networkStartingSended = false;
         static std::map<int, std::shared_ptr<asio::ip::tcp::socket>> playersToSayWelcome = {};
         static auto tcp = entityManager.createEntity();
+        static std::atomic<int> player_count = 0;
 
         if (!IS_SERVER && network.getStarted() && !networkStartingSended) {
             for (auto &entity : entityManager.getEntities()) {
@@ -361,35 +377,91 @@ namespace rtype::systems {
             components::Running running = { true };
             componentManager.addComponent(tcp, running);
             try {
-
                 network.registerOnPlayerDisconnect([&entityManager, &componentManager](std::shared_ptr<asio::ip::tcp::socket> socket) {
-                    std::string addressTcp = socket->remote_endpoint().address().to_string();
-                    int portTcp = socket->remote_endpoint().port();
-
                     if (IS_SERVER) {
                         for (auto &entity: entityManager.getEntities()) {
                             auto netCo = componentManager.getComponent<components::NetworkConnection>(entity);
-
                             if (netCo && netCo->socket == socket) {
                                 entityManager.destroyEntity(entity, componentManager);
+                                spdlog::info("Player destroyed");
+                                break;
                             }
                         }
-                        spdlog::info("Player destroyed: {}:{}", addressTcp, portTcp);
+                        for (auto it = playersToSayWelcome.begin(); it != playersToSayWelcome.end(); ) {
+                            if (it->second == socket) {
+                                player_count.store(player_count.load() - 1);
+                                it = playersToSayWelcome.erase(it);
+                            } else {
+                                ++it;
+                            }
+                        }
+                        network::PacketPlayerCounter packetPCount(player_count.load());
+                        for (auto &p : playersToSayWelcome) {
+                            network.sendPacket(packetPCount, p.second);
+                        }
                     } else {
                         spdlog::info("Server have closed the connection");
                     }
                 });
 
                 if (IS_SERVER) {
+                    network.addHandler(network::PLAYER_SHOOT, [&entityManager, &componentManager]
+                    (std::unique_ptr<network::IPacket> packet,
+                    std::shared_ptr<asio::ip::tcp::socket> socket) {
+                        auto* packetPlayerShoot = dynamic_cast<network::PacketPlayerShoot*>(packet.get());
+
+                        if (packetPlayerShoot) {
+                            for (auto &entity: entityManager.getEntities()) {
+                                auto netco = componentManager.getComponent<components::NetworkConnection>(entity);
+                                auto netId = componentManager.getComponent<components::NetId>(entity);
+                                auto playerPos = componentManager.getComponent<components::Position>(entity);
+
+                                if (netco && netId) {
+                                    if (netId->id == packetPlayerShoot->netId) {
+                                        size_t projectileId = entityManager.createEntity();
+
+                                        components::Velocity vel = {2.0, 0.0, 0.0};
+                                        components::Position pos = {playerPos->x + 10.0f, playerPos->y, playerPos->z};
+                                        componentManager.addComponent<components::Velocity>(projectileId, vel);
+                                        componentManager.addComponent<components::Position>(projectileId, pos);
+                                        componentManager.addComponent<components::Size>(projectileId, {10.0f, 10.0f});
+                                        componentManager.addComponent<components::Hitbox>(projectileId, {pos, {10.0f, 10.0f}});
+                                        componentManager.addComponent<components::Speed>(projectileId, {250});
+                                        componentManager.addComponent<components::Damage>(projectileId, {20});
+                                        componentManager.addComponent<components::NoDamageToPlayer>(projectileId, {true});
+                                        network::PacketPlayerShoot newPacket(packetPlayerShoot->netId);
+                                        for (auto &p : playersToSayWelcome) {
+                                            if (socket != p.second)
+                                                network.sendPacket(newPacket, p.second);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+
                     network.addHandler(network::CONNECT, [&entityManager, &componentManager](std::unique_ptr<network::IPacket> packet,
                         std::shared_ptr<asio::ip::tcp::socket> socket) {
-                            std::string addressTcp = socket->remote_endpoint().address().to_string();
-                            int portTcp = socket->remote_endpoint().port();
-
-                            std::lock_guard guard(Network::playerIdMutex);
-                            Network::playerId++;
-                            playersToSayWelcome[playerId] = socket;
-                            spdlog::info("New player created with net id: {}, for: {}:{}", Network::playerId, addressTcp, portTcp);
+                            for (auto &entity: entityManager.getEntities()) {
+                                auto gameState = componentManager.getComponent<components::GameState>(entity);
+                                if (gameState && gameState->isStarted) {
+                                    spdlog::info("New player joined the game but the game is already started");
+                                    return;
+                                }
+                            }
+                            if (player_count.load() < 4) {
+                                player_count.store(player_count.load() + 1);
+                                network::PacketPlayerCounter playerCount(player_count.load());
+                                std::lock_guard guard(Network::playerIdMutex);
+                                Network::playerId++;
+                                playersToSayWelcome[playerId] = socket;
+                                for (auto &p : playersToSayWelcome) {
+                                    network.sendPacket(playerCount, p.second);
+                                }
+                                spdlog::info("New player created with net id: {}", playerId);
+                            } else {
+                                //todo: send packet game already started to the client
+                            }
                     });
 
                     network.addHandler(network::START_GAME, [&entityManager, &componentManager]
@@ -400,20 +472,10 @@ namespace rtype::systems {
                                 if (gameState->isStarted)
                                     return;
                                 gameState->isStarted = true;
+                                componentManager.addComponent<components::GameState>(entity, *gameState);
                             }
                         }
 
-                        playerId++;
-#ifndef RTYPE_IS_CLIENT
-                            rtype::entities::Enemy enemy(
-                                entityManager,
-                                componentManager,
-                                {600, 100, 0},
-                                {0, 0, 0},
-                                {64, 64},
-                                {playerId}
-                            );
-#endif
                         for (auto &player : playersToSayWelcome) {
                             #ifndef RTYPE_IS_CLIENT
                             rtype::entities::Player playerShip(
@@ -422,7 +484,7 @@ namespace rtype::systems {
                             {0, 0, 0},
                             {0, 0, 0},
                             {64, 64},
-                            {socket},
+                            {player.second},
                             { player.first }, {PLAYER_SPEED});
 
                             network::PacketWelcome welcome(player.first);
@@ -448,13 +510,101 @@ namespace rtype::systems {
                                     {64, 64},
                                     sprite2,
                                     {"", 0, 0},
+                                    [network](int id) {
+                                        network::PacketPlayerShoot sendPlayerShoot(id);
+                                        network.sendPacket(sendPlayerShoot);
+                                    },
                                     {packetWelcome->netId},
                                     {true}
                             );
                             #endif
                         }
                     });
+
+
+                network.addHandler(network::PLAYER_SHOOT, [&entityManager, &componentManager]
+                    (std::unique_ptr<network::IPacket> packet,
+                    std::shared_ptr<asio::ip::tcp::socket> socket) {
+                        auto* packetPlayerShoot = dynamic_cast<network::PacketPlayerShoot*>(packet.get());
+
+#ifdef RTYPE_IS_CLIENT
+                        if (packetPlayerShoot) {
+                            spdlog::info(packetPlayerShoot->netId);
+                            for (auto &entity: entityManager.getEntities()) {
+                                auto netId = componentManager.getComponent<components::NetId>(entity);
+                                auto playerPos = componentManager.getComponent<components::Position>(entity);
+
+                                if (netId && playerPos) {
+                                    if (netId->id == packetPlayerShoot->netId) {
+                                        size_t projectileId = entityManager.createEntity();
+
+                                        components::Velocity vel = {2.0, 0.0, 0.0};
+                                        components::Position pos = {playerPos->x + 10.0f, playerPos->y, playerPos->z};
+                                        componentManager.addComponent<components::Velocity>(projectileId, vel);
+                                        componentManager.addComponent<components::Position>(projectileId, pos);
+                                        componentManager.addComponent<components::Size>(projectileId, {10.0f, 10.0f});
+                                        componentManager.addComponent<components::Hitbox>(projectileId, {pos, {10.0f, 10.0f}});
+                                        componentManager.addComponent<components::Speed>(projectileId, {250});
+                                        componentManager.addComponent<components::Damage>(projectileId, {20});
+                                        componentManager.addComponent<components::NoDamageToPlayer>(projectileId, {true});
+                                        components::Sprite projectileSprite = {
+                                            pos,
+                                            {82.0f, 18.0f},
+                                            "assets/sprites/projectile/player-shots.gif",
+                                            {1},
+                                            {1.0, 1.0},
+                                            std::make_shared<sf::Texture>(),
+                                            std::make_shared<sf::Sprite>()
+                                        };
+                                        projectileSprite.texture->loadFromFile(projectileSprite.path);
+                                        projectileSprite.sprite->setTexture(*projectileSprite.texture);
+                                        sf::IntRect textureRect(82, 165, 82, 18);
+                                        projectileSprite.sprite->setTextureRect(textureRect);
+                                        projectileSprite.sprite->setPosition({pos.x, pos.y});
+                                        components::Animation projAnim = {
+                                            "assets/sprite/projectile/player-shots.gif",
+                                                2,
+                                                10
+                                            };
+                                        componentManager.addComponent<components::Animation>(projectileId, projAnim);
+                                        componentManager.addComponent<components::Sprite>(projectileId, projectileSprite);
+                                        components::Projectile projectile = {
+                                            pos,
+                                            vel,
+                                            projAnim,
+                                            projectileSprite
+                                        };
+                                        componentManager.addComponent<components::Projectile>(projectileId, projectile);
+                                    }
+                                }
+                            }
+                        }
+#endif
+                    });
+
+                    network.addHandler(network::PLAYER_COUNT, [&entityManager, &componentManager]
+                    (std::unique_ptr<network::IPacket> packet,
+                    std::shared_ptr<asio::ip::tcp::socket> socket) {
+                        auto* packetPlayerCounter = dynamic_cast<network::PacketPlayerCounter*>(packet.get());
+
+                        if (packetPlayerCounter) {
+                            int count = 0;
+
+                            for (auto &entity: entityManager.getEntities()) {
+                                auto gameState = componentManager.getComponent<components::GameState>(entity);
+                                auto playerCount = componentManager.getComponent<components::Counter>(entity);
+                                if (gameState && gameState->isStarted) {
+                                    return;
+                                }
+                                if (playerCount && playerCount->name == "players") {
+                                    playerCount->update(packetPlayerCounter->_count);
+                                    componentManager.addComponent<components::Counter>(entity, *playerCount);
+                                }
+                            }
+                        }
+                    });
                 }
+
 
                 network.start();
             } catch (std::exception &e) {
@@ -467,7 +617,10 @@ namespace rtype::systems {
                 if (stop && !network.getStop()) {
                     if (!stop->running) {
                         network.setStop(true);
-                        componentManager.getComponent<components::Running>(tcp)->running = false;
+                        auto r = componentManager.getComponent<components::Running>(tcp);
+                        r->running = false;
+
+                        componentManager.addComponent<components::Running>(tcp, *r);
                     }
                 }
             }
