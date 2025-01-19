@@ -98,7 +98,8 @@ namespace rtype::network {
                 handlePacket(*buffer, socket);
                 handleClient(socket);
             } else {
-                if (error == asio::error::eof) {
+                // On Linux, the error code is `asio::error::eof`, but on Windows, it's `asio::error::connection_reset`
+                if (error == asio::error::eof || error == asio::error::connection_reset) {
                     spdlog::warn("TCP Remote {}:{} closed the connection", address, port);
                     this->_onPlayerDisconnect(socket);
                 } else {
