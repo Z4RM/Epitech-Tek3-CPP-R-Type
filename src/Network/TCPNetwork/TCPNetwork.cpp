@@ -86,12 +86,12 @@ namespace rtype::network {
 
         socket->async_read_some(asio::buffer(*buffer),
     [this, socket, buffer](const asio::error_code& error, std::size_t bytes_transferred) {
-        std::string address = socket->remote_endpoint().address().to_string();
-        int port = socket->remote_endpoint().port();
             if (!socket->is_open()) {
                 spdlog::warn("Socket closed before read operation.");
                 return;
             }
+        std::string address = socket->remote_endpoint().address().to_string();
+        int port = socket->remote_endpoint().port();
             if (!error) {
                 handlePacket(*buffer, socket);
                 handleClient(socket);
@@ -117,7 +117,11 @@ namespace rtype::network {
     void TCPNetwork::sendPacket(const IPacket &packet, std::shared_ptr<asio::ip::tcp::socket> socket) const {
         const auto packetData = std::make_shared<std::vector<char>>(packet.bufferize());
         const auto code = packet.getCode();
+
         auto targetSocket = socket ? socket : this->_socket;
+
+        if (!targetSocket || !targetSocket->is_open())
+            return;
 
         async_write(*targetSocket, asio::buffer(*packetData), [this, code, targetSocket, packetData](const
         asio::error_code& ec,
@@ -125,11 +129,9 @@ namespace rtype::network {
             if (ec) {
                 spdlog::error("TCP Error while sending message: {}", ec.message());
             } else {
-                std::string address = targetSocket->remote_endpoint().address().to_string();
                 std::string codeStr = std::to_string(code);
-                int port = targetSocket->remote_endpoint().port();
 
-                spdlog::info("TCP Packet {}: successfully sended to: {}:{}", codeStr, address, port);
+                spdlog::info("TCP Packet {}: successfully sended to");
             }
         });
     }

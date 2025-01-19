@@ -20,7 +20,9 @@
 #include "Components.hpp"
 #include "Network/Packets/Descriptors/PacketPlayersData/PacketPlayersData.hpp"
 #include "Network/Packets/Descriptors/PacketEnemiesData/PacketEnemiesData.hpp"
+#include "Network/Packets/Descriptors/PacketPlayerCounter/PacketPlayerCounter.hpp"
 #include "Network/Packets/Descriptors/PacketStartGame/PacketStartGame.hpp"
+#include "RType/Components/Shared/Counter.hpp"
 #include "RType/Entities/Enemy.hpp"
 #include "RType/Entities/Player.hpp"
 
@@ -344,6 +346,7 @@ namespace rtype::systems {
         static bool networkStartingSended = false;
         static std::map<int, std::shared_ptr<asio::ip::tcp::socket>> playersToSayWelcome = {};
         static auto tcp = entityManager.createEntity();
+        static std::atomic<int> player_count = 0;
 
         if (!IS_SERVER && network.getStarted() && !networkStartingSended) {
             for (auto &entity : entityManager.getEntities()) {
@@ -361,20 +364,27 @@ namespace rtype::systems {
             components::Running running = { true };
             componentManager.addComponent(tcp, running);
             try {
-
                 network.registerOnPlayerDisconnect([&entityManager, &componentManager](std::shared_ptr<asio::ip::tcp::socket> socket) {
-                    std::string addressTcp = socket->remote_endpoint().address().to_string();
-                    int portTcp = socket->remote_endpoint().port();
-
                     if (IS_SERVER) {
                         for (auto &entity: entityManager.getEntities()) {
                             auto netCo = componentManager.getComponent<components::NetworkConnection>(entity);
-
                             if (netCo && netCo->socket == socket) {
                                 entityManager.destroyEntity(entity, componentManager);
                             }
                         }
-                        spdlog::info("Player destroyed: {}:{}", addressTcp, portTcp);
+                        for (auto it = playersToSayWelcome.begin(); it != playersToSayWelcome.end(); ) {
+                            if (it->second == socket) {
+                                player_count.store(player_count.load() - 1);
+                                it = playersToSayWelcome.erase(it);
+                            } else {
+                                ++it;
+                            }
+                        }
+                        network::PacketPlayerCounter packetPCount(player_count.load());
+                        for (auto &p : playersToSayWelcome) {
+                            network.sendPacket(packetPCount, p.second);
+                        }
+                        spdlog::info("Player destroyed");
                     } else {
                         spdlog::info("Server have closed the connection");
                     }
@@ -383,13 +393,26 @@ namespace rtype::systems {
                 if (IS_SERVER) {
                     network.addHandler(network::CONNECT, [&entityManager, &componentManager](std::unique_ptr<network::IPacket> packet,
                         std::shared_ptr<asio::ip::tcp::socket> socket) {
-                            std::string addressTcp = socket->remote_endpoint().address().to_string();
-                            int portTcp = socket->remote_endpoint().port();
-
-                            std::lock_guard guard(Network::playerIdMutex);
-                            Network::playerId++;
-                            playersToSayWelcome[playerId] = socket;
-                            spdlog::info("New player created with net id: {}, for: {}:{}", Network::playerId, addressTcp, portTcp);
+                            for (auto &entity: entityManager.getEntities()) {
+                                auto gameState = componentManager.getComponent<components::GameState>(entity);
+                                if (gameState && gameState->isStarted) {
+                                    spdlog::info("New player joined the game but the game is already started");
+                                    return;
+                                }
+                            }
+                            if (player_count.load() < 4) {
+                                player_count.store(player_count.load() + 1);
+                                network::PacketPlayerCounter playerCount(player_count.load());
+                                std::lock_guard guard(Network::playerIdMutex);
+                                Network::playerId++;
+                                playersToSayWelcome[playerId] = socket;
+                                for (auto &p : playersToSayWelcome) {
+                                    network.sendPacket(playerCount, p.second);
+                                }
+                                spdlog::info("New player created with net id: {}");
+                            } else {
+                                //todo: send packet game already started to the client
+                            }
                     });
 
                     network.addHandler(network::START_GAME, [&entityManager, &componentManager]
@@ -404,7 +427,7 @@ namespace rtype::systems {
                         }
 
                         playerId++;
-#ifndef RTYPE_IS_CLIENT
+                        #ifndef RTYPE_IS_CLIENT
                             rtype::entities::Enemy enemy(
                                 entityManager,
                                 componentManager,
@@ -413,7 +436,7 @@ namespace rtype::systems {
                                 {64, 64},
                                 {playerId}
                             );
-#endif
+                        #endif
                         for (auto &player : playersToSayWelcome) {
                             #ifndef RTYPE_IS_CLIENT
                             rtype::entities::Player playerShip(
@@ -452,6 +475,30 @@ namespace rtype::systems {
                                     {true}
                             );
                             #endif
+                        }
+                    });
+
+                    network.addHandler(network::PLAYER_COUNT, [&entityManager, &componentManager]
+                    (std::unique_ptr<network::IPacket> packet,
+                    std::shared_ptr<asio::ip::tcp::socket> socket) {
+                        auto* packetPlayerCounter = dynamic_cast<network::PacketPlayerCounter*>(packet.get());
+
+                        if (packetPlayerCounter) {
+                            //spdlog::info("New player joined the game");
+                            int count = 0;
+
+                            for (auto &entity: entityManager.getEntities()) {
+                                auto gameState = componentManager.getComponent<components::GameState>(entity);
+                                auto playerCount = componentManager.getComponent<components::Counter>(entity);
+                                if (gameState && gameState->isStarted) {
+                                    spdlog::info("New player joined the game but the game is already started");
+                                    return;
+                                }
+                                if (playerCount && playerCount->name == "players") {
+                                    spdlog::warn(packetPlayerCounter->_count);
+                                    playerCount->update(packetPlayerCounter->_count);
+                                }
+                            }
                         }
                     });
                 }

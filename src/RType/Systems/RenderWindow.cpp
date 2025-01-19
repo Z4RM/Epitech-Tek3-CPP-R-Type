@@ -11,6 +11,8 @@
 #include "RType/Entities/Window.hpp"
 #include "RenderWindow.hpp"
 
+#include "RType/Components/Shared/Counter.hpp"
+
 std::vector<rtype::ecs::Entity> getEntitiesSortedByZIndex(
     const rtype::ecs::EntityManager& entityManager,
     rtype::ecs::ComponentManager& componentManager
@@ -82,8 +84,12 @@ void rtype::systems::RenderWindowSys::render(ecs::EntityManager &entityManager, 
 
         for (auto e: entityManager.getEntities()) {
             auto text = componentManager.getComponent<components::SfText>(e);
+            auto counter = componentManager.getComponent<components::Counter>(e);
             if (text) {
                 renderWindow->window->draw(text->text);
+            }
+            if (counter) {
+                renderWindow->window->draw(counter->text.text);
             }
         }
         renderWindow->window->display();
