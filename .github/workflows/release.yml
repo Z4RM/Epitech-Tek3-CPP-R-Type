@@ -1,3 +1,4 @@
+---
 name: Create a new release
 
 on:
@@ -33,6 +34,5 @@ jobs:
             r-type_server.exe
             assets.tar.gz
             config.ini.example
-          preserve_order: true
           fail_on_unmatched_files: true
           generate_release_notes: true

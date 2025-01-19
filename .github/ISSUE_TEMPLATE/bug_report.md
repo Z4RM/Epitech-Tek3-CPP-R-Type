@@ -1,10 +1,9 @@
 ---
 name: Bug report
 about: Create a report to help us improve
-title: ''
-labels: ''
-assignees: ''
-
+title: ""
+labels: ""
+assignees: ""
 ---
 
 ## Description of the bug
@@ -14,6 +13,7 @@ assignees: ''
 ## To Reproduce
 
 Steps to reproduce the behavior:
+
 1. Go to '...'
 2. Click on '....'
 3. Scroll down to '....'
@@ -29,9 +29,9 @@ Steps to reproduce the behavior:
 
 ## Desktop (please complete the following information)
 
- - OS: [e.g. Ubuntu]
- - Version [e.g. 22]
- - CMake version [e.g. 3.29]
+- OS: [e.g. Ubuntu]
+- Version [e.g. 22]
+- CMake version [e.g. 3.29]
 - Conan version [e.g. 2.10.2]
 
 ## Additional context
