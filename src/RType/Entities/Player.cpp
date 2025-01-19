@@ -58,7 +58,7 @@ rtype::entities::Player::Player(
 
     _inputs.keyActions.insert({
         sf::Keyboard::Key::Space,
-        {sf::Event::KeyPressed, [this, &entityManager, &componentManager, id, shootFn, network]() {
+        {sf::Event::KeyPressed, [this, &entityManager, &componentManager, id, shootFn, &network]() {
             static auto clock = std::chrono::steady_clock::now();
             bool result = this->shoot(entityManager, componentManager, id, clock);
             if (result) {
