@@ -9,7 +9,11 @@
 
 #include <atomic>
 #include <string>
+
+#ifdef RTYPE_IS_CLIENT
 #include <SFML/Graphics/Text.hpp>
+#endif
+
 #ifndef RTYPE_IS_CLIENT
     namespace rtype::components {
         struct Counter {
