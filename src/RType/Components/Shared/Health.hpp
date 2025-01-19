@@ -11,12 +11,15 @@ namespace rtype::components {
     struct Health {
         int value;
         int max;
+        std::chrono::steady_clock::time_point _elapsedDamage = std::chrono::steady_clock::now();
+        bool colisionState = false;
 
         void takeDamage(int amount) {
             value -= amount;
 
             if (value < 0)
                 value = 0;
+            _elapsedDamage = std::chrono::steady_clock::now();
         }
 
         void setHealth(int amount) {
@@ -35,6 +38,8 @@ namespace rtype::components {
         sf::RectangleShape bgBar;
         sf::RectangleShape healthBar;
         bool created = false;
+        std::chrono::steady_clock::time_point _elapsedDamage = std::chrono::steady_clock::now();
+        bool colisionState = false;
 
         Health(int maxHealth, sf::Vector2f position, Size entitySize)
             : value(maxHealth), max(maxHealth) {
@@ -65,6 +70,7 @@ namespace rtype::components {
                 sizeX = 0;
 
             healthBar.setSize({sizeX, size.y});
+            _elapsedDamage = std::chrono::steady_clock::now();
         }
 
         void setHealth(int amount) {

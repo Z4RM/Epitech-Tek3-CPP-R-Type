@@ -43,7 +43,7 @@ rtype::entities::Enemy::Enemy(
     components::Health health(100, {sprite.pos.x, sprite.pos.y}, size);
     componentManager.addComponent<components::Health>(_id, health);
 
-    components::Damage damage = {15, 10};
+    components::Damage damage = {15};
     componentManager.addComponent<components::Damage>(_id, damage);
 
 
@@ -77,7 +77,7 @@ rtype::entities::Enemy::Enemy(
     components::Health health = { 100 };
     componentManager.addComponent<components::Health>(_id, health);
 
-    components::Damage damage = {15, 10};
+    components::Damage damage = {15};
     componentManager.addComponent<components::Damage>(_id, damage);
 
     std::unordered_map<float, components::Velocity> move;

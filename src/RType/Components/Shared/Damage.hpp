@@ -9,7 +9,6 @@
 
 namespace rtype::components {
     struct Damage {
-        int fireDamage = 0;
         int collisionDamage = 0;
     };
 }

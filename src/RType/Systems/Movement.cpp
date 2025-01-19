@@ -46,9 +46,16 @@ void rtype::systems::Movement::handleCollisions(unsigned int entity, components:
             float dz = pos->z - colliderPos->z;
             float distance = std::sqrt(dx * dx + dy * dy + dz * dz);
 
-            if (entityHealthBar && colliderDamage) {
-                entityHealthBar->takeDamage(colliderDamage->collisionDamage);
-                componentManager.addComponent<components::Health>(entity, *entityHealthBar);
+            if (entityHealthBar && colliderDamage && IS_SERVER) {
+                auto now = std::chrono::steady_clock::now();
+                std::chrono::duration<double> elapsed = now - entityHealthBar->_elapsedDamage;
+
+                if (elapsed.count() > 0.8) {
+                    entityHealthBar->takeDamage(colliderDamage->collisionDamage);
+                    entityHealthBar->_elapsedDamage = now;
+                    componentManager.addComponent<components::Damage>(collisionEntity, *colliderDamage);
+                    componentManager.addComponent<components::Health>(entity, *entityHealthBar);
+                }
             }
             componentManager.addComponent<components::Velocity>(entity, *vel);
         }

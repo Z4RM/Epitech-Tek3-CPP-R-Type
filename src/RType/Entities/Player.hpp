@@ -64,7 +64,7 @@ namespace rtype::entities {
                 const components::Animation &animation,
                 rtype::components::NetId = { false },
                 rtype::components::ActualPlayer = { false },
-                rtype::components::Speed = {100}
+                rtype::components::Speed = {200}
         );
 
 #else

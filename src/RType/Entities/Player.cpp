@@ -176,7 +176,6 @@ void rtype::entities::Player::shoot(ecs::EntityManager &entityManager, ecs::Comp
     if (elapsed.count() < _shootCooldown) {
         return;
     }
-    spdlog::warn(_shootCooldown);
     _shootCooldown = 0.8;
     _elaspedShoot = std::chrono::steady_clock::now();
     size_t projectileId = entityManager.createEntity();
@@ -184,7 +183,6 @@ void rtype::entities::Player::shoot(ecs::EntityManager &entityManager, ecs::Comp
     auto playerPos = componentManager.getComponent<components::Position>(id);
 
     if (!playerPos) {
-        spdlog::warn("no pos");
         return;
     }
     components::Velocity vel = {2.0, 0.0, 0.0};
@@ -217,7 +215,8 @@ void rtype::entities::Player::shoot(ecs::EntityManager &entityManager, ecs::Comp
     componentManager.addComponent<components::Velocity>(projectileId, vel);
     componentManager.addComponent<components::Size>(projectileId, {10.0f, 10.0f});
     componentManager.addComponent<components::Hitbox>(projectileId, {pos, {10.0f, 10.0f}});
-    componentManager.addComponent<components::Speed>(projectileId, {120});
+    componentManager.addComponent<components::Speed>(projectileId, {250});
+    componentManager.addComponent<components::Damage>(projectileId, {20});
     components::Projectile projectile = {
         pos,
         vel,

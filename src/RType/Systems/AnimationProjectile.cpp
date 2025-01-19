@@ -7,6 +7,8 @@
 
 #include "AnimationProjectile.hpp"
 
+#include <spdlog/spdlog.h>
+
 void rtype::systems::UpdateProjectilesSystem::updateProjectiles(
     ecs::EntityManager &entityManager,
     ecs::ComponentManager &componentManager
@@ -17,6 +19,26 @@ void rtype::systems::UpdateProjectilesSystem::updateProjectiles(
         auto projectile = componentManager.getComponent<components::Projectile>(entity);
         auto sprite = componentManager.getComponent<components::Sprite>(entity);
         auto pos = componentManager.getComponent<components::Position>(entity);
+        auto healthBar = componentManager.getComponent<components::Health>(entity);
+
+
+        if (sprite && healthBar) {
+            auto now = std::chrono::steady_clock::now();
+            std::chrono::duration<double> elapsed = now - healthBar->_elapsedDamage;
+
+            if (elapsed.count() < 0.8) {
+                if (healthBar->colisionState)
+                    sprite->sprite->setColor(sf::Color::Red);
+                else {
+                    sprite->sprite->setColor(sf::Color::White);
+                }
+            } else {
+                sprite->sprite->setColor(sf::Color::White);
+            }
+            healthBar->colisionState = !healthBar->colisionState;
+            componentManager.addComponent<components::Health>(entity, *healthBar);
+            componentManager.addComponent<components::Sprite>(entity, *sprite);
+        }
 
 
         if (!projectile || !sprite || !pos)
