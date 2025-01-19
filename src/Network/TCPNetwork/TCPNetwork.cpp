@@ -10,7 +10,7 @@
 
 #include "RType/ModeManager/ModeManager.hpp"
 #include "Packets.hpp"
-
+#include "RType/Config/Config.hpp"
 
 namespace rtype::network {
 
@@ -20,13 +20,15 @@ namespace rtype::network {
         if (IS_SERVER) {
             this->_acceptor = asio::ip::tcp::acceptor(this->_ioContext, asio::ip::tcp::endpoint(asio::ip::tcp::v4(), port));
         } else {
+            const auto address = Config::getInstance().getNetwork().server.address;
+
             this->_socket = std::make_shared<asio::ip::tcp::socket>(this->_ioContext);
             try {
-                asio::ip::tcp::endpoint serverEndpoint(asio::ip::make_address("127.0.0.1"), port);
+                asio::ip::tcp::endpoint serverEndpoint(asio::ip::make_address(address), port);
                 this->connect(serverEndpoint);
                 this->handleClient(this->_socket);
             } catch (std::exception &e) {
-                spdlog::error("Error while creating a endpoint to the server tcp network: 127.0.0.1:{}", port);
+                spdlog::error("Error while creating a endpoint to the server tcp network: {}:{}", address, port);
             }
         }
     }
@@ -96,7 +98,8 @@ namespace rtype::network {
                 handlePacket(*buffer, socket);
                 handleClient(socket);
             } else {
-                if (error == asio::error::eof) {
+                // On Linux, the error code is `asio::error::eof`, but on Windows, it's `asio::error::connection_reset`
+                if (error == asio::error::eof || error == asio::error::connection_reset) {
                     spdlog::warn("TCP Remote {}:{} closed the connection", address, port);
                     this->_onPlayerDisconnect(socket);
                 } else {

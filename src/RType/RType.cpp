@@ -24,15 +24,6 @@
 #include "Entities/Window.hpp"
 #endif
 
-int rtype::RType::run() {
-    if (!Config::initialize())
-        return 84;
-
-    RType rtype(Config::getInstance().getNetwork().server.port);
-
-    return rtype._run();
-}
-
 #ifdef RTYPE_IS_CLIENT
 
 void rtype::RType::startServer() {
@@ -55,9 +46,10 @@ void rtype::RType::stopServer() {
 
 #endif
 
-rtype::RType::RType(unsigned short port) : _port(port) {}
+int rtype::RType::run() {
+    if (!Config::initialize())
+        return 84;
 
-int rtype::RType::_run() {
     ecs::EntityManager entityManager;
     ecs::ComponentManager componentManager;
     ecs::SystemManager systemManager;
@@ -113,7 +105,7 @@ int rtype::RType::_run() {
         }
 
         if (runningStoppedCount > 0) {
-            spdlog::warn("stop");
+            spdlog::debug("Program stopped");
             break;
         }
         sceneManager.updateCurrentScene(systemManager);
