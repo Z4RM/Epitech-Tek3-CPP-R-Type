@@ -435,6 +435,7 @@ namespace rtype::systems {
                                 if (gameState->isStarted)
                                     return;
                                 gameState->isStarted = true;
+                                componentManager.addComponent<components::GameState>(entity, *gameState);
                             }
                         }
 

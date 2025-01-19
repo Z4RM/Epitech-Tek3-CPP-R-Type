@@ -23,6 +23,9 @@
 namespace rtype::entities {
     class Player {
     public:
+        void shoot(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager, size_t id);
+        std::chrono::steady_clock::time_point _elaspedShoot;
+        double _shootCooldown = 0.8;
 #ifdef RTYPE_IS_CLIENT
 
         /**

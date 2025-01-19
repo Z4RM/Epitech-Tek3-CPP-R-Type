@@ -17,8 +17,8 @@
 namespace rtype::entities {
     Image::Image(ecs::ComponentManager &componentManager, ecs::EntityManager &entityManager, components::Sprite sprite, bool
     isBackground, bool isSlide) : AEntity(entityManager) {
-        sprite.texture = new sf::Texture();
-        sprite.sprite = new sf::Sprite();
+        sprite.texture = std::make_shared<sf::Texture>();
+        sprite.sprite = std::make_shared<sf::Sprite>();
         const int width = static_cast<int>(sprite.size.width);
         const int height = static_cast<int>(sprite.size.height);
         const sf::IntRect rect(0, 0, width, height);

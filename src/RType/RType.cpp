@@ -17,6 +17,7 @@
 #include "Entities/Game.hpp"
 #include "Scenes/Game/Game.hpp"
 #include "Scenes/Menu/Menu.hpp"
+#include "Systems/AnimationProjectile.hpp"
 #include "Systems/Network.hpp"
 #ifdef RTYPE_IS_CLIENT
 #include "Entities/Window.hpp"
@@ -81,6 +82,7 @@ int rtype::RType::_run() {
             mode
     );
     systemManager.addSystem(rtype::systems::RenderWindowSys::render);
+    systemManager.addSystem(rtype::systems::UpdateProjectilesSystem::updateProjectiles);
 #endif
 
     systemManager.addSystem(rtype::systems::Movement::move);
@@ -94,6 +96,7 @@ int rtype::RType::_run() {
     sceneManager.registerScene(1, std::move(game));
 
     entities::Game gameSate(componentManager, entityManager);
+
 
     while (true) {
         int runningStoppedCount = 0;

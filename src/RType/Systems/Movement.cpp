@@ -46,27 +46,11 @@ void rtype::systems::Movement::handleCollisions(unsigned int entity, components:
             float dz = pos->z - colliderPos->z;
             float distance = std::sqrt(dx * dx + dy * dy + dz * dz);
 
-            if (distance > 0.0f) {
-                dx /= distance;
-                dy /= distance;
-                dz /= distance;
-
-                pos->x += dx * minSeparation;
-                pos->y += dy * minSeparation;
-                pos->z += dz * minSeparation;
-
-                float dotProduct = vel->x * dx + vel->y * dy + vel->z * dz;
-
-                vel->x -= (1.0f + bounceFactor) * dotProduct * dx;
-                vel->y -= (1.0f + bounceFactor) * dotProduct * dy;
-                vel->z -= (1.0f + bounceFactor) * dotProduct * dz;
-
-                if (entityHealthBar && colliderDamage) {
-                    entityHealthBar->takeDamage(colliderDamage->collisionDamage);
-                    componentManager.addComponent<components::Health>(entity, *entityHealthBar);
-                }
-                componentManager.addComponent<components::Velocity>(entity, *vel);
+            if (entityHealthBar && colliderDamage) {
+                entityHealthBar->takeDamage(colliderDamage->collisionDamage);
+                componentManager.addComponent<components::Health>(entity, *entityHealthBar);
             }
+            componentManager.addComponent<components::Velocity>(entity, *vel);
         }
     }
 }

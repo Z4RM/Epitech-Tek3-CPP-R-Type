@@ -21,3 +21,4 @@
 #include "./Shared/Damage.hpp"
 #include "./Shared/GameState.hpp"
 #include "./Shared/Health.hpp"
+#include "./Shared/Projectile.hpp"
