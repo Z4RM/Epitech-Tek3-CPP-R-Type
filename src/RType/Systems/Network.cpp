@@ -493,7 +493,8 @@ namespace rtype::systems {
                         }
                     });
                 } else {
-                    network.addHandler(network::WELCOME, [&entityManager, &componentManager](std::unique_ptr<network::IPacket> packet,
+                    network.addHandler(network::WELCOME, [&entityManager, &componentManager]
+                    (std::unique_ptr<network::IPacket> packet,
                     std::shared_ptr<asio::ip::tcp::socket> socket) {
                         auto* packetWelcome = dynamic_cast<network::PacketWelcome*>(packet.get());
 
@@ -510,7 +511,7 @@ namespace rtype::systems {
                                     {64, 64},
                                     sprite2,
                                     {"", 0, 0},
-                                    [&network](int id) {
+                                    [](int id) {
                                         network::PacketPlayerShoot sendPlayerShoot(id);
                                         network.sendPacket(sendPlayerShoot);
                                     },
