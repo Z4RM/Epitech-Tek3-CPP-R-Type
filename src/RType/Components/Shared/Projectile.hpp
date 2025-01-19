@@ -8,9 +8,9 @@
 #pragma once
 #include "Position.hpp"
 #include "Velocity.hpp"
-#include "RType/Components/Client/Sprite.hpp"
 
 #ifdef RTYPE_IS_CLIENT
+#include "RType/Components/Client/Sprite.hpp"
 #include "../Client/Animation.hpp"
 #endif
 

@@ -6,9 +6,6 @@
 */
 
 #pragma once
-#include <map>
-
-#include "RType/Models/Scene.hpp"
 
 namespace rtype::components {
     struct GameState {
