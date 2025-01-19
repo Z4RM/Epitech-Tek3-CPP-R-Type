@@ -45,7 +45,7 @@ rtype::entities::Player::Player(
     componentManager.addComponent<components::Hitbox>(_id, {pos, size});
     componentManager.addComponent<components::NetId>(_id, network);
     componentManager.addComponent<components::ActualPlayer>(_id, actualPlayer);
-    componentManager.addComponent<components::Speed>(_id, speed);
+    componentManager.addComponent<components::Speed>(_id, { 140 });
     components::Health health(1000, {pos.x, pos.y}, size);
     componentManager.addComponent<components::Health>(_id, health);
     _elaspedShoot = std::chrono::steady_clock::now();
@@ -152,7 +152,7 @@ std::chrono::steady_clock::time_point &clock) {
     auto now = std::chrono::steady_clock::now();
     std::chrono::duration<double> elapsed = now - clock;
 
-    if (elapsed.count() < 0.8) {
+    if (elapsed.count() < 0.2) {
         return false;
     }
     clock = std::chrono::steady_clock::now();
@@ -196,6 +196,7 @@ std::chrono::steady_clock::time_point &clock) {
     componentManager.addComponent<components::Hitbox>(projectileId, {pos, {10.0f, 10.0f}});
     componentManager.addComponent<components::Speed>(projectileId, {250});
     componentManager.addComponent<components::Damage>(projectileId, {20});
+    componentManager.addComponent<components::NoDamageToPlayer>(projectileId, {true});
     components::Projectile projectile = {
         pos,
         vel,
@@ -229,7 +230,7 @@ rtype::entities::Player::Player(
     componentManager.addComponent<components::Hitbox>(_id, {pos, size});
     componentManager.addComponent<components::NetworkConnection>(_id, network);
     componentManager.addComponent<components::NetId>(_id, netId);
-    componentManager.addComponent<components::Speed>(_id, speed);
+    componentManager.addComponent<components::Speed>(_id, {140});
 
     components::Health health = {1000};
     componentManager.addComponent<components::Health>(_id, health);

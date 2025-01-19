@@ -476,17 +476,6 @@ namespace rtype::systems {
                             }
                         }
 
-                        playerId++;
-                        #ifndef RTYPE_IS_CLIENT
-                            rtype::entities::Enemy enemy(
-                                entityManager,
-                                componentManager,
-                                {600, 100, 0},
-                                {0, 0, 0},
-                                {64, 64},
-                                {playerId}
-                            );
-                        #endif
                         for (auto &player : playersToSayWelcome) {
                             #ifndef RTYPE_IS_CLIENT
                             rtype::entities::Player playerShip(

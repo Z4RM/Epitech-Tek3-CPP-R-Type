@@ -43,8 +43,8 @@ void rtype::systems::UpdateProjectilesSystem::updateProjectiles(
         if (!projectile || !sprite || !pos)
             continue;
 
-        if (pos->x < 0 || pos->x > 800 ||
-        pos->y < 0 || pos->y > 600) {
+        if (pos->x < 0 || pos->x >= 760 ||
+        pos->y < 0 || pos->y >= 590) {
             entityManager.destroyEntity(entity, componentManager);
             continue;
         }

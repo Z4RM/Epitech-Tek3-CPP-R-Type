@@ -18,6 +18,7 @@
 #include "Scenes/Game/Game.hpp"
 #include "Scenes/Menu/Menu.hpp"
 #include "Systems/AnimationProjectile.hpp"
+#include "Systems/MonsterSpawner.hpp"
 #include "Systems/Network.hpp"
 #ifdef RTYPE_IS_CLIENT
 #include "Entities/Window.hpp"
@@ -83,8 +84,9 @@ int rtype::RType::_run() {
     );
     systemManager.addSystem(rtype::systems::RenderWindowSys::render);
     systemManager.addSystem(rtype::systems::UpdateProjectilesSystem::updateProjectiles);
+#else
+    systemManager.addSystem(systems::MonsterSpawner::spawnMonster);
 #endif
-
     systemManager.addSystem(rtype::systems::Movement::move);
     systemManager.addSystem(rtype::systems::Network::udpProcess);
     systemManager.addSystem(rtype::systems::Network::tcpProcess);

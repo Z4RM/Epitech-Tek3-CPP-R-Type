@@ -24,7 +24,9 @@ bool rtype::systems::Movement::isColliding(components::Position *pos, components
 
 void rtype::systems::Movement::handleCollisions(unsigned int entity, components::Position *pos, components::Hitbox *hitBox,
                                                 const std::unordered_set<unsigned int> &entities,
-                                                ecs::ComponentManager &componentManager, components::Velocity *vel) {
+                                                ecs::ComponentManager &componentManager,
+                                                components::Velocity *vel,
+                                                ecs::EntityManager &entityManager) {
     constexpr float bounceFactor = 1.0f;  // Intensity of the bounce
     constexpr float minSeparation = 0.01f; // Small offset to avoid overlap
 
@@ -38,6 +40,11 @@ void rtype::systems::Movement::handleCollisions(unsigned int entity, components:
         const auto colliderDamage = componentManager.getComponent<components::Damage>(collisionEntity);
         const auto peaceful = componentManager.getComponent<components::NoDamageToPlayer>(collisionEntity);
         const auto player = componentManager.getComponent<components::NetworkConnection>(entity);
+        const auto ai1 = componentManager.getComponent<components::IA>(entity);
+        const auto ai2 = componentManager.getComponent<components::IA>(collisionEntity);
+
+        if (ai1 && ai2)
+            continue;
 
         if (!colliderPos || !colliderHitBox)
             continue;
@@ -59,6 +66,9 @@ void rtype::systems::Movement::handleCollisions(unsigned int entity, components:
                     entityHealthBar->_elapsedDamage = now;
                     componentManager.addComponent<components::Damage>(collisionEntity, *colliderDamage);
                     componentManager.addComponent<components::Health>(entity, *entityHealthBar);
+                    if (entityHealthBar->value <= 0) {
+                        entityManager.destroyEntity(entity, componentManager);
+                    }
                 }
             }
             componentManager.addComponent<components::Velocity>(entity, *vel);
@@ -66,7 +76,7 @@ void rtype::systems::Movement::handleCollisions(unsigned int entity, components:
     }
 }
 
-void rtype::systems::Movement::move(const rtype::ecs::EntityManager& entityManager,
+void rtype::systems::Movement::move(rtype::ecs::EntityManager& entityManager,
                                     rtype::ecs::ComponentManager& componentManager) {
     static auto lastUpdateTime = std::chrono::steady_clock::now();
     auto currentTime = std::chrono::steady_clock::now();
@@ -81,10 +91,11 @@ void rtype::systems::Movement::move(const rtype::ecs::EntityManager& entityManag
         const auto hitBox = componentManager.getComponent<components::Hitbox>(entity);
         const auto speed = componentManager.getComponent<components::Speed>(entity);
         const auto health = componentManager.getComponent<components::Health>(entity);
+        const auto peaceful = componentManager.getComponent<components::NoDamageToPlayer>(entity);
 
         if (pos && vel) {
             if (hitBox) {
-                handleCollisions(entity, pos.get(), hitBox.get(), entities, componentManager, vel.get());
+                handleCollisions(entity, pos.get(), hitBox.get(), entities, componentManager, vel.get(), entityManager);
             }
 
             auto newPosX = vel->x * elapsedTime.count();
@@ -101,10 +112,12 @@ void rtype::systems::Movement::move(const rtype::ecs::EntityManager& entityManag
             pos->y += newPosY;
             pos->z += newPosZ;
 
-            componentManager.addComponent<components::Position>(entity, *pos);
+            if (pos->x > 800 || pos->x < 0 || pos->y < 0 || pos->y > 600 && !peaceful) {
+            } else
+                componentManager.addComponent<components::Position>(entity, *pos);
 
         #ifndef RTYPE_IS_SERVER
-            if (health && hitBox) {
+            if (health && hitBox && !peaceful) {
                 health->bgBar.setPosition({pos->x + hitBox->size.width / 5, pos->y});
                 health->healthBar.setPosition({pos->x + hitBox->size.width / 5, pos->y});
                 componentManager.addComponent<components::Health>(entity, *health);
@@ -115,17 +128,18 @@ void rtype::systems::Movement::move(const rtype::ecs::EntityManager& entityManag
 
         const auto ia = componentManager.getComponent<components::IA>(entity);
         const auto pos2 = componentManager.getComponent<components::Position>(entity);
-        if (ia && pos2) {
+
+        if (ia && pos2 && !peaceful) {
             const auto move = ia->moves.begin();
             components::Velocity velTarget = move->second;
 
             if (hitBox) {
-                handleCollisions(entity, pos2.get(), hitBox.get(), entities, componentManager, &velTarget);
+                handleCollisions(entity, pos2.get(), hitBox.get(), entities, componentManager, &velTarget, entityManager);
             }
 
-            auto newPosX = velTarget.x * elapsedTime.count();
-            auto newPosY = velTarget.y * elapsedTime.count();
-            auto newPosZ = velTarget.z * elapsedTime.count();
+            auto newPosX = velTarget.x * elapsedTime.count() * 2;
+            auto newPosY = velTarget.y * elapsedTime.count() * 2;
+            auto newPosZ = velTarget.z * elapsedTime.count() * 2;
 
             if (speed) {
                 newPosX *= speed->value;
@@ -135,7 +149,12 @@ void rtype::systems::Movement::move(const rtype::ecs::EntityManager& entityManag
             pos2->x += newPosX;
             pos2->y += newPosY;
             pos2->z += newPosZ;
-
+#ifdef RTYPE_IS_SERVER
+            if (pos2->x > 900 || pos2->x < -50 || pos2->y < -50 || pos2->y > 800) {
+                entityManager.destroyEntity(entity, componentManager);
+                return;
+            }
+#endif
             componentManager.addComponent<components::Position>(entity, *pos2);
         #ifndef RTYPE_IS_SERVER
             if (health && hitBox) {

@@ -74,6 +74,8 @@ set(RTYPE_SRC
         src/RType/Components/Shared/Projectile.hpp
         src/Network/Packets/Descriptors/PacketPlayerShoot/PacketPlayerShoot.cpp
         src/Network/Packets/Descriptors/PacketPlayerShoot/PacketPlayerShoot.hpp
+        src/RType/Systems/MonsterSpawner.cpp
+        src/RType/Systems/MonsterSpawner.hpp
 )
 
 set(CLIENT_SRC
