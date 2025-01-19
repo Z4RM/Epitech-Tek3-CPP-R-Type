@@ -56,15 +56,15 @@ rtype::entities::Player::Player(
 
     size_t id = this->_id;
 
-    auto networkCopy = network;
+    int netId = network.id;
 
     _inputs.keyActions.insert({
         sf::Keyboard::Key::Space,
-        {sf::Event::KeyPressed, [this, &entityManager, &componentManager, &id, &shootFn, &networkCopy]() {
+        {sf::Event::KeyPressed, [this, &entityManager, &componentManager, id, &shootFn, netId]() {
             static auto clock = std::chrono::steady_clock::now();
             bool result = this->shoot(entityManager, componentManager, id, clock);
             if (result) {
-                shootFn(networkCopy.id);
+                shootFn(netId);
             }
         }}
     });
