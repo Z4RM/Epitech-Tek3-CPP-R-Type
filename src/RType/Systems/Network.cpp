@@ -510,7 +510,7 @@ namespace rtype::systems {
                                     {64, 64},
                                     sprite2,
                                     {"", 0, 0},
-                                    [network](int id) {
+                                    [&network](int id) {
                                         network::PacketPlayerShoot sendPlayerShoot(id);
                                         network.sendPacket(sendPlayerShoot);
                                     },
