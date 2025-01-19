@@ -14,6 +14,9 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Load super-linter configuration
+        run: grep -v '^#' .github/super-linter.env >> "$GITHUB_ENV"
+
       - name: Lint and format code
         uses: super-linter/super-linter/slim@v7
         env:
