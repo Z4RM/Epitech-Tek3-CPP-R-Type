@@ -5,7 +5,6 @@
 ** RenderWindow.cpp
 */
 
-#include <spdlog/spdlog.h>
 #include "InputSystem.hpp"
 #include "Components.hpp"
 #include "RType/Entities/Window.hpp"
@@ -13,33 +12,6 @@
 
 #include "RType/Components/Client/SlidingBg.hpp"
 #include "RType/Components/Shared/Counter.hpp"
-
-std::vector<rtype::ecs::Entity> getEntitiesSortedByZIndex(
-    const rtype::ecs::EntityManager& entityManager,
-    rtype::ecs::ComponentManager& componentManager
-) {
-    const auto entities = entityManager.getEntities();
-    std::vector<rtype::ecs::Entity> renderableEntities;
-
-    for (auto entity : entities) {
-        if (componentManager.getComponent<rtype::components::Sprite>(entity)) {
-            renderableEntities.push_back({entity});
-        }
-    }
-
-    std::sort(renderableEntities.begin(), renderableEntities.end(),
-              [&componentManager](const rtype::ecs::Entity a, const rtype::ecs::Entity b) {
-                  auto spriteA = componentManager.getComponent<rtype::components::Sprite>(a.id);
-                  auto spriteB = componentManager.getComponent<rtype::components::Sprite>(b.id);
-
-                  if (spriteA && spriteB) {
-                      return spriteA->priority.value < spriteB->priority.value;
-                  }
-                  return spriteA != nullptr;
-              });
-
-    return renderableEntities;
-}
 
 void rtype::systems::RenderWindowSys::render(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager)
 {
@@ -69,7 +41,7 @@ void rtype::systems::RenderWindowSys::render(ecs::EntityManager &entityManager, 
             rtype::systems::InputSystem::handleInput(entityManager, componentManager, event, renderWindow.get());
         }
 
-        auto sortedEntities = getEntitiesSortedByZIndex(entityManager, componentManager);
+        auto sortedEntities = _getEntitiesSortedByZIndex(entityManager, componentManager);
 
         for (auto e : sortedEntities) {
             auto sprite = componentManager.getComponent<components::Sprite>(e.id);
@@ -132,4 +104,34 @@ void rtype::systems::RenderWindowSys::createWindow(const ecs::EntityManager& ent
             componentManager.addComponent<components::Created>(entity, *created);
         }
     }
+}
+
+std::vector<rtype::ecs::Entity> rtype::systems::RenderWindowSys::_getEntitiesSortedByZIndex(
+        const rtype::ecs::EntityManager &entityManager,
+        rtype::ecs::ComponentManager &componentManager
+) {
+    const auto entities = entityManager.getEntities();
+    std::vector<rtype::ecs::Entity> renderableEntities;
+
+    for (auto entity: entities) {
+        if (componentManager.getComponent<rtype::components::Sprite>(entity)) {
+            renderableEntities.push_back({entity});
+        }
+    }
+
+    std::sort(renderableEntities.begin(), renderableEntities.end(),
+              [&componentManager](const rtype::ecs::Entity a,
+                                  const rtype::ecs::Entity b) {
+                  auto spriteA = componentManager.getComponent<rtype::components::Sprite>(
+                          a.id);
+                  auto spriteB = componentManager.getComponent<rtype::components::Sprite>(
+                          b.id);
+
+                  if (spriteA && spriteB) {
+                      return spriteA->priority.value < spriteB->priority.value;
+                  }
+                  return spriteA != nullptr;
+              });
+
+    return renderableEntities;
 }

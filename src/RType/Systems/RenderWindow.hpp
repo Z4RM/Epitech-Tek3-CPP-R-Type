@@ -54,5 +54,11 @@ namespace rtype::systems
          *        managing window-related components.
          */
         static void createWindow(const ecs::EntityManager& entityManager, ecs::ComponentManager& componentManager);
+
+    private:
+        static std::vector<rtype::ecs::Entity> _getEntitiesSortedByZIndex(
+                const rtype::ecs::EntityManager& entityManager,
+                rtype::ecs::ComponentManager& componentManager
+        );
     };
 }
