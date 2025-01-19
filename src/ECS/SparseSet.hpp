@@ -51,6 +51,15 @@ namespace rtype::ecs
             }
         }
 
+         
+        /**
+         * @brief Removes the component associated with a given entity.
+         *
+         * If the entity has an associated component, it is removed. The dense array and
+         * sparse map are updated to maintain efficiency.
+         *
+         * @param entity The unique ID of the entity.
+         */
         void removeComponent(unsigned int entity) override {
             std::lock_guard lock(_mutex);
 
