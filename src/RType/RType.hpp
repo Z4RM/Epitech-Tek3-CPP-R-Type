@@ -38,19 +38,6 @@ namespace rtype {
         // TODO: documentation
         void stopServer();
 #endif
-
-    private:
-        // TODO: documentation
-        explicit RType(unsigned short port);
-
-        // TODO: documentation
-        int _run();
-
-        // TODO: documentation
-        bool _running();
-
-        // TODO: documentation
-        unsigned short _port;
     };
 }
 
