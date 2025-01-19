@@ -6,10 +6,15 @@
 */
 
 #include "RType/RType.hpp"
+#include <exception>
 
 /**
  * @see rtype::RType::run
  */
 int main() {
-    return rtype::RType::run();
+    try {
+        return  rtype::RType::run();
+    } catch (std::exception &e) {
+        return 84;
+    }
 }

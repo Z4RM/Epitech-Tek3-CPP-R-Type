@@ -35,12 +35,11 @@ namespace rtype {
              * @brief The server configuration.
              */
             struct {
-#ifdef RTYPE_IS_CLIENT
                 /**
                  * @brief The address of the server.
                  */
                 std::string address;
-#endif
+
                 /**
                  * @brief The port of the server.
                  */
@@ -57,7 +56,7 @@ namespace rtype {
          *
          * @return Reference to the Config singleton instance.
          */
-        static Config &getInstance(const std::string &filename = "config.ini") {
+        static Config &getInstance(const std::string &filename = "./config.ini") {
             static Config instance(filename);
 
             return instance;

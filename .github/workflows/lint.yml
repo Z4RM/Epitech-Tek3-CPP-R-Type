@@ -1,0 +1,23 @@
+---
+name: Lint and format code
+
+on:
+  workflow_call:
+
+jobs:
+  lint:
+    name: Lint and format code
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Load super-linter configuration
+        run: grep -v '^#' .github/super-linter.env >> "$GITHUB_ENV"
+
+      - name: Lint and format code
+        uses: super-linter/super-linter/slim@v7
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

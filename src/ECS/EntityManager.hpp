@@ -9,6 +9,8 @@
 #define ENTITY_MANAGER_HPP_
 #include <unordered_set>
 #include <queue>
+#include <mutex>
+#include "ComponentManager.hpp"
 
 /**
  * @class EntityManager
@@ -36,6 +38,7 @@ namespace rtype::ecs
          * @return The unique ID of the newly created entity.
          */
         unsigned int createEntity() {
+            std::unique_lock lock(_entitiesMutex);
             unsigned int entity;
             if (!_availableIds.empty()) {
                 entity = _availableIds.front();
@@ -54,12 +57,15 @@ namespace rtype::ecs
          * and adds its ID to the queue of available IDs for future reuse.
          *
          * @param entity The unique ID of the entity to destroy.
+         * @param componentManager the component manager used for removing components of an entity
          */
-        void destroyEntity(unsigned int entity) {
+        void destroyEntity(unsigned int entity, ComponentManager &componentManager) {
+            std::lock_guard lock(_entitiesMutex);
             if (_activeEntities.find(entity) != _activeEntities.end()) {
                 _activeEntities.erase(entity);
                 _availableIds.push(entity);
             }
+            componentManager.removeAllComponent(entity);
         }
 
         /**
@@ -71,6 +77,7 @@ namespace rtype::ecs
          * @return `true` if the entity is active, otherwise `false`.
          */
         bool isEntityActive(unsigned int entity) const {
+            std::unique_lock lock(_entitiesMutex);
             return _activeEntities.find(entity) != _activeEntities.end();
         }
 
@@ -84,6 +91,7 @@ namespace rtype::ecs
          *         of all active entities.
         */
         std::unordered_set<unsigned int> getEntities() const {
+            std::unique_lock lock(_entitiesMutex);
             return _activeEntities;
         }
 
@@ -108,6 +116,8 @@ namespace rtype::ecs
          * Contains IDs of destroyed entities that can be reused for new entities.
          */
         std::queue<unsigned int> _availableIds;
+
+        mutable std::mutex _entitiesMutex;
     };
 }
 

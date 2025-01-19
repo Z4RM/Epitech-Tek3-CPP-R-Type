@@ -7,9 +7,11 @@
 
 #ifndef SPARSESET_HPP
 #define SPARSESET_HPP
+#include <iostream>
 
 #include <vector>
 #include <unordered_map>
+#include <shared_mutex>
 
 /**
  * @class SparseSet
@@ -22,26 +24,34 @@
  */
 namespace rtype::ecs
 {
-    template <typename T>
-    class SparseSet {
+    class ISparseSet
+    {
     public:
-        /**
-         * @brief Adds a component for a given entity.
-         *
-         * If the entity does not already have a component, it is added to the dense array, and its
-         * index is stored in the sparse map. The associated component is stored in a separate dense array.
-         *
-         * @param entity The unique ID of the entity.
-         * @param component The component to associate with the entity.
-         */
+        virtual ~ISparseSet() = default;
+        virtual void removeComponent(unsigned int entity) = 0;
+    };
+
+    template <typename T>
+       class SparseSet : public ISparseSet {
+    public:
+        SparseSet() = default;
+        ~SparseSet() override = default;
+
         void addComponent(unsigned int entity, const T& component) {
-            if (_sparse.find(entity) == _sparse.end()) {
+            std::unique_lock lock(_mutex);
+
+            auto it = _sparse.find(entity);
+            if (it != _sparse.end()) {
+                size_t index = it->second;
+                _components[index] = component;
+            } else {
                 _sparse[entity] = _dense.size();
                 _dense.push_back(entity);
                 _components.push_back(component);
             }
         }
 
+         
         /**
          * @brief Removes the component associated with a given entity.
          *
@@ -50,11 +60,14 @@ namespace rtype::ecs
          *
          * @param entity The unique ID of the entity.
          */
-        void removeComponent(unsigned int entity) {
-            if (_sparse.find(entity) != _sparse.end()) {
-                size_t index = _sparse[entity];
-                unsigned int last_entity = _dense.back();
+        void removeComponent(unsigned int entity) override {
+            std::lock_guard lock(_mutex);
 
+            auto it = _sparse.find(entity);
+            if (it != _sparse.end()) {
+                size_t index = it->second;
+
+                unsigned int last_entity = _dense.back();
                 _dense[index] = last_entity;
                 _sparse[last_entity] = index;
 
@@ -62,58 +75,28 @@ namespace rtype::ecs
                 _components[index] = _components.back();
                 _components.pop_back();
 
-                _sparse.erase(entity);
+                _sparse.erase(it);
             }
         }
 
-        /**
-         * @brief Retrieves the component associated with a given entity.
-         *
-         * If the entity has an associated component, a unique pointer to the component is returned.
-         * Otherwise, returns `nullptr`.
-         *
-         * @param entity The unique ID of the entity.
-         * @return A pointer to the component, or `nullptr` if the entity does not have a component.
-         */
-        T* getComponent(unsigned int entity) {
-            if (_sparse.find(entity) != _sparse.end()) {
-                return &_components[_sparse[entity]];
+        std::shared_ptr<T> getComponent(unsigned int entity) {
+            std::lock_guard lock(_mutex);
+            auto sparseIt = _sparse.find(entity);
+            if (sparseIt == _sparse.end()) {
+                return nullptr;
             }
-            return nullptr;
-        }
-
-        /**
-         * @brief Gets the list of entities currently stored in the set.
-         *
-         * Returns a reference to the dense array containing the IDs of all entities
-         * with associated components.
-         *
-         * @return A reference to the vector of entity IDs.
-         */
-        const std::vector<unsigned int>& getEntities() const {
-            return _dense;
+            size_t index = sparseIt->second;
+            if (index >= _dense.size() || index >= _components.size()) {
+                return nullptr;
+            }
+            return std::make_shared<T>(_components[index]);
         }
 
     private:
-        /**
-         * @brief A mapping from entity IDs to their indices in the dense array.
-         */
         std::unordered_map<unsigned int, size_t> _sparse;
-
-        /**
-         * @brief A dense array of entity IDs.
-         *
-         * Contains the IDs of all entities with components, stored in a compact form
-         * for efficient iteration.
-         */
         std::vector<unsigned int> _dense;
-
-        /**
-         * @brief A dense array of components.
-         *
-         * Stores components in the same order as the corresponding entities in `_dense`.
-         */
         std::vector<T> _components;
+        mutable std::mutex _mutex;
     };
 }
 

@@ -14,7 +14,7 @@ To ensure clarity and structure, follow these guidelines when naming branches:
 
 - **main**: The primary branch containing production-ready code.
 - **dev**: The primary development branch containing pre-production code.
-- A branch type can be either a *Conventional Commit* type (cf. [Commit Message Conventions](#commit-message-conventions)) (except `feat` (replaced by `feature`), `chore` and `style` (both for minor changes, no need to do a branch)), or:
+- A branch type can be either a _Conventional Commit_ type (cf. [Commit Message Conventions](#commit-message-conventions)) (except `feat` (replaced by `feature`), `chore` and `style` (both for minor changes, no need to do a branch)), or:
   - **`feature`**: For developing new features.
   - **`hotfix`**: For urgent fixes to production.
 
@@ -52,9 +52,9 @@ Follow the [Conventional Commits](https://conventionalcommits.org) format for cl
 ### Commit Types
 
 - **feat**: A new feature.
-    - Example: `feat(server-authentification): add client authentification`
-- **fix**: A bug fix.
-    - Example: `fix(client-ui): correct button alignment`
+  - Example: `feat(server-authentification): add client authentification`
+- **fix**: A bugfix.
+  - Example: `fix(client-ui): correct button alignment`
 - **build**: Build changes.
   - Example: `build(server): add Asio library`
 - **ci**: CI/CD changes.
@@ -75,7 +75,7 @@ Follow the [Conventional Commits](https://conventionalcommits.org) format for cl
 ### Commit Messages Rules
 
 1. Write messages in the imperative mood (e.g., "add" instead of "added").
-2. Separate the description from the body (and the body from the footer(s)) with a blank line.
+2. Separate the description from the body (and the body from the footer(s)) with an empty line.
 3. Reference related issues or PRs (e.g., `Closes #123`) in footer(s).
 
 ## Pull Request Conventions/Rules
@@ -85,5 +85,5 @@ Follow the [Conventional Commits](https://conventionalcommits.org) format for cl
 3. Request for people to review (add them to reviewers).
 4. Wait for the PR to be reviewed.
 5. Make changes if necessary.
-6. Merge the PR (you can use the default commit name, or custom it, or use a *Conventional Commits* one).
+6. Merge the PR (you can use the default commit name, or custom it, or use a _Conventional Commits_ one).
 7. Delete the branch if it is no longer useful.

@@ -8,9 +8,9 @@
 #ifndef SYSTEMS_HPP
 #define SYSTEMS_HPP
 
-#include "Systems/Movement.hpp"
+#include "RType/Systems/Movement.hpp"
 #ifdef RTYPE_IS_CLIENT
-#include "Systems/RenderWindow.hpp"
+#include "RType/Systems/RenderWindow.hpp"
 #endif
 
 #endif //SYSTEMS_HPP
