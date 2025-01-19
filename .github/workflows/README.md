@@ -71,5 +71,6 @@ To create a release, create a tag named following the [Semantic Versioning](http
 > Think changing the version where it's mentioned (among others, the `CMakeLists.txt`)
 
 ## Resources
+
 - [GitHub Actions Documentation](https://docs.github.com/en/actions)
 - [Workflow Syntax Reference](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions)
