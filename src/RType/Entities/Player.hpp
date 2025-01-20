@@ -97,7 +97,7 @@ namespace rtype::entities {
                 rtype::components::Size size,
                 rtype::components::NetworkConnection network,
                 rtype::components::NetId = { false },
-                rtype::components::Speed speed = {1}
+                rtype::components::Speed speed = {200}
         );
 
 #endif

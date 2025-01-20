@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.28)
 
-project(RType VERSION 1.0.0 LANGUAGES CXX)
+project(RType VERSION 1.0.1 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 
@@ -76,6 +76,7 @@ set(RTYPE_SRC
         src/Network/Packets/Descriptors/PacketPlayerShoot/PacketPlayerShoot.hpp
         src/RType/Systems/MonsterSpawner.cpp
         src/RType/Systems/MonsterSpawner.hpp
+        src/RType/Components/Shared/Dead.hpp
 )
 
 set(CLIENT_SRC

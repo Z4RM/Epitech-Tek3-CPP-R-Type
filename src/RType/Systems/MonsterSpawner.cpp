@@ -14,7 +14,7 @@ namespace rtype::systems {
 
     void MonsterSpawner::spawnMonster(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager) {
 #ifndef RTYPE_IS_CLIENT
-        static int monsterId = 0;
+        static int monsterId = 10;
         auto now = std::chrono::steady_clock::now();
         std::chrono::duration<double> elapsed = now - _lastSpawnTime;
 

@@ -46,8 +46,9 @@ void rtype::systems::RenderWindowSys::render(ecs::EntityManager &entityManager, 
         for (auto e : sortedEntities) {
             auto sprite = componentManager.getComponent<components::Sprite>(e.id);
             auto health = componentManager.getComponent<components::Health>(e.id);
+            auto dead = componentManager.getComponent<components::Dead>(e.id);
 
-            if (health && health->created) {
+            if (health && health->created && !dead) {
                 renderWindow->window->draw(health->bgBar);
                 renderWindow->window->draw(health->healthBar);
             }
@@ -71,7 +72,8 @@ void rtype::systems::RenderWindowSys::render(ecs::EntityManager &entityManager, 
                 if (pos) {
                     sprite->sprite->setPosition({pos->x, pos->y});
                 }
-                renderWindow->window->draw(*sprite->sprite);
+                if (!dead)
+                    renderWindow->window->draw(*sprite->sprite);
             }
         }
 
