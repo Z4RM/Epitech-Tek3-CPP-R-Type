@@ -5,6 +5,7 @@ var namespacertype_1_1components =
     [ "Counter", "structrtype_1_1components_1_1Counter.html", "structrtype_1_1components_1_1Counter" ],
     [ "Created", "structrtype_1_1components_1_1Created.html", "structrtype_1_1components_1_1Created" ],
     [ "Damage", "structrtype_1_1components_1_1Damage.html", "structrtype_1_1components_1_1Damage" ],
+    [ "Dead", "structrtype_1_1components_1_1Dead.html", "structrtype_1_1components_1_1Dead" ],
     [ "GameState", "structrtype_1_1components_1_1GameState.html", "structrtype_1_1components_1_1GameState" ],
     [ "Health", "structrtype_1_1components_1_1Health.html", "structrtype_1_1components_1_1Health" ],
     [ "Hitbox", "structrtype_1_1components_1_1Hitbox.html", "structrtype_1_1components_1_1Hitbox" ],

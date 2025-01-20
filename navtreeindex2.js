@@ -1,5 +1,7 @@
 var NAVTREEINDEX2 =
 {
+"classrtype_1_1network_1_1TCPNetwork.html#a2c3c8803409ea022fdb05827fc6a8f1f":[4,0,0,4,11,11],
+"classrtype_1_1network_1_1TCPNetwork.html#a386a34817636f915d07be1a26c418de5":[3,0,0,4,11,3],
 "classrtype_1_1network_1_1TCPNetwork.html#a386a34817636f915d07be1a26c418de5":[4,0,0,4,11,3],
 "classrtype_1_1network_1_1TCPNetwork.html#a42fdcefb87b45be182e53d175d4561ec":[3,0,0,4,11,4],
 "classrtype_1_1network_1_1TCPNetwork.html#a42fdcefb87b45be182e53d175d4561ec":[4,0,0,4,11,4],
@@ -241,13 +243,11 @@ var NAVTREEINDEX2 =
 "structrtype_1_1components_1_1Damage.html":[4,0,0,0,4],
 "structrtype_1_1components_1_1Damage.html#a078b191e25fea513efe5d16aa0de5e6d":[3,0,0,0,4,0],
 "structrtype_1_1components_1_1Damage.html#a078b191e25fea513efe5d16aa0de5e6d":[4,0,0,0,4,0],
-"structrtype_1_1components_1_1GameState.html":[3,0,0,0,5],
-"structrtype_1_1components_1_1GameState.html":[4,0,0,0,5],
-"structrtype_1_1components_1_1GameState.html#afe79cf614d9fd9b9d363081029fc095d":[3,0,0,0,5,0],
-"structrtype_1_1components_1_1GameState.html#afe79cf614d9fd9b9d363081029fc095d":[4,0,0,0,5,0],
-"structrtype_1_1components_1_1Health.html":[3,0,0,0,6],
-"structrtype_1_1components_1_1Health.html":[4,0,0,0,6],
-"structrtype_1_1components_1_1Health.html#a0c4f2b9884a96f0fd87c8ab7c8565760":[3,0,0,0,6,2],
-"structrtype_1_1components_1_1Health.html#a0c4f2b9884a96f0fd87c8ab7c8565760":[4,0,0,0,6,2],
-"structrtype_1_1components_1_1Health.html#a567666bffd3957b1d74db350db2da0ca":[3,0,0,0,6,0]
+"structrtype_1_1components_1_1Dead.html":[3,0,0,0,5],
+"structrtype_1_1components_1_1Dead.html":[4,0,0,0,5],
+"structrtype_1_1components_1_1Dead.html#ab80fcb05965ecf030e160cd7f8517a39":[3,0,0,0,5,0],
+"structrtype_1_1components_1_1Dead.html#ab80fcb05965ecf030e160cd7f8517a39":[4,0,0,0,5,0],
+"structrtype_1_1components_1_1GameState.html":[3,0,0,0,6],
+"structrtype_1_1components_1_1GameState.html":[4,0,0,0,6],
+"structrtype_1_1components_1_1GameState.html#afe79cf614d9fd9b9d363081029fc095d":[3,0,0,0,6,0]
 };

@@ -103,9 +103,9 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "AEntity_8hpp.html",
-"classrtype_1_1ecs_1_1AScene.html#a4a84a6de0e489f471e9ef8eadd1f5b56",
-"classrtype_1_1network_1_1TCPNetwork.html#a386a34817636f915d07be1a26c418de5",
-"structrtype_1_1components_1_1Health.html#a567666bffd3957b1d74db350db2da0ca"
+"classrtype_1_1ecs_1_1AScene.html#a3b1b11fe609f08550b763cd5cb6416bf",
+"classrtype_1_1network_1_1TCPNetwork.html#a2c3c8803409ea022fdb05827fc6a8f1f",
+"structrtype_1_1components_1_1GameState.html#afe79cf614d9fd9b9d363081029fc095d"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronization';

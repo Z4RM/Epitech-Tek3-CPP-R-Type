@@ -31,7 +31,7 @@ var searchData=
   ['packetwelcome_2ehpp_28',['PacketWelcome.hpp',['../PacketWelcome_8hpp.html',1,'']]],
   ['path_29',['path',['../structrtype_1_1components_1_1Animation.html#a5a0d5081e3e7190436a08d10f009e55f',1,'rtype::components::Animation::path'],['../structrtype_1_1components_1_1Sprite.html#a5d292a69f1102efb73eb03e4e7946f8b',1,'rtype::components::Sprite::path']]],
   ['permanent_20ban_30',['4. Permanent Ban',['../md_CODE__OF__CONDUCT.html#autotoc_md10',1,'']]],
-  ['player_31',['Player',['../classPlayer.html',1,'Player'],['../classrtype_1_1entities_1_1Player.html',1,'rtype::entities::Player'],['../classrtype_1_1entities_1_1Player.html#aa990f87198013abc3a59629abc7faef8',1,'rtype::entities::Player::Player()']]],
+  ['player_31',['Player',['../classPlayer.html',1,'Player'],['../classrtype_1_1entities_1_1Player.html',1,'rtype::entities::Player'],['../classrtype_1_1entities_1_1Player.html#aca956ef3f4494c6b279a134996098148',1,'rtype::entities::Player::Player()']]],
   ['player_2ecpp_32',['Player.cpp',['../Player_8cpp.html',1,'']]],
   ['player_2ehpp_33',['Player.hpp',['../Player_8hpp.html',1,'']]],
   ['player_5fcount_34',['PLAYER_COUNT',['../namespacertype_1_1network.html#a6e33dcdcd158a1e8ce1f13336651a3f8ab8b06a024d3da63238c0652702f254d9',1,'rtype::network']]],

@@ -9,6 +9,6 @@ var searchData=
   ['packetplayershoot_6',['PacketPlayerShoot',['../classrtype_1_1network_1_1PacketPlayerShoot.html#a59544f0b3a65633092e736d597b48aaf',1,'rtype::network::PacketPlayerShoot']]],
   ['packetstartgame_7',['PacketStartGame',['../classrtype_1_1network_1_1PacketStartGame.html#a0411003a042010b36c62a580ba0c1e78',1,'rtype::network::PacketStartGame']]],
   ['packetwelcome_8',['PacketWelcome',['../classrtype_1_1network_1_1PacketWelcome.html#a43b6f163a802c16c69781270001be85b',1,'rtype::network::PacketWelcome']]],
-  ['player_9',['Player',['../classrtype_1_1entities_1_1Player.html#aa990f87198013abc3a59629abc7faef8',1,'rtype::entities::Player']]],
+  ['player_9',['Player',['../classrtype_1_1entities_1_1Player.html#aca956ef3f4494c6b279a134996098148',1,'rtype::entities::Player']]],
   ['playercounter_10',['PlayerCounter',['../classrtype_1_1entities_1_1PlayerCounter.html#ad024cb1bf7fa45bce4fa6ddf1fac6083',1,'rtype::entities::PlayerCounter']]]
 ];

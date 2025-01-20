@@ -8,6 +8,7 @@ var hierarchy =
     [ "rtype::components::Counter", "structrtype_1_1components_1_1Counter.html", null ],
     [ "rtype::components::Created", "structrtype_1_1components_1_1Created.html", null ],
     [ "rtype::components::Damage", "structrtype_1_1components_1_1Damage.html", null ],
+    [ "rtype::components::Dead", "structrtype_1_1components_1_1Dead.html", null ],
     [ "rtype::entities::Enemy", "classrtype_1_1entities_1_1Enemy.html", null ],
     [ "rtype::models::EnemyData", "structrtype_1_1models_1_1EnemyData.html", null ],
     [ "rtype::ecs::Entity", "structrtype_1_1ecs_1_1Entity.html", null ],
