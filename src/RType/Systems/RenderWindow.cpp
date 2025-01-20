@@ -84,6 +84,7 @@ void rtype::systems::RenderWindowSys::render(ecs::EntityManager &entityManager, 
             if (sprite && sprite->sprite) {
                 auto pos = componentManager.getComponent<components::Position>(e.id);
                 auto slide = componentManager.getComponent<components::SlidingBg>(e.id);
+                auto dead = componentManager.getComponent<components::Dead>(e.id);
 
                 if (slide) {
                     auto position = sprite->sprite->getPosition();
@@ -99,7 +100,8 @@ void rtype::systems::RenderWindowSys::render(ecs::EntityManager &entityManager, 
                 if (pos) {
                     sprite->sprite->setPosition({pos->x, pos->y});
                 }
-                renderWindow->window->draw(*sprite->sprite);
+                if (!dead)
+                    renderWindow->window->draw(*sprite->sprite);
             }
         }
 

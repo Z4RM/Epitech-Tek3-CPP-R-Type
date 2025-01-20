@@ -24,3 +24,4 @@
 #include "./Shared/Projectile.hpp"
 #include "./Shared/NoDamageToPlayer.hpp"
 #include "./Shared/ActualPlayer.hpp"
+#include "./Shared/Dead.hpp"
