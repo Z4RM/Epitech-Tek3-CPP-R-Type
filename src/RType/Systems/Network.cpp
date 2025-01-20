@@ -125,7 +125,7 @@ namespace rtype::systems {
                 }
             }
 
-            timer->expires_after(std::chrono::milliseconds(1));
+            timer->expires_after(std::chrono::milliseconds(16));
             timer->async_wait([&entityManager, &componentManager, &network, timer](const asio::error_code& ec) {
                 if (!ec) {
                     schedulePacketSending(entityManager, componentManager, network, timer);
