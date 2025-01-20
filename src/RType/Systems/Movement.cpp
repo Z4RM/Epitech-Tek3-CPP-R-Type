@@ -3,6 +3,7 @@
 #include <complex>
 #include <spdlog/spdlog.h>
 
+#include "RType/Components/Shared/Dead.hpp"
 #include "RType/ModeManager/ModeManager.hpp"
 
 float rtype::systems::Movement::getDistanceBetweenPositions(const rtype::components::Position *pos1,
@@ -61,13 +62,20 @@ void rtype::systems::Movement::handleCollisions(unsigned int entity, components:
                 }
                 auto now = std::chrono::steady_clock::now();
                 std::chrono::duration<double> elapsed = now - entityHealthBar->_elapsedDamage;
-                if (elapsed.count() > 0.8) {
+                if (elapsed.count() > 0.8 || (peaceful && ai1)) {
                     entityHealthBar->takeDamage(colliderDamage->collisionDamage);
                     entityHealthBar->_elapsedDamage = now;
                     componentManager.addComponent<components::Damage>(collisionEntity, *colliderDamage);
                     componentManager.addComponent<components::Health>(entity, *entityHealthBar);
                     if (entityHealthBar->value <= 0) {
-                        entityManager.destroyEntity(entity, componentManager);
+                        if (!player)
+                            entityManager.destroyEntity(entity, componentManager);
+                        else {
+                            componentManager.addComponent<components::Dead>(entity, {true});
+                        }
+                    }
+                    if (peaceful) {
+                        entityManager.destroyEntity(collisionEntity, componentManager);
                     }
                 }
             }
@@ -112,9 +120,16 @@ void rtype::systems::Movement::move(rtype::ecs::EntityManager& entityManager,
             pos->y += newPosY;
             pos->z += newPosZ;
 
-            if (pos->x > 800 || pos->x < 0 || pos->y < 0 || pos->y > 600 && !peaceful) {
-            } else
+            if (peaceful) {
+                if (pos->x > 800 || pos->x < 0 || pos->y < 0 || pos->y > 600) {
+                    entityManager.destroyEntity(entity, componentManager);
+                    continue;
+                }
+            }
+
+            if (pos->x < 800 && pos->x > 0 && pos->y > 0 && pos->y < 600) {
                 componentManager.addComponent<components::Position>(entity, *pos);
+            }
 
         #ifndef RTYPE_IS_SERVER
             if (health && hitBox && !peaceful) {
@@ -137,9 +152,9 @@ void rtype::systems::Movement::move(rtype::ecs::EntityManager& entityManager,
                 handleCollisions(entity, pos2.get(), hitBox.get(), entities, componentManager, &velTarget, entityManager);
             }
 
-            auto newPosX = velTarget.x * elapsedTime.count() * 2;
-            auto newPosY = velTarget.y * elapsedTime.count() * 2;
-            auto newPosZ = velTarget.z * elapsedTime.count() * 2;
+            auto newPosX = velTarget.x * elapsedTime.count() * 1.2;
+            auto newPosY = velTarget.y * elapsedTime.count() * 1.2;
+            auto newPosZ = velTarget.z * elapsedTime.count() * 1.2;
 
             if (speed) {
                 newPosX *= speed->value;

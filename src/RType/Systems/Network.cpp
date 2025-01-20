@@ -75,13 +75,17 @@ namespace rtype::systems {
                 const auto actualPlayer = componentManager.getComponent<components::ActualPlayer>(entity);
                 const auto health = componentManager.getComponent<components::Health>(entity);
                 const auto ai = componentManager.getComponent<components::IA>(entity);
+                const auto dead = componentManager.getComponent<components::Dead>(entity);
 
                 if (vel && pos && size && netId && health) {
                     models::PlayerData pdata{*pos, *vel, *size, *netId, health->value};
                     models::EnemyData edata{*pos, *vel, *size, *netId, health->value};
 
-                    if (actualPlayer && actualPlayer->value == true && !IS_SERVER)
+                    if (actualPlayer && actualPlayer->value == true && !IS_SERVER) {
+                        if (dead)
+                            continue;
                         playerDatas.emplace_back(pdata);
+                    }
 
                     if (IS_SERVER && !ai) {
                         playerDatas.emplace_back(pdata);
@@ -196,6 +200,8 @@ namespace rtype::systems {
                                             if (data.health != health->value) {
                                                 health->setHealth(data.health);
                                                 health->_elapsedDamage = std::chrono::steady_clock::now();
+                                                if (data.health <= 0)
+                                                    componentManager.addComponent<components::Dead>(entity, { true });
                                                 componentManager.addComponent<components::Health>(entity, *health);
                                             }
                                         }
@@ -412,6 +418,11 @@ namespace rtype::systems {
 
                         if (packetPlayerShoot) {
                             for (auto &entity: entityManager.getEntities()) {
+                                const auto dead = componentManager.getComponent<components::Dead>(entity);
+
+                                if (dead)
+                                    continue;
+
                                 auto netco = componentManager.getComponent<components::NetworkConnection>(entity);
                                 auto netId = componentManager.getComponent<components::NetId>(entity);
                                 auto playerPos = componentManager.getComponent<components::Position>(entity);
