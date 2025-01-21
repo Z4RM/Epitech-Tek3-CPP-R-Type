@@ -66,7 +66,7 @@ int rtype::RType::run() {
     rtype::entities::RWindow renderWindow{};
     rtype::entities::Mode mode;
     mode.style.style = sf::Style::Default;
-    rtype::entities::Window window(
+    rtype::entities::Window(
             entityManager,
             componentManager,
             {800, 600},
