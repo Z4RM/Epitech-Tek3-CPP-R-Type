@@ -39,7 +39,7 @@ void rtype::Config::_setLogLevel(const INIReader &reader) {
 
 void rtype::Config::_initializeNetwork(const INIReader &reader) {
 #ifdef RTYPE_IS_CLIENT
-    _network.server.address = reader.GetString("network", "server_address", "");
+    _network.server.address = reader.GetString("network", "server_address", "127.0.0.1");
     if (_network.server.address.empty())
         spdlog::warn("No server address provided, you will be able to play only with a \"local server\"");
 #endif
