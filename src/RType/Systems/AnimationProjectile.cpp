@@ -7,8 +7,6 @@
 
 #include "AnimationProjectile.hpp"
 
-#include <spdlog/spdlog.h>
-
 void rtype::systems::UpdateProjectilesSystem::updateProjectiles(
     ecs::EntityManager &entityManager,
     ecs::ComponentManager &componentManager

@@ -7,8 +7,6 @@
 
 #include "PacketPlayersData.hpp"
 
-#include <spdlog/spdlog.h>
-
 namespace rtype::network {
 
     std::vector<char> PacketPlayersData::bufferize() const {

@@ -1,10 +1,14 @@
-#include "Movement.hpp"
-#include "Components.hpp"
-#include <complex>
-#include <spdlog/spdlog.h>
+/*
+** EPITECH PROJECT, 2025
+** RType
+** File description:
+** InputSystem.cpp
+*/
 
-#include "RType/Components/Shared/Dead.hpp"
+#include <complex>
 #include "RType/ModeManager/ModeManager.hpp"
+#include "Components.hpp"
+#include "Movement.hpp"
 
 float rtype::systems::Movement::getDistanceBetweenPositions(const rtype::components::Position *pos1,
                                                             const rtype::components::Position *pos2) {

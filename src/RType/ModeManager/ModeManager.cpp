@@ -19,13 +19,13 @@ bool rtype::ModeManager::isServer() {
 void rtype::ModeManager::enableServer() {
     std::lock_guard<std::mutex> lock(_modeMutex);
     _isServer = true;
-    spdlog::debug("Server mode enabled");
+    spdlog::info("Server enabled");
 }
 
 void rtype::ModeManager::disableServer() {
     std::lock_guard<std::mutex> lock(_modeMutex);
     _isServer = false;
-    spdlog::debug("Server mode disabled");
+    spdlog::info("Server disabled");
 }
 
 void rtype::ModeManager::switchServer() {

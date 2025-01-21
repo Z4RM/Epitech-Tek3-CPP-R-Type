@@ -5,14 +5,9 @@
 ** Image entity
 */
 
-
-#include "./Image.hpp"
-
-#include <spdlog/spdlog.h>
-
+#include "Components.hpp"
 #include "Window.hpp"
-#include "RType/Components/Client/SlidingBg.hpp"
-#include "RType/Components/Client/Sprite.hpp"
+#include "Image.hpp"
 
 namespace rtype::entities {
     Image::Image(ecs::ComponentManager &componentManager, ecs::EntityManager &entityManager, components::Sprite sprite, bool

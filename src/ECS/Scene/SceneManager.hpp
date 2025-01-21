@@ -27,7 +27,7 @@ namespace rtype::ecs {
 
        void registerScene(int id, std::shared_ptr<IScene> scene) {
            if (_scenes.find(id) != _scenes.end()) {
-               spdlog::warn("Scene not loaded because already registered with id: {}", id);
+               spdlog::warn("Scene not loaded because already registered with ID {}", id);
                return;
            }
            _scenes[id] = std::move(scene);

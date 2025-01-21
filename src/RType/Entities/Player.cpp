@@ -5,12 +5,8 @@
 ** Player.hpp
 */
 
-#include "Player.hpp"
-
-#include <iostream>
-#include <spdlog/spdlog.h>
-
 #include "RType/ModeManager/ModeManager.hpp"
+#include "Player.hpp"
 
 #ifdef RTYPE_IS_CLIENT
 

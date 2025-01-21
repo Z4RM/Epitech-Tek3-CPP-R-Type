@@ -5,11 +5,8 @@
 ** InputSystem.cpp
 */
 
-#include "InputSystem.hpp"
-
-#include <spdlog/spdlog.h>
-
 #include "Components.hpp"
+#include "InputSystem.hpp"
 
 void rtype::systems::InputSystem::handleInput(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager, const
  sf::Event &event, entities::RWindow *window) {

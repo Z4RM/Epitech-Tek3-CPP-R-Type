@@ -7,8 +7,6 @@
 
 #include "PacketWelcome.hpp"
 
-#include <spdlog/spdlog.h>
-
 namespace rtype::network {
     std::vector<char> PacketWelcome::bufferize() const {
         std::vector<char> buffer(sizeof(this->_code) + sizeof(this->netId));
