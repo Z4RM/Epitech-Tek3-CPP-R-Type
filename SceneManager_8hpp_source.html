@@ -138,7 +138,7 @@ $(function(){initNavTree('SceneManager_8hpp_source.html',''); initResizable(true
 <div class="foldopen" id="foldopen00028" data-start="{" data-end="}">
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="classrtype_1_1ecs_1_1SceneManager.html#afa868a386f0221f98ed8429ede02ebd1">   28</a></span>       <span class="keywordtype">void</span> <a class="code hl_function" href="classrtype_1_1ecs_1_1SceneManager.html#afa868a386f0221f98ed8429ede02ebd1">registerScene</a>(<span class="keywordtype">int</span> <span class="keywordtype">id</span>, std::shared_ptr&lt;IScene&gt; scene) {</div>
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>           <span class="keywordflow">if</span> (_scenes.find(<span class="keywordtype">id</span>) != _scenes.end()) {</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>               spdlog::warn(<span class="stringliteral">&quot;Scene not loaded because already registered with id: {}&quot;</span>, <span class="keywordtype">id</span>);</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>               spdlog::warn(<span class="stringliteral">&quot;Scene not loaded because already registered with ID {}&quot;</span>, <span class="keywordtype">id</span>);</div>
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>               <span class="keywordflow">return</span>;</div>
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>           }</div>
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>           _scenes[id] = std::move(scene);</div>
