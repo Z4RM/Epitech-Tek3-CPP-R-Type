@@ -7,7 +7,6 @@
 
 #include "Network.hpp"
 
-#include "Network/Packets/Descriptors/PacketNewPlayer/PacketNewPlayer.hpp"
 #include "Network/TCPNetwork/TCPNetwork.hpp"
 #include "Network/UDPNetwork/UDPNetwork.hpp"
 
@@ -18,6 +17,7 @@
 
 #include "RType/Config/Config.hpp"
 #include "Components.hpp"
+#include "handlers/WelcomeHandler/WelcomeHandler.hpp"
 #include "Network/Packets/Descriptors/PacketPlayersData/PacketPlayersData.hpp"
 #include "Network/Packets/Descriptors/PacketEnemiesData/PacketEnemiesData.hpp"
 #include "Network/Packets/Descriptors/PacketPlayerCounter/PacketPlayerCounter.hpp"
@@ -503,34 +503,7 @@ namespace rtype::systems {
                         }
                     });
                 } else {
-                    network.addHandler(network::WELCOME, [&entityManager, &componentManager]
-                    (std::unique_ptr<network::IPacket> packet,
-                    std::shared_ptr<asio::ip::tcp::socket> socket) {
-                        auto* packetWelcome = dynamic_cast<network::PacketWelcome*>(packet.get());
-
-                        if (packetWelcome) {
-                            spdlog::info("Server said welcome, network ID is: {}", packetWelcome->netId);
-                            ecs::SceneManager::getInstance().changeScene(1, true);
-                            #ifdef RTYPE_IS_CLIENT
-                            components::Sprite sprite2 = {{100, 100, 0}, {33, 17}, "assets/sprites/players.gif", {0}};
-                            entities::Player player2(
-                                    entityManager,
-                                    componentManager,
-                                    {0, 200, 0},
-                                    {0, 0, 0},
-                                    {64, 64},
-                                    sprite2,
-                                    {"", 0, 0},
-                                    [](int id) {
-                                        network::PacketPlayerShoot sendPlayerShoot(id);
-                                        network.sendPacket(sendPlayerShoot);
-                                    },
-                                    {packetWelcome->netId},
-                                    {true}
-                            );
-                            #endif
-                        }
-                    });
+                    network.registerNetHandler(network::WELCOME, std::make_unique<WelcomeHandler>(componentManager, entityManager));
 
 
                 network.addHandler(network::PLAYER_SHOOT, [&entityManager, &componentManager]

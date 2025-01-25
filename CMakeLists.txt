@@ -39,16 +39,14 @@ set(RTYPE_SRC
         src/Network/UDPNetwork/UDPNetwork.hpp
         src/Network/TCPNetwork/TCPNetwork.cpp
         src/Network/TCPNetwork/TCPNetwork.hpp
-        src/RType/Systems/Network.cpp
-        src/RType/Systems/Network.hpp
+        src/RType/Systems/Network/Network.cpp
+        src/RType/Systems/Network/Network.hpp
         src/ThreadPool/ThreadPool.cpp
         src/Network/Packets/PacketFactory/PacketFactory.cpp
         src/Network/Packets/PacketFactory/PacketFactory.hpp
         src/Network/Packets/Descriptors/PacketConnect/PacketConnect.cpp
         src/Network/Packets/Descriptors/PacketWelcome/PacketWelcome.cpp
         src/Network/Packets/Descriptors/PacketWelcome/PacketWelcome.hpp
-        src/Network/Packets/Descriptors/PacketNewPlayer/PacketNewPlayer.cpp
-        src/Network/Packets/Descriptors/PacketNewPlayer/PacketNewPlayer.hpp
         src/RType/Components/Shared/Network.hpp
         src/Network/Packets/Descriptors/PacketPlayersData/PacketPlayersData.cpp
         src/Network/Packets/Descriptors/PacketPlayersData/PacketPlayersData.hpp
@@ -77,6 +75,10 @@ set(RTYPE_SRC
         src/RType/Systems/MonsterSpawner.cpp
         src/RType/Systems/MonsterSpawner.hpp
         src/RType/Components/Shared/Dead.hpp
+        src/RType/Systems/Network/handlers/INetworkHandler.hpp
+        src/RType/Systems/Network/handlers/WelcomeHandler/WelcomeHandler.hpp
+        src/RType/Systems/Network/handlers/WelcomeHandler/WelcomeHandler.cpp
+        src/RType/Systems/Network/handlers/ANetworkHandler.hpp
 )
 
 set(CLIENT_SRC
@@ -88,8 +90,6 @@ set(CLIENT_SRC
         src/RType/Systems/InputSystem.hpp
         src/Network/UDPNetwork/UDPNetwork.cpp
         src/Network/UDPNetwork/UDPNetwork.hpp
-        src/RType/Systems/Network.cpp
-        src/RType/Systems/Network.hpp
         src/ThreadPool/ThreadPool.cpp
         include/ThreadPool.hpp
         src/Network/TCPNetwork/TCPNetwork.cpp
@@ -103,8 +103,6 @@ set(CLIENT_SRC
         src/RType/Components/Client/Sprite.hpp
         src/Network/Packets/Descriptors/PacketWelcome/PacketWelcome.cpp
         src/Network/Packets/Descriptors/PacketWelcome/PacketWelcome.hpp
-        src/Network/Packets/Descriptors/PacketNewPlayer/PacketNewPlayer.cpp
-        src/Network/Packets/Descriptors/PacketNewPlayer/PacketNewPlayer.hpp
         src/RType/Components/Shared/Network.hpp
         src/Network/Packets/Descriptors/PacketPlayersData/PacketPlayersData.cpp
         src/Network/Packets/Descriptors/PacketPlayersData/PacketPlayersData.hpp

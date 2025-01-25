@@ -157,6 +157,14 @@ namespace rtype::network {
                     return;
                 }
             }
+
+            for (auto &handler: this->_netHandlers) {
+                if (handler.first == packet->getCode()) {
+                    handler.second->handle(std::move(packet), socket);
+                    return;
+                }
+            }
+
             spdlog::warn("No handler found for packet [{}]", std::to_string(packet->getCode()));
         } catch (std::exception &e) {
             spdlog::error("Unable to handle TCP packet: {}", e.what());
@@ -181,5 +189,12 @@ namespace rtype::network {
         std::lock_guard<std::mutex> lock(this->_stopMutex);
         return this->_stop;
     }
+
+    TCPNetwork &TCPNetwork::getInstance() {
+        static TCPNetwork instance;
+
+        return instance;
+    }
+
 
 }

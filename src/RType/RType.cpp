@@ -19,7 +19,7 @@
 #include "Scenes/Menu/Menu.hpp"
 #include "Systems/AnimationProjectile.hpp"
 #include "Systems/MonsterSpawner.hpp"
-#include "Systems/Network.hpp"
+#include "Systems/Network/Network.hpp"
 #ifdef RTYPE_IS_CLIENT
 #include "Entities/Window.hpp"
 #endif
