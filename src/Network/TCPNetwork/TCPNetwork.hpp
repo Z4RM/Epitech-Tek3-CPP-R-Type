@@ -64,7 +64,7 @@ namespace rtype::network {
 
             inline bool getStarted() const { return this->_started; };
 
-            static TCPNetwork &getInstance();
+            static TCPNetwork &getInstance(unsigned short port = 0);
 
             void registerOnPlayerDisconnect(std::function<void(std::shared_ptr<asio::ip::tcp::socket>)> fn) { this->_onPlayerDisconnect =
             std::move(fn); }
@@ -73,7 +73,7 @@ namespace rtype::network {
             socket)>
             handler);
 
-            inline void registerNetHandler(EPacketCode code, std::unique_ptr<systems::INetworkHandler> handler) { this->_handlerss
+            inline void registerNetHandler(EPacketCode code, std::unique_ptr<systems::INetworkHandler> handler) { this->_netHandlers
             .emplace_back(code, std::move(handler) ); };
 
             void setStop(bool state);

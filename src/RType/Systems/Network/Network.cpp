@@ -360,7 +360,7 @@ namespace rtype::systems {
 
 
     void Network::tcpProcess(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager) {
-        static network::TCPNetwork network(Config::getInstance().getNetwork().server.port);
+        network::TCPNetwork &network = network::TCPNetwork::getInstance(Config::getInstance().getNetwork().server.port);
         static bool networkStartingSended = false;
         static std::map<int, std::shared_ptr<asio::ip::tcp::socket>> playersToSayWelcome = {};
         static auto tcp = entityManager.createEntity();
@@ -382,7 +382,7 @@ namespace rtype::systems {
             components::Running running = { true };
             componentManager.addComponent(tcp, running);
             try {
-                network.registerOnPlayerDisconnect([&entityManager, &componentManager](std::shared_ptr<asio::ip::tcp::socket> socket) {
+                network.registerOnPlayerDisconnect([&entityManager, &componentManager, &network](std::shared_ptr<asio::ip::tcp::socket> socket) {
                     if (IS_SERVER) {
                         for (auto &entity: entityManager.getEntities()) {
                             auto netCo = componentManager.getComponent<components::NetworkConnection>(entity);
@@ -410,7 +410,7 @@ namespace rtype::systems {
                 });
 
                 if (IS_SERVER) {
-                    network.addHandler(network::PLAYER_SHOOT, [&entityManager, &componentManager]
+                    network.addHandler(network::PLAYER_SHOOT, [&entityManager, &componentManager, &network]
                     (std::unique_ptr<network::IPacket> packet,
                     std::shared_ptr<asio::ip::tcp::socket> socket) {
                         auto* packetPlayerShoot = dynamic_cast<network::PacketPlayerShoot*>(packet.get());
@@ -450,8 +450,8 @@ namespace rtype::systems {
                         }
                     });
 
-                    network.addHandler(network::CONNECT, [&entityManager, &componentManager](std::unique_ptr<network::IPacket> packet,
-                        std::shared_ptr<asio::ip::tcp::socket> socket) {
+                    network.addHandler(network::CONNECT, [&entityManager, &componentManager, &network](std::unique_ptr<network::IPacket> packet,
+                                                                                                       std::shared_ptr<asio::ip::tcp::socket> socket) {
                             for (auto &entity: entityManager.getEntities()) {
                                 auto gameState = componentManager.getComponent<components::GameState>(entity);
                                 if (gameState && gameState->isStarted) {
@@ -474,7 +474,7 @@ namespace rtype::systems {
                             }
                     });
 
-                    network.addHandler(network::START_GAME, [&entityManager, &componentManager]
+                    network.addHandler(network::START_GAME, [&entityManager, &componentManager, &network]
                     (std::unique_ptr<network::IPacket> packet, std::shared_ptr<asio::ip::tcp::socket> socket) {
                         for (auto &entity: entityManager.getEntities()) {
                             auto gameState = componentManager.getComponent<components::GameState>(entity);

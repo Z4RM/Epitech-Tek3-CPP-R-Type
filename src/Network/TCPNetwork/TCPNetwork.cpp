@@ -190,8 +190,8 @@ namespace rtype::network {
         return this->_stop;
     }
 
-    TCPNetwork &TCPNetwork::getInstance() {
-        static TCPNetwork instance;
+    TCPNetwork &TCPNetwork::getInstance(unsigned short port) {
+        static TCPNetwork instance(port);
 
         return instance;
     }
