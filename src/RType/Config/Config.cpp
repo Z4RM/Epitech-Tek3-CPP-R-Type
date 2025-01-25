@@ -31,7 +31,7 @@ void rtype::Config::_setLogLevel(const INIReader &reader) {
 
     if (!logLevel.empty()) {
         if (_logLevels.find(logLevel) == _logLevels.end())
-            spdlog::warn("\"\33[3m" + logLevel + "\33[0m\" is not a valid log level");
+            spdlog::warn("\"\33[3m" + logLevel + "\33[0m\" is not a valid log level, ignoring this setting");
         else
             spdlog::set_level(_logLevels.at(logLevel));
     }
@@ -39,7 +39,7 @@ void rtype::Config::_setLogLevel(const INIReader &reader) {
 
 void rtype::Config::_initializeNetwork(const INIReader &reader) {
 #ifdef RTYPE_IS_CLIENT
-    _network.server.address = reader.GetString("network", "server_address", "");
+    _network.server.address = reader.GetString("network", "server_address", "127.0.0.1");
     if (_network.server.address.empty())
         spdlog::warn("No server address provided, you will be able to play only with a \"local server\"");
 #endif

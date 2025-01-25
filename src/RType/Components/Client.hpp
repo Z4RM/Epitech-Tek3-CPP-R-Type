@@ -13,3 +13,5 @@
 #include "./Client/InputHandler.hpp"
 #include "./Client/SfText.hpp"
 #include "./Client/OnClick.hpp"
+#include "./Client/SlidingBg.hpp"
+#include "./Client/Sprite.hpp"

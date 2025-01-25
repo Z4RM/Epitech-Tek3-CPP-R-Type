@@ -43,7 +43,7 @@ namespace rtype::systems {
                     schedulePacketSending(entityManager, componentManager, network, timer);
                 network.start();
             } catch (std::exception &e) {
-                spdlog::error("Error while starting udp");
+                spdlog::error("Unable to start UDP socket: {}", e.what());
             }
         } else {
             for (auto &entity : entityManager.getEntities()) {
@@ -132,10 +132,9 @@ namespace rtype::systems {
                 }
             });
         } catch (const std::exception &e) {
-            spdlog::error("Exception in sendPackets: {}", e.what());
+            spdlog::error("Unable to send packet: {}", e.what());
         }
     }
-
 
     void Network::addUdpHandlers(network::UDPNetwork &network, ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager) {
         if (IS_SERVER) {
@@ -155,7 +154,7 @@ namespace rtype::systems {
 
                             if (pos && vel && size && net && netCo) {
                                 if (!netCo->endpoint.has_value() && net->id == data.netId.id) {
-                                    spdlog::info("New player in the udp game with net id: {}", net->id);
+                                    spdlog::info("New player in the game with network ID {}", net->id);
                                     componentManager.addComponent<components::NetworkConnection>(entity, {netCo->socket, endpoint});
                                 }
                                 if (netCo->endpoint.has_value() && netCo->endpoint == endpoint) {
@@ -170,7 +169,7 @@ namespace rtype::systems {
                     }
                 }
                 else {
-                    spdlog::error("Invalid packet players data received");
+                    spdlog::error("Invalid player data packet received");
                 }
             });
 
@@ -229,7 +228,7 @@ namespace rtype::systems {
                             }
 
                             if (!created) {
-                            spdlog::info("Creating new player in game");
+                            spdlog::debug("Creating new player in the game");
                             #ifndef RTYPE_IS_SERVER
                                 components::Sprite sprite2 = {{100, 100, 0}, {33, 17}, "assets/sprites/players.gif", {0}};
                                 entities::Player player2(
@@ -258,13 +257,13 @@ namespace rtype::systems {
                                     }
                                 }
                                 if (isDead) {
-                                    spdlog::info("Destroying disconnected player");
+                                    spdlog::debug("Destroying disconnected player");
                                     entityManager.destroyEntity(entity, componentManager);
                                 }
                             }
                         }
                     } else {
-                        spdlog::error("Invalid packet players data received");
+                        spdlog::error("Invalid player data packet received");
                     }
             });
 
@@ -318,7 +317,7 @@ namespace rtype::systems {
                             }
 
                             if (!created) {
-                            spdlog::info("Creating new enemy in game");
+                            spdlog::debug("Creating new enemy in the game");
                             #ifndef RTYPE_IS_SERVER
                                 components::Sprite sprite3 = {{600, 100, 0}, {33, 36}, "assets/sprites/enemy.gif", {1}};
                                 rtype::entities::Enemy enemy(
@@ -347,13 +346,13 @@ namespace rtype::systems {
                                         isDead = false;
                                 }
                                 if (isDead) {
-                                    spdlog::info("Destroying disconnected enemy");
+                                    spdlog::debug("Destroying disconnected enemy");
                                     entityManager.destroyEntity(entity, componentManager);
                                 }
                             }
                         }
                     } else {
-                        spdlog::error("Invalid packet players data received");
+                        spdlog::error("Invalid player data packet received");
                     }
             });
         }
@@ -406,7 +405,7 @@ namespace rtype::systems {
                             network.sendPacket(packetPCount, p.second);
                         }
                     } else {
-                        spdlog::info("Server have closed the connection");
+                        spdlog::info("Server has closed the connection");
                     }
                 });
 
@@ -456,7 +455,7 @@ namespace rtype::systems {
                             for (auto &entity: entityManager.getEntities()) {
                                 auto gameState = componentManager.getComponent<components::GameState>(entity);
                                 if (gameState && gameState->isStarted) {
-                                    spdlog::info("New player joined the game but the game is already started");
+                                    spdlog::warn("New player joined the game, but it's already started");
                                     return;
                                 }
                             }
@@ -469,7 +468,7 @@ namespace rtype::systems {
                                 for (auto &p : playersToSayWelcome) {
                                     network.sendPacket(playerCount, p.second);
                                 }
-                                spdlog::info("New player created with net id: {}", playerId);
+                                spdlog::info("New player created with network ID {}", playerId);
                             } else {
                                 //todo: send packet game already started to the client
                             }
@@ -510,7 +509,7 @@ namespace rtype::systems {
                         auto* packetWelcome = dynamic_cast<network::PacketWelcome*>(packet.get());
 
                         if (packetWelcome) {
-                            spdlog::info("Server said welcome, net id is: {}", packetWelcome->netId);
+                            spdlog::info("Server said welcome, network ID is: {}", packetWelcome->netId);
                             ecs::SceneManager::getInstance().changeScene(1, true);
                             #ifdef RTYPE_IS_CLIENT
                             components::Sprite sprite2 = {{100, 100, 0}, {33, 17}, "assets/sprites/players.gif", {0}};
@@ -617,10 +616,9 @@ namespace rtype::systems {
                     });
                 }
 
-
                 network.start();
             } catch (std::exception &e) {
-                spdlog::error("Error while starting tcp");
+                spdlog::error("Unable to start TCP socket: {}", e.what());
             }
         } else {
             for (auto &entity : entityManager.getEntities()) {

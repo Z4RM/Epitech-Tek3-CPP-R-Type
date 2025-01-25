@@ -7,8 +7,6 @@
 
 #include "PacketPlayerCounter.hpp"
 
-#include <spdlog/spdlog.h>
-
 namespace rtype::network {
     std::vector<char> PacketPlayerCounter::bufferize() const {
         std::vector<char> buffer(sizeof(this->_code) + sizeof(this->_count));

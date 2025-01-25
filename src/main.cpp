@@ -13,10 +13,11 @@
  * @see rtype::RType::run
  */
 int main() {
+    // TODO: remove this try/catch and catch at the right place(s)
     try {
         return  rtype::RType::run();
     } catch (std::exception &e) {
-        spdlog::error(e.what());
+        spdlog::critical(e.what());
         return 84;
     }
 }

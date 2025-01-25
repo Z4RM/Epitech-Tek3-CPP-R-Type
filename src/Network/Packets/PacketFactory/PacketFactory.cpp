@@ -8,7 +8,6 @@
 #include "PacketFactory.hpp"
 
 #include <Network/Packets/EPacketCode.hpp>
-#include <spdlog/spdlog.h>
 
 #include "Network/Packets/Descriptors/PacketConnect/PacketConnect.hpp"
 #include "Network/Packets/Descriptors/PacketEnemiesData/PacketEnemiesData.hpp"
