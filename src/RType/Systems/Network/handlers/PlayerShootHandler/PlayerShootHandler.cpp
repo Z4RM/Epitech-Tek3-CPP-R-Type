@@ -11,10 +11,7 @@
 #include "RType/Components/Shared/Network.hpp"
 #include "Components.hpp"
 #include "Network/TCPNetwork/TCPNetwork.hpp"
-
-namespace rtype::components {
-    struct Dead;
-}
+#include "RType/Services/ProjectileService/ProjectileService.hpp"
 
 namespace rtype::systems {
     void PlayerShootHandler::handle(std::unique_ptr<network::IPacket> packet, std::shared_ptr<asio::ip::tcp::socket> socket) {
@@ -36,17 +33,7 @@ namespace rtype::systems {
                 //TODO: make a service that create a projectile
                 if (netco && netId) {
                     if (netId->id == packetPlayerShoot->netId) {
-                        size_t projectileId = _entityManager.createEntity();
-
-                        components::Velocity vel = {2.0, 0.0, 0.0};
-                        components::Position pos = {playerPos->x + 10.0f, playerPos->y, playerPos->z};
-                        _componentManager.addComponent<components::Velocity>(projectileId, vel);
-                        _componentManager.addComponent<components::Position>(projectileId, pos);
-                        _componentManager.addComponent<components::Size>(projectileId, {10.0f, 10.0f});
-                        _componentManager.addComponent<components::Hitbox>(projectileId, {pos, {10.0f, 10.0f}});
-                        _componentManager.addComponent<components::Speed>(projectileId, {250});
-                        _componentManager.addComponent<components::Damage>(projectileId, {20});
-                        _componentManager.addComponent<components::NoDamageToPlayer>(projectileId, {true});
+                        services::ProjectileService::createProjectile(_entityManager, _componentManager, playerPos);
                         network::PacketPlayerShoot newPacket(packetPlayerShoot->netId);
 
                         for (auto &entity : _entityManager.getEntities()) {
