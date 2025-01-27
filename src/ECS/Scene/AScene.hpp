@@ -21,7 +21,7 @@ namespace rtype::ecs {
 
         void unload() final { for (const auto &entity : _entities) {
             _entityManager.destroyEntity(entity, this->_componentManager);
-        }};
+        } this->_loaded = false; };
 
         void registerEntity(IEntity &entity) final { this->_entities.emplace_back(entity.getId()); }
 

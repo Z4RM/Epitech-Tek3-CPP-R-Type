@@ -63,7 +63,6 @@ namespace rtype::entities {
                 components::Size size,
                 components::Sprite &sprite,
                 const components::Animation &animation,
-                std::function<void(int id)> shootFn,
                 rtype::components::NetId = { false },
                 rtype::components::ActualPlayer = { false },
                 rtype::components::Speed = {200}

@@ -18,7 +18,6 @@ rtype::entities::Player::Player(
         const components::Size size,
         components::Sprite &sprite,
         const components::Animation &animation,
-        std::function<void(int id)> shootFn,
         const components::NetId network,
         components::ActualPlayer actualPlayer,
         const components::Speed speed
@@ -56,11 +55,12 @@ rtype::entities::Player::Player(
 
     _inputs.keyActions.insert({
         sf::Keyboard::Key::Space,
-        {sf::Event::KeyPressed, [this, &entityManager, &componentManager, id, shootFn, netId]() {
+        {sf::Event::KeyPressed, [this, &entityManager, &componentManager, id, netId]() {
             static auto clock = std::chrono::steady_clock::now();
             bool result = this->shoot(entityManager, componentManager, id, clock);
             if (result) {
-                shootFn(netId);
+                network::PacketPlayerShoot sendPlayerShoot(netId);
+                network::TCPNetwork::getInstance().sendPacket(sendPlayerShoot);
             }
         }}
     });

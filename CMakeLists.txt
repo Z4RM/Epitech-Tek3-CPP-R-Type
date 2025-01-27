@@ -79,6 +79,10 @@ set(RTYPE_SRC
         src/RType/Systems/Network/handlers/WelcomeHandler/WelcomeHandler.hpp
         src/RType/Systems/Network/handlers/WelcomeHandler/WelcomeHandler.cpp
         src/RType/Systems/Network/handlers/ANetworkHandler.hpp
+        src/RType/Services/PlayerService/PlayerService.cpp
+        src/RType/Services/PlayerService/PlayerService.hpp
+        src/RType/Systems/Network/handlers/PlayerShootHandler/PlayerShootHandler.cpp
+        src/RType/Systems/Network/handlers/PlayerShootHandler/PlayerShootHandler.hpp
 )
 
 set(CLIENT_SRC

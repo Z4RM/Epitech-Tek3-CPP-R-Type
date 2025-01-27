@@ -32,7 +32,7 @@ namespace rtype::ecs {
            }
            _scenes[id] = std::move(scene);
        }
-
+        
         void changeScene(const int id, bool unload = false) {
             if (unload)
                 this->_scenes[_currentScene]->unload();
