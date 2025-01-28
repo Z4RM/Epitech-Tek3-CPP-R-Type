@@ -25,3 +25,4 @@
 #include "./Shared/NoDamageToPlayer.hpp"
 #include "./Shared/ActualPlayer.hpp"
 #include "./Shared/Dead.hpp"
+#include "./Shared/Counter.hpp"

@@ -17,6 +17,7 @@
 
 #include "RType/Config/Config.hpp"
 #include "Components.hpp"
+#include "handlers/PlayerCountHandler/PlayerCountHandler.hpp"
 #include "handlers/PlayerShootHandler/PlayerShootHandler.hpp"
 #include "handlers/WelcomeHandler/WelcomeHandler.hpp"
 #include "Network/Packets/Descriptors/PacketPlayersData/PacketPlayersData.hpp"
@@ -465,28 +466,7 @@ namespace rtype::systems {
                     });
                 } else {
                     network.registerNetHandler(network::WELCOME, std::make_unique<WelcomeHandler>(componentManager, entityManager));
-
-                    network.addHandler(network::PLAYER_COUNT, [&entityManager, &componentManager]
-                    (std::unique_ptr<network::IPacket> packet,
-                    std::shared_ptr<asio::ip::tcp::socket> socket) {
-                        auto* packetPlayerCounter = dynamic_cast<network::PacketPlayerCounter*>(packet.get());
-
-                        if (packetPlayerCounter) {
-                            int count = 0;
-
-                            for (auto &entity: entityManager.getEntities()) {
-                                auto gameState = componentManager.getComponent<components::GameState>(entity);
-                                auto playerCount = componentManager.getComponent<components::Counter>(entity);
-                                if (gameState && gameState->isStarted) {
-                                    return;
-                                }
-                                if (playerCount && playerCount->name == "players") {
-                                    playerCount->update(packetPlayerCounter->_count);
-                                    componentManager.addComponent<components::Counter>(entity, *playerCount);
-                                }
-                            }
-                        }
-                    });
+                    network.registerNetHandler(network::PLAYER_COUNT, std::make_unique<PlayerCountHandler>(componentManager, entityManager));
                 }
                 network.registerNetHandler(network::PLAYER_SHOOT, std::make_unique<PlayerShootHandler>(componentManager, entityManager));
                 network.start();
