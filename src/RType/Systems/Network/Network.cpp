@@ -17,6 +17,7 @@
 
 #include "RType/Config/Config.hpp"
 #include "Components.hpp"
+#include "handlers/PlayerShootHandler/PlayerShootHandler.hpp"
 #include "handlers/WelcomeHandler/WelcomeHandler.hpp"
 #include "Network/Packets/Descriptors/PacketPlayersData/PacketPlayersData.hpp"
 #include "Network/Packets/Descriptors/PacketEnemiesData/PacketEnemiesData.hpp"
@@ -360,6 +361,7 @@ namespace rtype::systems {
 
     void Network::tcpProcess(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager) {
         network::TCPNetwork &network = network::TCPNetwork::getInstance(Config::getInstance().getNetwork().server.port);
+        //TODO: remove these useless static variables
         static bool networkStartingSended = false;
         static std::map<int, std::shared_ptr<asio::ip::tcp::socket>> playersToSayWelcome = {};
         static auto tcp = entityManager.createEntity();
@@ -464,67 +466,6 @@ namespace rtype::systems {
                 } else {
                     network.registerNetHandler(network::WELCOME, std::make_unique<WelcomeHandler>(componentManager, entityManager));
 
-
-                network.addHandler(network::PLAYER_SHOOT, [&entityManager, &componentManager]
-                    (std::unique_ptr<network::IPacket> packet,
-                    std::shared_ptr<asio::ip::tcp::socket> socket) {
-                        auto* packetPlayerShoot = dynamic_cast<network::PacketPlayerShoot*>(packet.get());
-
-#ifdef RTYPE_IS_CLIENT
-                        if (packetPlayerShoot) {
-                            spdlog::info(packetPlayerShoot->netId);
-                            for (auto &entity: entityManager.getEntities()) {
-                                auto netId = componentManager.getComponent<components::NetId>(entity);
-                                auto playerPos = componentManager.getComponent<components::Position>(entity);
-
-                                if (netId && playerPos) {
-                                    if (netId->id == packetPlayerShoot->netId) {
-                                        size_t projectileId = entityManager.createEntity();
-
-                                        components::Velocity vel = {2.0, 0.0, 0.0};
-                                        components::Position pos = {playerPos->x + 10.0f, playerPos->y, playerPos->z};
-                                        componentManager.addComponent<components::Velocity>(projectileId, vel);
-                                        componentManager.addComponent<components::Position>(projectileId, pos);
-                                        componentManager.addComponent<components::Size>(projectileId, {10.0f, 10.0f});
-                                        componentManager.addComponent<components::Hitbox>(projectileId, {pos, {10.0f, 10.0f}});
-                                        componentManager.addComponent<components::Speed>(projectileId, {250});
-                                        componentManager.addComponent<components::Damage>(projectileId, {20});
-                                        componentManager.addComponent<components::NoDamageToPlayer>(projectileId, {true});
-                                        components::Sprite projectileSprite = {
-                                            pos,
-                                            {82.0f, 18.0f},
-                                            "assets/sprites/projectile/player-shots.gif",
-                                            {1},
-                                            {1.0, 1.0},
-                                            std::make_shared<sf::Texture>(),
-                                            std::make_shared<sf::Sprite>()
-                                        };
-                                        projectileSprite.texture->loadFromFile(projectileSprite.path);
-                                        projectileSprite.sprite->setTexture(*projectileSprite.texture);
-                                        sf::IntRect textureRect(82, 165, 82, 18);
-                                        projectileSprite.sprite->setTextureRect(textureRect);
-                                        projectileSprite.sprite->setPosition({pos.x, pos.y});
-                                        components::Animation projAnim = {
-                                            "assets/sprite/projectile/player-shots.gif",
-                                                2,
-                                                10
-                                            };
-                                        componentManager.addComponent<components::Animation>(projectileId, projAnim);
-                                        componentManager.addComponent<components::Sprite>(projectileId, projectileSprite);
-                                        components::Projectile projectile = {
-                                            pos,
-                                            vel,
-                                            projAnim,
-                                            projectileSprite
-                                        };
-                                        componentManager.addComponent<components::Projectile>(projectileId, projectile);
-                                    }
-                                }
-                            }
-                        }
-#endif
-                    });
-
                     network.addHandler(network::PLAYER_COUNT, [&entityManager, &componentManager]
                     (std::unique_ptr<network::IPacket> packet,
                     std::shared_ptr<asio::ip::tcp::socket> socket) {
@@ -547,7 +488,7 @@ namespace rtype::systems {
                         }
                     });
                 }
-
+                network.registerNetHandler(network::PLAYER_SHOOT, std::make_unique<PlayerShootHandler>(componentManager, entityManager));
                 network.start();
             } catch (std::exception &e) {
                 spdlog::error("Unable to start TCP socket: {}", e.what());
