@@ -409,46 +409,6 @@ namespace rtype::systems {
                 });
 
                 if (IS_SERVER) {
-                    network.addHandler(network::PLAYER_SHOOT, [&entityManager, &componentManager, &network]
-                    (std::unique_ptr<network::IPacket> packet,
-                        std::shared_ptr<asio::ip::tcp::socket> socket) {
-                            auto* packetPlayerShoot = dynamic_cast<network::PacketPlayerShoot*>(packet.get());
-
-                            if (packetPlayerShoot) {
-                                for (auto &entity: entityManager.getEntities()) {
-                                    const auto dead = componentManager.getComponent<components::Dead>(entity);
-
-                                    if (dead)
-                                        continue;
-
-                                    auto netco = componentManager.getComponent<components::NetworkConnection>(entity);
-                                    auto netId = componentManager.getComponent<components::NetId>(entity);
-                                    auto playerPos = componentManager.getComponent<components::Position>(entity);
-
-                                    if (netco && netId) {
-                                        if (netId->id == packetPlayerShoot->netId) {
-                                            size_t projectileId = entityManager.createEntity();
-
-                                            components::Velocity vel = {2.0, 0.0, 0.0};
-                                            components::Position pos = {playerPos->x + 10.0f, playerPos->y, playerPos->z};
-                                            componentManager.addComponent<components::Velocity>(projectileId, vel);
-                                            componentManager.addComponent<components::Position>(projectileId, pos);
-                                            componentManager.addComponent<components::Size>(projectileId, {10.0f, 10.0f});
-                                            componentManager.addComponent<components::Hitbox>(projectileId, {pos, {10.0f, 10.0f}});
-                                            componentManager.addComponent<components::Speed>(projectileId, {250});
-                                            componentManager.addComponent<components::Damage>(projectileId, {20});
-                                            componentManager.addComponent<components::NoDamageToPlayer>(projectileId, {true});
-                                            network::PacketPlayerShoot newPacket(packetPlayerShoot->netId);
-                                            for (auto &p : playersToSayWelcome) {
-                                                if (socket != p.second)
-                                                    network.sendPacket(newPacket, p.second);
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                    });
-
                     network.addHandler(network::CONNECT, [&entityManager, &componentManager, &network](std::unique_ptr<network::IPacket> packet,
                                                                                                        std::shared_ptr<asio::ip::tcp::socket> socket) {
                             for (auto &entity: entityManager.getEntities()) {
