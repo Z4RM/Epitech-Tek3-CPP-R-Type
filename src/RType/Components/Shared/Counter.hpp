@@ -52,7 +52,7 @@ namespace rtype::components {
             (max), name
             (name),
             text(
-            (std::to_string(iniCount) + "/" + std::to_string(max) + " " + name),
+            (name + ": " + std::to_string(iniCount) + "/" + std::to_string(max)),
                 "./assets/fonts/Starborn.ttf", sf::Color::White, charSize, pos) {
             }
 
@@ -62,7 +62,7 @@ namespace rtype::components {
 
             void update(int newCount) {
                 count = newCount;
-                const std::string newStr = std::to_string(count) + "/" + std::to_string(max) + " " + name;
+                const std::string newStr = name + ": " + std::to_string(count) + "/" + std::to_string(max);
                 this->text.text.setString(newStr);
             }
         };

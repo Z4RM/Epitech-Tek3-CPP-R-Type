@@ -94,6 +94,8 @@ set(RTYPE_SRC
         src/RType/Systems/Network/handlers/StartGameHandler/StartGameHandler.hpp
         src/RType/Systems/Network/handlers/EnnemiesDataHandler/EnnemiesDataHandler.cpp
         src/RType/Systems/Network/handlers/EnnemiesDataHandler/EnnemiesDataHandler.hpp
+        src/RType/Systems/Network/handlers/PlayerDataHandler/PlayerDataHandler.cpp
+        src/RType/Systems/Network/handlers/PlayerDataHandler/PlayerDataHandler.hpp
 )
 
 set(CLIENT_SRC
@@ -157,6 +159,8 @@ set(CLIENT_SRC
         src/RType/Systems/AnimationProjectile.cpp
         src/RType/Systems/AnimationProjectile.hpp
         src/RType/Components/Shared/NoDamageToPlayer.hpp
+        src/RType/Systems/Network/handlers/PlayerDataHandler/PlayerDataHandler.cpp
+        src/RType/Systems/Network/handlers/PlayerDataHandler/PlayerDataHandler.hpp
 )
 
 set(RTYPE_HEADERS
