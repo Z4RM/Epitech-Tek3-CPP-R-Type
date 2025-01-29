@@ -7,6 +7,7 @@
 
 #include "Menu.hpp"
 
+#include "RType/Components/Shared/MenuState.hpp"
 #include "RType/Entities/PlayerCounter.hpp"
 
 #ifdef RTYPE_IS_CLIENT
@@ -51,9 +52,19 @@ void rtype::scenes::Menu::load() {
     this->registerEntity(backgroundImage);
     this->registerEntity(logoImage);
 
+    unsigned int menuSateEntity = _entityManager.createEntity();
+    components::MenuState state = { 0 };
+
+    _componentManager.addComponent<components::MenuState>(menuSateEntity, state);
     AScene::load();
 }
 
 #else
-void rtype::scenes::Menu::load() {}
+void rtype::scenes::Menu::load() {
+    unsigned int menuSateEntity = _entityManager.createEntity();
+    components::MenuState state = { 0 };
+
+    _componentManager.addComponent<components::MenuState>(menuSateEntity, state);
+    AScene::load();
+}
 #endif

@@ -20,7 +20,7 @@ namespace rtype::systems {
         if (packetWelcome) {
             spdlog::info("Server said welcome, network ID is: {}", packetWelcome->netId);
             ecs::SceneManager::getInstance().changeScene(1, true);
-            services::PlayerService::createPlayer(packetWelcome->netId, true, _entityManager, _componentManager);
+            services::PlayerService::createPlayer(packetWelcome->netId, _entityManager, _componentManager, true);
         }
     }
 }

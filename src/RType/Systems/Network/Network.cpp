@@ -31,6 +31,7 @@
 namespace rtype::systems {
     int Network::playerId = 0;
     std::mutex Network::playerIdMutex;
+    std::atomic<int> Network::globalNetId = 0;
 
     void Network::udpProcess(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager) {
         static network::UDPNetwork network(Config::getInstance().getNetwork().server.port);
@@ -41,8 +42,8 @@ namespace rtype::systems {
             componentManager.addComponent(udp, running);
             try {
                 addUdpHandlers(network, entityManager, componentManager);
-                    auto timer = std::make_shared<asio::steady_timer>(network.getIoContext());
-                    schedulePacketSending(entityManager, componentManager, network, timer);
+                auto timer = std::make_shared<asio::steady_timer>(network.getIoContext());
+                schedulePacketSending(entityManager, componentManager, network, timer);
                 network.start();
             } catch (std::exception &e) {
                 spdlog::error("Unable to start UDP socket: {}", e.what());
@@ -68,31 +69,45 @@ namespace rtype::systems {
         try {
             std::vector<models::PlayerData> playerDatas;
             std::vector<models::EnemyData> enemyDatas;
+            bool inGame = false;
 
-            for (const auto& entity : entityManager.getEntities()) {
-                const auto netId = componentManager.getComponent<components::NetId>(entity);
-                const auto vel = componentManager.getComponent<components::Velocity>(entity);
-                const auto pos = componentManager.getComponent<components::Position>(entity);
-                const auto size = componentManager.getComponent<components::Size>(entity);
-                const auto actualPlayer = componentManager.getComponent<components::ActualPlayer>(entity);
-                const auto health = componentManager.getComponent<components::Health>(entity);
-                const auto ai = componentManager.getComponent<components::IA>(entity);
-                const auto dead = componentManager.getComponent<components::Dead>(entity);
+            //TODO: Maybe add a service or handle state differently to avoid loop like that in different part of the code
+            for (const auto &entity: entityManager.getEntities()) {
+                const auto gameState = componentManager.getComponent<components::GameState>(entity);
 
-                if (vel && pos && size && netId && health) {
-                    models::PlayerData pdata{*pos, *vel, *size, *netId, health->value};
-                    models::EnemyData edata{*pos, *vel, *size, *netId, health->value};
+                if (gameState) {
+                    if (gameState->isStarted)
+                        inGame = true;
+                    break;
+                }
+            }
 
-                    if (actualPlayer && actualPlayer->value == true && !IS_SERVER) {
-                        if (dead)
-                            continue;
-                        playerDatas.emplace_back(pdata);
-                    }
+            if (!inGame) {
+                for (const auto& entity : entityManager.getEntities()) {
+                    const auto netId = componentManager.getComponent<components::NetId>(entity);
+                    const auto vel = componentManager.getComponent<components::Velocity>(entity);
+                    const auto pos = componentManager.getComponent<components::Position>(entity);
+                    const auto size = componentManager.getComponent<components::Size>(entity);
+                    const auto actualPlayer = componentManager.getComponent<components::ActualPlayer>(entity);
+                    const auto health = componentManager.getComponent<components::Health>(entity);
+                    const auto ai = componentManager.getComponent<components::IA>(entity);
+                    const auto dead = componentManager.getComponent<components::Dead>(entity);
 
-                    if (IS_SERVER && !ai) {
-                        playerDatas.emplace_back(pdata);
-                    } else if (IS_SERVER && ai) {
-                        enemyDatas.emplace_back(edata);
+                    if (vel && pos && size && netId && health) {
+                        models::PlayerData pdata{*pos, *vel, *size, *netId, health->value};
+                        models::EnemyData edata{*pos, *vel, *size, *netId, health->value};
+
+                        if (actualPlayer && actualPlayer->value == true && !IS_SERVER) {
+                            if (dead)
+                                continue;
+                            playerDatas.emplace_back(pdata);
+                        }
+
+                        if (IS_SERVER && !ai) {
+                            playerDatas.emplace_back(pdata);
+                        } else if (IS_SERVER && ai) {
+                            enemyDatas.emplace_back(edata);
+                        }
                     }
                 }
             }
@@ -426,11 +441,12 @@ namespace rtype::systems {
                                 network::PacketPlayerCounter playerCount(player_count.load());
                                 std::lock_guard guard(Network::playerIdMutex);
                                 Network::playerId++;
-                                playersToSayWelcome[playerId] = socket;
+                                Network::globalNetId.store(globalNetId.load() + 1);
+                                playersToSayWelcome[globalNetId.load()] = socket;
                                 for (auto &p : playersToSayWelcome) {
                                     network.sendPacket(playerCount, p.second);
                                 }
-                                spdlog::info("New player created with network ID {}", playerId);
+                                spdlog::info("New player created with network ID {}", globalNetId.load());
                             } else {
                                 //todo: send packet game already started to the client
                             }

@@ -87,6 +87,9 @@ set(RTYPE_SRC
         src/RType/Services/ProjectileService/ProjectileService.hpp
         src/RType/Systems/Network/handlers/PlayerCountHandler/PlayerCountHandler.cpp
         src/RType/Systems/Network/handlers/PlayerCountHandler/PlayerCountHandler.hpp
+        src/RType/Systems/Network/handlers/ConnectHandler/ConnectHandler.cpp
+        src/RType/Systems/Network/handlers/ConnectHandler/ConnectHandler.hpp
+        src/RType/Components/Shared/MenuState.hpp
 )
 
 set(CLIENT_SRC
