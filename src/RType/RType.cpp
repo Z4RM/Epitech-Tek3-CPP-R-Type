@@ -89,26 +89,20 @@ int rtype::RType::run() {
     std::shared_ptr<scenes::Game> game = std::make_shared<scenes::Game>(entityManager, componentManager);
     sceneManager.registerScene(1, std::move(game));
 
+    //TODO: put this component in the game scene instead of here
     entities::Game gameSate(componentManager, entityManager);
 
 
     while (true) {
-        int runningStoppedCount = 0;
-
         for (auto &entity: entityManager.getEntities()) {
             if (entity == rtype)
                 continue;
             auto run = componentManager.getComponent<components::Running>(entity);
             if (run && !run->running) {
-                runningStoppedCount += 1;
+                spdlog::debug("Program stopped");
+                return 0;
             }
-        }
-
-        if (runningStoppedCount > 0) {
-            spdlog::debug("Program stopped");
-            break;
         }
         sceneManager.updateCurrentScene(systemManager);
     }
-    return 0;
 }

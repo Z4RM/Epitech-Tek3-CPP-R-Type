@@ -7,6 +7,8 @@
 
 #include "Menu.hpp"
 
+#include "Network/Packets/Descriptors/PacketStartGame/PacketStartGame.hpp"
+#include "Network/TCPNetwork/TCPNetwork.hpp"
 #include "RType/Components/Shared/MenuState.hpp"
 #include "RType/Entities/PlayerCounter.hpp"
 
@@ -34,17 +36,22 @@ void rtype::scenes::Menu::load() {
 
     components::OnClick onClick;
     onClick.fn = [this]() {
+        network::TCPNetwork &network = network::TCPNetwork::getInstance();
+
         for (auto &entity: _entityManager.getEntities()) {
             auto gameState = _componentManager.getComponent<components::GameState>(entity);
             if (gameState) {
                 gameState->isStarted = true;
                 _componentManager.addComponent<components::GameState>(entity, *gameState);
+                if (network.getStarted())
+                    network.sendPacket(network::PacketStartGame());
+                break;
             }
         }
     };
+
     components::SfText startButtonText("START", "./assets/fonts/Starborn.ttf", sf::Color::White, 50, {300, 300});
     entities::Button startButton(_componentManager, _entityManager, onClick, startButtonText);
-
     entities::PlayerCounter playerCounter(_componentManager, _entityManager, {250, 400});
 
     this->registerEntity(playerCounter);

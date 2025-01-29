@@ -14,7 +14,9 @@
 #include <SFML/Graphics/Text.hpp>
 #endif
 
+//TODO: maybe delete this and make this component only a client component or use this in server instead of the MenuState variable ?
 #ifndef RTYPE_IS_CLIENT
+
     namespace rtype::components {
         struct Counter {
             std::shared_ptr<std::atomic<int>> count = 0;

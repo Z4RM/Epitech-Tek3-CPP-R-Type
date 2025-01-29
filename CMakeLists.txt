@@ -92,6 +92,8 @@ set(RTYPE_SRC
         src/RType/Components/Shared/MenuState.hpp
         src/RType/Systems/Network/handlers/StartGameHandler/StartGameHandler.cpp
         src/RType/Systems/Network/handlers/StartGameHandler/StartGameHandler.hpp
+        src/RType/Systems/Network/handlers/EnnemiesDataHandler/EnnemiesDataHandler.cpp
+        src/RType/Systems/Network/handlers/EnnemiesDataHandler/EnnemiesDataHandler.hpp
 )
 
 set(CLIENT_SRC

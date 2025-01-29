@@ -35,6 +35,7 @@ namespace rtype::systems {
     std::mutex Network::playerIdMutex;
     std::atomic<int> Network::globalNetId = 0;
 
+    //TODO: check why this udp running entity is needed for closing correctly the client when the window close
     void Network::udpProcess(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager) {
         static network::UDPNetwork network(Config::getInstance().getNetwork().server.port);
         static auto udp = entityManager.createEntity();
@@ -113,37 +114,24 @@ namespace rtype::systems {
                     }
                 }
             }
+            network::PacketPlayersData packetPlayersData(playerDatas);
+            network::PacketEnemiesData packetEnemyDatas(enemyDatas);
 
-            if (!playerDatas.empty()) {
-                network::PacketPlayersData packetPlayersData(playerDatas);
-
-                if (!IS_SERVER) {
+            if (!IS_SERVER) {
+                if (!playerDatas.empty())
                     network.sendPacket(packetPlayersData, network.getServerEndpoint());
-                }
-                else {
-                    for (const auto &entity : entityManager.getEntities()) {
-                        const auto net = componentManager.getComponent<components::NetworkConnection>(entity);
-                        if (net) {
-                            if (net->endpoint.has_value()) {
-                                network.sendPacket(packetPlayersData, net->endpoint.value());
-                            }
-                        }
-                    }
-                }
             }
-
-            if (!enemyDatas.empty() && IS_SERVER) {
-                network::PacketEnemiesData packetEnemyDatas(enemyDatas);
+            else {
                 for (const auto &entity : entityManager.getEntities()) {
                     const auto net = componentManager.getComponent<components::NetworkConnection>(entity);
-                    if (net) {
-                        if (net->endpoint.has_value()) {
+                    if (net && net->endpoint.has_value()) {
+                        if (!playerDatas.empty())
+                            network.sendPacket(packetPlayersData, net->endpoint.value());
+                        if (!enemyDatas.empty())
                             network.sendPacket(packetEnemyDatas, net->endpoint.value());
                         }
                     }
                 }
-            }
-
             timer->expires_after(std::chrono::milliseconds(16));
             timer->async_wait([&entityManager, &componentManager, &network, timer](const asio::error_code& ec) {
                 if (!ec) {
@@ -288,90 +276,6 @@ namespace rtype::systems {
 
             network.addHandler(network::ENEMIES_DATA, [&network, &entityManager, &componentManager](std::unique_ptr<network::IPacket>
                 packet, asio::ip::udp::endpoint endpoint) {
-                    auto* enemiesData = dynamic_cast<network::PacketEnemiesData*>(packet.get());
-
-                    if (enemiesData) {
-                        for (const models::EnemyData &data: enemiesData->datas) {
-                            bool created = false;
-
-                            for (const auto &entity : entityManager.getEntities()) {
-                                auto net = componentManager.getComponent<components::NetId>(entity);
-                                auto ai = componentManager.getComponent<components::IA>(entity);
-
-                                if (net && ai) {
-                                    int netId = net->id;
-
-                                    if (data.netId.id == netId) {
-                                        created = true;
-                                        const auto localPos = componentManager.getComponent<components::Position>(entity);
-                                        const auto vel = componentManager.getComponent<components::Velocity>(entity);
-                                        const auto health = componentManager.getComponent<components::Health>(entity);
-
-                                        if (health) {
-                                            if (data.health != health->value) {
-                                                health->value = data.health;
-                                                health->takeDamage(0);
-                                                componentManager.addComponent<components::Health>(entity, *health);
-                                            }
-                                        }
-
-                                        if (localPos) {
-                                            float distance = std::sqrt(
-                                            std::pow(data.pos.x - localPos->x, 2) +
-                                            std::pow(data.pos.y - localPos->y, 2) +
-                                            std::pow(data.pos.z - localPos->z, 2)
-                                            );
-                                            const float positionThreshold = 0.1f;
-                                            if (distance > positionThreshold) {
-                                                *localPos = data.pos;
-                                                componentManager.addComponent<components::Position>(entity, *localPos);
-                                            }
-                                        }
-                                        *vel = data.vel;
-                                        componentManager.addComponent<components::Velocity>(entity, *vel);
-                                        break;
-                                    }
-                                }
-                            }
-
-                            if (!created) {
-                            spdlog::debug("Creating new enemy in the game");
-                            #ifndef RTYPE_IS_SERVER
-                                components::Sprite sprite3 = {{600, 100, 0}, {33, 36}, "assets/sprites/enemy.gif", {1}};
-                                rtype::entities::Enemy enemy(
-                                    entityManager,
-                                    componentManager,
-                                    {600, 100, 0},
-                                    {0, 0, 0},
-                                    {64, 64},
-                                    sprite3,
-                                    {"", 0, 0},
-                                    data.netId
-                                );
-                            #endif
-                                continue;
-                            }
-                        }
-                        for (const auto entity : entityManager.getEntities()) {
-                            auto net = componentManager.getComponent<components::NetId>(entity);
-                            auto ai = componentManager.getComponent<components::IA>(entity);
-
-                            bool isDead = true;
-
-                            if (net && net->id != 0 && ai) {
-                                for (const models::EnemyData &data : enemiesData->datas) {
-                                    if (data.netId.id == net->id)
-                                        isDead = false;
-                                }
-                                if (isDead) {
-                                    spdlog::debug("Destroying disconnected enemy");
-                                    entityManager.destroyEntity(entity, componentManager);
-                                }
-                            }
-                        }
-                    } else {
-                        spdlog::error("Invalid player data packet received");
-                    }
             });
         }
     }
@@ -379,51 +283,45 @@ namespace rtype::systems {
 
     void Network::tcpProcess(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager) {
         network::TCPNetwork &network = network::TCPNetwork::getInstance(Config::getInstance().getNetwork().server.port);
-        //TODO: remove these useless static variables
-        static bool networkStartingSended = false;
-        static std::map<int, std::shared_ptr<asio::ip::tcp::socket>> playersToSayWelcome = {};
-        static auto tcp = entityManager.createEntity();
-        static std::atomic<int> player_count = 0;
-
-        //TODO: because of now we use a singleton for the network, do it directly when clicking the button to avoid this useless loop
-        if (!IS_SERVER && network.getStarted() && !networkStartingSended) {
-            for (auto &entity : entityManager.getEntities()) {
-                auto gameSate = componentManager.getComponent<components::GameState>(entity);
-                if (gameSate && gameSate->isStarted) {
-                    networkStartingSended = true;
-                    network::PacketStartGame packet;
-                    network.sendPacket(packet);
-                }
-            }
-        }
 
         if (!network.getStarted()) {
 
-            components::Running running = { true };
-            componentManager.addComponent(tcp, running);
             try {
-                //TODO: refactor with the new menuState component
                 network.registerOnPlayerDisconnect([&entityManager, &componentManager, &network](std::shared_ptr<asio::ip::tcp::socket> socket) {
                     if (IS_SERVER) {
+                        int newCount = 0;
+                        bool stateUpdated = false;
+                        bool playerDestroyed = false;
+
                         for (auto &entity: entityManager.getEntities()) {
                             auto netCo = componentManager.getComponent<components::NetworkConnection>(entity);
+                            auto menuState = componentManager.getComponent<components::MenuState>(entity);
+
+                            if (menuState) {
+                                menuState->playerCount -= 1;
+                                newCount = menuState->playerCount;
+                                componentManager.addComponent<components::MenuState>(entity, *menuState);
+                                stateUpdated = true;
+                                if (playerDestroyed)
+                                    break;
+                            }
+
                             if (netCo && netCo->socket == socket) {
                                 entityManager.destroyEntity(entity, componentManager);
+                                playerDestroyed = true;
                                 spdlog::info("Player destroyed");
-                                break;
+                                if (stateUpdated)
+                                    break;
                             }
                         }
-                        for (auto it = playersToSayWelcome.begin(); it != playersToSayWelcome.end(); ) {
-                            if (it->second == socket) {
-                                player_count.store(player_count.load() - 1);
-                                it = playersToSayWelcome.erase(it);
-                            } else {
-                                ++it;
+
+                        network::PacketPlayerCounter packetPCount(newCount);
+                        for (auto &entity : entityManager.getEntities()) {
+                            auto netCo = componentManager.getComponent<components::NetworkConnection>(entity);
+
+                            if (netCo) {
+                                network.sendPacket(packetPCount, netCo->socket);
                             }
-                        }
-                        network::PacketPlayerCounter packetPCount(player_count.load());
-                        for (auto &p : playersToSayWelcome) {
-                            network.sendPacket(packetPCount, p.second);
                         }
                     } else {
                         spdlog::info("Server has closed the connection");
@@ -442,6 +340,7 @@ namespace rtype::systems {
             } catch (std::exception &e) {
                 spdlog::error("Unable to start TCP socket: {}", e.what());
             }
+
         } else {
             for (auto &entity : entityManager.getEntities()) {
                 auto stop = componentManager.getComponent<components::Running>(entity);
@@ -449,10 +348,6 @@ namespace rtype::systems {
                 if (stop && !network.getStop()) {
                     if (!stop->running) {
                         network.setStop(true);
-                        auto r = componentManager.getComponent<components::Running>(tcp);
-                        r->running = false;
-
-                        componentManager.addComponent<components::Running>(tcp, *r);
                     }
                 }
             }
