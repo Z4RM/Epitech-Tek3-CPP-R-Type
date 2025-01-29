@@ -7,10 +7,12 @@
 
 #pragma once
 
+#include <map>
 #include <optional>
 #include <ThreadPool/ThreadPool.hpp>
 #include "asio.hpp"
 #include "Packets.hpp"
+#include "RType/Systems/Network/handlers/INetworkHandler.hpp"
 
 #define BUFFER_SIZE 1024
 
@@ -56,6 +58,11 @@ namespace rtype::network {
         void setStop(bool state);
         bool getStop();
 
+        inline void registerNetHandler(EPacketCode code, std::unique_ptr<systems::INetworkHandler> handler) {
+            this->_netHandlers[code] = std::move(handler);
+        };
+
+
     private:
         unsigned short _port; ///< port of the server
         asio::io_context _ioContext; ///< asio context
@@ -66,6 +73,8 @@ namespace rtype::network {
         bool _started = false;
         std::vector<std::pair<EPacketCode, std::function<void(std::unique_ptr<IPacket>, asio::ip::udp::endpoint)>>>
         _handlers;
+        std::map<EPacketCode, std::unique_ptr<systems::INetworkHandler>> _netHandlers {};
+
         std::mutex _stopMutex;
         bool _stop = false;
     };
