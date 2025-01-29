@@ -14,7 +14,7 @@
 #include "RType/Entities/Enemy.hpp"
 
 namespace rtype::systems {
-    void EnnemiesDataHandler::handle(std::unique_ptr<network::IPacket> packet, std::shared_ptr<asio::ip::tcp::socket> socket) {
+    void EnnemiesDataHandler::handle(std::unique_ptr<network::IPacket> packet, asio::ip::udp::endpoint endpoint) {
         auto* enemiesData = dynamic_cast<network::PacketEnemiesData*>(packet.get());
 
         if (enemiesData) {

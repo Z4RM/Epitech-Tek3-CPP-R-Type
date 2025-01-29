@@ -134,4 +134,9 @@ namespace rtype::network {
         return this->_stop;
     }
 
+    UDPNetwork &UDPNetwork::getInstance(unsigned short port) {
+        static UDPNetwork instance(port);
+
+        return instance;
+    }
 }

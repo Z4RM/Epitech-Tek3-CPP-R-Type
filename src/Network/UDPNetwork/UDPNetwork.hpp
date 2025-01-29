@@ -62,6 +62,8 @@ namespace rtype::network {
             this->_netHandlers[code] = std::move(handler);
         };
 
+        static UDPNetwork &getInstance(unsigned short port = 0);
+
 
     private:
         unsigned short _port; ///< port of the server

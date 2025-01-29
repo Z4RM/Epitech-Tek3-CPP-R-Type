@@ -20,6 +20,7 @@
 #include "handlers/ConnectHandler/ConnectHandler.hpp"
 #include "handlers/EnnemiesDataHandler/EnnemiesDataHandler.hpp"
 #include "handlers/PlayerCountHandler/PlayerCountHandler.hpp"
+#include "handlers/PlayerDataHandler/PlayerDataHandler.hpp"
 #include "handlers/PlayerShootHandler/PlayerShootHandler.hpp"
 #include "handlers/StartGameHandler/StartGameHandler.hpp"
 #include "handlers/WelcomeHandler/WelcomeHandler.hpp"
@@ -38,14 +39,17 @@ namespace rtype::systems {
 
     //TODO: check why this udp running entity is needed for closing correctly the client when the window close
     void Network::udpProcess(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager) {
-        static network::UDPNetwork network(Config::getInstance().getNetwork().server.port);
+        network::UDPNetwork &network = network::UDPNetwork::getInstance(Config::getInstance().getNetwork().server.port);
         static auto udp = entityManager.createEntity();
 
         if (!network.getStarted()) {
             components::Running running = { true };
             componentManager.addComponent(udp, running);
             try {
-                addUdpHandlers(network, entityManager, componentManager);
+                if (!IS_SERVER) {
+                    network.registerNetHandler(network::ENEMIES_DATA, std::make_unique<EnnemiesDataHandler>(componentManager, entityManager));
+                }
+                network.registerNetHandler(network::PLAYERS_DATA, std::make_unique<PlayerDataHandler>(componentManager, entityManager));
                 auto timer = std::make_shared<asio::steady_timer>(network.getIoContext());
                 schedulePacketSending(entityManager, componentManager, network, timer);
                 network.start();
@@ -143,142 +147,6 @@ namespace rtype::systems {
             spdlog::error("Unable to send packet: {}", e.what());
         }
     }
-
-    void Network::addUdpHandlers(network::UDPNetwork &network, ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager) {
-        if (IS_SERVER) {
-            network.addHandler(network::PLAYERS_DATA, [&network, &entityManager, &componentManager](std::unique_ptr<network::IPacket>
-            packet, asio::ip::udp::endpoint endpoint) {
-                auto* playersData = dynamic_cast<network::PacketPlayersData*>(packet.get());
-
-                /** UPDATING THE GAME **/
-                if (playersData) {
-                    for (models::PlayerData &data : playersData->datas) {
-                        for (const auto &entity : entityManager.getEntities()) {
-                            auto netCo = componentManager.getComponent<components::NetworkConnection>(entity);
-                            auto pos = componentManager.getComponent<components::Position>(entity);
-                            auto vel = componentManager.getComponent<components::Velocity>(entity);
-                            auto size = componentManager.getComponent<components::Size>(entity);
-                            auto net = componentManager.getComponent<components::NetId>(entity);
-
-                            if (pos && vel && size && net && netCo) {
-                                if (!netCo->endpoint.has_value() && net->id == data.netId.id) {
-                                    spdlog::info("New player in the game with network ID {}", net->id);
-                                    componentManager.addComponent<components::NetworkConnection>(entity, {netCo->socket, endpoint});
-                                }
-                                if (netCo->endpoint.has_value() && netCo->endpoint == endpoint) {
-                                    //*pos = data.pos;
-                                    *vel = data.vel;
-                                    *size = data.size;
-                                    componentManager.addComponent<components::Velocity>(entity, *vel);
-                                    componentManager.addComponent<components::Size>(entity, *size);
-                                }
-                            }
-                        }
-                    }
-                }
-                else {
-                    spdlog::error("Invalid player data packet received");
-                }
-            });
-
-        } else {
-            network.addHandler(network::PLAYERS_DATA, [&network, &entityManager, &componentManager](std::unique_ptr<network::IPacket>
-                packet, asio::ip::udp::endpoint endpoint) {
-                    auto* playersData = dynamic_cast<network::PacketPlayersData*>(packet.get());
-
-                    if (playersData) {
-                        for (const models::PlayerData &data: playersData->datas) {
-                            bool created = false;
-
-                            for (const auto &entity : entityManager.getEntities()) {
-                                auto net = componentManager.getComponent<components::NetId>(entity);
-                                auto actualPlayer = componentManager.getComponent<components::ActualPlayer>(entity);
-
-                                if (net && actualPlayer) {
-                                    int netId = net->id;
-
-                                    if (data.netId.id == netId) {
-                                        created = true;
-                                        const auto localPos = componentManager.getComponent<components::Position>(entity);
-                                        const auto vel = componentManager.getComponent<components::Velocity>(entity);
-                                        const auto health = componentManager.getComponent<components::Health>(entity);
-
-                                        if (health) {
-                                            if (data.health != health->value) {
-                                                health->setHealth(data.health);
-                                                health->_elapsedDamage = std::chrono::steady_clock::now();
-                                                if (data.health <= 0)
-                                                    componentManager.addComponent<components::Dead>(entity, { true });
-                                                componentManager.addComponent<components::Health>(entity, *health);
-                                            }
-                                        }
-
-                                        if (localPos) {
-                                            float distance = std::sqrt(
-                                            std::pow(data.pos.x - localPos->x, 2) +
-                                            std::pow(data.pos.y - localPos->y, 2) +
-                                            std::pow(data.pos.z - localPos->z, 2)
-                                            );
-                                            const float positionThreshold = 0.1f;
-                                            if (distance > positionThreshold) {
-                                                *localPos = data.pos;
-                                                componentManager.addComponent<components::Position>(entity, *localPos);
-                                            }
-                                        }
-
-                                        if (!actualPlayer->value) {
-                                            *vel = data.vel;
-                                            componentManager.addComponent<components::Velocity>(entity, *vel);
-                                        }
-                                        break;
-                                    }
-                                }
-                            }
-
-                            if (!created) {
-                            spdlog::debug("Creating new player in the game");
-                            #ifndef RTYPE_IS_SERVER
-                                components::Sprite sprite2 = {{100, 100, 0}, {33, 17}, "assets/sprites/players.gif", {0}};
-                                entities::Player player2(
-                                        entityManager,
-                                        componentManager,
-                                        {0, 200, 0},
-                                        {0, 0, 0},
-                                        {64, 64},
-                                        sprite2,
-                                        {"", 0, 0},
-                                        data.netId
-                                );
-                            #endif
-                            }
-                        }
-                        for (const auto entity : entityManager.getEntities()) {
-                            auto net = componentManager.getComponent<components::NetId>(entity);
-                            auto actualPlayer = componentManager.getComponent<components::ActualPlayer>(entity);
-                            bool isDead = true;
-
-                            if (net && actualPlayer) {
-                                for (const models::PlayerData &data : playersData->datas) {
-                                    if (data.netId.id == net->id) {
-                                        isDead = false;
-                                    }
-                                }
-                                if (isDead) {
-                                    spdlog::debug("Destroying disconnected player");
-                                    entityManager.destroyEntity(entity, componentManager);
-                                }
-                            }
-                        }
-                    } else {
-                        spdlog::error("Invalid player data packet received");
-                    }
-            });
-
-            network.registerNetHandler(network::ENEMIES_DATA, std::make_unique<EnnemiesDataHandler>(componentManager, entityManager));
-
-        }
-    }
-
 
     void Network::tcpProcess(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager) {
         network::TCPNetwork &network = network::TCPNetwork::getInstance(Config::getInstance().getNetwork().server.port);

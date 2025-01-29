@@ -20,6 +20,13 @@ namespace rtype::systems {
         if (packetWelcome) {
             spdlog::info("Server said welcome, network ID is: {}", packetWelcome->netId);
             ecs::SceneManager::getInstance().changeScene(1, true);
+            for (auto &entity : _entityManager.getEntities()) {
+                auto gameState = _componentManager.getComponent<components::GameState>(entity);
+                if (gameState) {
+                    gameState->isStarted = true;
+                    _componentManager.addComponent<components::GameState>(entity, *gameState);
+                }
+            }
             services::PlayerService::createPlayer(packetWelcome->netId, _entityManager, _componentManager, true);
         }
     }

@@ -13,6 +13,6 @@ namespace rtype::systems {
     public:
         EnnemiesDataHandler(ecs::ComponentManager &componentManager, ecs::EntityManager &entityManager) : ANetworkHandler(componentManager,
         entityManager) {};
-        void handle(std::unique_ptr<network::IPacket> packet, std::shared_ptr<asio::ip::tcp::socket> socket) override;
+        void handle(std::unique_ptr<network::IPacket> packet, asio::ip::udp::endpoint endpoint) override;
     };
 }
