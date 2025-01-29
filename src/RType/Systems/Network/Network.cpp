@@ -82,7 +82,7 @@ namespace rtype::systems {
                 }
             }
 
-            if (!inGame) {
+            if (inGame) {
                 for (const auto& entity : entityManager.getEntities()) {
                     const auto netId = componentManager.getComponent<components::NetId>(entity);
                     const auto vel = componentManager.getComponent<components::Velocity>(entity);
