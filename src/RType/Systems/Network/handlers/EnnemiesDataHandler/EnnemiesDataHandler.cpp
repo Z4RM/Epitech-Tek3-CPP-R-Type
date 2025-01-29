@@ -11,6 +11,8 @@
 #include <cmath>
 #include <spdlog/spdlog.h>
 
+#include "RType/Entities/Enemy.hpp"
+
 namespace rtype::systems {
     void EnnemiesDataHandler::handle(std::unique_ptr<network::IPacket> packet, std::shared_ptr<asio::ip::tcp::socket> socket) {
         auto* enemiesData = dynamic_cast<network::PacketEnemiesData*>(packet.get());
@@ -64,8 +66,8 @@ namespace rtype::systems {
                     #ifndef RTYPE_IS_SERVER
                                     components::Sprite sprite3 = {{600, 100, 0}, {33, 36}, "assets/sprites/enemy.gif", {1}};
                                     rtype::entities::Enemy enemy(
-                                        entityManager,
-                                        componentManager,
+                                        _entityManager,
+                                        _componentManager,
                                         {600, 100, 0},
                                         {0, 0, 0},
                                         {64, 64},

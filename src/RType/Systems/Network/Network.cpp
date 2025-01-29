@@ -18,6 +18,7 @@
 #include "RType/Config/Config.hpp"
 #include "Components.hpp"
 #include "handlers/ConnectHandler/ConnectHandler.hpp"
+#include "handlers/EnnemiesDataHandler/EnnemiesDataHandler.hpp"
 #include "handlers/PlayerCountHandler/PlayerCountHandler.hpp"
 #include "handlers/PlayerShootHandler/PlayerShootHandler.hpp"
 #include "handlers/StartGameHandler/StartGameHandler.hpp"
@@ -273,10 +274,8 @@ namespace rtype::systems {
                     }
             });
 
+            network.registerNetHandler(network::ENEMIES_DATA, std::make_unique<EnnemiesDataHandler>(componentManager, entityManager));
 
-            network.addHandler(network::ENEMIES_DATA, [&network, &entityManager, &componentManager](std::unique_ptr<network::IPacket>
-                packet, asio::ip::udp::endpoint endpoint) {
-            });
         }
     }
 
