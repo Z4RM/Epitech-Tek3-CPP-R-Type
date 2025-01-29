@@ -95,10 +95,10 @@ int rtype::RType::run() {
 
     while (true) {
         for (auto &entity: entityManager.getEntities()) {
-            if (entity == rtype)
-                continue;
             auto run = componentManager.getComponent<components::Running>(entity);
             if (run && !run->running) {
+                network::TCPNetwork::getInstance().setStop(true);
+                network::UDPNetwork::getInstance().setStop(true);
                 spdlog::debug("Program stopped");
                 return 0;
             }

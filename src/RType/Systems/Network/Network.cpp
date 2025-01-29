@@ -27,9 +27,6 @@
 #include "Network/Packets/Descriptors/PacketPlayersData/PacketPlayersData.hpp"
 #include "Network/Packets/Descriptors/PacketEnemiesData/PacketEnemiesData.hpp"
 #include "Network/Packets/Descriptors/PacketPlayerCounter/PacketPlayerCounter.hpp"
-#include "Network/Packets/Descriptors/PacketStartGame/PacketStartGame.hpp"
-#include "RType/Components/Shared/Counter.hpp"
-#include "RType/Entities/Enemy.hpp"
 #include "RType/Entities/Player.hpp"
 
 namespace rtype::systems {
@@ -40,11 +37,8 @@ namespace rtype::systems {
     //TODO: check why this udp running entity is needed for closing correctly the client when the window close
     void Network::udpProcess(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager) {
         network::UDPNetwork &network = network::UDPNetwork::getInstance(Config::getInstance().getNetwork().server.port);
-        static auto udp = entityManager.createEntity();
 
         if (!network.getStarted()) {
-            components::Running running = { true };
-            componentManager.addComponent(udp, running);
             try {
                 if (!IS_SERVER) {
                     network.registerNetHandler(network::ENEMIES_DATA, std::make_unique<EnnemiesDataHandler>(componentManager, entityManager));
@@ -55,19 +49,6 @@ namespace rtype::systems {
                 network.start();
             } catch (std::exception &e) {
                 spdlog::error("Unable to start UDP socket: {}", e.what());
-            }
-        } else {
-            for (auto &entity : entityManager.getEntities()) {
-                auto stop = componentManager.getComponent<components::Running>(entity);
-
-                if (stop && !network.getStop()) {
-                    if (!stop->running) {
-                        network.setStop(true);
-                        auto r = componentManager.getComponent<components::Running>(udp);
-                        r->running = false;
-                        componentManager.addComponent<components::Running>(udp, *r);
-                    }
-                }
             }
         }
     }
@@ -206,17 +187,6 @@ namespace rtype::systems {
                 network.start();
             } catch (std::exception &e) {
                 spdlog::error("Unable to start TCP socket: {}", e.what());
-            }
-
-        } else {
-            for (auto &entity : entityManager.getEntities()) {
-                auto stop = componentManager.getComponent<components::Running>(entity);
-
-                if (stop && !network.getStop()) {
-                    if (!stop->running) {
-                        network.setStop(true);
-                    }
-                }
             }
         }
     }
