@@ -17,8 +17,10 @@
 
 #include "RType/Config/Config.hpp"
 #include "Components.hpp"
+#include "handlers/ConnectHandler/ConnectHandler.hpp"
 #include "handlers/PlayerCountHandler/PlayerCountHandler.hpp"
 #include "handlers/PlayerShootHandler/PlayerShootHandler.hpp"
+#include "handlers/StartGameHandler/StartGameHandler.hpp"
 #include "handlers/WelcomeHandler/WelcomeHandler.hpp"
 #include "Network/Packets/Descriptors/PacketPlayersData/PacketPlayersData.hpp"
 #include "Network/Packets/Descriptors/PacketEnemiesData/PacketEnemiesData.hpp"
@@ -383,6 +385,7 @@ namespace rtype::systems {
         static auto tcp = entityManager.createEntity();
         static std::atomic<int> player_count = 0;
 
+        //TODO: because of now we use a singleton for the network, do it directly when clicking the button to avoid this useless loop
         if (!IS_SERVER && network.getStarted() && !networkStartingSended) {
             for (auto &entity : entityManager.getEntities()) {
                 auto gameSate = componentManager.getComponent<components::GameState>(entity);
@@ -399,6 +402,7 @@ namespace rtype::systems {
             components::Running running = { true };
             componentManager.addComponent(tcp, running);
             try {
+                //TODO: refactor with the new menuState component
                 network.registerOnPlayerDisconnect([&entityManager, &componentManager, &network](std::shared_ptr<asio::ip::tcp::socket> socket) {
                     if (IS_SERVER) {
                         for (auto &entity: entityManager.getEntities()) {
@@ -427,59 +431,8 @@ namespace rtype::systems {
                 });
 
                 if (IS_SERVER) {
-                    network.addHandler(network::CONNECT, [&entityManager, &componentManager, &network](std::unique_ptr<network::IPacket> packet,
-                                                                                                       std::shared_ptr<asio::ip::tcp::socket> socket) {
-                            for (auto &entity: entityManager.getEntities()) {
-                                auto gameState = componentManager.getComponent<components::GameState>(entity);
-                                if (gameState && gameState->isStarted) {
-                                    spdlog::warn("New player joined the game, but it's already started");
-                                    return;
-                                }
-                            }
-                            if (player_count.load() < 4) {
-                                player_count.store(player_count.load() + 1);
-                                network::PacketPlayerCounter playerCount(player_count.load());
-                                std::lock_guard guard(Network::playerIdMutex);
-                                Network::playerId++;
-                                Network::globalNetId.store(globalNetId.load() + 1);
-                                playersToSayWelcome[globalNetId.load()] = socket;
-                                for (auto &p : playersToSayWelcome) {
-                                    network.sendPacket(playerCount, p.second);
-                                }
-                                spdlog::info("New player created with network ID {}", globalNetId.load());
-                            } else {
-                                //todo: send packet game already started to the client
-                            }
-                    });
-
-                    network.addHandler(network::START_GAME, [&entityManager, &componentManager, &network]
-                    (std::unique_ptr<network::IPacket> packet, std::shared_ptr<asio::ip::tcp::socket> socket) {
-                        for (auto &entity: entityManager.getEntities()) {
-                            auto gameState = componentManager.getComponent<components::GameState>(entity);
-                            if (gameState) {
-                                if (gameState->isStarted)
-                                    return;
-                                gameState->isStarted = true;
-                                componentManager.addComponent<components::GameState>(entity, *gameState);
-                            }
-                        }
-
-                        for (auto &player : playersToSayWelcome) {
-                            #ifndef RTYPE_IS_CLIENT
-                            rtype::entities::Player playerShip(
-                            entityManager,
-                            componentManager,
-                            {0, 0, 0},
-                            {0, 0, 0},
-                            {64, 64},
-                            {player.second},
-                            { player.first }, {PLAYER_SPEED});
-
-                            network::PacketWelcome welcome(player.first);
-                            network.sendPacket(welcome, player.second);
-                            #endif
-                        }
-                    });
+                    network.registerNetHandler(network::CONNECT, std::make_unique<ConnectHandler>(componentManager, entityManager));
+                    network.registerNetHandler(network::START_GAME, std::make_unique<StartGameHandler>(componentManager, entityManager));
                 } else {
                     network.registerNetHandler(network::WELCOME, std::make_unique<WelcomeHandler>(componentManager, entityManager));
                     network.registerNetHandler(network::PLAYER_COUNT, std::make_unique<PlayerCountHandler>(componentManager, entityManager));

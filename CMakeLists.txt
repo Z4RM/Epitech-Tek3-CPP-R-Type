@@ -90,6 +90,8 @@ set(RTYPE_SRC
         src/RType/Systems/Network/handlers/ConnectHandler/ConnectHandler.cpp
         src/RType/Systems/Network/handlers/ConnectHandler/ConnectHandler.hpp
         src/RType/Components/Shared/MenuState.hpp
+        src/RType/Systems/Network/handlers/StartGameHandler/StartGameHandler.cpp
+        src/RType/Systems/Network/handlers/StartGameHandler/StartGameHandler.hpp
 )
 
 set(CLIENT_SRC
