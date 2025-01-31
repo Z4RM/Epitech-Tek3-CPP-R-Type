@@ -10,12 +10,13 @@
 #include "RType/Entities/Enemy.hpp"
 #include "MonsterSpawner.hpp"
 
+#include "Network/Network.hpp"
+
 namespace rtype::systems {
     std::chrono::steady_clock::time_point MonsterSpawner::_lastSpawnTime = std::chrono::steady_clock::now();
 
     void MonsterSpawner::spawnMonster(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager) {
         if (IS_SERVER) {
-            static int monsterId = 10;
             auto now = std::chrono::steady_clock::now();
             std::chrono::duration<double> elapsed = now - _lastSpawnTime;
 
@@ -29,7 +30,7 @@ namespace rtype::systems {
                 }
             }
 
-            if (elapsed.count() >= 4.0 || monsterId == 0) {
+            if (elapsed.count() >= 4.0) {
                 std::random_device rd;
                 std::mt19937 gen(rd());
                 std::uniform_int_distribution<> dis(1, 4);
@@ -37,7 +38,7 @@ namespace rtype::systems {
                 int numberOfMonsters = dis(gen);
 
                 for (int i = 0; i < numberOfMonsters; ++i) {
-                    monsterId++;
+                    Network::globalNetId.store(Network::globalNetId.load() + 1);
                     std::uniform_int_distribution<> pos(5, 600);
                     float y = pos(gen);
 
@@ -47,7 +48,7 @@ namespace rtype::systems {
                             {700, y, 0},
                             {0, 0, 0},
                             {64, 64},
-                            {monsterId}
+                            {Network::globalNetId.load()}
                     );
                 }
 

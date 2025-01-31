@@ -32,12 +32,9 @@ namespace rtype::systems {
         if (newState.playerCount < 4) {
             newState.playerCount += 1;
             network::PacketPlayerCounter packetCount(newState.playerCount);
-            std::lock_guard guard(Network::playerIdMutex);
-            Network::playerId++; //TODO: remove this old thing when refactoring finished
-            Network::globalNetId.store(Network::globalNetId.load() + 1);
 
 #ifdef RTYPE_IS_SERVER
-            services::PlayerService::createPlayer(Network::globalNetId.load(), _entityManager, _componentManager, socket);
+            services::PlayerService::createPlayer(_entityManager, _componentManager, socket);
 #endif
 
             for (auto &entity : _entityManager.getEntities()) {

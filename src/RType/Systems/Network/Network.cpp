@@ -30,8 +30,6 @@
 #include "RType/Entities/Player.hpp"
 
 namespace rtype::systems {
-    int Network::playerId = 0;
-    std::mutex Network::playerIdMutex;
     std::atomic<int> Network::globalNetId = 0;
 
     //TODO: check why this udp running entity is needed for closing correctly the client when the window close

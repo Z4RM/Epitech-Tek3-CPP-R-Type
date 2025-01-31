@@ -9,6 +9,8 @@
 #include "PlayerService.hpp"
 
 #include <utility>
+
+#include "RType/Systems/Network/Network.hpp"
 #include "spdlog/spdlog.h"
 
 namespace rtype::services {
@@ -21,6 +23,7 @@ namespace rtype::services {
             bool actualPlayer
     ) {
         components::Sprite sprite2 = {{100, 100, 0}, {33, 17}, "assets/sprites/players.gif", {0}};
+
         entities::Player player2(
                 entityManager,
                 componentManager,
@@ -37,11 +40,11 @@ namespace rtype::services {
 #else
 
     void PlayerService::createPlayer(
-            int netId,
             ecs::EntityManager &entityManager,
             ecs::ComponentManager &componentManager,
             std::shared_ptr<asio::ip::tcp::socket> socket
     ) {
+            systems::Network::globalNetId.store(systems::Network::globalNetId.load() + 1);
             rtype::entities::Player playerShip(
                     entityManager,
                     componentManager,
@@ -49,7 +52,7 @@ namespace rtype::services {
                     {0, 0, 0},
                     {64, 64},
                     {std::move(socket)},
-                    {netId},
+                    {systems::Network::globalNetId.load()},
                     {PLAYER_SPEED}
             );
     }

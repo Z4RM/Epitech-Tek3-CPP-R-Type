@@ -25,7 +25,6 @@ namespace rtype::services {
 #else
 
         static void createPlayer(
-                int netId,
                 ecs::EntityManager &entityManager,
                 ecs::ComponentManager &componentManager,
                 std::shared_ptr<asio::ip::tcp::socket> socket
