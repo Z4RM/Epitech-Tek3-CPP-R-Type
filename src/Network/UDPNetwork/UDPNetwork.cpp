@@ -87,6 +87,13 @@ namespace rtype::network {
                     return;
                 }
             }
+
+            auto it = this->_netHandlers.find(packet->getCode());
+            if (it != this->_netHandlers.end()) {
+                it->second->handle(std::move(packet), endpoint);
+                return;
+            }
+
             spdlog::warn("No handler found for packet [{}]", codeStr);
         } catch (std::exception &e) {
             spdlog::error("Unable to handle UDP packet: {}", e.what());
@@ -127,4 +134,9 @@ namespace rtype::network {
         return this->_stop;
     }
 
+    UDPNetwork &UDPNetwork::getInstance(unsigned short port) {
+        static UDPNetwork instance(port);
+
+        return instance;
+    }
 }

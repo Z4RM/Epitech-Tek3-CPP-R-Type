@@ -7,11 +7,13 @@
 
 #pragma once
 
+#include <map>
 #include <optional>
 #include <utility>
 #include "ThreadPool/ThreadPool.hpp"
 #include "asio.hpp"
 #include "Packets.hpp"
+#include "RType/Systems/Network/handlers/INetworkHandler.hpp"
 
 #define BUFFER_SIZE 1024
 
@@ -63,12 +65,14 @@ namespace rtype::network {
 
             inline bool getStarted() const { return this->_started; };
 
+            static TCPNetwork &getInstance(unsigned short port = 0);
+
             void registerOnPlayerDisconnect(std::function<void(std::shared_ptr<asio::ip::tcp::socket>)> fn) { this->_onPlayerDisconnect =
             std::move(fn); }
 
-            void addHandler(EPacketCode code, std::function<void(std::unique_ptr<IPacket>, std::shared_ptr<asio::ip::tcp::socket>
-            socket)>
-            handler);
+            inline void registerNetHandler(EPacketCode code, std::unique_ptr<systems::INetworkHandler> handler) {
+                this->_netHandlers[code] = std::move(handler);
+            };
 
             void setStop(bool state);
             bool getStop();
@@ -81,8 +85,8 @@ namespace rtype::network {
             asio::io_context _ioContext; ///< asio context
             bool _started = false;
             std::function<void(std::shared_ptr<asio::ip::tcp::socket>)> _onPlayerDisconnect;
-            std::vector<std::pair<EPacketCode, std::function<void(std::unique_ptr<IPacket>, std::shared_ptr<asio::ip::tcp::socket>)
-            >>> _handlers;
+
+            std::map<EPacketCode, std::unique_ptr<systems::INetworkHandler>> _netHandlers {};
 
             std::mutex _stopMutex;
             bool _stop = false;

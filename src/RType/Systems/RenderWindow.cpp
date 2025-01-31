@@ -83,8 +83,8 @@ void rtype::systems::RenderWindowSys::render(ecs::EntityManager &entityManager, 
             if (text) {
                 renderWindow->window->draw(text->text);
             }
-            if (counter) {
-                renderWindow->window->draw(counter->text.text);
+            if (counter && counter->text.has_value()) {
+                renderWindow->window->draw(counter->text->text);
             }
         }
         renderWindow->window->display();

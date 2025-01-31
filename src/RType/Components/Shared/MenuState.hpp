@@ -2,14 +2,13 @@
 ** EPITECH PROJECT, 2025
 ** RType
 ** File description:
-** GameState
+** Menu State component
 */
 
 #pragma once
 
 namespace rtype::components {
-    struct GameState {
-        bool isStarted = false;
+    struct MenuState {
         int playerCount = 0;
     };
 }

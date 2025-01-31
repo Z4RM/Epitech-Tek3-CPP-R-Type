@@ -15,7 +15,6 @@ namespace rtype::network {
         WELCOME = 101,
         PLAYER_COUNT = 102,
 
-        NEW_PLAYER = 200,
         PLAYERS_DATA = 201,
         PLAYER_SHOOT = 202,
 

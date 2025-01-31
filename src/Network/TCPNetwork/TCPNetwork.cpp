@@ -151,21 +151,16 @@ namespace rtype::network {
             std::unique_ptr<IPacket> packet = PacketFactory::fromBuffer(buffer);
             spdlog::debug("TCP packet [{}] received from {}:{}", std::to_string(packet->getCode()), address, port);
 
-            for (auto &handler : this->_handlers) {
-                if (handler.first == packet->getCode()) {
-                    handler.second(std::move(packet), socket);
-                    return;
-                }
+            auto it = this->_netHandlers.find(packet->getCode());
+            if (it != this->_netHandlers.end()) {
+                it->second->handle(std::move(packet), socket);
+                return;
             }
+
             spdlog::warn("No handler found for packet [{}]", std::to_string(packet->getCode()));
         } catch (std::exception &e) {
             spdlog::error("Unable to handle TCP packet: {}", e.what());
         }
-    }
-
-    void TCPNetwork::addHandler(EPacketCode code, std::function<void(std::unique_ptr<IPacket>,
-        std::shared_ptr<asio::ip::tcp::socket> socket)> handler) {
-        this->_handlers.push_back({code, handler});
     }
 
     void TCPNetwork::setStop(bool state) {
@@ -181,5 +176,12 @@ namespace rtype::network {
         std::lock_guard<std::mutex> lock(this->_stopMutex);
         return this->_stop;
     }
+
+    TCPNetwork &TCPNetwork::getInstance(unsigned short port) {
+        static TCPNetwork instance(port);
+
+        return instance;
+    }
+
 
 }

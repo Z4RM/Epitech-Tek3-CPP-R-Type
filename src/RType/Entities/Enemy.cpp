@@ -55,7 +55,7 @@ rtype::entities::Enemy::Enemy(
     componentManager.addComponent<components::IA>(_id, {move});
 }
 
-#else
+#endif
 
 rtype::entities::Enemy::Enemy(
     rtype::ecs::EntityManager &entityManager,
@@ -74,7 +74,7 @@ rtype::entities::Enemy::Enemy(
     componentManager.addComponent<components::Speed>(_id, speed);
     componentManager.addComponent<components::NetId>(_id, netId);
 
-    components::Health health = { 50, 50};
+    components::Health health(50);
     componentManager.addComponent<components::Health>(_id, health);
 
     components::Damage damage = {200};
@@ -87,5 +87,3 @@ rtype::entities::Enemy::Enemy(
     });
     componentManager.addComponent<components::IA>(_id, {move});
 }
-
-#endif

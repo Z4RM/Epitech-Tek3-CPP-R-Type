@@ -19,7 +19,6 @@
 namespace rtype::scenes {
     void Game::load() {
 #ifdef RTYPE_IS_CLIENT
-
         components::Sprite backgroundSprite = {{0, 0, 0}, {-1, -1}, "assets/sprites/background.png", {-1}};
 
         entities::Image img(this->_componentManager, this->_entityManager, backgroundSprite, true, true);

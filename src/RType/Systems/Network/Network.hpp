@@ -20,6 +20,8 @@ namespace rtype::systems {
      * **/
     class Network {
     public:
+        //TODO: refactor netId everywhere as maybe unsigned long or something that make more sense
+        static std::atomic<int> globalNetId;
         static int playerId;
         static std::mutex playerIdMutex;
 
@@ -29,14 +31,6 @@ namespace rtype::systems {
         * **/
         static void udpProcess(ecs::EntityManager& entityManager, ecs::ComponentManager& componentManager);
 
-
-        /** @brief Adding packets handler to the udp network
-        * @param network the udp network
-        * @param entityManager the entity manager
-        * @param componentManager the component manager
-        * **/
-        static void addUdpHandlers(network::UDPNetwork &network, ecs::EntityManager& entityManager, ecs::ComponentManager&
-        componentManager);
 
         /** @brief sending continually packets of the game data
         * @param entityManager the entity manager

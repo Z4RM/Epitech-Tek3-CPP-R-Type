@@ -18,7 +18,6 @@ rtype::entities::Player::Player(
         const components::Size size,
         components::Sprite &sprite,
         const components::Animation &animation,
-        std::function<void(int id)> shootFn,
         const components::NetId network,
         components::ActualPlayer actualPlayer,
         const components::Speed speed
@@ -56,11 +55,12 @@ rtype::entities::Player::Player(
 
     _inputs.keyActions.insert({
         sf::Keyboard::Key::Space,
-        {sf::Event::KeyPressed, [this, &entityManager, &componentManager, id, shootFn, netId]() {
+        {sf::Event::KeyPressed, [this, &entityManager, &componentManager, id, netId]() {
             static auto clock = std::chrono::steady_clock::now();
             bool result = this->shoot(entityManager, componentManager, id, clock);
             if (result) {
-                shootFn(netId);
+                network::PacketPlayerShoot sendPlayerShoot(netId);
+                network::TCPNetwork::getInstance().sendPacket(sendPlayerShoot);
             }
         }}
     });
@@ -209,7 +209,7 @@ std::chrono::steady_clock::time_point &clock) {
     return true;
 }
 
-#else
+#endif
 
 rtype::entities::Player::Player(
         rtype::ecs::EntityManager &entityManager,
@@ -217,7 +217,7 @@ rtype::entities::Player::Player(
         const components::Position pos,
         const components::Velocity vel,
         const components::Size size,
-        const components::NetworkConnection network,
+        const components::NetworkConnection &network,
         const components::NetId netId,
         const components::Speed speed
 ) {
@@ -230,9 +230,6 @@ rtype::entities::Player::Player(
     componentManager.addComponent<components::NetId>(_id, netId);
     componentManager.addComponent<components::Speed>(_id, {140});
 
-    components::Health health = {1000};
+    components::Health health(1000);
     componentManager.addComponent<components::Health>(_id, health);
 }
-
-#endif
-

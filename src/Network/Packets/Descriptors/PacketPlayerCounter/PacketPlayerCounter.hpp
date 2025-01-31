@@ -12,10 +12,10 @@ namespace rtype::network {
     class PacketPlayerCounter final : public APacket {
     public:
         ~PacketPlayerCounter() override = default;
-        explicit PacketPlayerCounter(int count = 0) : APacket(EPacketCode::PLAYER_COUNT), _count(count) {};
+        explicit PacketPlayerCounter(int count = 0) : APacket(EPacketCode::PLAYER_COUNT), count(count) {};
         [[nodiscard]] std::vector<char> bufferize() const override;
         void fillData(const std::vector<char> &buffer) override;
 
-        int _count = 0;
+        int count = 0;
     };
 }
