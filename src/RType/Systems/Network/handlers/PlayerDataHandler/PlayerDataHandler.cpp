@@ -85,10 +85,12 @@ namespace rtype::systems {
                         }
                     }
                 }
-                if (!created && !IS_SERVER) {
+#ifdef RTYPE_IS_CLIENT
+                if (!created) {
                     spdlog::debug("Creating new player in the game");
                     services::PlayerService::createPlayer(data.netId.id, _entityManager, _componentManager, false);
                 }
+#endif
             }
 
             if (!IS_SERVER) {

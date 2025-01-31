@@ -10,7 +10,7 @@
 #include "Network/TCPNetwork/TCPNetwork.hpp"
 #include "Network/UDPNetwork/UDPNetwork.hpp"
 
-#ifndef RTYPE_IS_SERVER
+#ifdef RTYPE_IS_CLIENT
 #include "RType/Components/Client/Sprite.hpp"
 #endif
 #include "ECS/Scene/SceneManager.hpp"

@@ -135,7 +135,7 @@ void rtype::systems::Movement::move(rtype::ecs::EntityManager& entityManager,
                 componentManager.addComponent<components::Position>(entity, *pos);
             }
 
-        #ifndef RTYPE_IS_SERVER
+        #ifdef RTYPE_IS_CLIENT
             if (health && hitBox && !peaceful) {
                 health->bgBar.setPosition({pos->x + hitBox->size.width / 5, pos->y});
                 health->healthBar.setPosition({pos->x + hitBox->size.width / 5, pos->y});
@@ -168,14 +168,14 @@ void rtype::systems::Movement::move(rtype::ecs::EntityManager& entityManager,
             pos2->x += newPosX;
             pos2->y += newPosY;
             pos2->z += newPosZ;
-#ifdef RTYPE_IS_SERVER
-            if (pos2->x > 900 || pos2->x < -50 || pos2->y < -50 || pos2->y > 800) {
+
+            if (IS_SERVER && (pos2->x > 900 || pos2->x < -50 || pos2->y < -50 || pos2->y > 800)) {
                 entityManager.destroyEntity(entity, componentManager);
                 return;
             }
-#endif
+
             componentManager.addComponent<components::Position>(entity, *pos2);
-        #ifndef RTYPE_IS_SERVER
+        #ifdef RTYPE_IS_CLIENT
             if (health && hitBox) {
                 health->bgBar.setPosition({pos2->x + hitBox->size.width / 5, pos2->y});
                 health->healthBar.setPosition({pos2->x + hitBox->size.width / 5, pos2->y});

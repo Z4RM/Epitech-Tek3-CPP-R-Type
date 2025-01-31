@@ -209,7 +209,7 @@ std::chrono::steady_clock::time_point &clock) {
     return true;
 }
 
-#else
+#endif
 
 rtype::entities::Player::Player(
         rtype::ecs::EntityManager &entityManager,
@@ -217,7 +217,7 @@ rtype::entities::Player::Player(
         const components::Position pos,
         const components::Velocity vel,
         const components::Size size,
-        const components::NetworkConnection network,
+        const components::NetworkConnection &network,
         const components::NetId netId,
         const components::Speed speed
 ) {
@@ -230,9 +230,6 @@ rtype::entities::Player::Player(
     componentManager.addComponent<components::NetId>(_id, netId);
     componentManager.addComponent<components::Speed>(_id, {140});
 
-    components::Health health = {1000};
+    components::Health health(1000);
     componentManager.addComponent<components::Health>(_id, health);
 }
-
-#endif
-

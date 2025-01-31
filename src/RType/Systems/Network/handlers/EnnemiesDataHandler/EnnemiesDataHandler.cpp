@@ -63,7 +63,7 @@ namespace rtype::systems {
 
                 if (!created) {
                     spdlog::debug("Creating new enemy in the game");
-                    #ifndef RTYPE_IS_SERVER
+                    #ifdef RTYPE_IS_CLIENT
                                     components::Sprite sprite3 = {{600, 100, 0}, {33, 36}, "assets/sprites/enemy.gif", {1}};
                                     rtype::entities::Enemy enemy(
                                         _entityManager,

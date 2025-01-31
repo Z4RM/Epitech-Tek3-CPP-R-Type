@@ -68,7 +68,7 @@ namespace rtype::entities {
                 rtype::components::Speed = {200}
         );
 
-#else
+#endif
 
         /**
          * @brief Constructs a new Player object.
@@ -94,12 +94,10 @@ namespace rtype::entities {
                 rtype::components::Position pos,
                 rtype::components::Velocity vel,
                 rtype::components::Size size,
-                rtype::components::NetworkConnection network,
+                const rtype::components::NetworkConnection& network,
                 rtype::components::NetId = { false },
                 rtype::components::Speed speed = {200}
         );
-
-#endif
 
         /**
          * @brief Default destructor.

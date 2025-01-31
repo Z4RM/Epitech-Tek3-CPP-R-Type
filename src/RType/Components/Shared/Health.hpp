@@ -6,43 +6,28 @@
 */
 
 #pragma once
-#ifndef RTYPE_IS_CLIENT
-namespace rtype::components {
-    struct Health {
-        int value;
-        int max;
-        std::chrono::steady_clock::time_point _elapsedDamage = std::chrono::steady_clock::now();
-        bool colisionState = false;
 
-        void takeDamage(int amount) {
-            value -= amount;
-
-            if (value < 0)
-                value = 0;
-            _elapsedDamage = std::chrono::steady_clock::now();
-        }
-
-        void setHealth(int amount) {
-            value = amount;
-            if (value < 0)
-                value = 0;
-        }
-    };
-}
-#else
 #include <SFML/Graphics.hpp>
+
 namespace rtype::components {
     struct Health {
         int value;
         int max;
+
+#ifdef RTYPE_IS_CLIENT
         sf::RectangleShape bgBar;
         sf::RectangleShape healthBar;
         bool created = false;
-        std::chrono::steady_clock::time_point _elapsedDamage = std::chrono::steady_clock::now();
-        bool colisionState = false;
+#endif
 
-        Health(int maxHealth, sf::Vector2f position, Size entitySize)
-            : value(maxHealth), max(maxHealth) {
+        std::chrono::steady_clock::time_point _elapsedDamage = std::chrono::steady_clock::now();
+        bool collisionState = false;
+
+        explicit Health(int maxHealth) : value(maxHealth), max(maxHealth) {}
+
+#ifdef RTYPE_IS_CLIENT
+
+        Health(int maxHealth, sf::Vector2f position, Size entitySize) : Health(maxHealth) {
             sf::Vector2f size = {static_cast<float>(50), 4};
 
             position.x += entitySize.width / 5;
@@ -56,38 +41,37 @@ namespace rtype::components {
             created = true;
         }
 
+#endif
+
         void takeDamage(int amount) {
-            this->value -= amount;
+            value -= amount;
 
             if (value < 0)
                 value = 0;
 
+#ifdef RTYPE_IS_CLIENT
             auto size = healthBar.getSize();
-
-            float sizeX = this->value * 50 / this->max;
-
+            float sizeX = (float) value * 50 / (float) max;
             if (sizeX < 0)
                 sizeX = 0;
-
             healthBar.setSize({sizeX, size.y});
+#endif
+
             _elapsedDamage = std::chrono::steady_clock::now();
         }
 
         void setHealth(int amount) {
-            this->value = amount;
-
+            value = amount;
             if (value < 0)
                 value = 0;
 
+#ifdef RTYPE_IS_CLIENT
             auto size = healthBar.getSize();
-
-            float sizeX = this->value * 50 / this->max;
-
+            float sizeX = (float) value * 50 / (float) max;
             if (sizeX < 0)
                 sizeX = 0;
-
             healthBar.setSize({sizeX, size.y});
+#endif
         }
     };
 }
-#endif

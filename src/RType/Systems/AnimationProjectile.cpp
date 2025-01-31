@@ -25,7 +25,7 @@ void rtype::systems::UpdateProjectilesSystem::updateProjectiles(
             std::chrono::duration<double> elapsed = now - healthBar->_elapsedDamage;
 
             if (elapsed.count() < 0.8) {
-                if (healthBar->colisionState)
+                if (healthBar->collisionState)
                     sprite->sprite->setColor(sf::Color::Red);
                 else {
                     sprite->sprite->setColor(sf::Color::White);
@@ -33,7 +33,7 @@ void rtype::systems::UpdateProjectilesSystem::updateProjectiles(
             } else {
                 sprite->sprite->setColor(sf::Color::White);
             }
-            healthBar->colisionState = !healthBar->colisionState;
+            healthBar->collisionState = !healthBar->collisionState;
             componentManager.addComponent<components::Health>(entity, *healthBar);
             componentManager.addComponent<components::Sprite>(entity, *sprite);
         }
