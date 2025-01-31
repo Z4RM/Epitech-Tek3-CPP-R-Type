@@ -34,16 +34,14 @@ namespace rtype::services {
         );
     }
 
-#endif
+#else
 
-    void
-    PlayerService::createPlayer(
+    void PlayerService::createPlayer(
             int netId,
             ecs::EntityManager &entityManager,
             ecs::ComponentManager &componentManager,
             std::shared_ptr<asio::ip::tcp::socket> socket
     ) {
-        if (IS_SERVER)
             rtype::entities::Player playerShip(
                     entityManager,
                     componentManager,
@@ -55,4 +53,5 @@ namespace rtype::services {
                     {PLAYER_SPEED}
             );
     }
+#endif
 }

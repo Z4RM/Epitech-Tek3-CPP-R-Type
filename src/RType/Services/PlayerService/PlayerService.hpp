@@ -22,7 +22,7 @@ namespace rtype::services {
                 ecs::ComponentManager &componentManager,
                 bool actualPlayer = false
         );
-#endif
+#else
 
         static void createPlayer(
                 int netId,
@@ -30,5 +30,6 @@ namespace rtype::services {
                 ecs::ComponentManager &componentManager,
                 std::shared_ptr<asio::ip::tcp::socket> socket
         );
+#endif
     };
 }

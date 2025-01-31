@@ -35,7 +35,10 @@ namespace rtype::systems {
             std::lock_guard guard(Network::playerIdMutex);
             Network::playerId++; //TODO: remove this old thing when refactoring finished
             Network::globalNetId.store(Network::globalNetId.load() + 1);
+
+#ifdef RTYPE_IS_SERVER
             services::PlayerService::createPlayer(Network::globalNetId.load(), _entityManager, _componentManager, socket);
+#endif
 
             for (auto &entity : _entityManager.getEntities()) {
                 auto netCo = _componentManager.getComponent<components::NetworkConnection>(entity);

@@ -27,9 +27,9 @@ namespace rtype::systems {
                     _componentManager.addComponent<components::GameState>(entity, *gameState);
                 }
             }
-#ifdef RTYPE_IS_CLIENT
+        #ifdef RTYPE_IS_CLIENT
             services::PlayerService::createPlayer(packetWelcome->netId, _entityManager, _componentManager, true);
-#endif
+        #endif
         }
     }
 }
