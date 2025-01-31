@@ -7,7 +7,9 @@
 
 #pragma once
 
+#ifdef RTYPE_IS_CLIENT
 #include <SFML/Graphics.hpp>
+#endif
 
 namespace rtype::components {
     struct Health {
