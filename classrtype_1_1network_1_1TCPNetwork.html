@@ -104,6 +104,7 @@ $(function(){initNavTree('classrtype_1_1network_1_1TCPNetwork.html',''); initRes
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="classrtype_1_1network_1_1TCPNetwork-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">rtype::network::TCPNetwork Class Reference</div></div>
 </div><!--header-->
@@ -142,12 +143,17 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a42fdcefb87b45be182e53d175d4561ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acb436d4d9e3916f6759214d44d8ffe82" id="r_acb436d4d9e3916f6759214d44d8ffe82"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acb436d4d9e3916f6759214d44d8ffe82">registerOnPlayerDisconnect</a> (std::function&lt; void(std::shared_ptr&lt; asio::ip::tcp::socket &gt;)&gt; fn)</td></tr>
 <tr class="separator:acb436d4d9e3916f6759214d44d8ffe82"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aea9d3ce239df8d54778a69bdc93ede95" id="r_aea9d3ce239df8d54778a69bdc93ede95"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aea9d3ce239df8d54778a69bdc93ede95">addHandler</a> (<a class="el" href="namespacertype_1_1network.html#a6e33dcdcd158a1e8ce1f13336651a3f8">EPacketCode</a> code, std::function&lt; void(std::unique_ptr&lt; <a class="el" href="classrtype_1_1network_1_1IPacket.html">IPacket</a> &gt;, std::shared_ptr&lt; asio::ip::tcp::socket &gt; socket)&gt; handler)</td></tr>
-<tr class="separator:aea9d3ce239df8d54778a69bdc93ede95"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2bbebb85cab5200f68e0ba5072e4f3f2" id="r_a2bbebb85cab5200f68e0ba5072e4f3f2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2bbebb85cab5200f68e0ba5072e4f3f2">registerNetHandler</a> (<a class="el" href="namespacertype_1_1network.html#a6e33dcdcd158a1e8ce1f13336651a3f8">EPacketCode</a> code, std::unique_ptr&lt; <a class="el" href="classrtype_1_1systems_1_1INetworkHandler.html">systems::INetworkHandler</a> &gt; handler)</td></tr>
+<tr class="separator:a2bbebb85cab5200f68e0ba5072e4f3f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7da8de44553f0217a0ce0f09ac44571f" id="r_a7da8de44553f0217a0ce0f09ac44571f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7da8de44553f0217a0ce0f09ac44571f">setStop</a> (bool state)</td></tr>
 <tr class="separator:a7da8de44553f0217a0ce0f09ac44571f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a28529872bd09078f74f5864f6110b882" id="r_a28529872bd09078f74f5864f6110b882"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a28529872bd09078f74f5864f6110b882">getStop</a> ()</td></tr>
 <tr class="separator:a28529872bd09078f74f5864f6110b882"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:ae1f84857ccc3f3816608633b37052742" id="r_ae1f84857ccc3f3816608633b37052742"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classrtype_1_1network_1_1TCPNetwork.html">TCPNetwork</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae1f84857ccc3f3816608633b37052742">getInstance</a> (unsigned short port=0)</td></tr>
+<tr class="separator:ae1f84857ccc3f3816608633b37052742"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Represent a TCP network (client or server) </p>
@@ -195,27 +201,6 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="aea9d3ce239df8d54778a69bdc93ede95" name="aea9d3ce239df8d54778a69bdc93ede95"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aea9d3ce239df8d54778a69bdc93ede95">&#9670;&#160;</a></span>addHandler()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void rtype::network::TCPNetwork::addHandler </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="namespacertype_1_1network.html#a6e33dcdcd158a1e8ce1f13336651a3f8">EPacketCode</a></td>          <td class="paramname"><span class="paramname"><em>code</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::function&lt; void(std::unique_ptr&lt; <a class="el" href="classrtype_1_1network_1_1IPacket.html">IPacket</a> &gt;, std::shared_ptr&lt; asio::ip::tcp::socket &gt; socket)&gt;</td>          <td class="paramname"><span class="paramname"><em>handler</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <a id="a386a34817636f915d07be1a26c418de5" name="a386a34817636f915d07be1a26c418de5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a386a34817636f915d07be1a26c418de5">&#9670;&#160;</a></span>connect()</h2>
 
@@ -238,6 +223,31 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="ae1f84857ccc3f3816608633b37052742" name="ae1f84857ccc3f3816608633b37052742"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae1f84857ccc3f3816608633b37052742">&#9670;&#160;</a></span>getInstance()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classrtype_1_1network_1_1TCPNetwork.html">TCPNetwork</a> &amp; rtype::network::TCPNetwork::getInstance </td>
+          <td>(</td>
+          <td class="paramtype">unsigned short</td>          <td class="paramname"><span class="paramname"><em>port</em></span><span class="paramdefsep"> = </span><span class="paramdefval">0</span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -335,6 +345,35 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a2bbebb85cab5200f68e0ba5072e4f3f2" name="a2bbebb85cab5200f68e0ba5072e4f3f2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2bbebb85cab5200f68e0ba5072e4f3f2">&#9670;&#160;</a></span>registerNetHandler()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void rtype::network::TCPNetwork::registerNetHandler </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespacertype_1_1network.html#a6e33dcdcd158a1e8ce1f13336651a3f8">EPacketCode</a></td>          <td class="paramname"><span class="paramname"><em>code</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::unique_ptr&lt; <a class="el" href="classrtype_1_1systems_1_1INetworkHandler.html">systems::INetworkHandler</a> &gt;</td>          <td class="paramname"><span class="paramname"><em>handler</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>

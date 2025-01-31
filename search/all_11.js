@@ -10,11 +10,10 @@ var searchData=
   ['network_7',['Network',['../classrtype_1_1systems_1_1Network.html',1,'rtype::systems']]],
   ['network_8',['network',['../structrtype_1_1models_1_1PlayerData.html#a9f20636a63464c8a8db816988934257e',1,'rtype::models::PlayerData']]],
   ['network_2ecpp_9',['Network.cpp',['../Network_8cpp.html',1,'']]],
-  ['network_2ehpp_10',['Network.hpp',['../Components_2Shared_2Network_8hpp.html',1,'(Global Namespace)'],['../Systems_2Network_8hpp.html',1,'(Global Namespace)']]],
+  ['network_2ehpp_10',['Network.hpp',['../Components_2Shared_2Network_8hpp.html',1,'(Global Namespace)'],['../Systems_2Network_2Network_8hpp.html',1,'(Global Namespace)']]],
   ['networkconnection_11',['NetworkConnection',['../structrtype_1_1components_1_1NetworkConnection.html',1,'rtype::components']]],
   ['networks_2ehpp_12',['Networks.hpp',['../Networks_8hpp.html',1,'']]],
-  ['new_5fplayer_13',['NEW_PLAYER',['../namespacertype_1_1network.html#a6e33dcdcd158a1e8ce1f13336651a3f8a94683292f7e9d7237e8d447b03d3d08a',1,'rtype::network']]],
-  ['nodamagetoplayer_14',['NoDamageToPlayer',['../structrtype_1_1components_1_1NoDamageToPlayer.html',1,'rtype::components']]],
-  ['nodamagetoplayer_2ehpp_15',['NoDamageToPlayer.hpp',['../NoDamageToPlayer_8hpp.html',1,'']]],
-  ['none_16',['none',['../structrtype_1_1entities_1_1Style.html#a4ea93ebb931add49424625424bab49d1',1,'rtype::entities::Style']]]
+  ['nodamagetoplayer_13',['NoDamageToPlayer',['../structrtype_1_1components_1_1NoDamageToPlayer.html',1,'rtype::components']]],
+  ['nodamagetoplayer_2ehpp_14',['NoDamageToPlayer.hpp',['../NoDamageToPlayer_8hpp.html',1,'']]],
+  ['none_15',['none',['../structrtype_1_1entities_1_1Style.html#a4ea93ebb931add49424625424bab49d1',1,'rtype::entities::Style']]]
 ];

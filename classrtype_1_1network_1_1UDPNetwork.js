@@ -8,6 +8,7 @@ var classrtype_1_1network_1_1UDPNetwork =
     [ "getStarted", "classrtype_1_1network_1_1UDPNetwork.html#a1792c17cb054e01f47aaa1736320245c", null ],
     [ "getStop", "classrtype_1_1network_1_1UDPNetwork.html#a3f04503f277b6fd48e17e84928e15530", null ],
     [ "handlePacket", "classrtype_1_1network_1_1UDPNetwork.html#ab3ebfe588ddf4194da3a0f251716ab09", null ],
+    [ "registerNetHandler", "classrtype_1_1network_1_1UDPNetwork.html#a5c03a787bbc795d9a17dfb3ec2e5d382", null ],
     [ "sendPacket", "classrtype_1_1network_1_1UDPNetwork.html#a148645a9e4024adebbe8d34e2fb72e33", null ],
     [ "setStop", "classrtype_1_1network_1_1UDPNetwork.html#ae06ab17326d6ee2afe5a7bbd6bb7118e", null ],
     [ "start", "classrtype_1_1network_1_1UDPNetwork.html#aead5b4f721bf4ddca9cf80c437987b86", null ],

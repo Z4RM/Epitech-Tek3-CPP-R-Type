@@ -11,6 +11,7 @@ var namespacertype_1_1components =
     [ "Hitbox", "structrtype_1_1components_1_1Hitbox.html", "structrtype_1_1components_1_1Hitbox" ],
     [ "IA", "structrtype_1_1components_1_1IA.html", "structrtype_1_1components_1_1IA" ],
     [ "InputHandler", "structrtype_1_1components_1_1InputHandler.html", "structrtype_1_1components_1_1InputHandler" ],
+    [ "MenuState", "structrtype_1_1components_1_1MenuState.html", "structrtype_1_1components_1_1MenuState" ],
     [ "NetId", "structrtype_1_1components_1_1NetId.html", "structrtype_1_1components_1_1NetId" ],
     [ "NetworkConnection", "structrtype_1_1components_1_1NetworkConnection.html", "structrtype_1_1components_1_1NetworkConnection" ],
     [ "NoDamageToPlayer", "structrtype_1_1components_1_1NoDamageToPlayer.html", "structrtype_1_1components_1_1NoDamageToPlayer" ],

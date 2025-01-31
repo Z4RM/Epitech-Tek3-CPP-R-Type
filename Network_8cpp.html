@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.13.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>R-Type: src/RType/Systems/Network.cpp File Reference</title>
+<title>R-Type: src/RType/Systems/Network/Network.cpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -107,20 +107,22 @@ $(function(){initNavTree('Network_8cpp.html',''); initResizable(true); });
   <div class="headertitle"><div class="title">Network.cpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="Systems_2Network_8hpp_source.html">Network.hpp</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="PacketNewPlayer_8hpp_source.html">Network/Packets/Descriptors/PacketNewPlayer/PacketNewPlayer.hpp</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="Systems_2Network_2Network_8hpp_source.html">Network.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="TCPNetwork_8hpp_source.html">Network/TCPNetwork/TCPNetwork.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="UDPNetwork_8hpp_source.html">Network/UDPNetwork/UDPNetwork.hpp</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="Sprite_8hpp_source.html">RType/Components/Client/Sprite.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="SceneManager_8hpp_source.html">ECS/Scene/SceneManager.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="Config_8hpp_source.html">RType/Config/Config.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="Components_8hpp_source.html">Components.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="ConnectHandler_8hpp_source.html">handlers/ConnectHandler/ConnectHandler.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="EnnemiesDataHandler_8hpp_source.html">handlers/EnnemiesDataHandler/EnnemiesDataHandler.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="PlayerCountHandler_8hpp_source.html">handlers/PlayerCountHandler/PlayerCountHandler.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="PlayerDataHandler_8hpp_source.html">handlers/PlayerDataHandler/PlayerDataHandler.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="PlayerShootHandler_8hpp_source.html">handlers/PlayerShootHandler/PlayerShootHandler.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="StartGameHandler_8hpp_source.html">handlers/StartGameHandler/StartGameHandler.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="WelcomeHandler_8hpp_source.html">handlers/WelcomeHandler/WelcomeHandler.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="PacketPlayersData_8hpp_source.html">Network/Packets/Descriptors/PacketPlayersData/PacketPlayersData.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="PacketEnemiesData_8hpp_source.html">Network/Packets/Descriptors/PacketEnemiesData/PacketEnemiesData.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="PacketPlayerCounter_8hpp_source.html">Network/Packets/Descriptors/PacketPlayerCounter/PacketPlayerCounter.hpp</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="PacketStartGame_8hpp_source.html">Network/Packets/Descriptors/PacketStartGame/PacketStartGame.hpp</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="Counter_8hpp_source.html">RType/Components/Shared/Counter.hpp</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="Enemy_8hpp_source.html">RType/Entities/Enemy.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="Player_8hpp_source.html">RType/Entities/Player.hpp</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
@@ -136,7 +138,7 @@ Namespaces</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_cfaa8b1245d753f7d25236ac2ffff0c0.html">RType</a></li><li class="navelem"><a class="el" href="dir_9f3861c96afa0a41df42b9003a2370a7.html">Systems</a></li><li class="navelem"><a class="el" href="Network_8cpp.html">Network.cpp</a></li>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_cfaa8b1245d753f7d25236ac2ffff0c0.html">RType</a></li><li class="navelem"><a class="el" href="dir_9f3861c96afa0a41df42b9003a2370a7.html">Systems</a></li><li class="navelem"><a class="el" href="dir_093b471d0c16be6a1cb94f7ad8644d40.html">Network</a></li><li class="navelem"><a class="el" href="Network_8cpp.html">Network.cpp</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.1 </li>
   </ul>
 </div>

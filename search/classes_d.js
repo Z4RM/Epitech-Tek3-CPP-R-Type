@@ -8,7 +8,8 @@ var searchData=
   ['sparseset_5',['SparseSet',['../classrtype_1_1ecs_1_1SparseSet.html',1,'rtype::ecs::SparseSet&lt; T &gt;'],['../classSparseSet.html',1,'SparseSet']]],
   ['speed_6',['Speed',['../structrtype_1_1components_1_1Speed.html',1,'rtype::components']]],
   ['sprite_7',['Sprite',['../structrtype_1_1components_1_1Sprite.html',1,'rtype::components']]],
-  ['string_8',['String',['../structrtype_1_1components_1_1String.html',1,'rtype::components']]],
-  ['style_9',['Style',['../structrtype_1_1entities_1_1Style.html',1,'rtype::entities']]],
-  ['systemmanager_10',['SystemManager',['../classrtype_1_1ecs_1_1SystemManager.html',1,'rtype::ecs::SystemManager'],['../classSystemManager.html',1,'SystemManager']]]
+  ['startgamehandler_8',['StartGameHandler',['../classrtype_1_1systems_1_1StartGameHandler.html',1,'rtype::systems']]],
+  ['string_9',['String',['../structrtype_1_1components_1_1String.html',1,'rtype::components']]],
+  ['style_10',['Style',['../structrtype_1_1entities_1_1Style.html',1,'rtype::entities']]],
+  ['systemmanager_11',['SystemManager',['../classrtype_1_1ecs_1_1SystemManager.html',1,'rtype::ecs::SystemManager'],['../classSystemManager.html',1,'SystemManager']]]
 ];

@@ -6,6 +6,7 @@ var namespacertype =
     [ "models", "namespacertype_1_1models.html", "namespacertype_1_1models" ],
     [ "network", "namespacertype_1_1network.html", "namespacertype_1_1network" ],
     [ "scenes", "namespacertype_1_1scenes.html", "namespacertype_1_1scenes" ],
+    [ "services", "namespacertype_1_1services.html", "namespacertype_1_1services" ],
     [ "systems", "namespacertype_1_1systems.html", "namespacertype_1_1systems" ],
     [ "Config", "classrtype_1_1Config.html", "classrtype_1_1Config" ],
     [ "ModeManager", "classrtype_1_1ModeManager.html", null ],

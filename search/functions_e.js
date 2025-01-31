@@ -9,8 +9,9 @@ var searchData=
   ['spawnmonster_6',['spawnMonster',['../classrtype_1_1systems_1_1MonsterSpawner.html#ac2f644828abd2a57bcb72358e730d4eb',1,'rtype::systems::MonsterSpawner']]],
   ['start_7',['start',['../classrtype_1_1network_1_1TCPNetwork.html#a2c3c8803409ea022fdb05827fc6a8f1f',1,'rtype::network::TCPNetwork::start()'],['../classrtype_1_1network_1_1UDPNetwork.html#aead5b4f721bf4ddca9cf80c437987b86',1,'rtype::network::UDPNetwork::start()']]],
   ['startaccept_8',['startAccept',['../classrtype_1_1network_1_1TCPNetwork.html#a85a6230c4841fc939e86fbc7419bd5e0',1,'rtype::network::TCPNetwork']]],
-  ['startreceive_9',['startReceive',['../classrtype_1_1network_1_1UDPNetwork.html#ab4d82eb0a916fdbe415d408767ef461d',1,'rtype::network::UDPNetwork']]],
-  ['stop_10',['stop',['../classrtype_1_1ThreadPool.html#ad6e1826c0c29c6dd1749b935f5f967cb',1,'rtype::ThreadPool']]],
-  ['switchserver_11',['switchServer',['../classrtype_1_1ModeManager.html#abd31748daae8246749bfb09faf69059c',1,'rtype::ModeManager']]],
-  ['systemmanager_12',['SystemManager',['../classrtype_1_1ecs_1_1SystemManager.html#a53c9b5b7503e261e3206b26bab372c71',1,'rtype::ecs::SystemManager']]]
+  ['startgamehandler_9',['StartGameHandler',['../classrtype_1_1systems_1_1StartGameHandler.html#ad92521cf87b9b834a6c406e793e2b701',1,'rtype::systems::StartGameHandler']]],
+  ['startreceive_10',['startReceive',['../classrtype_1_1network_1_1UDPNetwork.html#ab4d82eb0a916fdbe415d408767ef461d',1,'rtype::network::UDPNetwork']]],
+  ['stop_11',['stop',['../classrtype_1_1ThreadPool.html#ad6e1826c0c29c6dd1749b935f5f967cb',1,'rtype::ThreadPool']]],
+  ['switchserver_12',['switchServer',['../classrtype_1_1ModeManager.html#abd31748daae8246749bfb09faf69059c',1,'rtype::ModeManager']]],
+  ['systemmanager_13',['SystemManager',['../classrtype_1_1ecs_1_1SystemManager.html#a53c9b5b7503e261e3206b26bab372c71',1,'rtype::ecs::SystemManager']]]
 ];

@@ -29,13 +29,23 @@ var hierarchy =
         [ "rtype::entities::PlayerCounter", "classrtype_1_1entities_1_1PlayerCounter.html", null ]
       ] ]
     ] ],
+    [ "rtype::systems::INetworkHandler", "classrtype_1_1systems_1_1INetworkHandler.html", [
+      [ "rtype::systems::ANetworkHandler", "classrtype_1_1systems_1_1ANetworkHandler.html", [
+        [ "rtype::systems::ConnectHandler", "classrtype_1_1systems_1_1ConnectHandler.html", null ],
+        [ "rtype::systems::EnnemiesDataHandler", "classrtype_1_1systems_1_1EnnemiesDataHandler.html", null ],
+        [ "rtype::systems::PlayerCountHandler", "classrtype_1_1systems_1_1PlayerCountHandler.html", null ],
+        [ "rtype::systems::PlayerDataHandler", "classrtype_1_1systems_1_1PlayerDataHandler.html", null ],
+        [ "rtype::systems::PlayerShootHandler", "classrtype_1_1systems_1_1PlayerShootHandler.html", null ],
+        [ "rtype::systems::StartGameHandler", "classrtype_1_1systems_1_1StartGameHandler.html", null ],
+        [ "rtype::systems::WelcomeHandler", "classrtype_1_1systems_1_1WelcomeHandler.html", null ]
+      ] ]
+    ] ],
     [ "rtype::components::InputHandler", "structrtype_1_1components_1_1InputHandler.html", null ],
     [ "rtype::systems::InputSystem", "classrtype_1_1systems_1_1InputSystem.html", null ],
     [ "rtype::network::IPacket", "classrtype_1_1network_1_1IPacket.html", [
       [ "rtype::network::APacket", "classrtype_1_1network_1_1APacket.html", [
         [ "rtype::network::PacketConnect", "classrtype_1_1network_1_1PacketConnect.html", null ],
         [ "rtype::network::PacketEnemiesData", "classrtype_1_1network_1_1PacketEnemiesData.html", null ],
-        [ "rtype::network::PacketNewPlayer", "classrtype_1_1network_1_1PacketNewPlayer.html", null ],
         [ "rtype::network::PacketPlayerCounter", "classrtype_1_1network_1_1PacketPlayerCounter.html", null ],
         [ "rtype::network::PacketPlayerShoot", "classrtype_1_1network_1_1PacketPlayerShoot.html", null ],
         [ "rtype::network::PacketPlayersData", "classrtype_1_1network_1_1PacketPlayersData.html", null ],
@@ -52,6 +62,7 @@ var hierarchy =
     [ "rtype::ecs::ISparseSet", "classrtype_1_1ecs_1_1ISparseSet.html", [
       [ "rtype::ecs::SparseSet< T >", "classrtype_1_1ecs_1_1SparseSet.html", null ]
     ] ],
+    [ "rtype::components::MenuState", "structrtype_1_1components_1_1MenuState.html", null ],
     [ "rtype::entities::Mode", "structrtype_1_1entities_1_1Mode.html", null ],
     [ "rtype::ModeManager", "classrtype_1_1ModeManager.html", null ],
     [ "rtype::systems::MonsterSpawner", "classrtype_1_1systems_1_1MonsterSpawner.html", null ],
@@ -65,8 +76,10 @@ var hierarchy =
     [ "Player", "classPlayer.html", null ],
     [ "rtype::entities::Player", "classrtype_1_1entities_1_1Player.html", null ],
     [ "rtype::models::PlayerData", "structrtype_1_1models_1_1PlayerData.html", null ],
+    [ "rtype::services::PlayerService", "classrtype_1_1services_1_1PlayerService.html", null ],
     [ "rtype::components::Position", "structrtype_1_1components_1_1Position.html", null ],
     [ "rtype::components::Projectile", "structrtype_1_1components_1_1Projectile.html", null ],
+    [ "rtype::services::ProjectileService", "classrtype_1_1services_1_1ProjectileService.html", null ],
     [ "rtype::systems::RenderWindowSys", "classrtype_1_1systems_1_1RenderWindowSys.html", null ],
     [ "rtype::RType", "classrtype_1_1RType.html", null ],
     [ "rtype::components::Running", "structrtype_1_1components_1_1Running.html", null ],

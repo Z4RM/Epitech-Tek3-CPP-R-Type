@@ -6,7 +6,9 @@ var searchData=
   ['components_2ehpp_3',['Components.hpp',['../Components_8hpp.html',1,'']]],
   ['config_2ecpp_4',['Config.cpp',['../Config_8cpp.html',1,'']]],
   ['config_2ehpp_5',['Config.hpp',['../Config_8hpp.html',1,'']]],
-  ['contributing_2emd_6',['CONTRIBUTING.md',['../CONTRIBUTING_8md.html',1,'']]],
-  ['counter_2ehpp_7',['Counter.hpp',['../Counter_8hpp.html',1,'']]],
-  ['created_2ehpp_8',['Created.hpp',['../Created_8hpp.html',1,'']]]
+  ['connecthandler_2ecpp_6',['ConnectHandler.cpp',['../ConnectHandler_8cpp.html',1,'']]],
+  ['connecthandler_2ehpp_7',['ConnectHandler.hpp',['../ConnectHandler_8hpp.html',1,'']]],
+  ['contributing_2emd_8',['CONTRIBUTING.md',['../CONTRIBUTING_8md.html',1,'']]],
+  ['counter_2ehpp_9',['Counter.hpp',['../Counter_8hpp.html',1,'']]],
+  ['created_2ehpp_10',['Created.hpp',['../Created_8hpp.html',1,'']]]
 ];

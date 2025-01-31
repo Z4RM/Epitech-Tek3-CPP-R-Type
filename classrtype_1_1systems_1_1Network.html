@@ -113,16 +113,13 @@ $(function(){initNavTree('classrtype_1_1systems_1_1Network.html',''); initResiza
 <p><a class="el" href="classrtype_1_1systems_1_1Network.html" title="Network systems class.">Network</a> systems class.  
  <a href="#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="Systems_2Network_8hpp_source.html">Network.hpp</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="Systems_2Network_2Network_8hpp_source.html">Network.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:acd4c8caa169a3e593d54b8118710f0d2" id="r_acd4c8caa169a3e593d54b8118710f0d2"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acd4c8caa169a3e593d54b8118710f0d2">udpProcess</a> (<a class="el" href="classrtype_1_1ecs_1_1EntityManager.html">ecs::EntityManager</a> &amp;entityManager, <a class="el" href="classrtype_1_1ecs_1_1ComponentManager.html">ecs::ComponentManager</a> &amp;componentManager)</td></tr>
 <tr class="memdesc:acd4c8caa169a3e593d54b8118710f0d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Process the udp system.  <br /></td></tr>
 <tr class="separator:acd4c8caa169a3e593d54b8118710f0d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6de8e8c92e7743556dd07c6facbafe16" id="r_a6de8e8c92e7743556dd07c6facbafe16"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6de8e8c92e7743556dd07c6facbafe16">addUdpHandlers</a> (<a class="el" href="classrtype_1_1network_1_1UDPNetwork.html">network::UDPNetwork</a> &amp;network, <a class="el" href="classrtype_1_1ecs_1_1EntityManager.html">ecs::EntityManager</a> &amp;entityManager, <a class="el" href="classrtype_1_1ecs_1_1ComponentManager.html">ecs::ComponentManager</a> &amp;componentManager)</td></tr>
-<tr class="memdesc:a6de8e8c92e7743556dd07c6facbafe16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adding packets handler to the udp network.  <br /></td></tr>
-<tr class="separator:a6de8e8c92e7743556dd07c6facbafe16"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a132f4737c4c5a2cead432b9902a2afd7" id="r_a132f4737c4c5a2cead432b9902a2afd7"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a132f4737c4c5a2cead432b9902a2afd7">schedulePacketSending</a> (<a class="el" href="classrtype_1_1ecs_1_1EntityManager.html">ecs::EntityManager</a> &amp;entityManager, <a class="el" href="classrtype_1_1ecs_1_1ComponentManager.html">ecs::ComponentManager</a> &amp;componentManager, <a class="el" href="classrtype_1_1network_1_1UDPNetwork.html">network::UDPNetwork</a> &amp;network, std::shared_ptr&lt; asio::steady_timer &gt; timer)</td></tr>
 <tr class="memdesc:a132f4737c4c5a2cead432b9902a2afd7"><td class="mdescLeft">&#160;</td><td class="mdescRight">sending continually packets of the game data  <br /></td></tr>
 <tr class="separator:a132f4737c4c5a2cead432b9902a2afd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -132,6 +129,8 @@ Static Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
+<tr class="memitem:a1aa6c5536481c1bc865d2c481db3e7ca" id="r_a1aa6c5536481c1bc865d2c481db3e7ca"><td class="memItemLeft" align="right" valign="top">static std::atomic&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1aa6c5536481c1bc865d2c481db3e7ca">globalNetId</a> = 0</td></tr>
+<tr class="separator:a1aa6c5536481c1bc865d2c481db3e7ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad7946966913c5102cf3dbdf7c8ebbe06" id="r_ad7946966913c5102cf3dbdf7c8ebbe06"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad7946966913c5102cf3dbdf7c8ebbe06">playerId</a> = 0</td></tr>
 <tr class="separator:ad7946966913c5102cf3dbdf7c8ebbe06"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a419255f2741194261f9d1542c852b195" id="r_a419255f2741194261f9d1542c852b195"><td class="memItemLeft" align="right" valign="top">static std::mutex&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a419255f2741194261f9d1542c852b195">playerIdMutex</a></td></tr>
@@ -140,51 +139,6 @@ Static Public Attributes</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="classrtype_1_1systems_1_1Network.html" title="Network systems class.">Network</a> systems class. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a6de8e8c92e7743556dd07c6facbafe16" name="a6de8e8c92e7743556dd07c6facbafe16"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6de8e8c92e7743556dd07c6facbafe16">&#9670;&#160;</a></span>addUdpHandlers()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void rtype::systems::Network::addUdpHandlers </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classrtype_1_1network_1_1UDPNetwork.html">network::UDPNetwork</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>network</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classrtype_1_1ecs_1_1EntityManager.html">ecs::EntityManager</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>entityManager</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classrtype_1_1ecs_1_1ComponentManager.html">ecs::ComponentManager</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>componentManager</em></span>&#160;)</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Adding packets handler to the udp network. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">network</td><td>the udp network </td></tr>
-    <tr><td class="paramname">entityManager</td><td>the entity manager </td></tr>
-    <tr><td class="paramname">componentManager</td><td>the component manager </td></tr>
-  </table>
-  </dd>
-</dl>
-<p>UPDATING THE GAME</p>
-
-</div>
-</div>
 <a id="a132f4737c4c5a2cead432b9902a2afd7" name="a132f4737c4c5a2cead432b9902a2afd7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a132f4737c4c5a2cead432b9902a2afd7">&#9670;&#160;</a></span>schedulePacketSending()</h2>
 
@@ -312,6 +266,28 @@ Static Public Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
+<a id="a1aa6c5536481c1bc865d2c481db3e7ca" name="a1aa6c5536481c1bc865d2c481db3e7ca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1aa6c5536481c1bc865d2c481db3e7ca">&#9670;&#160;</a></span>globalNetId</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::atomic&lt; int &gt; rtype::systems::Network::globalNetId = 0</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="ad7946966913c5102cf3dbdf7c8ebbe06" name="ad7946966913c5102cf3dbdf7c8ebbe06"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad7946966913c5102cf3dbdf7c8ebbe06">&#9670;&#160;</a></span>playerId</h2>
 
@@ -357,8 +333,8 @@ Static Public Attributes</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>src/RType/Systems/<a class="el" href="Systems_2Network_8hpp_source.html">Network.hpp</a></li>
-<li>src/RType/Systems/<a class="el" href="Network_8cpp.html">Network.cpp</a></li>
+<li>src/RType/Systems/Network/<a class="el" href="Systems_2Network_2Network_8hpp_source.html">Network.hpp</a></li>
+<li>src/RType/Systems/Network/<a class="el" href="Network_8cpp.html">Network.cpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

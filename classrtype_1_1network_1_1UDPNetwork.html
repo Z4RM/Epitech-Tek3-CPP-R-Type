@@ -104,6 +104,7 @@ $(function(){initNavTree('classrtype_1_1network_1_1UDPNetwork.html',''); initRes
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="classrtype_1_1network_1_1UDPNetwork-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">rtype::network::UDPNetwork Class Reference</div></div>
 </div><!--header-->
@@ -144,6 +145,13 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ae06ab17326d6ee2afe5a7bbd6bb7118e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3f04503f277b6fd48e17e84928e15530" id="r_a3f04503f277b6fd48e17e84928e15530"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3f04503f277b6fd48e17e84928e15530">getStop</a> ()</td></tr>
 <tr class="separator:a3f04503f277b6fd48e17e84928e15530"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c03a787bbc795d9a17dfb3ec2e5d382" id="r_a5c03a787bbc795d9a17dfb3ec2e5d382"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5c03a787bbc795d9a17dfb3ec2e5d382">registerNetHandler</a> (<a class="el" href="namespacertype_1_1network.html#a6e33dcdcd158a1e8ce1f13336651a3f8">EPacketCode</a> code, std::unique_ptr&lt; <a class="el" href="classrtype_1_1systems_1_1INetworkHandler.html">systems::INetworkHandler</a> &gt; handler)</td></tr>
+<tr class="separator:a5c03a787bbc795d9a17dfb3ec2e5d382"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:afc614ea8a1d2f6e667a4812eca0f26b6" id="r_afc614ea8a1d2f6e667a4812eca0f26b6"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classrtype_1_1network_1_1UDPNetwork.html">UDPNetwork</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afc614ea8a1d2f6e667a4812eca0f26b6">getInstance</a> (unsigned short port=0)</td></tr>
+<tr class="separator:afc614ea8a1d2f6e667a4812eca0f26b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Represent a UDP Network (client or server) </p>
@@ -208,6 +216,31 @@ Public Member Functions</h2></td></tr>
           <td class="paramtype">std::function&lt; void(std::unique_ptr&lt; <a class="el" href="classrtype_1_1network_1_1IPacket.html">IPacket</a> &gt;, asio::ip::udp::endpoint endpoint)&gt;</td>          <td class="paramname"><span class="paramname"><em>handler</em></span>&#160;)</td>
         </tr>
       </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="afc614ea8a1d2f6e667a4812eca0f26b6" name="afc614ea8a1d2f6e667a4812eca0f26b6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afc614ea8a1d2f6e667a4812eca0f26b6">&#9670;&#160;</a></span>getInstance()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classrtype_1_1network_1_1UDPNetwork.html">UDPNetwork</a> &amp; rtype::network::UDPNetwork::getInstance </td>
+          <td>(</td>
+          <td class="paramtype">unsigned short</td>          <td class="paramname"><span class="paramname"><em>port</em></span><span class="paramdefsep"> = </span><span class="paramdefval">0</span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 </div>
@@ -331,6 +364,35 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a5c03a787bbc795d9a17dfb3ec2e5d382" name="a5c03a787bbc795d9a17dfb3ec2e5d382"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5c03a787bbc795d9a17dfb3ec2e5d382">&#9670;&#160;</a></span>registerNetHandler()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void rtype::network::UDPNetwork::registerNetHandler </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespacertype_1_1network.html#a6e33dcdcd158a1e8ce1f13336651a3f8">EPacketCode</a></td>          <td class="paramname"><span class="paramname"><em>code</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::unique_ptr&lt; <a class="el" href="classrtype_1_1systems_1_1INetworkHandler.html">systems::INetworkHandler</a> &gt;</td>          <td class="paramname"><span class="paramname"><em>handler</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>

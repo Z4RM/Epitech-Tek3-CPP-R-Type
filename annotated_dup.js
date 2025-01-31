@@ -13,6 +13,7 @@ var annotated_dup =
         [ "Hitbox", "structrtype_1_1components_1_1Hitbox.html", "structrtype_1_1components_1_1Hitbox" ],
         [ "IA", "structrtype_1_1components_1_1IA.html", "structrtype_1_1components_1_1IA" ],
         [ "InputHandler", "structrtype_1_1components_1_1InputHandler.html", "structrtype_1_1components_1_1InputHandler" ],
+        [ "MenuState", "structrtype_1_1components_1_1MenuState.html", "structrtype_1_1components_1_1MenuState" ],
         [ "NetId", "structrtype_1_1components_1_1NetId.html", "structrtype_1_1components_1_1NetId" ],
         [ "NetworkConnection", "structrtype_1_1components_1_1NetworkConnection.html", "structrtype_1_1components_1_1NetworkConnection" ],
         [ "NoDamageToPlayer", "structrtype_1_1components_1_1NoDamageToPlayer.html", "structrtype_1_1components_1_1NoDamageToPlayer" ],
@@ -65,7 +66,6 @@ var annotated_dup =
         [ "PacketConnect", "classrtype_1_1network_1_1PacketConnect.html", "classrtype_1_1network_1_1PacketConnect" ],
         [ "PacketEnemiesData", "classrtype_1_1network_1_1PacketEnemiesData.html", "classrtype_1_1network_1_1PacketEnemiesData" ],
         [ "PacketFactory", "classrtype_1_1network_1_1PacketFactory.html", "classrtype_1_1network_1_1PacketFactory" ],
-        [ "PacketNewPlayer", "classrtype_1_1network_1_1PacketNewPlayer.html", "classrtype_1_1network_1_1PacketNewPlayer" ],
         [ "PacketPlayerCounter", "classrtype_1_1network_1_1PacketPlayerCounter.html", "classrtype_1_1network_1_1PacketPlayerCounter" ],
         [ "PacketPlayersData", "classrtype_1_1network_1_1PacketPlayersData.html", "classrtype_1_1network_1_1PacketPlayersData" ],
         [ "PacketPlayerShoot", "classrtype_1_1network_1_1PacketPlayerShoot.html", "classrtype_1_1network_1_1PacketPlayerShoot" ],
@@ -78,13 +78,26 @@ var annotated_dup =
         [ "Game", "classrtype_1_1scenes_1_1Game.html", "classrtype_1_1scenes_1_1Game" ],
         [ "Menu", "classrtype_1_1scenes_1_1Menu.html", "classrtype_1_1scenes_1_1Menu" ]
       ] ],
+      [ "services", "namespacertype_1_1services.html", [
+        [ "PlayerService", "classrtype_1_1services_1_1PlayerService.html", null ],
+        [ "ProjectileService", "classrtype_1_1services_1_1ProjectileService.html", null ]
+      ] ],
       [ "systems", "namespacertype_1_1systems.html", [
+        [ "ANetworkHandler", "classrtype_1_1systems_1_1ANetworkHandler.html", "classrtype_1_1systems_1_1ANetworkHandler" ],
+        [ "ConnectHandler", "classrtype_1_1systems_1_1ConnectHandler.html", "classrtype_1_1systems_1_1ConnectHandler" ],
+        [ "EnnemiesDataHandler", "classrtype_1_1systems_1_1EnnemiesDataHandler.html", "classrtype_1_1systems_1_1EnnemiesDataHandler" ],
+        [ "INetworkHandler", "classrtype_1_1systems_1_1INetworkHandler.html", "classrtype_1_1systems_1_1INetworkHandler" ],
         [ "InputSystem", "classrtype_1_1systems_1_1InputSystem.html", null ],
         [ "MonsterSpawner", "classrtype_1_1systems_1_1MonsterSpawner.html", null ],
         [ "Movement", "classrtype_1_1systems_1_1Movement.html", "classrtype_1_1systems_1_1Movement" ],
         [ "Network", "classrtype_1_1systems_1_1Network.html", null ],
+        [ "PlayerCountHandler", "classrtype_1_1systems_1_1PlayerCountHandler.html", "classrtype_1_1systems_1_1PlayerCountHandler" ],
+        [ "PlayerDataHandler", "classrtype_1_1systems_1_1PlayerDataHandler.html", "classrtype_1_1systems_1_1PlayerDataHandler" ],
+        [ "PlayerShootHandler", "classrtype_1_1systems_1_1PlayerShootHandler.html", "classrtype_1_1systems_1_1PlayerShootHandler" ],
         [ "RenderWindowSys", "classrtype_1_1systems_1_1RenderWindowSys.html", null ],
-        [ "UpdateProjectilesSystem", "classrtype_1_1systems_1_1UpdateProjectilesSystem.html", null ]
+        [ "StartGameHandler", "classrtype_1_1systems_1_1StartGameHandler.html", "classrtype_1_1systems_1_1StartGameHandler" ],
+        [ "UpdateProjectilesSystem", "classrtype_1_1systems_1_1UpdateProjectilesSystem.html", null ],
+        [ "WelcomeHandler", "classrtype_1_1systems_1_1WelcomeHandler.html", "classrtype_1_1systems_1_1WelcomeHandler" ]
       ] ],
       [ "Config", "classrtype_1_1Config.html", "classrtype_1_1Config" ],
       [ "ModeManager", "classrtype_1_1ModeManager.html", null ],

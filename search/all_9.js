@@ -13,11 +13,14 @@ var searchData=
   ['enforcement_10',['Enforcement',['../md_CODE__OF__CONDUCT.html#autotoc_md5',1,'']]],
   ['enforcement_20guidelines_11',['Enforcement Guidelines',['../md_CODE__OF__CONDUCT.html#autotoc_md6',1,'']]],
   ['enforcement_20responsibilities_12',['Enforcement Responsibilities',['../md_CODE__OF__CONDUCT.html#autotoc_md3',1,'']]],
-  ['entity_13',['Entity',['../structrtype_1_1ecs_1_1Entity.html',1,'rtype::ecs']]],
-  ['entitymanager_14',['EntityManager',['../classEntityManager.html',1,'EntityManager'],['../classrtype_1_1ecs_1_1EntityManager.html',1,'rtype::ecs::EntityManager']]],
-  ['entitymanager_15',['entityManager',['../structrtype_1_1models_1_1Scene.html#a25ceaededdb46d4c2fad4cad8ac275c2',1,'rtype::models::Scene']]],
-  ['entitymanager_2ehpp_16',['EntityManager.hpp',['../EntityManager_8hpp.html',1,'']]],
-  ['epacketcode_17',['EPacketCode',['../namespacertype_1_1network.html#a6e33dcdcd158a1e8ce1f13336651a3f8',1,'rtype::network']]],
-  ['epacketcode_2ehpp_18',['EPacketCode.hpp',['../EPacketCode_8hpp.html',1,'']]],
-  ['example_19',['Example',['../md_CONTRIBUTING.html#autotoc_md18',1,'']]]
+  ['ennemiesdatahandler_13',['EnnemiesDataHandler',['../classrtype_1_1systems_1_1EnnemiesDataHandler.html',1,'rtype::systems::EnnemiesDataHandler'],['../classrtype_1_1systems_1_1EnnemiesDataHandler.html#a57d8789effd0fd70c288fe641dd0942e',1,'rtype::systems::EnnemiesDataHandler::EnnemiesDataHandler()']]],
+  ['ennemiesdatahandler_2ecpp_14',['EnnemiesDataHandler.cpp',['../EnnemiesDataHandler_8cpp.html',1,'']]],
+  ['ennemiesdatahandler_2ehpp_15',['EnnemiesDataHandler.hpp',['../EnnemiesDataHandler_8hpp.html',1,'']]],
+  ['entity_16',['Entity',['../structrtype_1_1ecs_1_1Entity.html',1,'rtype::ecs']]],
+  ['entitymanager_17',['EntityManager',['../classEntityManager.html',1,'EntityManager'],['../classrtype_1_1ecs_1_1EntityManager.html',1,'rtype::ecs::EntityManager']]],
+  ['entitymanager_18',['entityManager',['../structrtype_1_1models_1_1Scene.html#a25ceaededdb46d4c2fad4cad8ac275c2',1,'rtype::models::Scene']]],
+  ['entitymanager_2ehpp_19',['EntityManager.hpp',['../EntityManager_8hpp.html',1,'']]],
+  ['epacketcode_20',['EPacketCode',['../namespacertype_1_1network.html#a6e33dcdcd158a1e8ce1f13336651a3f8',1,'rtype::network']]],
+  ['epacketcode_2ehpp_21',['EPacketCode.hpp',['../EPacketCode_8hpp.html',1,'']]],
+  ['example_22',['Example',['../md_CONTRIBUTING.html#autotoc_md18',1,'']]]
 ];
