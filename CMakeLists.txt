@@ -96,6 +96,13 @@ set(RTYPE_SRC
         src/RType/Systems/Network/handlers/EnnemiesDataHandler/EnnemiesDataHandler.hpp
         src/RType/Systems/Network/handlers/PlayerDataHandler/PlayerDataHandler.cpp
         src/RType/Systems/Network/handlers/PlayerDataHandler/PlayerDataHandler.hpp
+        src/RType/Models/EEnemyType.hpp
+        src/RType/Levels/Level.hpp
+        src/RType/Models/Spawn.hpp
+        src/RType/Levels/LevelBuilder.hpp
+        src/RType/Levels/LevelManager.cpp
+        src/RType/Levels/LevelManager.hpp
+        src/RType/Levels/Level.cpp
 )
 
 set(CLIENT_SRC

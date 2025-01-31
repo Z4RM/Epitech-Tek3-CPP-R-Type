@@ -26,6 +26,7 @@ namespace rtype::ecs {
        };
 
        void registerScene(int id, std::shared_ptr<IScene> scene) {
+           std::lock_guard guard(_mutex);
            if (_scenes.find(id) != _scenes.end()) {
                spdlog::warn("Scene not loaded because already registered with ID {}", id);
                return;
@@ -34,6 +35,7 @@ namespace rtype::ecs {
        }
 
         void changeScene(const int id, bool unload = false) {
+           std::lock_guard guard(_mutex);
             if (unload)
                 this->_scenes[_currentScene]->unload();
             this->_currentScene = id;
@@ -49,6 +51,7 @@ namespace rtype::ecs {
 
     private:
         SceneManager() = default;
+        std::mutex _mutex;
         int _currentScene = 0;
         std::map<int, std::shared_ptr<IScene>> _scenes {};
     };

@@ -15,6 +15,8 @@
 #include "Networks.hpp"
 #include "ECS/Scene/SceneManager.hpp"
 #include "Entities/Game.hpp"
+#include "Levels/LevelBuilder.hpp"
+#include "Levels/LevelManager.hpp"
 #include "Scenes/Game/Game.hpp"
 #include "Scenes/Menu/Menu.hpp"
 #include "Systems/AnimationProjectile.hpp"
@@ -92,6 +94,26 @@ int rtype::RType::run() {
     //TODO: put this component in the game scene instead of here
     entities::Game gameSate(componentManager, entityManager);
 
+    levels::LevelBuilder levelBuilder;
+
+    rtype::models::SpawnPoint spawn1{5, {
+        {12, models::EEnemyType::BASIC}}
+    };
+
+    rtype::models::SpawnPoint spawn2{7, {
+            {12, models::EEnemyType::BASIC},
+            {5, models::EEnemyType::BASIC}
+    }
+    };
+
+    levels::Level test = levelBuilder.setDuration(10)
+    .setNumber(1)
+    .addSpawnPoint(spawn1)
+    .addSpawnPoint(spawn2)
+    .build();
+
+    levels::LevelManager::getInstance().registerLevel(std::make_shared<levels::Level>(test));
+    levels::LevelManager::getInstance().changeLevel(1);
 
     while (true) {
         for (auto &entity: entityManager.getEntities()) {
@@ -104,5 +126,6 @@ int rtype::RType::run() {
             }
         }
         sceneManager.updateCurrentScene(systemManager);
+        levels::LevelManager::getInstance().processCurrentLevel();
     }
 }
