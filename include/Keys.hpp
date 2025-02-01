@@ -14,6 +14,12 @@
 #include <SFML/Window/Keyboard.hpp>
 
 namespace rtype {
+    /**
+     * @var A map that associates string representations of keys with their corresponding `sf::Keyboard::Key` values.
+     *
+     * This map is used to convert string key names from configuration files or other sources
+     * into `sf::Keyboard::Key` values that can be used within the application to handle keyboard input.
+     */
     static std::unordered_map<std::string, sf::Keyboard::Key> keys = {
             {"A",          sf::Keyboard::Key::A},
             {"B",          sf::Keyboard::Key::B},
