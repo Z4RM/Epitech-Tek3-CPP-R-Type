@@ -31,9 +31,9 @@ namespace rtype::systems {
                 auto playerPos = _componentManager.getComponent<components::Position>(entity);
 
                 if (netId && netId->id == packetPlayerShoot->netId) {
-                    services::ProjectileService::createProjectile(_entityManager, _componentManager, playerPos);
+                    services::ProjectileService::createProjectile(_entityManager, _componentManager, playerPos, packetPlayerShoot->isSuperProjectile);
                     if (IS_SERVER) {
-                        network::PacketPlayerShoot newPacket(packetPlayerShoot->netId);
+                        network::PacketPlayerShoot newPacket(packetPlayerShoot->netId, packetPlayerShoot->isSuperProjectile);
                         for (auto &playerEntity : _entityManager.getEntities()) {
                             auto networkConnection = _componentManager.getComponent<components::NetworkConnection>(playerEntity);
                             auto networkId = _componentManager.getComponent<components::NetId>(playerEntity);

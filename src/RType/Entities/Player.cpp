@@ -57,13 +57,25 @@ rtype::entities::Player::Player(
         sf::Keyboard::Key::Space,
         {sf::Event::KeyPressed, [this, &entityManager, &componentManager, id, netId]() {
             static auto clock = std::chrono::steady_clock::now();
-            bool result = this->shoot(entityManager, componentManager, id, clock);
+            bool result = this->shoot(entityManager, componentManager, id, clock, false);
             if (result) {
-                network::PacketPlayerShoot sendPlayerShoot(netId);
+                network::PacketPlayerShoot sendPlayerShoot(netId, false);
                 network::TCPNetwork::getInstance().sendPacket(sendPlayerShoot);
             }
         }}
     });
+
+    _inputs.keyActions.insert({
+        sf::Keyboard::Key::E,
+        {sf::Event::KeyPressed, [this, &entityManager, &componentManager, id, netId]() {
+            static auto clock = std::chrono::steady_clock::now();
+            bool result = this->shoot(entityManager, componentManager, id, clock, true);
+            if (result) {
+                network::PacketPlayerShoot sendPlayerShoot(netId, true);
+                network::TCPNetwork::getInstance().sendPacket(sendPlayerShoot);
+            }
+        }}
+    }),
 
     // Press
     _inputs.keyActions.insert({
@@ -146,30 +158,32 @@ rtype::entities::Player::Player(
 }
 
 bool rtype::entities::Player::shoot(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager, size_t id,
-std::chrono::steady_clock::time_point &clock) {
+std::chrono::steady_clock::time_point &clock, bool isSuperProjectile) {
+    const auto cooldown = isSuperProjectile ? 1.5 : 0.2;
+    const auto projectileSpritePath = isSuperProjectile ? "assets/sprites/projectile/player-shots-charged.gif" : "assets/sprites/projectile/player-shots.gif";
+    const int projectileDamage = isSuperProjectile ? 35 : 20;
     auto now = std::chrono::steady_clock::now();
     std::chrono::duration<double> elapsed = now - clock;
 
-    if (elapsed.count() < 0.2) {
+    if (elapsed.count() < cooldown)
         return false;
-    }
     clock = std::chrono::steady_clock::now();
     size_t projectileId = entityManager.createEntity();
 
     auto playerPos = componentManager.getComponent<components::Position>(id);
     auto netId = componentManager.getComponent<components::NetId>(id);
 
-    if (!playerPos) {
+    if (!playerPos)
         return false;
-    }
-    components::Velocity vel = {2.0, 0.0, 0.0};
+    const float projectileVelX = isSuperProjectile ? 0.25 : 2.0;
+    components::Velocity vel = {projectileVelX, 0.0, 0.0};
     components::Position pos = {playerPos->x + 10.0f, playerPos->y, playerPos->z};
 
     #ifdef RTYPE_IS_CLIENT
     components::Sprite projectileSprite = {
         pos,
         {82.0f, 18.0f},
-        "assets/sprites/projectile/player-shots.gif",
+        projectileSpritePath,
         {1},
         {1.0, 1.0},
         std::make_shared<sf::Texture>(),
@@ -181,7 +195,7 @@ std::chrono::steady_clock::time_point &clock) {
     projectileSprite.sprite->setTextureRect(textureRect);
     projectileSprite.sprite->setPosition({pos.x, pos.y});
     components::Animation projAnim = {
-    "assets/sprite/projectile/player-shots.gif",
+    projectileSpritePath,
         2,
         10
     };
@@ -193,7 +207,7 @@ std::chrono::steady_clock::time_point &clock) {
     componentManager.addComponent<components::Size>(projectileId, {10.0f, 10.0f});
     componentManager.addComponent<components::Hitbox>(projectileId, {pos, {10.0f, 10.0f}});
     componentManager.addComponent<components::Speed>(projectileId, {250});
-    componentManager.addComponent<components::Damage>(projectileId, {20});
+    componentManager.addComponent<components::Damage>(projectileId, {projectileDamage});
     componentManager.addComponent<components::NoDamageToPlayer>(projectileId, {true});
     components::Projectile projectile = {
         pos,
@@ -205,7 +219,7 @@ std::chrono::steady_clock::time_point &clock) {
     };
     componentManager.addComponent<components::Projectile>(projectileId, projectile);
 
-    network::PacketPlayerShoot packet(netId->id);
+    network::PacketPlayerShoot packet(netId->id, isSuperProjectile);
     return true;
 }
 
