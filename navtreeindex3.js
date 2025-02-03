@@ -1,5 +1,7 @@
 var NAVTREEINDEX3 =
 {
+"md_CODE__OF__CONDUCT.html#autotoc_md11":[0,6],
+"md_CODE__OF__CONDUCT.html#autotoc_md2":[0,1],
 "md_CODE__OF__CONDUCT.html#autotoc_md3":[0,2],
 "md_CODE__OF__CONDUCT.html#autotoc_md4":[0,3],
 "md_CODE__OF__CONDUCT.html#autotoc_md5":[0,4],
@@ -247,7 +249,5 @@ var NAVTREEINDEX3 =
 "structrtype_1_1entities_1_1RWindow.html#aac38c5c0f48a97af935138eb1e57935e":[4,0,0,2,7,0],
 "structrtype_1_1entities_1_1Style.html":[3,0,0,2,8],
 "structrtype_1_1entities_1_1Style.html":[4,0,0,2,8],
-"structrtype_1_1entities_1_1Style.html#a29eae3b029b7b4ac4353a5cb0a9e4136":[3,0,0,2,8,6],
-"structrtype_1_1entities_1_1Style.html#a29eae3b029b7b4ac4353a5cb0a9e4136":[4,0,0,2,8,6],
-"structrtype_1_1entities_1_1Style.html#a4ea93ebb931add49424625424bab49d1":[3,0,0,2,8,3]
+"structrtype_1_1entities_1_1Style.html#a29eae3b029b7b4ac4353a5cb0a9e4136":[3,0,0,2,8,6]
 };

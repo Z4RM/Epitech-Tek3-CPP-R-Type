@@ -1,5 +1,7 @@
 var NAVTREEINDEX4 =
 {
+"structrtype_1_1entities_1_1Style.html#a29eae3b029b7b4ac4353a5cb0a9e4136":[4,0,0,2,8,6],
+"structrtype_1_1entities_1_1Style.html#a4ea93ebb931add49424625424bab49d1":[3,0,0,2,8,3],
 "structrtype_1_1entities_1_1Style.html#a4ea93ebb931add49424625424bab49d1":[4,0,0,2,8,3],
 "structrtype_1_1entities_1_1Style.html#a7522c7024d7930d1b8e191b739bc0524":[3,0,0,2,8,0],
 "structrtype_1_1entities_1_1Style.html#a7522c7024d7930d1b8e191b739bc0524":[4,0,0,2,8,0],
