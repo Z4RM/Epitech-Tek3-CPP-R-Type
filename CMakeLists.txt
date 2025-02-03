@@ -103,6 +103,8 @@ set(RTYPE_SRC
         src/RType/Levels/LevelManager.cpp
         src/RType/Levels/LevelManager.hpp
         src/RType/Levels/Level.cpp
+        src/RType/Systems/LevelRunner.cpp
+        src/RType/Systems/LevelRunner.hpp
 )
 
 set(CLIENT_SRC

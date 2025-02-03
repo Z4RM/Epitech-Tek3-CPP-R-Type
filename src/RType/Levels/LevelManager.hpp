@@ -17,7 +17,7 @@ namespace rtype::levels {
     public:
         inline void registerLevel(std::shared_ptr<Level> level) { this->_levels.emplace_back(std::move(level)); }
 
-        void processCurrentLevel() const;
+        void processCurrentLevel(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager) const;
         static LevelManager &getInstance();
         void changeLevel(int number);
 
@@ -26,5 +26,4 @@ namespace rtype::levels {
         std::shared_ptr<Level> _currentLevel = nullptr;
         std::vector<std::shared_ptr<Level>> _levels {};
     };
-
 }

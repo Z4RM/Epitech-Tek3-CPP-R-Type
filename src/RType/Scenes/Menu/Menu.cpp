@@ -9,6 +9,7 @@
 
 #include "Network/Packets/Descriptors/PacketStartGame/PacketStartGame.hpp"
 #include "Network/TCPNetwork/TCPNetwork.hpp"
+#include "RType/Components/Shared/Counter.hpp"
 #include "RType/Components/Shared/MenuState.hpp"
 #include "RType/Entities/PlayerCounter.hpp"
 
@@ -61,6 +62,36 @@ void rtype::scenes::Menu::load() {
 
     unsigned int menuSateEntity = _entityManager.createEntity();
     components::MenuState state = { 0 };
+
+    unsigned int levelSelectorEntity = _entityManager.createEntity();
+    std::string levelCounterName = "level";
+    components::Counter count(1, 8, levelCounterName, {260, 475}, 35);
+    _componentManager.addComponent<components::Counter>(levelSelectorEntity, count);
+
+
+    components::OnClick changeLevel;
+    changeLevel.fn = [this]() {
+        for (const auto &entity : _entityManager.getEntities()) {
+            auto counter = _componentManager.getComponent<components::Counter>(entity);
+
+            if (counter && counter->name == "level") {
+                int count = counter->getCount();
+
+                count += 1;
+                if (count > 8)
+                    counter->update(1);
+                else
+                    counter->update(count);
+                _componentManager.addComponent<components::Counter>(entity, *counter);
+            }
+        }
+    };
+    components::SfText changeLevelText("->", "./assets/fonts/Starborn.ttf", sf::Color::White, 50, {500, 465});
+    entities::Button changeLevelButton(_componentManager, _entityManager, changeLevel, changeLevelText);
+
+    this->registerEntity(levelSelectorEntity);
+    this->registerEntity(menuSateEntity);
+    this->registerEntity(changeLevelButton);
 
     _componentManager.addComponent<components::MenuState>(menuSateEntity, state);
     AScene::load();

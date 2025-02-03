@@ -20,6 +20,7 @@
 #include "Scenes/Game/Game.hpp"
 #include "Scenes/Menu/Menu.hpp"
 #include "Systems/AnimationProjectile.hpp"
+#include "Systems/LevelRunner.hpp"
 #include "Systems/MonsterSpawner.hpp"
 #include "Systems/Network/Network.hpp"
 #ifdef RTYPE_IS_CLIENT
@@ -84,6 +85,7 @@ int rtype::RType::run() {
     systemManager.addSystem(rtype::systems::Movement::move);
     systemManager.addSystem(rtype::systems::Network::udpProcess);
     systemManager.addSystem(rtype::systems::Network::tcpProcess);
+    systemManager.addSystem(rtype::systems::LevelRunner::process);
 
     std::shared_ptr<scenes::Menu> menu = std::make_shared<scenes::Menu>(entityManager, componentManager);
     sceneManager.registerScene(0, std::move(menu));
@@ -94,7 +96,6 @@ int rtype::RType::run() {
     //TODO: put this component in the game scene instead of here
     entities::Game gameSate(componentManager, entityManager);
 
-    levels::LevelBuilder levelBuilder;
 
     rtype::models::SpawnPoint spawn1{5, {
         {12, models::EEnemyType::BASIC}}
@@ -105,13 +106,11 @@ int rtype::RType::run() {
             {5, models::EEnemyType::BASIC}
     }
     };
-
-    levels::Level test = levelBuilder.setDuration(10)
+    levels::Level test = levels::LevelBuilder().setDuration(10)
     .setNumber(1)
     .addSpawnPoint(spawn1)
     .addSpawnPoint(spawn2)
     .build();
-
     levels::LevelManager::getInstance().registerLevel(std::make_shared<levels::Level>(test));
     levels::LevelManager::getInstance().changeLevel(1);
 
@@ -126,6 +125,5 @@ int rtype::RType::run() {
             }
         }
         sceneManager.updateCurrentScene(systemManager);
-        levels::LevelManager::getInstance().processCurrentLevel();
     }
 }

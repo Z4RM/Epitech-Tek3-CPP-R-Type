@@ -7,13 +7,11 @@
 
 #pragma once
 
-#include <string>
 #include <utility>
 #include <vector>
-
-#include "RType/Models/EEnemyType.hpp"
 #include "RType/Models/Spawn.hpp"
 #include <chrono>
+#include "ECS.hpp"
 
 namespace rtype::levels {
 
@@ -24,7 +22,7 @@ namespace rtype::levels {
 
         [[nodiscard]] int getNumber() const { return this->_number; }
 
-        void process();
+        void process(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager);
 
     private:
         bool _started = false;

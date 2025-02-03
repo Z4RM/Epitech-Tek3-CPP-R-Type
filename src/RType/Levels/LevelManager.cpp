@@ -22,9 +22,9 @@ namespace rtype::levels {
         return instance;
     }
 
-    void LevelManager::processCurrentLevel() const {
+    void LevelManager::processCurrentLevel(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager) const {
         if (this->_currentLevel) {
-            this->_currentLevel->process();
+            this->_currentLevel->process(entityManager, componentManager);
         }
     }
 }

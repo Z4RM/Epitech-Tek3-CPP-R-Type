@@ -10,7 +10,7 @@
 #include <spdlog/spdlog.h>
 
 namespace rtype::levels {
-    void Level::process() {
+    void Level::process(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager) {
 
         if (!this->_started) {
             this->_start =  std::chrono::steady_clock::now();
@@ -44,5 +44,4 @@ namespace rtype::levels {
             }
         }
     }
-
 }
