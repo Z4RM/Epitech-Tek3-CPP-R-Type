@@ -44,8 +44,15 @@ void rtype::scenes::Menu::load() {
             if (gameState) {
                 gameState->isStarted = true;
                 _componentManager.addComponent<components::GameState>(entity, *gameState);
+                break;
+            }
+        }
+        for (const auto &entity : _entityManager.getEntities()) {
+            auto levelCounter = _componentManager.getComponent<components::Counter>(entity);
+
+            if (levelCounter && levelCounter->name == "level") {
                 if (network.getStarted())
-                    network.sendPacket(network::PacketStartGame());
+                    network.sendPacket(network::PacketStartGame(levelCounter->getCount()));
                 break;
             }
         }

@@ -85,7 +85,6 @@ int rtype::RType::run() {
     systemManager.addSystem(rtype::systems::Movement::move);
     systemManager.addSystem(rtype::systems::Network::udpProcess);
     systemManager.addSystem(rtype::systems::Network::tcpProcess);
-    systemManager.addSystem(rtype::systems::LevelRunner::process);
 
     std::shared_ptr<scenes::Menu> menu = std::make_shared<scenes::Menu>(entityManager, componentManager);
     sceneManager.registerScene(0, std::move(menu));
@@ -97,22 +96,24 @@ int rtype::RType::run() {
     entities::Game gameSate(componentManager, entityManager);
 
 
-    rtype::models::SpawnPoint spawn1{5, {
-        {12, models::EEnemyType::BASIC}}
-    };
+    if (IS_SERVER) {
+        systemManager.addSystem(rtype::systems::LevelRunner::process);
+        rtype::models::SpawnPoint spawn1{5, {
+            {12, models::EEnemyType::BASIC}}
+        };
 
-    rtype::models::SpawnPoint spawn2{7, {
-            {12, models::EEnemyType::BASIC},
-            {5, models::EEnemyType::BASIC}
+        rtype::models::SpawnPoint spawn2{7, {
+                {12, models::EEnemyType::BASIC},
+                {5, models::EEnemyType::BASIC}
+            }
+        };
+        levels::Level test = levels::LevelBuilder().setDuration(10)
+        .setNumber(1)
+        .addSpawnPoint(spawn1)
+        .addSpawnPoint(spawn2)
+        .build();
+        levels::LevelManager::getInstance().registerLevel(std::make_shared<levels::Level>(test));
     }
-    };
-    levels::Level test = levels::LevelBuilder().setDuration(10)
-    .setNumber(1)
-    .addSpawnPoint(spawn1)
-    .addSpawnPoint(spawn2)
-    .build();
-    levels::LevelManager::getInstance().registerLevel(std::make_shared<levels::Level>(test));
-    levels::LevelManager::getInstance().changeLevel(1);
 
     while (true) {
         for (auto &entity: entityManager.getEntities()) {
