@@ -10,23 +10,26 @@
 
 namespace rtype::services {
     void ProjectileService::createProjectile(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager,
-    std::shared_ptr<components::Position> shooterPos) {
+    std::shared_ptr<components::Position> shooterPos, bool isSuperProjectile) {
+        const auto projectileSpritePath = isSuperProjectile ? "assets/sprites/projectile/player-shots-charged.gif" : "assets/sprites/projectile/player-shots.gif";
+        const float projectileVelX = isSuperProjectile ? 0.25 : 2.0;
+        const int projectileDamage = isSuperProjectile ? 35 : 20;
         size_t projectileId = entityManager.createEntity();
 
-        components::Velocity vel = {2.0, 0.0, 0.0};
+        components::Velocity vel = {projectileVelX, 0.0, 0.0};
         components::Position pos = {shooterPos->x + 10.0f, shooterPos->y, shooterPos->z};
         componentManager.addComponent<components::Velocity>(projectileId, vel);
         componentManager.addComponent<components::Position>(projectileId, pos);
         componentManager.addComponent<components::Size>(projectileId, {10.0f, 10.0f});
         componentManager.addComponent<components::Hitbox>(projectileId, {pos, {10.0f, 10.0f}});
         componentManager.addComponent<components::Speed>(projectileId, {250});
-        componentManager.addComponent<components::Damage>(projectileId, {20});
+        componentManager.addComponent<components::Damage>(projectileId, {projectileDamage});
         componentManager.addComponent<components::NoDamageToPlayer>(projectileId, {true});
         #ifdef RTYPE_IS_CLIENT
         components::Sprite projectileSprite = {
             pos,
             {82.0f, 18.0f},
-            "assets/sprites/projectile/player-shots.gif",
+            projectileSpritePath,
             {1},
             {1.0, 1.0},
             std::make_shared<sf::Texture>(),
@@ -38,7 +41,7 @@ namespace rtype::services {
         projectileSprite.sprite->setTextureRect(textureRect);
         projectileSprite.sprite->setPosition({pos.x, pos.y});
         components::Animation projAnim = {
-            "assets/sprite/projectile/player-shots.gif",
+            projectileSpritePath,
             2,
             10
         };

@@ -27,6 +27,9 @@ right=D
 ; The key to shoot.
 shoot=Space
 
+; The key to charged shoot.
+charged_shoot=E
+
 [log]
 ; The logging level
 ; trace    | Highly detailed logs for tracing program execution.
