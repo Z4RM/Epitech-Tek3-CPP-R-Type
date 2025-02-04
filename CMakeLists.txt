@@ -72,8 +72,6 @@ set(RTYPE_SRC
         src/RType/Components/Shared/Projectile.hpp
         src/Network/Packets/Descriptors/PacketPlayerShoot/PacketPlayerShoot.cpp
         src/Network/Packets/Descriptors/PacketPlayerShoot/PacketPlayerShoot.hpp
-        src/RType/Systems/MonsterSpawner.cpp
-        src/RType/Systems/MonsterSpawner.hpp
         src/RType/Components/Shared/Dead.hpp
         src/RType/Systems/Network/handlers/INetworkHandler.hpp
         src/RType/Systems/Network/handlers/WelcomeHandler/WelcomeHandler.hpp
@@ -105,6 +103,8 @@ set(RTYPE_SRC
         src/RType/Levels/Level.cpp
         src/RType/Systems/LevelRunner.cpp
         src/RType/Systems/LevelRunner.hpp
+        src/RType/Services/EnemyService/EnemyService.cpp
+        src/RType/Services/EnemyService/EnemyService.hpp
 )
 
 set(CLIENT_SRC

@@ -34,5 +34,7 @@ namespace rtype::levels {
 
         std::vector<models::SpawnPoint> _spawns {};
         std::chrono::time_point<std::chrono::steady_clock> _start;
+
+        bool isGameEnded(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager);
     };
 }

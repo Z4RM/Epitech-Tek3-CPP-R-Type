@@ -57,10 +57,13 @@ rtype::entities::Player::Player(
         sf::Keyboard::Key::Space,
         {sf::Event::KeyPressed, [this, &entityManager, &componentManager, id, netId]() {
             static auto clock = std::chrono::steady_clock::now();
-            bool result = this->shoot(entityManager, componentManager, id, clock);
-            if (result) {
-                network::PacketPlayerShoot sendPlayerShoot(netId);
-                network::TCPNetwork::getInstance().sendPacket(sendPlayerShoot);
+            auto health = componentManager.getComponent<components::Health>(id);
+            if (health->value > 0) {
+                bool result = this->shoot(entityManager, componentManager, id, clock);
+                if (result) {
+                    network::PacketPlayerShoot sendPlayerShoot(netId);
+                    network::TCPNetwork::getInstance().sendPacket(sendPlayerShoot);
+                }
             }
         }}
     });

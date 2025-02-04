@@ -46,9 +46,10 @@ void rtype::systems::RenderWindowSys::render(ecs::EntityManager &entityManager, 
         for (auto e : sortedEntities) {
             auto sprite = componentManager.getComponent<components::Sprite>(e.id);
             auto health = componentManager.getComponent<components::Health>(e.id);
+            auto ai = componentManager.getComponent<components::IA>(e.id);
             auto dead = componentManager.getComponent<components::Dead>(e.id);
 
-            if (health && health->created && !dead) {
+            if (health && health->created && !dead && !ai) {
                 renderWindow->window->draw(health->bgBar);
                 renderWindow->window->draw(health->healthBar);
             }

@@ -83,7 +83,7 @@ void rtype::systems::Movement::handleCollisions(unsigned int entity, components:
                     }
                 }
             }
-            componentManager.addComponent<components::Velocity>(entity, *vel);
+            //componentManager.addComponent<components::Velocity>(entity, *vel);
         }
     }
 }
