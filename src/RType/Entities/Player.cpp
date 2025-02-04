@@ -7,6 +7,7 @@
 
 #include "RType/ModeManager/ModeManager.hpp"
 #include "Player.hpp"
+#include "RType/Config/Config.hpp"
 
 #ifdef RTYPE_IS_CLIENT
 
@@ -50,11 +51,16 @@ rtype::entities::Player::Player(
         return;
 
     size_t id = this->_id;
-
     int netId = network.id;
 
+    const auto upKeybinding = Config::getInstance().getKeybinding("up", sf::Keyboard::Key::Z);
+    const auto downKeybinding = Config::getInstance().getKeybinding("down", sf::Keyboard::Key::S);
+    const auto leftKeybinding = Config::getInstance().getKeybinding("left", sf::Keyboard::Key::Q);
+    const auto rightKeybinding = Config::getInstance().getKeybinding("right", sf::Keyboard::Key::D);
+    const auto shootKeybinding = Config::getInstance().getKeybinding("shoot", sf::Keyboard::Key::Space);
+
     _inputs.keyActions.insert({
-        sf::Keyboard::Key::Space,
+        shootKeybinding,
         {sf::Event::KeyPressed, [this, &entityManager, &componentManager, id, netId]() {
             static auto clock = std::chrono::steady_clock::now();
             bool result = this->shoot(entityManager, componentManager, id, clock, false);
@@ -65,6 +71,7 @@ rtype::entities::Player::Player(
         }}
     });
 
+    //region Press
     _inputs.keyActions.insert({
         sf::Keyboard::Key::E,
         {sf::Event::KeyPressed, [this, &entityManager, &componentManager, id, netId]() {
@@ -77,9 +84,8 @@ rtype::entities::Player::Player(
         }}
     }),
 
-    // Press
     _inputs.keyActions.insert({
-        sf::Keyboard::Key::Z,
+        upKeybinding,
         {sf::Event::KeyPressed, [id, pos, &componentManager]() {
             auto vel = componentManager.getComponent<components::Velocity>(id);
             if (vel != nullptr) {
@@ -90,7 +96,7 @@ rtype::entities::Player::Player(
     });
 
     _inputs.keyActions.insert({
-        sf::Keyboard::Key::S,
+        downKeybinding,
         {sf::Event::KeyPressed, [id, &componentManager]() {
             auto vel = componentManager.getComponent<components::Velocity>(id);
             vel->y = 1;
@@ -99,7 +105,7 @@ rtype::entities::Player::Player(
     });
 
     _inputs.keyActions.insert({
-        sf::Keyboard::Key::Q,
+        leftKeybinding,
         {sf::Event::KeyPressed, [id, &componentManager]() {
             auto vel = componentManager.getComponent<components::Velocity>(id);
             vel->x = -1;
@@ -108,17 +114,18 @@ rtype::entities::Player::Player(
     });
 
     _inputs.keyActions.insert({
-        sf::Keyboard::Key::D,
+        rightKeybinding,
         {sf::Event::KeyPressed, [id, &componentManager]() {
             auto vel = componentManager.getComponent<components::Velocity>(id);
             vel->x = 1;
             componentManager.addComponent<components::Velocity>(id, *vel);
         }}
     });
+    //endregion
 
-    // Release
+    //region Release
     _inputs.keyActions.insert({
-        sf::Keyboard::Key::Z,
+        upKeybinding,
         {sf::Event::KeyReleased, [id, pos, &componentManager]() {
             auto vel = componentManager.getComponent<components::Velocity>(id);
             if (vel != nullptr) {
@@ -129,7 +136,7 @@ rtype::entities::Player::Player(
     });
 
     _inputs.keyActions.insert({
-        sf::Keyboard::Key::S,
+        downKeybinding,
         {sf::Event::KeyReleased, [id, &componentManager]() {
             auto vel = componentManager.getComponent<components::Velocity>(id);
              vel->y = 0;
@@ -138,7 +145,7 @@ rtype::entities::Player::Player(
     });
 
     _inputs.keyActions.insert({
-        sf::Keyboard::Key::Q,
+        leftKeybinding,
         {sf::Event::KeyReleased, [id, &componentManager]() {
             auto vel = componentManager.getComponent<components::Velocity>(id);
              vel->x = 0;
@@ -147,13 +154,15 @@ rtype::entities::Player::Player(
     });
 
     _inputs.keyActions.insert({
-        sf::Keyboard::Key::D,
+        rightKeybinding,
         {sf::Event::KeyReleased, [id, &componentManager]() {
             auto vel = componentManager.getComponent<components::Velocity>(id);
              vel->x = 0;
              componentManager.addComponent<components::Velocity>(id, *vel);
         }}
     });
+    //endregion
+
     componentManager.addComponent<components::InputHandler>(id, _inputs);
 }
 

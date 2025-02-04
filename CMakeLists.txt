@@ -169,6 +169,7 @@ set(RTYPE_HEADERS
         include/Systems.hpp
         include/Packets.hpp
         include/Networks.hpp
+        include/Keys.hpp
 )
 
 link_libraries(inih::inireader spdlog::spdlog asio::asio)
