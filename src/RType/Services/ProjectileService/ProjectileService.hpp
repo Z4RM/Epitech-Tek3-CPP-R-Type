@@ -14,6 +14,6 @@ namespace rtype::services {
     class ProjectileService {
     public:
         static void createProjectile(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager,
-        std::shared_ptr<components::Position> shooterPos);
+        std::shared_ptr<components::Position> shooterPos, bool isSuperProjectile);
     };
 }

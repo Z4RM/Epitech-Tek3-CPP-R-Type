@@ -10,6 +10,26 @@ server_address=127.0.0.1
 ; Must be in the range [1024, 65535]
 server_port=4242
 
+; The keybindings used by the client.
+[keybindings]
+; The key to move the player up.
+up=Z
+
+; The key to move the player down.
+down=S
+
+; The key to move the player left.
+left=Q
+
+; The key to move the player right.
+right=D
+
+; The key to shoot.
+shoot=Space
+
+; The key to charged shoot.
+charged_shoot=E
+
 [log]
 ; The logging level
 ; trace    | Highly detailed logs for tracing program execution.
