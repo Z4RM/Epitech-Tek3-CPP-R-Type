@@ -224,12 +224,14 @@ var NAVTREEINDEX1 =
 "classrtype_1_1network_1_1PacketPlayerShoot.html#a065b6bdf6dc604a1586a12922f1e8ccc":[4,0,0,4,7,2],
 "classrtype_1_1network_1_1PacketPlayerShoot.html#a0ffab33b02b80463e562f449198c0227":[3,0,0,4,7,3],
 "classrtype_1_1network_1_1PacketPlayerShoot.html#a0ffab33b02b80463e562f449198c0227":[4,0,0,4,7,3],
-"classrtype_1_1network_1_1PacketPlayerShoot.html#a59544f0b3a65633092e736d597b48aaf":[3,0,0,4,7,1],
-"classrtype_1_1network_1_1PacketPlayerShoot.html#a59544f0b3a65633092e736d597b48aaf":[4,0,0,4,7,1],
-"classrtype_1_1network_1_1PacketPlayerShoot.html#a5b4cf21c0f2d6d916dba99172a560690":[3,0,0,4,7,4],
-"classrtype_1_1network_1_1PacketPlayerShoot.html#a5b4cf21c0f2d6d916dba99172a560690":[4,0,0,4,7,4],
+"classrtype_1_1network_1_1PacketPlayerShoot.html#a5b4cf21c0f2d6d916dba99172a560690":[3,0,0,4,7,5],
+"classrtype_1_1network_1_1PacketPlayerShoot.html#a5b4cf21c0f2d6d916dba99172a560690":[4,0,0,4,7,5],
+"classrtype_1_1network_1_1PacketPlayerShoot.html#ac151085c70c411331713126930864abf":[3,0,0,4,7,1],
+"classrtype_1_1network_1_1PacketPlayerShoot.html#ac151085c70c411331713126930864abf":[4,0,0,4,7,1],
 "classrtype_1_1network_1_1PacketPlayerShoot.html#ac88819e8125689fe0afde920b7953522":[3,0,0,4,7,0],
 "classrtype_1_1network_1_1PacketPlayerShoot.html#ac88819e8125689fe0afde920b7953522":[4,0,0,4,7,0],
+"classrtype_1_1network_1_1PacketPlayerShoot.html#af0a7c626e4fc95354cdf9003724a20b2":[3,0,0,4,7,4],
+"classrtype_1_1network_1_1PacketPlayerShoot.html#af0a7c626e4fc95354cdf9003724a20b2":[4,0,0,4,7,4],
 "classrtype_1_1network_1_1PacketPlayersData.html":[3,0,0,4,6],
 "classrtype_1_1network_1_1PacketPlayersData.html":[4,0,0,4,6],
 "classrtype_1_1network_1_1PacketPlayersData.html#a03a17665d12e370922c987749e55a8eb":[3,0,0,4,6,1],
@@ -247,7 +249,5 @@ var NAVTREEINDEX1 =
 "classrtype_1_1network_1_1PacketStartGame.html#a0411003a042010b36c62a580ba0c1e78":[3,0,0,4,8,1],
 "classrtype_1_1network_1_1PacketStartGame.html#a0411003a042010b36c62a580ba0c1e78":[4,0,0,4,8,1],
 "classrtype_1_1network_1_1PacketStartGame.html#a112cb9ccbb243604d133976b959e025b":[3,0,0,4,8,0],
-"classrtype_1_1network_1_1PacketStartGame.html#a112cb9ccbb243604d133976b959e025b":[4,0,0,4,8,0],
-"classrtype_1_1network_1_1PacketStartGame.html#a51ab774ae2b5678bc3d7410eb72c5565":[3,0,0,4,8,2],
-"classrtype_1_1network_1_1PacketStartGame.html#a51ab774ae2b5678bc3d7410eb72c5565":[4,0,0,4,8,2]
+"classrtype_1_1network_1_1PacketStartGame.html#a112cb9ccbb243604d133976b959e025b":[4,0,0,4,8,0]
 };

@@ -28,5 +28,6 @@ var searchData=
   ['isloaded_25',['isLoaded',['../classrtype_1_1ecs_1_1AScene.html#a395e559635b055cc81f0b9717859a1a9',1,'rtype::ecs::AScene::isLoaded()'],['../classrtype_1_1ecs_1_1IScene.html#a76f1b73165577c9eac6d66d2e4042791',1,'rtype::ecs::IScene::isLoaded()']]],
   ['isparseset_26',['ISparseSet',['../classrtype_1_1ecs_1_1ISparseSet.html',1,'rtype::ecs']]],
   ['isserver_27',['isServer',['../classrtype_1_1ModeManager.html#a5db557e9519ac166c01dad0f9f640749',1,'rtype::ModeManager']]],
-  ['isstarted_28',['isStarted',['../structrtype_1_1components_1_1GameState.html#afe79cf614d9fd9b9d363081029fc095d',1,'rtype::components::GameState']]]
+  ['isstarted_28',['isStarted',['../structrtype_1_1components_1_1GameState.html#afe79cf614d9fd9b9d363081029fc095d',1,'rtype::components::GameState']]],
+  ['issuperprojectile_29',['isSuperProjectile',['../classrtype_1_1network_1_1PacketPlayerShoot.html#af0a7c626e4fc95354cdf9003724a20b2',1,'rtype::network::PacketPlayerShoot']]]
 ];

@@ -1,5 +1,7 @@
 var NAVTREEINDEX2 =
 {
+"classrtype_1_1network_1_1PacketStartGame.html#a51ab774ae2b5678bc3d7410eb72c5565":[3,0,0,4,8,2],
+"classrtype_1_1network_1_1PacketStartGame.html#a51ab774ae2b5678bc3d7410eb72c5565":[4,0,0,4,8,2],
 "classrtype_1_1network_1_1PacketStartGame.html#a70fa501dfaf90fe14a6ac7ab1ed9ec1b":[3,0,0,4,8,3],
 "classrtype_1_1network_1_1PacketStartGame.html#a70fa501dfaf90fe14a6ac7ab1ed9ec1b":[4,0,0,4,8,3],
 "classrtype_1_1network_1_1PacketWelcome.html":[3,0,0,4,9],
@@ -247,7 +249,5 @@ var NAVTREEINDEX2 =
 "index.html":[],
 "main_8cpp.html":[5,0,1,4],
 "main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4":[5,0,1,4,0],
-"md_CODE__OF__CONDUCT.html":[0],
-"md_CODE__OF__CONDUCT.html#autotoc_md1":[0,0],
-"md_CODE__OF__CONDUCT.html#autotoc_md10":[0,5,3]
+"md_CODE__OF__CONDUCT.html":[0]
 };
