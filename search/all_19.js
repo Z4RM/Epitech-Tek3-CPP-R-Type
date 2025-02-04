@@ -1,16 +1,8 @@
 var searchData=
 [
-  ['waitfortaskstocomplete_0',['waitForTasksToComplete',['../classrtype_1_1ThreadPool.html#a6e974406b68ef56efcc708850aad5630',1,'rtype::ThreadPool']]],
-  ['warning_1',['2. Warning',['../md_CODE__OF__CONDUCT.html#autotoc_md8',1,'']]],
-  ['welcome_2',['WELCOME',['../namespacertype_1_1network.html#a6e33dcdcd158a1e8ce1f13336651a3f8a71c0c2c8e649ed667a74980ee5d5bf51',1,'rtype::network']]],
-  ['welcomehandler_3',['WelcomeHandler',['../classrtype_1_1systems_1_1WelcomeHandler.html',1,'rtype::systems::WelcomeHandler'],['../classrtype_1_1systems_1_1WelcomeHandler.html#a9cf4d5f13fb65ac7917dbc1a14df16fa',1,'rtype::systems::WelcomeHandler::WelcomeHandler()']]],
-  ['welcomehandler_2ecpp_4',['WelcomeHandler.cpp',['../WelcomeHandler_8cpp.html',1,'']]],
-  ['welcomehandler_2ehpp_5',['WelcomeHandler.hpp',['../WelcomeHandler_8hpp.html',1,'']]],
-  ['what_6',['what',['../classrtype_1_1network_1_1PacketFactory_1_1PacketFactoryException.html#a92353cb5996759739a579bb4c38e402c',1,'rtype::network::PacketFactory::PacketFactoryException']]],
-  ['width_7',['width',['../structrtype_1_1components_1_1Size.html#a268f2c34b74e6c98d7cae9ffa5305594',1,'rtype::components::Size']]],
-  ['window_8',['Window',['../classrtype_1_1entities_1_1Window.html',1,'rtype::entities::Window'],['../classrtype_1_1entities_1_1Window.html#a7c522cf51f3c5f9a0605e89a1f8f5f88',1,'rtype::entities::Window::Window()']]],
-  ['window_9',['window',['../structrtype_1_1entities_1_1RWindow.html#aac38c5c0f48a97af935138eb1e57935e',1,'rtype::entities::RWindow']]],
-  ['window_2ecpp_10',['Window.cpp',['../Window_8cpp.html',1,'']]],
-  ['window_2ehpp_11',['Window.hpp',['../Window_8hpp.html',1,'']]],
-  ['workerthread_12',['workerThread',['../classrtype_1_1ThreadPool.html#a67412cf17597fed5725f722ef48cc34d',1,'rtype::ThreadPool']]]
+  ['value_0',['value',['../structrtype_1_1components_1_1SlidingBg.html#a450ab07a066ecee5c90da719e9c56032',1,'rtype::components::SlidingBg::value'],['../structrtype_1_1components_1_1ZIndex.html#ad65893b674f25daed085b0211fc9a0fe',1,'rtype::components::ZIndex::value'],['../structrtype_1_1components_1_1ActualPlayer.html#a4d938929081510acf6f79c92438a6650',1,'rtype::components::ActualPlayer::value'],['../structrtype_1_1components_1_1Health.html#ae619d9a3cb78e00f6eb6d5e5e926c50f',1,'rtype::components::Health::value'],['../structrtype_1_1components_1_1NoDamageToPlayer.html#a3cacf93f5caf039a8e96fb416b35ba37',1,'rtype::components::NoDamageToPlayer::value'],['../structrtype_1_1components_1_1Speed.html#a096a7456b8eb514d0aa4f3d59ee53e41',1,'rtype::components::Speed::value']]],
+  ['vel_1',['vel',['../structrtype_1_1models_1_1EnemyData.html#ae812ca89e4ee2e4961070e9542958371',1,'rtype::models::EnemyData::vel'],['../structrtype_1_1models_1_1PlayerData.html#aa01f66e50b0320c4342d8ef5af38d0c0',1,'rtype::models::PlayerData::vel']]],
+  ['velocity_2',['Velocity',['../structrtype_1_1components_1_1Velocity.html',1,'rtype::components']]],
+  ['velocity_3',['velocity',['../structrtype_1_1components_1_1Projectile.html#afef1ab4046178c579d84005ee6e862eb',1,'rtype::components::Projectile']]],
+  ['velocity_2ehpp_4',['Velocity.hpp',['../Velocity_8hpp.html',1,'']]]
 ];

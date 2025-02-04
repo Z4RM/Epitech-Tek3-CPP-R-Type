@@ -7,7 +7,6 @@ var annotated_dup =
         [ "Counter", "structrtype_1_1components_1_1Counter.html", "structrtype_1_1components_1_1Counter" ],
         [ "Created", "structrtype_1_1components_1_1Created.html", "structrtype_1_1components_1_1Created" ],
         [ "Damage", "structrtype_1_1components_1_1Damage.html", "structrtype_1_1components_1_1Damage" ],
-        [ "Dead", "structrtype_1_1components_1_1Dead.html", "structrtype_1_1components_1_1Dead" ],
         [ "GameState", "structrtype_1_1components_1_1GameState.html", "structrtype_1_1components_1_1GameState" ],
         [ "Health", "structrtype_1_1components_1_1Health.html", "structrtype_1_1components_1_1Health" ],
         [ "Hitbox", "structrtype_1_1components_1_1Hitbox.html", "structrtype_1_1components_1_1Hitbox" ],
@@ -55,10 +54,17 @@ var annotated_dup =
         [ "Style", "structrtype_1_1entities_1_1Style.html", "structrtype_1_1entities_1_1Style" ],
         [ "Window", "classrtype_1_1entities_1_1Window.html", "classrtype_1_1entities_1_1Window" ]
       ] ],
+      [ "levels", "namespacertype_1_1levels.html", [
+        [ "Level", "classrtype_1_1levels_1_1Level.html", "classrtype_1_1levels_1_1Level" ],
+        [ "LevelBuilder", "classrtype_1_1levels_1_1LevelBuilder.html", "classrtype_1_1levels_1_1LevelBuilder" ],
+        [ "LevelManager", "classrtype_1_1levels_1_1LevelManager.html", "classrtype_1_1levels_1_1LevelManager" ]
+      ] ],
       [ "models", "namespacertype_1_1models.html", [
         [ "EnemyData", "structrtype_1_1models_1_1EnemyData.html", "structrtype_1_1models_1_1EnemyData" ],
+        [ "EnemySpawn", "structrtype_1_1models_1_1EnemySpawn.html", "structrtype_1_1models_1_1EnemySpawn" ],
         [ "PlayerData", "structrtype_1_1models_1_1PlayerData.html", "structrtype_1_1models_1_1PlayerData" ],
-        [ "Scene", "structrtype_1_1models_1_1Scene.html", "structrtype_1_1models_1_1Scene" ]
+        [ "Scene", "structrtype_1_1models_1_1Scene.html", "structrtype_1_1models_1_1Scene" ],
+        [ "SpawnPoint", "structrtype_1_1models_1_1SpawnPoint.html", "structrtype_1_1models_1_1SpawnPoint" ]
       ] ],
       [ "network", "namespacertype_1_1network.html", [
         [ "APacket", "classrtype_1_1network_1_1APacket.html", "classrtype_1_1network_1_1APacket" ],
@@ -79,6 +85,7 @@ var annotated_dup =
         [ "Menu", "classrtype_1_1scenes_1_1Menu.html", "classrtype_1_1scenes_1_1Menu" ]
       ] ],
       [ "services", "namespacertype_1_1services.html", [
+        [ "EnemyService", "classrtype_1_1services_1_1EnemyService.html", null ],
         [ "PlayerService", "classrtype_1_1services_1_1PlayerService.html", null ],
         [ "ProjectileService", "classrtype_1_1services_1_1ProjectileService.html", null ]
       ] ],
@@ -88,7 +95,7 @@ var annotated_dup =
         [ "EnnemiesDataHandler", "classrtype_1_1systems_1_1EnnemiesDataHandler.html", "classrtype_1_1systems_1_1EnnemiesDataHandler" ],
         [ "INetworkHandler", "classrtype_1_1systems_1_1INetworkHandler.html", "classrtype_1_1systems_1_1INetworkHandler" ],
         [ "InputSystem", "classrtype_1_1systems_1_1InputSystem.html", null ],
-        [ "MonsterSpawner", "classrtype_1_1systems_1_1MonsterSpawner.html", null ],
+        [ "LevelRunner", "classrtype_1_1systems_1_1LevelRunner.html", null ],
         [ "Movement", "classrtype_1_1systems_1_1Movement.html", "classrtype_1_1systems_1_1Movement" ],
         [ "Network", "classrtype_1_1systems_1_1Network.html", null ],
         [ "PlayerCountHandler", "classrtype_1_1systems_1_1PlayerCountHandler.html", "classrtype_1_1systems_1_1PlayerCountHandler" ],

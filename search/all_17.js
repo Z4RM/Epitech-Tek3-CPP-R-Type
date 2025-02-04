@@ -1,13 +1,21 @@
 var searchData=
 [
-  ['udpnetwork_0',['UDPNetwork',['../classrtype_1_1network_1_1UDPNetwork.html',1,'rtype::network::UDPNetwork'],['../classrtype_1_1network_1_1UDPNetwork.html#a80c37ee95cec6f0f425d4327b54b0665',1,'rtype::network::UDPNetwork::UDPNetwork()']]],
-  ['udpnetwork_2ecpp_1',['UDPNetwork.cpp',['../UDPNetwork_8cpp.html',1,'']]],
-  ['udpnetwork_2ehpp_2',['UDPNetwork.hpp',['../UDPNetwork_8hpp.html',1,'']]],
-  ['udpprocess_3',['udpProcess',['../classrtype_1_1systems_1_1Network.html#acd4c8caa169a3e593d54b8118710f0d2',1,'rtype::systems::Network']]],
-  ['unload_4',['unload',['../classrtype_1_1ecs_1_1AScene.html#a8ac06854f8f02e5041423aad17a05824',1,'rtype::ecs::AScene::unload()'],['../classrtype_1_1ecs_1_1IScene.html#aebe3d10d706f7ae134059216c6aaf62a',1,'rtype::ecs::IScene::unload()']]],
-  ['update_5',['update',['../classrtype_1_1ecs_1_1AScene.html#a9cf8a0e864dd55db8fec762904696f3f',1,'rtype::ecs::AScene::update()'],['../classrtype_1_1ecs_1_1IScene.html#aa8e7f15f95d99c9f8bec867a85411de5',1,'rtype::ecs::IScene::update()'],['../structrtype_1_1components_1_1Counter.html#a00b283ea37c8b77a6997240cacbacacd',1,'rtype::components::Counter::update()']]],
-  ['updatecurrentscene_6',['updateCurrentScene',['../classrtype_1_1ecs_1_1SceneManager.html#a85957d246aa8fea4d254ef69b89aa7cf',1,'rtype::ecs::SceneManager']]],
-  ['updateprojectiles_7',['updateProjectiles',['../classrtype_1_1systems_1_1UpdateProjectilesSystem.html#ab4df694b82e8042cae390ef3e036b03e',1,'rtype::systems::UpdateProjectilesSystem']]],
-  ['updateprojectilessystem_8',['UpdateProjectilesSystem',['../classrtype_1_1systems_1_1UpdateProjectilesSystem.html',1,'rtype::systems']]],
-  ['updatesystems_9',['updateSystems',['../classrtype_1_1ecs_1_1SystemManager.html#a8548b92cdf2f0f5a2e0e29b4a2fc0924',1,'rtype::ecs::SystemManager']]]
+  ['takedamage_0',['takeDamage',['../structrtype_1_1components_1_1Health.html#a939165d3e294cf42e4a6b19ea3c6d116',1,'rtype::components::Health']]],
+  ['tcpnetwork_1',['TCPNetwork',['../classrtype_1_1network_1_1TCPNetwork.html',1,'rtype::network::TCPNetwork'],['../classrtype_1_1network_1_1TCPNetwork.html#aaa5ba1db1e496c4a14df682bcc342cd4',1,'rtype::network::TCPNetwork::TCPNetwork()']]],
+  ['tcpnetwork_2ecpp_2',['TCPNetwork.cpp',['../TCPNetwork_8cpp.html',1,'']]],
+  ['tcpnetwork_2ehpp_3',['TCPNetwork.hpp',['../TCPNetwork_8hpp.html',1,'']]],
+  ['tcpprocess_4',['tcpProcess',['../classrtype_1_1systems_1_1Network.html#a8ddfca2c44a2899b7162907076614256',1,'rtype::systems::Network']]],
+  ['tech_20stack_5',['Tech Stack',['../md_README.html#autotoc_md26',1,'']]],
+  ['temporary_20ban_6',['3. Temporary Ban',['../md_CODE__OF__CONDUCT.html#autotoc_md9',1,'']]],
+  ['text_7',['text',['../structrtype_1_1components_1_1SfText.html#a6727fbdf82ef2ea6bf4445cc3e539ced',1,'rtype::components::SfText']]],
+  ['texture_8',['texture',['../structrtype_1_1components_1_1Sprite.html#a4147c310d7a36de058a3534c73cfe07d',1,'rtype::components::Sprite']]],
+  ['threadpool_9',['ThreadPool',['../classrtype_1_1ThreadPool.html',1,'rtype::ThreadPool'],['../classrtype_1_1ThreadPool.html#ab0a52cf0f18836ea448a910916f871be',1,'rtype::ThreadPool::ThreadPool()']]],
+  ['threadpool_2ecpp_10',['ThreadPool.cpp',['../ThreadPool_8cpp.html',1,'']]],
+  ['threadpool_2ehpp_11',['ThreadPool.hpp',['../include_2ThreadPool_8hpp.html',1,'(Global Namespace)'],['../src_2ThreadPool_2ThreadPool_8hpp.html',1,'(Global Namespace)']]],
+  ['time_12',['time',['../structrtype_1_1models_1_1SpawnPoint.html#a3f40432aa780dba5bd18b83e87fd62a5',1,'rtype::models::SpawnPoint']]],
+  ['titlebar_13',['titleBar',['../structrtype_1_1entities_1_1Style.html#a29eae3b029b7b4ac4353a5cb0a9e4136',1,'rtype::entities::Style']]],
+  ['type_14',['R-Type',['../md_README.html#autotoc_md24',1,'']]],
+  ['type_15',['type',['../structrtype_1_1models_1_1EnemySpawn.html#af029104507aff576b1ea2056a384fab3',1,'rtype::models::EnemySpawn']]],
+  ['types_16',['Commit Types',['../md_CONTRIBUTING.html#autotoc_md21',1,'']]],
+  ['types_20of_20branches_17',['Types of Branches',['../md_CONTRIBUTING.html#autotoc_md15',1,'']]]
 ];

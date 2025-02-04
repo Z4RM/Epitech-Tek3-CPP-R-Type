@@ -3,6 +3,7 @@ var namespacertype =
     [ "components", "namespacertype_1_1components.html", "namespacertype_1_1components" ],
     [ "ecs", "namespacertype_1_1ecs.html", "namespacertype_1_1ecs" ],
     [ "entities", "namespacertype_1_1entities.html", "namespacertype_1_1entities" ],
+    [ "levels", "namespacertype_1_1levels.html", "namespacertype_1_1levels" ],
     [ "models", "namespacertype_1_1models.html", "namespacertype_1_1models" ],
     [ "network", "namespacertype_1_1network.html", "namespacertype_1_1network" ],
     [ "scenes", "namespacertype_1_1scenes.html", "namespacertype_1_1scenes" ],

@@ -5,7 +5,7 @@ var namespacertype_1_1systems =
     [ "EnnemiesDataHandler", "classrtype_1_1systems_1_1EnnemiesDataHandler.html", "classrtype_1_1systems_1_1EnnemiesDataHandler" ],
     [ "INetworkHandler", "classrtype_1_1systems_1_1INetworkHandler.html", "classrtype_1_1systems_1_1INetworkHandler" ],
     [ "InputSystem", "classrtype_1_1systems_1_1InputSystem.html", null ],
-    [ "MonsterSpawner", "classrtype_1_1systems_1_1MonsterSpawner.html", null ],
+    [ "LevelRunner", "classrtype_1_1systems_1_1LevelRunner.html", null ],
     [ "Movement", "classrtype_1_1systems_1_1Movement.html", "classrtype_1_1systems_1_1Movement" ],
     [ "Network", "classrtype_1_1systems_1_1Network.html", null ],
     [ "PlayerCountHandler", "classrtype_1_1systems_1_1PlayerCountHandler.html", "classrtype_1_1systems_1_1PlayerCountHandler" ],

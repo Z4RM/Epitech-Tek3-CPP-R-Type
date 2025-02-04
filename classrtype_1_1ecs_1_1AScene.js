@@ -5,6 +5,7 @@ var classrtype_1_1ecs_1_1AScene =
     [ "isLoaded", "classrtype_1_1ecs_1_1AScene.html#a395e559635b055cc81f0b9717859a1a9", null ],
     [ "load", "classrtype_1_1ecs_1_1AScene.html#a36f4886588026ee783563072417839f8", null ],
     [ "registerEntity", "classrtype_1_1ecs_1_1AScene.html#a3b1b11fe609f08550b763cd5cb6416bf", null ],
+    [ "registerEntity", "classrtype_1_1ecs_1_1AScene.html#af495517829936ea4b6a3795b24807b39", null ],
     [ "unload", "classrtype_1_1ecs_1_1AScene.html#a8ac06854f8f02e5041423aad17a05824", null ],
     [ "update", "classrtype_1_1ecs_1_1AScene.html#a9cf8a0e864dd55db8fec762904696f3f", null ],
     [ "_componentManager", "classrtype_1_1ecs_1_1AScene.html#a2a8bde5198716c7bd772808f73589099", null ],

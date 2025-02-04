@@ -1,17 +1,9 @@
 var searchData=
 [
-  ['scene_2ehpp_0',['Scene.hpp',['../Scene_8hpp.html',1,'']]],
-  ['scenemanager_2ehpp_1',['SceneManager.hpp',['../SceneManager_8hpp.html',1,'']]],
-  ['sftext_2ehpp_2',['SfText.hpp',['../SfText_8hpp.html',1,'']]],
-  ['shared_2ehpp_3',['Shared.hpp',['../Shared_8hpp.html',1,'']]],
-  ['size_2ehpp_4',['Size.hpp',['../Size_8hpp.html',1,'']]],
-  ['slidingbg_2ehpp_5',['SlidingBg.hpp',['../SlidingBg_8hpp.html',1,'']]],
-  ['sparseset_2ehpp_6',['SparseSet.hpp',['../SparseSet_8hpp.html',1,'']]],
-  ['speed_2ehpp_7',['Speed.hpp',['../Speed_8hpp.html',1,'']]],
-  ['sprite_2ehpp_8',['Sprite.hpp',['../Sprite_8hpp.html',1,'']]],
-  ['startgamehandler_2ecpp_9',['StartGameHandler.cpp',['../StartGameHandler_8cpp.html',1,'']]],
-  ['startgamehandler_2ehpp_10',['StartGameHandler.hpp',['../StartGameHandler_8hpp.html',1,'']]],
-  ['string_2ehpp_11',['String.hpp',['../String_8hpp.html',1,'']]],
-  ['systemmanager_2ehpp_12',['SystemManager.hpp',['../SystemManager_8hpp.html',1,'']]],
-  ['systems_2ehpp_13',['Systems.hpp',['../Systems_8hpp.html',1,'']]]
+  ['readme_2emd_0',['README.md',['../README_8md.html',1,'']]],
+  ['renderwindow_2ecpp_1',['RenderWindow.cpp',['../RenderWindow_8cpp.html',1,'']]],
+  ['renderwindow_2ehpp_2',['RenderWindow.hpp',['../RenderWindow_8hpp.html',1,'']]],
+  ['rtype_2ecpp_3',['RType.cpp',['../RType_8cpp.html',1,'']]],
+  ['rtype_2ehpp_4',['RType.hpp',['../RType_8hpp.html',1,'']]],
+  ['running_2ehpp_5',['Running.hpp',['../Running_8hpp.html',1,'']]]
 ];

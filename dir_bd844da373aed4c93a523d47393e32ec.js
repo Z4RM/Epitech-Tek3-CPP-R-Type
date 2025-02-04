@@ -4,7 +4,6 @@ var dir_bd844da373aed4c93a523d47393e32ec =
     [ "Counter.hpp", "Counter_8hpp.html", "Counter_8hpp" ],
     [ "Created.hpp", "Created_8hpp.html", "Created_8hpp" ],
     [ "Damage.hpp", "Damage_8hpp.html", "Damage_8hpp" ],
-    [ "Dead.hpp", "Dead_8hpp.html", "Dead_8hpp" ],
     [ "GameState.hpp", "GameState_8hpp.html", "GameState_8hpp" ],
     [ "Health.hpp", "Health_8hpp.html", "Health_8hpp" ],
     [ "Hitbox.hpp", "Hitbox_8hpp.html", "Hitbox_8hpp" ],

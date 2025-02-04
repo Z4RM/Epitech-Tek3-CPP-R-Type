@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['zindex_0',['ZIndex',['../structrtype_1_1components_1_1ZIndex.html',1,'rtype::components']]]
+  ['welcomehandler_0',['WelcomeHandler',['../classrtype_1_1systems_1_1WelcomeHandler.html',1,'rtype::systems']]],
+  ['window_1',['Window',['../classrtype_1_1entities_1_1Window.html',1,'rtype::entities']]]
 ];
