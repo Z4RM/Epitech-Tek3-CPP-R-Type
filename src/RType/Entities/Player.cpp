@@ -58,6 +58,7 @@ rtype::entities::Player::Player(
     const auto leftKeybinding = Config::getInstance().getKeybinding("left", sf::Keyboard::Key::Q);
     const auto rightKeybinding = Config::getInstance().getKeybinding("right", sf::Keyboard::Key::D);
     const auto shootKeybinding = Config::getInstance().getKeybinding("shoot", sf::Keyboard::Key::Space);
+    const auto chargedShootKeybinding = Config::getInstance().getKeybinding("charged_shoot", sf::Keyboard::Key::E);
 
     _inputs.keyActions.insert({
         shootKeybinding,
@@ -71,9 +72,8 @@ rtype::entities::Player::Player(
         }}
     });
 
-    //region Press
     _inputs.keyActions.insert({
-        sf::Keyboard::Key::E,
+        chargedShootKeybinding,
         {sf::Event::KeyPressed, [this, &entityManager, &componentManager, id, netId]() {
             static auto clock = std::chrono::steady_clock::now();
             bool result = this->shoot(entityManager, componentManager, id, clock, true);
@@ -82,8 +82,9 @@ rtype::entities::Player::Player(
                 network::TCPNetwork::getInstance().sendPacket(sendPlayerShoot);
             }
         }}
-    }),
+    });
 
+    //region Press
     _inputs.keyActions.insert({
         upKeybinding,
         {sf::Event::KeyPressed, [id, pos, &componentManager]() {
