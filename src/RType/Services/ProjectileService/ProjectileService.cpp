@@ -15,6 +15,7 @@ namespace rtype::services {
 
         components::Velocity vel = {2.0, 0.0, 0.0};
         components::Position pos = {shooterPos->x + 10.0f, shooterPos->y, shooterPos->z};
+        components::Health health(1);
         componentManager.addComponent<components::Velocity>(projectileId, vel);
         componentManager.addComponent<components::Position>(projectileId, pos);
         componentManager.addComponent<components::Size>(projectileId, {10.0f, 10.0f});
@@ -22,6 +23,7 @@ namespace rtype::services {
         componentManager.addComponent<components::Speed>(projectileId, {250});
         componentManager.addComponent<components::Damage>(projectileId, {20});
         componentManager.addComponent<components::NoDamageToPlayer>(projectileId, {true});
+        //componentManager.addComponent<components::Health>(projectileId, health);
         #ifdef RTYPE_IS_CLIENT
         components::Sprite projectileSprite = {
             pos,

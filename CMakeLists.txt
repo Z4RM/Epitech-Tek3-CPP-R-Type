@@ -72,7 +72,6 @@ set(RTYPE_SRC
         src/RType/Components/Shared/Projectile.hpp
         src/Network/Packets/Descriptors/PacketPlayerShoot/PacketPlayerShoot.cpp
         src/Network/Packets/Descriptors/PacketPlayerShoot/PacketPlayerShoot.hpp
-        src/RType/Components/Shared/Dead.hpp
         src/RType/Systems/Network/handlers/INetworkHandler.hpp
         src/RType/Systems/Network/handlers/WelcomeHandler/WelcomeHandler.hpp
         src/RType/Systems/Network/handlers/WelcomeHandler/WelcomeHandler.cpp

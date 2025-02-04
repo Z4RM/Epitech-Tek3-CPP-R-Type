@@ -57,8 +57,6 @@ namespace rtype::systems {
                                     if (data.health != health->value) {
                                         health->setHealth(data.health);
                                         health->_elapsedDamage = std::chrono::steady_clock::now();
-                                        if (data.health <= 0)
-                                            _componentManager.addComponent<components::Dead>(entity, { true });
                                         _componentManager.addComponent<components::Health>(entity, *health);
                                     }
                                 }
