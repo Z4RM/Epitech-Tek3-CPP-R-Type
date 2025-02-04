@@ -173,7 +173,9 @@ std::chrono::steady_clock::time_point &clock) {
         {1},
         {1.0, 1.0},
         std::make_shared<sf::Texture>(),
-        std::make_shared<sf::Sprite>()
+        std::make_shared<sf::Sprite>(),
+        165,
+        82
     };
     projectileSprite.texture->loadFromFile(projectileSprite.path);
     projectileSprite.sprite->setTexture(*projectileSprite.texture);

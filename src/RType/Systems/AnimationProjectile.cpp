@@ -50,7 +50,7 @@ void rtype::systems::UpdateProjectilesSystem::updateProjectiles(
         float elapsedTime = projectile->animationClock.getElapsedTime().asSeconds();
         int frame = static_cast<int>(elapsedTime * projectile->animation.frameRate) % projectile->animation.nbFrames;
         int frameWidth = static_cast<int>(sprite->size.width);
-        sf::IntRect textureRect(frame * frameWidth + 82, 165, frameWidth, static_cast<int>(sprite->size.height));
+        sf::IntRect textureRect(frame * frameWidth + sprite->rect_left, sprite->rect_top, frameWidth, static_cast<int>(sprite->size.height));
         sprite->sprite->setTextureRect(textureRect);
 
         componentManager.addComponent<components::Sprite>(entity, *sprite);

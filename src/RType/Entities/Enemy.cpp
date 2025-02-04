@@ -55,6 +55,50 @@ rtype::entities::Enemy::Enemy(
     componentManager.addComponent<components::IA>(_id, {move});
 }
 
+void rtype::entities::Enemy::enemy_shots(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager) {
+    auto now = std::chrono::steady_clock::now();
+    std::chrono::duration<double> elapsed = now - _elapsedShoot;
+
+    if (elapsed.count() >= _shootCooldown) {
+        size_t projectileId = entityManager.createEntity();
+        auto enemyPos = componentManager.getComponent<components::Position>(_id);
+
+        if (enemyPos) {
+            components::Velocity vel = {-2.0, 0.0, 0.0};
+            components::Position pos = {enemyPos->x - 10.0f, enemyPos->y, enemyPos->z};
+
+            components::Sprite projectileSprite = {
+                pos,
+                {82.0f, 18.0f},
+                "assets/sprites/projectile/player-shots.gif",
+                {1},
+                {1.0, 1.0},
+                std::make_shared<sf::Texture>(),
+                std::make_shared<sf::Sprite>(),
+                165,
+                82
+            };
+            projectileSprite.texture->loadFromFile(projectileSprite.path);
+            projectileSprite.sprite->setTexture(*projectileSprite.texture);
+            projectileSprite.sprite->setPosition({pos.x, pos.y});
+            componentManager.addComponent<components::Sprite>(projectileId, projectileSprite);
+
+            components::Animation projAnim = {
+                "assets/sprite/projectile/player-shots.gif",
+                2,
+                10
+            };
+
+            componentManager.addComponent<components::Animation>(projectileId, projAnim);
+            componentManager.addComponent<components::Position>(projectileId, pos);
+            componentManager.addComponent<components::Velocity>(projectileId, vel);
+            componentManager.addComponent<components::Size>(projectileId, {10, 10});
+
+            _elapsedShoot = std::chrono::steady_clock::now();
+        }
+    }
+}
+
 #else
 
 rtype::entities::Enemy::Enemy(

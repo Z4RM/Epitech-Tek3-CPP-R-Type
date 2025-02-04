@@ -81,12 +81,15 @@ namespace rtype::entities {
          * @brief Default destructor for the `Enemy` class.
          */
         ~Enemy() = default;
+        void enemy_shots(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager);
 
     private:
         /**
          * @brief The unique identifier for the player entity.
          */
         size_t _id;
+        std::chrono::steady_clock::time_point _elapsedShoot;
+        double _shootCooldown = 1.5;
     };
 }
 

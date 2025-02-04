@@ -23,6 +23,8 @@ namespace rtype::components {
         sf::Vector2f scale = {1, 1};
         std::shared_ptr<sf::Texture> texture;
         std::shared_ptr<sf::Sprite> sprite;
+        int rect_top;
+        int rect_left;
         Created created;
     };
 }
