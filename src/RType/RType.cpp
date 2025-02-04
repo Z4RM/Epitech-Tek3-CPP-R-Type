@@ -78,6 +78,28 @@ int rtype::RType::run() {
     );
     systemManager.addSystem(rtype::systems::RenderWindowSys::render);
     systemManager.addSystem(rtype::systems::UpdateProjectilesSystem::updateProjectiles);
+#else
+    systemManager.addSystem(rtype::systems::LevelRunner::process);
+    rtype::models::SpawnPoint spawn1{5, {
+                {3, models::EEnemyType::BASIC}}
+    };
+
+    rtype::models::SpawnPoint spawn2{7, {
+                    {4, models::EEnemyType::BASIC},
+                }
+    };
+
+    rtype::models::SpawnPoint spawn3{10, {
+                        {3, models::EEnemyType::BASIC},
+                    }
+    };
+    levels::Level test = levels::LevelBuilder().setDuration(1000)
+    .setNumber(1)
+    .addSpawnPoint(spawn1)
+    .addSpawnPoint(spawn2)
+    .addSpawnPoint(spawn3)
+    .build();
+    levels::LevelManager::getInstance().registerLevel(std::make_shared<levels::Level>(test));
 #endif
     systemManager.addSystem(rtype::systems::Movement::move);
     systemManager.addSystem(rtype::systems::Network::udpProcess);
@@ -91,31 +113,6 @@ int rtype::RType::run() {
 
     //TODO: put this component in the game scene instead of here
     entities::Game gameSate(componentManager, entityManager);
-
-
-    if (IS_SERVER) {
-        systemManager.addSystem(rtype::systems::LevelRunner::process);
-        rtype::models::SpawnPoint spawn1{5, {
-            {3, models::EEnemyType::BASIC}}
-        };
-
-        rtype::models::SpawnPoint spawn2{7, {
-                {4, models::EEnemyType::BASIC},
-            }
-        };
-
-        rtype::models::SpawnPoint spawn3{10, {
-                    {3, models::EEnemyType::BASIC},
-                }
-        };
-        levels::Level test = levels::LevelBuilder().setDuration(1000)
-        .setNumber(1)
-        .addSpawnPoint(spawn1)
-        .addSpawnPoint(spawn2)
-        .addSpawnPoint(spawn3)
-        .build();
-        levels::LevelManager::getInstance().registerLevel(std::make_shared<levels::Level>(test));
-    }
 
     while (true) {
         for (auto &entity: entityManager.getEntities()) {
