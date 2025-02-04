@@ -76,10 +76,13 @@ rtype::entities::Player::Player(
         chargedShootKeybinding,
         {sf::Event::KeyPressed, [this, &entityManager, &componentManager, id, netId]() {
             static auto clock = std::chrono::steady_clock::now();
-            bool result = this->shoot(entityManager, componentManager, id, clock, true);
-            if (result) {
-                network::PacketPlayerShoot sendPlayerShoot(netId, true);
-                network::TCPNetwork::getInstance().sendPacket(sendPlayerShoot);
+            auto health = componentManager.getComponent<components::Health>(id);
+            if (health->value > 0) {
+              bool result = this->shoot(entityManager, componentManager, id, clock, true);
+              if (result) {
+                  network::PacketPlayerShoot sendPlayerShoot(netId, true);
+                  network::TCPNetwork::getInstance().sendPacket(sendPlayerShoot);
+              }
             }
         }}
     });

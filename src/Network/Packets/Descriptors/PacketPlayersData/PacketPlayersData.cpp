@@ -14,10 +14,15 @@ namespace rtype::network {
         int dataCount = datas.size();
 
         for (const auto &data : datas) {
-            size += sizeof(data.netId);
-            size += sizeof(data.pos);
-            size += sizeof(data.size);
-            size += sizeof(data.vel);
+            size += sizeof(data.netId.id);
+            size += sizeof(data.pos.x);
+            size += sizeof(data.pos.y);
+            size += sizeof(data.pos.z);
+            size += sizeof(data.size.width);
+            size += sizeof(data.size.height);
+            size += sizeof(data.vel.x);
+            size += sizeof(data.vel.y);
+            size += sizeof(data.vel.z);
             size += sizeof(data.health);
         }
 
@@ -28,17 +33,29 @@ namespace rtype::network {
 
         size_t currentSize = sizeof(this->_code) + sizeof(dataCount);
         for (const auto &data : datas) {
-            std::memcpy(buffer.data() + currentSize, &data.netId, sizeof(data.netId));
-            currentSize += sizeof(data.netId);
+            std::memcpy(buffer.data() + currentSize, &data.netId.id, sizeof(data.netId.id));
+            currentSize += sizeof(data.netId.id);
 
-            std::memcpy(buffer.data() + currentSize, &data.pos, sizeof(data.pos));
-            currentSize += sizeof(data.pos);
+            std::memcpy(buffer.data() + currentSize, &data.pos.x, sizeof(data.pos.x));
+            currentSize += sizeof(data.pos.x);
 
-            std::memcpy(buffer.data() + currentSize, &data.size, sizeof(data.size));
-            currentSize += sizeof(data.size);
+            std::memcpy(buffer.data() + currentSize, &data.pos.y, sizeof(data.pos.y));
+            currentSize += sizeof(data.pos.y);
 
-            std::memcpy(buffer.data() + currentSize, &data.vel, sizeof(data.vel));
-            currentSize += sizeof(data.vel);
+            std::memcpy(buffer.data() + currentSize, &data.pos.z, sizeof(data.pos.z));
+            currentSize += sizeof(data.pos.z);
+
+            std::memcpy(buffer.data() + currentSize, &data.size.width, sizeof(data.size.width));
+            currentSize += sizeof(data.size.width);
+
+            std::memcpy(buffer.data() + currentSize, &data.size.height, sizeof(data.size.height));
+            currentSize += sizeof(data.size.height);
+
+            std::memcpy(buffer.data() + currentSize, &data.vel.x, sizeof(data.vel.x));
+            currentSize += sizeof(data.vel.x);
+
+            std::memcpy(buffer.data() + currentSize, &data.vel.y, sizeof(data.vel.y));
+            currentSize += sizeof(data.vel.y);
 
             std::memcpy(buffer.data() + currentSize, &data.health, sizeof(data.health));
             currentSize += sizeof(data.health);
@@ -55,17 +72,29 @@ namespace rtype::network {
         datas.resize(dataCount);
 
         for (int i = 0; i < dataCount; ++i) {
-            std::memcpy(&datas[i].netId, buffer.data() + currentSize, sizeof(datas[i].netId));
-            currentSize += sizeof(datas[i].netId);
+            std::memcpy(&datas[i].netId.id, buffer.data() + currentSize, sizeof(datas[i].netId.id));
+            currentSize += sizeof(datas[i].netId.id);
 
-            std::memcpy(&datas[i].pos, buffer.data() + currentSize, sizeof(datas[i].pos));
-            currentSize += sizeof(datas[i].pos);
+            std::memcpy(&datas[i].pos.x, buffer.data() + currentSize, sizeof(datas[i].pos.x));
+            currentSize += sizeof(datas[i].pos.x);
 
-            std::memcpy(&datas[i].size, buffer.data() + currentSize, sizeof(datas[i].size));
-            currentSize += sizeof(datas[i].size);
+            std::memcpy(&datas[i].pos.y, buffer.data() + currentSize, sizeof(datas[i].pos.y));
+            currentSize += sizeof(datas[i].pos.y);
 
-            std::memcpy(&datas[i].vel, buffer.data() + currentSize, sizeof(datas[i].vel));
-            currentSize += sizeof(datas[i].vel);
+            std::memcpy(&datas[i].pos.z, buffer.data() + currentSize, sizeof(datas[i].pos.z));
+            currentSize += sizeof(datas[i].pos.z);
+
+            std::memcpy(&datas[i].size.width, buffer.data() + currentSize, sizeof(datas[i].size.width));
+            currentSize += sizeof(datas[i].size.width);
+
+            std::memcpy(&datas[i].size.height, buffer.data() + currentSize, sizeof(datas[i].size.height));
+            currentSize += sizeof(datas[i].size.height);
+
+            std::memcpy(&datas[i].vel.x, buffer.data() + currentSize, sizeof(datas[i].vel.x));
+            currentSize += sizeof(datas[i].vel.x);
+
+            std::memcpy(&datas[i].vel.y, buffer.data() + currentSize, sizeof(datas[i].vel.y));
+            currentSize += sizeof(datas[i].vel.y);
 
             std::memcpy(&datas[i].health, buffer.data() + currentSize, sizeof(datas[i].health));
             currentSize += sizeof(datas[i].health);

@@ -21,9 +21,9 @@ namespace rtype::systems {
         if (packetPlayerShoot) {
             for (auto &entity: _entityManager.getEntities()) {
                 //TODO: use directly health component instead of this useless component
-                const auto dead = _componentManager.getComponent<components::Dead>(entity);
+                const auto health = _componentManager.getComponent<components::Health>(entity);
 
-                if (dead)
+                if (health && health->value <= 0)
                     continue;
 
                 auto netco = _componentManager.getComponent<components::NetworkConnection>(entity);

@@ -15,7 +15,8 @@
 #include "RType/Components/Client/SfText.hpp"
 #endif
 
-//TODO: maybe delete this and make this component only a client component or use this in server instead of the MenuState variable ?
+//TODO: maybe delete this and make this component only a client component or use this in server instead of the MenuState
+// variable ? and maybe change atomic variable by a normal because new component manager is thread safe
 
 namespace rtype::components {
     struct Counter {

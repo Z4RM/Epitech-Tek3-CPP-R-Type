@@ -20,10 +20,7 @@ namespace rtype::systems {
      * **/
     class Network {
     public:
-        //TODO: refactor netId everywhere as maybe unsigned long or something that make more sense
         static std::atomic<int> globalNetId;
-        static int playerId;
-        static std::mutex playerIdMutex;
 
         /** @brief Process the udp system
         * @param entityManager the ecs entity manager

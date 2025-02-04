@@ -30,8 +30,6 @@
 #include "RType/Entities/Player.hpp"
 
 namespace rtype::systems {
-    int Network::playerId = 0;
-    std::mutex Network::playerIdMutex;
     std::atomic<int> Network::globalNetId = 0;
 
     //TODO: check why this udp running entity is needed for closing correctly the client when the window close
@@ -80,14 +78,13 @@ namespace rtype::systems {
                     const auto actualPlayer = componentManager.getComponent<components::ActualPlayer>(entity);
                     const auto health = componentManager.getComponent<components::Health>(entity);
                     const auto ai = componentManager.getComponent<components::IA>(entity);
-                    const auto dead = componentManager.getComponent<components::Dead>(entity);
 
                     if (vel && pos && size && netId && health) {
                         models::PlayerData pdata{*pos, *vel, *size, *netId, health->value};
                         models::EnemyData edata{*pos, *vel, *size, *netId, health->value};
 
                         if (actualPlayer && actualPlayer->value == true && !IS_SERVER) {
-                            if (dead)
+                            if (health->value <= 0)
                                 continue;
                             playerDatas.emplace_back(pdata);
                         }

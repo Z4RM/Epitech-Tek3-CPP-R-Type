@@ -32,9 +32,6 @@ void rtype::systems::Movement::handleCollisions(unsigned int entity, components:
                                                 ecs::ComponentManager &componentManager,
                                                 components::Velocity *vel,
                                                 ecs::EntityManager &entityManager) {
-    constexpr float bounceFactor = 1.0f;  // Intensity of the bounce
-    constexpr float minSeparation = 0.01f; // Small offset to avoid overlap
-
     for (auto &collisionEntity: entities) {
         if (collisionEntity == entity)
             continue;
@@ -55,12 +52,7 @@ void rtype::systems::Movement::handleCollisions(unsigned int entity, components:
             continue;
 
         if (isColliding(pos, hitBox, colliderPos.get(), colliderHitBox.get())) {
-            float dx = pos->x - colliderPos->x;
-            float dy = pos->y - colliderPos->y;
-            float dz = pos->z - colliderPos->z;
-            float distance = std::sqrt(dx * dx + dy * dy + dz * dz);
-
-            if (entityHealthBar && colliderDamage && IS_SERVER) {
+            if (entityHealthBar && colliderDamage && entityHealthBar->value > 0) {
                 if (player && peaceful) {
                     continue;
                 }
@@ -69,21 +61,16 @@ void rtype::systems::Movement::handleCollisions(unsigned int entity, components:
                 if (elapsed.count() > 0.8 || (peaceful && ai1)) {
                     entityHealthBar->takeDamage(colliderDamage->collisionDamage);
                     entityHealthBar->_elapsedDamage = now;
-                    componentManager.addComponent<components::Damage>(collisionEntity, *colliderDamage);
                     componentManager.addComponent<components::Health>(entity, *entityHealthBar);
                     if (entityHealthBar->value <= 0) {
                         if (!player)
                             entityManager.destroyEntity(entity, componentManager);
-                        else {
-                            componentManager.addComponent<components::Dead>(entity, {true});
-                        }
                     }
-                    if (peaceful) {
+                    if (peaceful && ai1) {
                         entityManager.destroyEntity(collisionEntity, componentManager);
                     }
                 }
             }
-            componentManager.addComponent<components::Velocity>(entity, *vel);
         }
     }
 }
