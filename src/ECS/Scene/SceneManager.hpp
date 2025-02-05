@@ -42,10 +42,12 @@ namespace rtype::ecs {
         };
 
         void updateCurrentScene(SystemManager &sysMg) {
+            std::unique_lock lock(_mutex);
             std::shared_ptr<IScene> scene = this->_scenes[this->_currentScene];
 
             if (!scene->isLoaded())
                 scene->load();
+            lock.unlock();
             scene->update(sysMg);
        }
 
