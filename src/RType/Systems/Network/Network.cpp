@@ -24,6 +24,7 @@
 #include "handlers/PlayerShootHandler/PlayerShootHandler.hpp"
 #include "handlers/StartGameHandler/StartGameHandler.hpp"
 #include "handlers/WelcomeHandler/WelcomeHandler.hpp"
+#include "handlers/EndGameHandler/EndGameHandler.hpp"
 #include "Network/Packets/Descriptors/PacketPlayersData/PacketPlayersData.hpp"
 #include "Network/Packets/Descriptors/PacketEnemiesData/PacketEnemiesData.hpp"
 #include "Network/Packets/Descriptors/PacketPlayerCounter/PacketPlayerCounter.hpp"
@@ -179,6 +180,7 @@ namespace rtype::systems {
                 } else {
                     network.registerNetHandler(network::WELCOME, std::make_unique<WelcomeHandler>(componentManager, entityManager));
                     network.registerNetHandler(network::PLAYER_COUNT, std::make_unique<PlayerCountHandler>(componentManager, entityManager));
+                    network.registerNetHandler(network::END_GAME, std::make_unique<EndGameHandler>(componentManager, entityManager));
                 }
                 network.registerNetHandler(network::PLAYER_SHOOT, std::make_unique<PlayerShootHandler>(componentManager, entityManager));
                 network.start();

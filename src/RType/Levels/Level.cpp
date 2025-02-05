@@ -9,8 +9,10 @@
 #include <chrono>
 #include <spdlog/spdlog.h>
 #include <random>
+#include <Network/Packets/Descriptors/PacketEndGame/PacketEndGame.hpp>
 
 #include "ECS/Scene/SceneManager.hpp"
+#include "Network/TCPNetwork/TCPNetwork.hpp"
 #include "RType/Services/EnemyService/EnemyService.hpp"
 
 //TODO: this code should be only in the server
@@ -81,6 +83,23 @@ namespace rtype::levels {
         }
 
         if (playerAliveCount <= 0) {
+            for (const auto &entity : entityManager.getEntities()) {
+                auto netCo = componentManager.getComponent<components::NetworkConnection>(entity);
+                auto gameState = componentManager.getComponent<components::GameState>(entity);
+                auto ai = componentManager.getComponent<components::IA>(entity);
+
+                if (ai) {
+                    entityManager.destroyEntity(entity, componentManager);
+                }
+
+                if (gameState) {
+                    componentManager.addComponent(entity, components::GameState{0, gameState->playerCount});
+                }
+
+                if (netCo) {
+                    network::TCPNetwork::getInstance().sendPacket(network::PacketEndGame(true), netCo->socket);
+                }
+            }
             spdlog::info("Game lose, all players are dead");
             return true;
         }
@@ -99,7 +118,18 @@ namespace rtype::levels {
                 }
             }
             if (enemyAliveCount <= 0) {
-                spdlog::info("Game win, all ennemies are dead");
+                for (const auto &entity : entityManager.getEntities()) {
+                    auto netCo = componentManager.getComponent<components::NetworkConnection>(entity);
+                    auto gameState = componentManager.getComponent<components::GameState>(entity);
+
+                    if (gameState) {
+                        componentManager.addComponent(entity, components::GameState{0, gameState->playerCount});
+                    }
+                    if (netCo) {
+                        network::TCPNetwork::getInstance().sendPacket(network::PacketEndGame(false), netCo->socket);
+                    }
+                }
+                spdlog::info("Game win, all enemies are dead");
                 return true;
             }
         }
