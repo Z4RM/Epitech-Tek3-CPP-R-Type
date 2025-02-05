@@ -122,8 +122,6 @@ int rtype::RType::run() {
     //TODO: put this component in the game scene instead of here
     entities::Game gameSate(componentManager, entityManager);
 
-    sceneManager.changeScene(3, true);
-
     while (true) {
         for (auto &entity: entityManager.getEntities()) {
             auto run = componentManager.getComponent<components::Running>(entity);
