@@ -26,7 +26,7 @@ namespace rtype::entities {
     public:
 #ifdef RTYPE_IS_CLIENT
         bool shoot(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager, size_t id,
-        std::chrono::steady_clock::time_point &clock);
+        std::chrono::steady_clock::time_point &clock, bool isSuperProjectile);
         std::chrono::steady_clock::time_point _elaspedShoot= std::chrono::steady_clock::now();
         double _shootCooldown = 0.8;
         /**
@@ -68,7 +68,7 @@ namespace rtype::entities {
                 rtype::components::Speed = {200}
         );
 
-#else
+#endif
 
         /**
          * @brief Constructs a new Player object.
@@ -94,12 +94,10 @@ namespace rtype::entities {
                 rtype::components::Position pos,
                 rtype::components::Velocity vel,
                 rtype::components::Size size,
-                rtype::components::NetworkConnection network,
+                const rtype::components::NetworkConnection& network,
                 rtype::components::NetId = { false },
                 rtype::components::Speed speed = {200}
         );
-
-#endif
 
         /**
          * @brief Default destructor.

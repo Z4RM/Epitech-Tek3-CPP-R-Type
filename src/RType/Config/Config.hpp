@@ -10,6 +10,9 @@
 
 #include "INIReader.h"
 #include "spdlog/spdlog.h"
+#ifdef RTYPE_IS_CLIENT
+#include <SFML/Window/Keyboard.hpp>
+#endif
 
 namespace rtype {
     /**
@@ -80,6 +83,18 @@ namespace rtype {
          */
         [[nodiscard]] Network getNetwork() const;
 
+#ifdef RTYPE_IS_CLIENT
+        /**
+         * @brief Get the keybinding from the configuration file.
+         *
+         * @param key The key to get the keybinding for.
+         * @param fallback The fallback keybinding if the key is not found.
+         *
+         * @return The keybinding for the given key, or the fallback keybinding if the key is not found.
+         */
+        [[nodiscard]] sf::Keyboard::Key getKeybinding(const std::string &key, sf::Keyboard::Key fallback) const;
+#endif
+
         //region Delete copy and move constructors to ensure singleton integrity
         Config(const Config &) = delete;
 
@@ -101,17 +116,18 @@ namespace rtype {
 
         /**
          * @brief Set the spdlog log level, depending on the log level defined in the configuration file (if applicable).
-         *
-         * @param reader The INIReader where to get the configuration value from.
          */
-        static void _setLogLevel(const INIReader &reader);
+        void _setLogLevel();
 
         /**
          * @brief Get, validate and store the network configuration values.
-         *
-         * @param reader The INIReader where to get the configuration value from.
          */
-        void _initializeNetwork(const INIReader &reader);
+        void _initializeNetwork();
+
+        /*%
+         * @var The INIReader where to get the configuration value from.
+         */
+        INIReader _reader;
 
         /**
          * @var Map containing the log levels.

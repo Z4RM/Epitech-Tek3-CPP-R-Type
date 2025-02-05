@@ -57,8 +57,6 @@ namespace rtype::systems {
                                     if (data.health != health->value) {
                                         health->setHealth(data.health);
                                         health->_elapsedDamage = std::chrono::steady_clock::now();
-                                        if (data.health <= 0)
-                                            _componentManager.addComponent<components::Dead>(entity, { true });
                                         _componentManager.addComponent<components::Health>(entity, *health);
                                     }
                                 }
@@ -85,10 +83,12 @@ namespace rtype::systems {
                         }
                     }
                 }
-                if (!created && !IS_SERVER) {
+            #ifdef RTYPE_IS_CLIENT
+                if (!created) {
                     spdlog::debug("Creating new player in the game");
                     services::PlayerService::createPlayer(data.netId.id, _entityManager, _componentManager, false);
                 }
+            #endif
             }
 
             if (!IS_SERVER) {

@@ -21,9 +21,9 @@ namespace rtype::systems {
         if (packetPlayerShoot) {
             for (auto &entity: _entityManager.getEntities()) {
                 //TODO: use directly health component instead of this useless component
-                const auto dead = _componentManager.getComponent<components::Dead>(entity);
+                const auto health = _componentManager.getComponent<components::Health>(entity);
 
-                if (dead)
+                if (health && health->value <= 0)
                     continue;
 
                 auto netco = _componentManager.getComponent<components::NetworkConnection>(entity);
@@ -31,9 +31,9 @@ namespace rtype::systems {
                 auto playerPos = _componentManager.getComponent<components::Position>(entity);
 
                 if (netId && netId->id == packetPlayerShoot->netId) {
-                    services::ProjectileService::createProjectile(_entityManager, _componentManager, playerPos);
+                    services::ProjectileService::createProjectile(_entityManager, _componentManager, playerPos, packetPlayerShoot->isSuperProjectile);
                     if (IS_SERVER) {
-                        network::PacketPlayerShoot newPacket(packetPlayerShoot->netId);
+                        network::PacketPlayerShoot newPacket(packetPlayerShoot->netId, packetPlayerShoot->isSuperProjectile);
                         for (auto &playerEntity : _entityManager.getEntities()) {
                             auto networkConnection = _componentManager.getComponent<components::NetworkConnection>(playerEntity);
                             auto networkId = _componentManager.getComponent<components::NetId>(playerEntity);

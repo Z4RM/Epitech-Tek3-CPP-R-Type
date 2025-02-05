@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2025
 ** RType
 ** File description:
-** Lose.hpp
+** Win.hpp
 */
 
 

@@ -12,6 +12,7 @@
 #include <spdlog/spdlog.h>
 
 #include "RType/Entities/Enemy.hpp"
+#include "RType/Services/EnemyService/EnemyService.hpp"
 
 namespace rtype::systems {
     void EnnemiesDataHandler::handle(std::unique_ptr<network::IPacket> packet, asio::ip::udp::endpoint endpoint) {
@@ -62,20 +63,8 @@ namespace rtype::systems {
                 }
 
                 if (!created) {
-                    spdlog::debug("Creating new enemy in the game");
-                    #ifndef RTYPE_IS_SERVER
-                                    components::Sprite sprite3 = {{600, 100, 0}, {33, 36}, "assets/sprites/enemy.gif", {1}};
-                                    rtype::entities::Enemy enemy(
-                                        _entityManager,
-                                        _componentManager,
-                                        {600, 100, 0},
-                                        {0, 0, 0},
-                                        {64, 64},
-                                        sprite3,
-                                        {"", 0, 0},
-                                        data.netId
-                                    );
-                    #endif
+                    spdlog::debug("Creating new enemy in the game with netId: {}", data.netId.id);
+                    services::EnemyService::createEnemy(_entityManager, _componentManager, data.pos, data.netId.id);
                 }
             }
 

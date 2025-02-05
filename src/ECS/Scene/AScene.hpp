@@ -28,6 +28,8 @@ namespace rtype::ecs {
 
         void registerEntity(IEntity &entity) final { this->_entities.emplace_back(entity.getId()); }
 
+        void registerEntity(unsigned int entity) final { this->_entities.emplace_back(entity); }
+
         bool isLoaded() final { return this->_loaded; }
 
         void load() override { this->_loaded = true; };

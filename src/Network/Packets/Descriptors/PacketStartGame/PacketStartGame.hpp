@@ -12,9 +12,11 @@ namespace rtype::network {
     class PacketStartGame final : public APacket {
     public:
         ~PacketStartGame() override = default;
-        explicit PacketStartGame() : APacket(EPacketCode::START_GAME) {};
+        explicit PacketStartGame(int level = 0) : APacket(EPacketCode::START_GAME), level(level) {};
         [[nodiscard]] std::vector<char> bufferize() const override;
         void fillData(const std::vector<char> &buffer) override;
+
+        int level = 0;
     };
 
 }

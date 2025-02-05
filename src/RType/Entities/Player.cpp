@@ -7,6 +7,7 @@
 
 #include "RType/ModeManager/ModeManager.hpp"
 #include "Player.hpp"
+#include "RType/Config/Config.hpp"
 
 #ifdef RTYPE_IS_CLIENT
 
@@ -50,24 +51,45 @@ rtype::entities::Player::Player(
         return;
 
     size_t id = this->_id;
-
     int netId = network.id;
 
+    const auto upKeybinding = Config::getInstance().getKeybinding("up", sf::Keyboard::Key::Z);
+    const auto downKeybinding = Config::getInstance().getKeybinding("down", sf::Keyboard::Key::S);
+    const auto leftKeybinding = Config::getInstance().getKeybinding("left", sf::Keyboard::Key::Q);
+    const auto rightKeybinding = Config::getInstance().getKeybinding("right", sf::Keyboard::Key::D);
+    const auto shootKeybinding = Config::getInstance().getKeybinding("shoot", sf::Keyboard::Key::Space);
+    const auto chargedShootKeybinding = Config::getInstance().getKeybinding("charged_shoot", sf::Keyboard::Key::E);
+
     _inputs.keyActions.insert({
-        sf::Keyboard::Key::Space,
+        shootKeybinding,
         {sf::Event::KeyPressed, [this, &entityManager, &componentManager, id, netId]() {
             static auto clock = std::chrono::steady_clock::now();
-            bool result = this->shoot(entityManager, componentManager, id, clock);
+            bool result = this->shoot(entityManager, componentManager, id, clock, false);
             if (result) {
-                network::PacketPlayerShoot sendPlayerShoot(netId);
+                network::PacketPlayerShoot sendPlayerShoot(netId, false);
                 network::TCPNetwork::getInstance().sendPacket(sendPlayerShoot);
             }
         }}
     });
 
-    // Press
     _inputs.keyActions.insert({
-        sf::Keyboard::Key::Z,
+        chargedShootKeybinding,
+        {sf::Event::KeyPressed, [this, &entityManager, &componentManager, id, netId]() {
+            static auto clock = std::chrono::steady_clock::now();
+            auto health = componentManager.getComponent<components::Health>(id);
+            if (health->value > 0) {
+              bool result = this->shoot(entityManager, componentManager, id, clock, true);
+              if (result) {
+                  network::PacketPlayerShoot sendPlayerShoot(netId, true);
+                  network::TCPNetwork::getInstance().sendPacket(sendPlayerShoot);
+              }
+            }
+        }}
+    });
+
+    //region Press
+    _inputs.keyActions.insert({
+        upKeybinding,
         {sf::Event::KeyPressed, [id, pos, &componentManager]() {
             auto vel = componentManager.getComponent<components::Velocity>(id);
             if (vel != nullptr) {
@@ -78,7 +100,7 @@ rtype::entities::Player::Player(
     });
 
     _inputs.keyActions.insert({
-        sf::Keyboard::Key::S,
+        downKeybinding,
         {sf::Event::KeyPressed, [id, &componentManager]() {
             auto vel = componentManager.getComponent<components::Velocity>(id);
             vel->y = 1;
@@ -87,7 +109,7 @@ rtype::entities::Player::Player(
     });
 
     _inputs.keyActions.insert({
-        sf::Keyboard::Key::Q,
+        leftKeybinding,
         {sf::Event::KeyPressed, [id, &componentManager]() {
             auto vel = componentManager.getComponent<components::Velocity>(id);
             vel->x = -1;
@@ -96,17 +118,18 @@ rtype::entities::Player::Player(
     });
 
     _inputs.keyActions.insert({
-        sf::Keyboard::Key::D,
+        rightKeybinding,
         {sf::Event::KeyPressed, [id, &componentManager]() {
             auto vel = componentManager.getComponent<components::Velocity>(id);
             vel->x = 1;
             componentManager.addComponent<components::Velocity>(id, *vel);
         }}
     });
+    //endregion
 
-    // Release
+    //region Release
     _inputs.keyActions.insert({
-        sf::Keyboard::Key::Z,
+        upKeybinding,
         {sf::Event::KeyReleased, [id, pos, &componentManager]() {
             auto vel = componentManager.getComponent<components::Velocity>(id);
             if (vel != nullptr) {
@@ -117,7 +140,7 @@ rtype::entities::Player::Player(
     });
 
     _inputs.keyActions.insert({
-        sf::Keyboard::Key::S,
+        downKeybinding,
         {sf::Event::KeyReleased, [id, &componentManager]() {
             auto vel = componentManager.getComponent<components::Velocity>(id);
              vel->y = 0;
@@ -126,7 +149,7 @@ rtype::entities::Player::Player(
     });
 
     _inputs.keyActions.insert({
-        sf::Keyboard::Key::Q,
+        leftKeybinding,
         {sf::Event::KeyReleased, [id, &componentManager]() {
             auto vel = componentManager.getComponent<components::Velocity>(id);
              vel->x = 0;
@@ -135,41 +158,45 @@ rtype::entities::Player::Player(
     });
 
     _inputs.keyActions.insert({
-        sf::Keyboard::Key::D,
+        rightKeybinding,
         {sf::Event::KeyReleased, [id, &componentManager]() {
             auto vel = componentManager.getComponent<components::Velocity>(id);
              vel->x = 0;
              componentManager.addComponent<components::Velocity>(id, *vel);
         }}
     });
+    //endregion
+
     componentManager.addComponent<components::InputHandler>(id, _inputs);
 }
 
 bool rtype::entities::Player::shoot(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager, size_t id,
-std::chrono::steady_clock::time_point &clock) {
+std::chrono::steady_clock::time_point &clock, bool isSuperProjectile) {
+    const auto cooldown = isSuperProjectile ? 1.5 : 0.2;
+    const auto projectileSpritePath = isSuperProjectile ? "assets/sprites/projectile/player-shots-charged.gif" : "assets/sprites/projectile/player-shots.gif";
+    const int projectileDamage = isSuperProjectile ? 35 : 20;
     auto now = std::chrono::steady_clock::now();
     std::chrono::duration<double> elapsed = now - clock;
 
-    if (elapsed.count() < 0.2) {
+    if (elapsed.count() < cooldown)
         return false;
-    }
     clock = std::chrono::steady_clock::now();
     size_t projectileId = entityManager.createEntity();
 
     auto playerPos = componentManager.getComponent<components::Position>(id);
     auto netId = componentManager.getComponent<components::NetId>(id);
 
-    if (!playerPos) {
+    if (!playerPos)
         return false;
-    }
-    components::Velocity vel = {2.0, 0.0, 0.0};
+    const float projectileVelX = isSuperProjectile ? 0.25 : 2.0;
+    components::Velocity vel = {projectileVelX, 0.0, 0.0};
     components::Position pos = {playerPos->x + 10.0f, playerPos->y, playerPos->z};
 
     #ifdef RTYPE_IS_CLIENT
     components::Sprite projectileSprite = {
         pos,
         {82.0f, 18.0f},
-        "assets/sprites/projectile/player-shots.gif",
+        projectileSpritePath,
         {1},
         {1.0, 1.0},
         std::make_shared<sf::Texture>(),
@@ -181,7 +208,7 @@ std::chrono::steady_clock::time_point &clock) {
     projectileSprite.sprite->setTextureRect(textureRect);
     projectileSprite.sprite->setPosition({pos.x, pos.y});
     components::Animation projAnim = {
-    "assets/sprite/projectile/player-shots.gif",
+    projectileSpritePath,
         2,
         10
     };
@@ -193,7 +220,7 @@ std::chrono::steady_clock::time_point &clock) {
     componentManager.addComponent<components::Size>(projectileId, {10.0f, 10.0f});
     componentManager.addComponent<components::Hitbox>(projectileId, {pos, {10.0f, 10.0f}});
     componentManager.addComponent<components::Speed>(projectileId, {250});
-    componentManager.addComponent<components::Damage>(projectileId, {20});
+    componentManager.addComponent<components::Damage>(projectileId, {projectileDamage});
     componentManager.addComponent<components::NoDamageToPlayer>(projectileId, {true});
     components::Projectile projectile = {
         pos,
@@ -205,11 +232,11 @@ std::chrono::steady_clock::time_point &clock) {
     };
     componentManager.addComponent<components::Projectile>(projectileId, projectile);
 
-    network::PacketPlayerShoot packet(netId->id);
+    network::PacketPlayerShoot packet(netId->id, isSuperProjectile);
     return true;
 }
 
-#else
+#endif
 
 rtype::entities::Player::Player(
         rtype::ecs::EntityManager &entityManager,
@@ -217,7 +244,7 @@ rtype::entities::Player::Player(
         const components::Position pos,
         const components::Velocity vel,
         const components::Size size,
-        const components::NetworkConnection network,
+        const components::NetworkConnection &network,
         const components::NetId netId,
         const components::Speed speed
 ) {
@@ -230,9 +257,6 @@ rtype::entities::Player::Player(
     componentManager.addComponent<components::NetId>(_id, netId);
     componentManager.addComponent<components::Speed>(_id, {140});
 
-    components::Health health = {1000};
+    components::Health health(1000);
     componentManager.addComponent<components::Health>(_id, health);
 }
-
-#endif
-

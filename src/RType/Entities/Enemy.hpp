@@ -52,7 +52,7 @@ namespace rtype::entities {
               components::NetId netId,
               components::Speed speed = {BASIC_ENEMY_SPEED }
         );
-#else
+#endif
         /**
          * @brief Constructs an enemy entity for the server-side implementation.
          *
@@ -75,7 +75,6 @@ namespace rtype::entities {
               components::NetId netId,
               components::Speed speed = {BASIC_ENEMY_SPEED }
         );
-#endif
 
         /**
          * @brief Default destructor for the `Enemy` class.
