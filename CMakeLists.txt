@@ -61,6 +61,8 @@ set(RTYPE_SRC
         src/ECS/Scene/AScene.hpp
         src/RType/Scenes/Game/Game.cpp
         src/RType/Scenes/Game/Game.hpp
+        src/RType/Scenes/Lose/Lose.cpp
+        src/RType/Scenes/Lose/Lose.hpp
         src/RType/Entities/Game.cpp
         src/RType/Entities/Game.hpp
         src/Network/Packets/Descriptors/PacketStartGame/PacketStartGame.cpp
