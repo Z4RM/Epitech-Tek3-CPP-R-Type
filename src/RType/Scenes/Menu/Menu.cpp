@@ -12,6 +12,7 @@
 #include "RType/Components/Shared/Counter.hpp"
 #include "RType/Components/Shared/MenuState.hpp"
 #include "RType/Entities/PlayerCounter.hpp"
+#include "RType/Levels/LevelManager.hpp"
 
 #ifdef RTYPE_IS_CLIENT
 
@@ -83,12 +84,17 @@ void rtype::scenes::Menu::load() {
 
             if (counter && counter->name == "level") {
                 int count = counter->getCount();
+                std::vector<std::shared_ptr<levels::Level>> &levels = levels::LevelManager::getInstance().getLevels();
 
-                count += 1;
-                if (count > 8)
-                    counter->update(1);
-                else
-                    counter->update(count);
+                for (int i = 0; i < levels.size(); i++) {
+                    if (levels[i]->getNumber() == count) {
+                        if (i + 1 < levels.size()) {
+                            counter->update(levels[i + 1]->getNumber());
+                        } else {
+                            counter->update(levels[0]->getNumber());
+                        }
+                    }
+                }
                 _componentManager.addComponent<components::Counter>(entity, *counter);
             }
         }

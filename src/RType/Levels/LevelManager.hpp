@@ -15,9 +15,20 @@ namespace rtype::levels {
 
     class LevelManager {
     public:
-        inline void registerLevel(std::shared_ptr<Level> level) { this->_levels.emplace_back(std::move(level)); }
+        inline void registerLevel(std::shared_ptr<Level> level) {
+            std::lock_guard lock(_mutex);
+            this->_levels.emplace_back(std::move(level));
+        }
+        inline std::vector<std::shared_ptr<Level>> &getLevels() {
+            std::lock_guard lock(_mutex);
+            return this->_levels;
+        }
+        inline void setLevels(std::vector<std::shared_ptr<Level>> &levels) {
+            std::lock_guard lock(_mutex);
+            this->_levels = std::move(levels);
+        }
 
-        void processCurrentLevel(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager) const;
+        void processCurrentLevel(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager);
         static LevelManager &getInstance();
         void changeLevel(int number);
 
@@ -25,5 +36,6 @@ namespace rtype::levels {
         LevelManager() = default;
         std::shared_ptr<Level> _currentLevel = nullptr;
         std::vector<std::shared_ptr<Level>> _levels {};
+        std::mutex _mutex;
     };
 }

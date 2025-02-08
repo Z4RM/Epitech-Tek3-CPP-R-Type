@@ -40,15 +40,14 @@ void rtype::systems::InputSystem::handleInput(ecs::EntityManager &entityManager,
             continue;
 
         if (event.type == sf::Event::KeyPressed || event.type == sf::Event::KeyReleased) {
-            auto action = inputHandler->keyActions.equal_range(event.key.code);
+            auto [fst, snd] = inputHandler->keyActions.equal_range(event.key.code);
 
-            if (action.first == inputHandler->keyActions.end())
+            if (fst == inputHandler->keyActions.end())
                 return;
 
-            for (auto todo = action.first; todo != action.second; ++todo) {
-                if (event.type == todo->second.first) {
+            for (auto todo = fst; todo != snd; ++todo) {
+                if (event.type == todo->second.first)
                     todo->second.second();
-                }
             }
         }
     }

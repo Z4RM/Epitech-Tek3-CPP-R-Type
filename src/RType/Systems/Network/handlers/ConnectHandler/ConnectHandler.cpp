@@ -9,7 +9,9 @@
 
 #include "RType/Systems/Network/Network.hpp"
 #include "Components.hpp"
+#include "Network/Packets/Descriptors/PacketLevelsRegistered/PacketLevelsRegistered.hpp"
 #include "Network/Packets/Descriptors/PacketPlayerCounter/PacketPlayerCounter.hpp"
+#include "RType/Levels/LevelManager.hpp"
 #include "RType/Services/PlayerService/PlayerService.hpp"
 #include "spdlog/spdlog.h"
 
@@ -32,6 +34,13 @@ namespace rtype::systems {
         if (newState.playerCount < 4) {
             newState.playerCount += 1;
             network::PacketPlayerCounter packetCount(newState.playerCount);
+            std::vector<int> levels;
+
+            for (auto &level : levels::LevelManager::getInstance().getLevels()) {
+                levels.emplace_back(level->getNumber());
+            }
+
+            network::PacketLevelsRegistered packetLevelsRegistered(levels);
 
 #ifdef RTYPE_IS_SERVER
             services::PlayerService::createPlayer(_entityManager, _componentManager, socket);
@@ -42,6 +51,7 @@ namespace rtype::systems {
 
                 if (netCo) {
                     network::TCPNetwork::getInstance().sendPacket(packetCount, netCo->socket);
+                    network::TCPNetwork::getInstance().sendPacket(packetLevelsRegistered, netCo->socket);
                 }
             }
             _componentManager.addComponent<components::MenuState>(menuStateEntity, newState);

@@ -105,6 +105,10 @@ set(RTYPE_SRC
         src/RType/Systems/LevelRunner.hpp
         src/RType/Services/EnemyService/EnemyService.cpp
         src/RType/Services/EnemyService/EnemyService.hpp
+        src/Network/Packets/Descriptors/PacketLevelsRegistered/PacketLevelsRegistered.cpp
+        src/Network/Packets/Descriptors/PacketLevelsRegistered/PacketLevelsRegistered.hpp
+        src/RType/Systems/Network/handlers/LevelsRegisteredHandler/LevelsRegisteredHandler.cpp
+        src/RType/Systems/Network/handlers/LevelsRegisteredHandler/LevelsRegisteredHandler.hpp
 )
 
 set(CLIENT_SRC

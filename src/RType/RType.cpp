@@ -75,6 +75,9 @@ void rtype::RType::stopServer() {
 
                     if (jsonData.contains("id") && jsonData.contains("duration") && jsonData.contains("spawns")) {
                         int id = jsonData["id"].get<int>();
+
+                        if (id < 0)
+                            continue;
                         int duration = jsonData["duration"].get<int>();
                         levels::LevelBuilder builder;
 
@@ -144,7 +147,6 @@ int rtype::RType::run() {
 #else
     loadLevels();
     systemManager.addSystem(systems::LevelRunner::process);
-    levels::LevelManager::getInstance().changeLevel(2);
 #endif
     systemManager.addSystem(rtype::systems::Movement::move);
     systemManager.addSystem(rtype::systems::Network::udpProcess);
