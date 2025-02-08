@@ -22,7 +22,7 @@ namespace rtype::entities
      */
     struct RWindow
     {
-        mutable sf::RenderWindow *window;
+       mutable std::shared_ptr<sf::RenderWindow> window = nullptr;
     };
 
     /**

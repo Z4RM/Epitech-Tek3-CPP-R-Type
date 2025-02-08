@@ -13,13 +13,13 @@ namespace rtype::levels {
 
     void LevelManager::changeLevel(int number) {
         for (const auto &level : this->_levels) {
-            if (level->getNumber() == number)
+            if (level->getNumber() == number) {
                 this->_currentLevel = level;
-            else {
-                this->_currentLevel = nullptr;
-                spdlog::error("Bad level selected");
+                return;
             }
         }
+        this->_currentLevel = nullptr;
+        spdlog::error("Bad level selected");
     }
 
     LevelManager &LevelManager::getInstance() {

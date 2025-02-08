@@ -44,7 +44,7 @@ namespace rtype::ecs
          *
          * @param system The system function to add.
          */
-        void addSystem(const std::function<void(EntityManager& entityManager, ComponentManager& componentManager)>& system) {
+        void addSystem(const std::function<void(EntityManager& entityManager, ComponentManager& componentManager)> &system) {
             _systems.push_back(system);
         }
 
@@ -64,7 +64,7 @@ namespace rtype::ecs
          *
          * Stores all systems as callable objects (`std::function<void(EntityManager& entityManager, ComponentManager& componentManager)>`) to be executed during updates.
          */
-        std::vector<std::function<void(EntityManager& entityManager, ComponentManager& componentManager)>> _systems;
+        std::vector<std::function<void(EntityManager& entityManager, ComponentManager& componentManager)>> _systems = {};
     };
 }
 

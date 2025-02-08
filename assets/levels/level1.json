@@ -1,0 +1,24 @@
+{
+  "id":1,
+  "duration":10,
+  "spawns":[
+    {
+      "time": 3,
+      "enemies": [
+        {
+          "type": 1,
+          "quantity": 3
+        }
+      ]
+    },
+    {
+      "time": 5,
+      "enemies": [
+        {
+          "type": 1,
+          "quantity": 5
+        }
+      ]
+    }
+  ]
+}
