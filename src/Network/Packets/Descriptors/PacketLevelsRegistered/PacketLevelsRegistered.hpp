@@ -11,6 +11,7 @@
 #include "RType/Levels/Level.hpp"
 
 namespace rtype::network {
+    /** @brief Packet used to tell what levels are registered in the server to the client **/
     class PacketLevelsRegistered final : public APacket {
     public:
         ~PacketLevelsRegistered() override = default;
@@ -21,6 +22,6 @@ namespace rtype::network {
         [[nodiscard]] std::vector<char> bufferize() const override;
         void fillData(const std::vector<char> &buffer) override;
 
-        std::vector<int> levels {};
+        std::vector<int> levels {}; ///< registered levels
     };
 }

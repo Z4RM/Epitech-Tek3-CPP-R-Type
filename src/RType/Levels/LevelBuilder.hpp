@@ -10,8 +10,14 @@
 #include "RType/Models/Spawn.hpp"
 
 namespace rtype::levels {
+
+    /** @brief Builder used to build a level
+     * configurable params are number, duration and spawns
+     * **/
     class LevelBuilder {
     public:
+        LevelBuilder() = default;
+
         LevelBuilder &setDuration(int duration) {
             this->_duration = duration;
             return *this;

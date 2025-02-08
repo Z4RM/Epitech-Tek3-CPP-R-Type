@@ -13,6 +13,7 @@
 
 namespace rtype::levels {
 
+    /** @brief Singleton used for managing levels **/
     class LevelManager {
     public:
         inline void registerLevel(std::shared_ptr<Level> level) {
