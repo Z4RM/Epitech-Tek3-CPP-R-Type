@@ -61,11 +61,11 @@ void rtype::RType::stopServer() {
 
        for (const auto& entry : std::filesystem::directory_iterator(folder)) {
             if (entry.is_regular_file() && entry.path().extension() == ".json") {
-                spdlog::info("loading level: {}", static_cast<std::string>(entry.path().filename().c_str()));
+                spdlog::info("loading level: {}", entry.path().filename().string());
 
                 std::ifstream file(entry.path());
                 if (!file.is_open()) {
-                    spdlog::error("Error while opening: {}", static_cast<std::string>(entry.path().c_str()));
+                    spdlog::error("Error while opening: {}", entry.path().string());
                     continue;
                 }
 
@@ -106,7 +106,7 @@ void rtype::RType::stopServer() {
                         spdlog::debug("Level {} registered", id);
                     }
                 } catch (const nlohmann::json::parse_error& e) {
-                    spdlog::error("Parsing error in {} : {}", static_cast<std::string>(entry.path().c_str()), e.what());
+                    spdlog::error("Parsing error in {} : {}", entry.path().string(), e.what());
                 }
             }
         }
