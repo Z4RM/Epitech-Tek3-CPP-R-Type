@@ -72,7 +72,7 @@ void rtype::scenes::Menu::load() {
 
     unsigned int levelSelectorEntity = _entityManager.createEntity();
     std::string levelCounterName = "level";
-    components::Counter count(1, 8, levelCounterName, {260, 475}, 35);
+    components::Counter count(1, 8, levelCounterName, {260, 475}, 35, false);
     _componentManager.addComponent<components::Counter>(levelSelectorEntity, count);
 
 
@@ -93,7 +93,7 @@ void rtype::scenes::Menu::load() {
             }
         }
     };
-    components::SfText changeLevelText("->", "./assets/fonts/Starborn.ttf", sf::Color::White, 50, {500, 465});
+    components::SfText changeLevelText("->", "./assets/fonts/Starborn.ttf", sf::Color::White, 50, {475, 465});
     entities::Button changeLevelButton(_componentManager, _entityManager, changeLevel, changeLevelText);
 
     this->registerEntity(levelSelectorEntity);
