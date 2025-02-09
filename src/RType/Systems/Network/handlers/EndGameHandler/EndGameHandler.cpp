@@ -13,9 +13,6 @@
 #include "Network/Packets/Descriptors/PacketEndGame/PacketEndGame.hpp"
 #include "ECS/Scene/SceneManager.hpp"
 #include "ECS.hpp"
-#ifdef RTYPE_IS_CLIENT
-#include "RType/Components/Client/Sprite.hpp"
-#endif
 #include "RType/Components/Shared/ActualPlayer.hpp"
 #include "RType/Components/Shared/Network.hpp"
 
