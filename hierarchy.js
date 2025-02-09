@@ -33,6 +33,7 @@ var hierarchy =
     [ "rtype::systems::INetworkHandler", "classrtype_1_1systems_1_1INetworkHandler.html", [
       [ "rtype::systems::ANetworkHandler", "classrtype_1_1systems_1_1ANetworkHandler.html", [
         [ "rtype::systems::ConnectHandler", "classrtype_1_1systems_1_1ConnectHandler.html", null ],
+        [ "rtype::systems::EndGameHandler", "classrtype_1_1systems_1_1EndGameHandler.html", null ],
         [ "rtype::systems::EnnemiesDataHandler", "classrtype_1_1systems_1_1EnnemiesDataHandler.html", null ],
         [ "rtype::systems::PlayerCountHandler", "classrtype_1_1systems_1_1PlayerCountHandler.html", null ],
         [ "rtype::systems::PlayerDataHandler", "classrtype_1_1systems_1_1PlayerDataHandler.html", null ],
@@ -46,6 +47,7 @@ var hierarchy =
     [ "rtype::network::IPacket", "classrtype_1_1network_1_1IPacket.html", [
       [ "rtype::network::APacket", "classrtype_1_1network_1_1APacket.html", [
         [ "rtype::network::PacketConnect", "classrtype_1_1network_1_1PacketConnect.html", null ],
+        [ "rtype::network::PacketEndGame", "classrtype_1_1network_1_1PacketEndGame.html", null ],
         [ "rtype::network::PacketEnemiesData", "classrtype_1_1network_1_1PacketEnemiesData.html", null ],
         [ "rtype::network::PacketPlayerCounter", "classrtype_1_1network_1_1PacketPlayerCounter.html", null ],
         [ "rtype::network::PacketPlayerShoot", "classrtype_1_1network_1_1PacketPlayerShoot.html", null ],
@@ -57,7 +59,9 @@ var hierarchy =
     [ "rtype::ecs::IScene", "classrtype_1_1ecs_1_1IScene.html", [
       [ "rtype::ecs::AScene", "classrtype_1_1ecs_1_1AScene.html", [
         [ "rtype::scenes::Game", "classrtype_1_1scenes_1_1Game.html", null ],
-        [ "rtype::scenes::Menu", "classrtype_1_1scenes_1_1Menu.html", null ]
+        [ "rtype::scenes::Lose", "classrtype_1_1scenes_1_1Lose.html", null ],
+        [ "rtype::scenes::Menu", "classrtype_1_1scenes_1_1Menu.html", null ],
+        [ "rtype::scenes::Win", "classrtype_1_1scenes_1_1Win.html", null ]
       ] ]
     ] ],
     [ "rtype::ecs::ISparseSet", "classrtype_1_1ecs_1_1ISparseSet.html", [

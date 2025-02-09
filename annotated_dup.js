@@ -70,6 +70,7 @@ var annotated_dup =
         [ "APacket", "classrtype_1_1network_1_1APacket.html", "classrtype_1_1network_1_1APacket" ],
         [ "IPacket", "classrtype_1_1network_1_1IPacket.html", "classrtype_1_1network_1_1IPacket" ],
         [ "PacketConnect", "classrtype_1_1network_1_1PacketConnect.html", "classrtype_1_1network_1_1PacketConnect" ],
+        [ "PacketEndGame", "classrtype_1_1network_1_1PacketEndGame.html", "classrtype_1_1network_1_1PacketEndGame" ],
         [ "PacketEnemiesData", "classrtype_1_1network_1_1PacketEnemiesData.html", "classrtype_1_1network_1_1PacketEnemiesData" ],
         [ "PacketFactory", "classrtype_1_1network_1_1PacketFactory.html", "classrtype_1_1network_1_1PacketFactory" ],
         [ "PacketPlayerCounter", "classrtype_1_1network_1_1PacketPlayerCounter.html", "classrtype_1_1network_1_1PacketPlayerCounter" ],
@@ -82,7 +83,9 @@ var annotated_dup =
       ] ],
       [ "scenes", "namespacertype_1_1scenes.html", [
         [ "Game", "classrtype_1_1scenes_1_1Game.html", "classrtype_1_1scenes_1_1Game" ],
-        [ "Menu", "classrtype_1_1scenes_1_1Menu.html", "classrtype_1_1scenes_1_1Menu" ]
+        [ "Lose", "classrtype_1_1scenes_1_1Lose.html", "classrtype_1_1scenes_1_1Lose" ],
+        [ "Menu", "classrtype_1_1scenes_1_1Menu.html", "classrtype_1_1scenes_1_1Menu" ],
+        [ "Win", "classrtype_1_1scenes_1_1Win.html", "classrtype_1_1scenes_1_1Win" ]
       ] ],
       [ "services", "namespacertype_1_1services.html", [
         [ "EnemyService", "classrtype_1_1services_1_1EnemyService.html", null ],
@@ -92,6 +95,7 @@ var annotated_dup =
       [ "systems", "namespacertype_1_1systems.html", [
         [ "ANetworkHandler", "classrtype_1_1systems_1_1ANetworkHandler.html", "classrtype_1_1systems_1_1ANetworkHandler" ],
         [ "ConnectHandler", "classrtype_1_1systems_1_1ConnectHandler.html", "classrtype_1_1systems_1_1ConnectHandler" ],
+        [ "EndGameHandler", "classrtype_1_1systems_1_1EndGameHandler.html", "classrtype_1_1systems_1_1EndGameHandler" ],
         [ "EnnemiesDataHandler", "classrtype_1_1systems_1_1EnnemiesDataHandler.html", "classrtype_1_1systems_1_1EnnemiesDataHandler" ],
         [ "INetworkHandler", "classrtype_1_1systems_1_1INetworkHandler.html", "classrtype_1_1systems_1_1INetworkHandler" ],
         [ "InputSystem", "classrtype_1_1systems_1_1InputSystem.html", null ],

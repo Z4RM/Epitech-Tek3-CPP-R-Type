@@ -26,8 +26,9 @@ var searchData=
   ['iscreate_23',['isCreate',['../structrtype_1_1components_1_1Created.html#a08b8a4b7f2c7fe01055985acbd2f7c82',1,'rtype::components::Created']]],
   ['isentityactive_24',['isEntityActive',['../classrtype_1_1ecs_1_1EntityManager.html#aee500ea41e56edcccf098954b21791de',1,'rtype::ecs::EntityManager']]],
   ['isloaded_25',['isLoaded',['../classrtype_1_1ecs_1_1AScene.html#a395e559635b055cc81f0b9717859a1a9',1,'rtype::ecs::AScene::isLoaded()'],['../classrtype_1_1ecs_1_1IScene.html#a76f1b73165577c9eac6d66d2e4042791',1,'rtype::ecs::IScene::isLoaded()']]],
-  ['isparseset_26',['ISparseSet',['../classrtype_1_1ecs_1_1ISparseSet.html',1,'rtype::ecs']]],
-  ['isserver_27',['isServer',['../classrtype_1_1ModeManager.html#a5db557e9519ac166c01dad0f9f640749',1,'rtype::ModeManager']]],
-  ['isstarted_28',['isStarted',['../structrtype_1_1components_1_1GameState.html#afe79cf614d9fd9b9d363081029fc095d',1,'rtype::components::GameState']]],
-  ['issuperprojectile_29',['isSuperProjectile',['../classrtype_1_1network_1_1PacketPlayerShoot.html#af0a7c626e4fc95354cdf9003724a20b2',1,'rtype::network::PacketPlayerShoot']]]
+  ['islose_26',['isLose',['../classrtype_1_1network_1_1PacketEndGame.html#ac55f6aa66d8859fc6461cc6c209e519d',1,'rtype::network::PacketEndGame']]],
+  ['isparseset_27',['ISparseSet',['../classrtype_1_1ecs_1_1ISparseSet.html',1,'rtype::ecs']]],
+  ['isserver_28',['isServer',['../classrtype_1_1ModeManager.html#a5db557e9519ac166c01dad0f9f640749',1,'rtype::ModeManager']]],
+  ['isstarted_29',['isStarted',['../structrtype_1_1components_1_1GameState.html#afe79cf614d9fd9b9d363081029fc095d',1,'rtype::components::GameState']]],
+  ['issuperprojectile_30',['isSuperProjectile',['../classrtype_1_1network_1_1PacketPlayerShoot.html#af0a7c626e4fc95354cdf9003724a20b2',1,'rtype::network::PacketPlayerShoot']]]
 ];

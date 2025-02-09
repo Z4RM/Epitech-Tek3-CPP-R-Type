@@ -3,6 +3,7 @@ var namespacertype_1_1network =
     [ "APacket", "classrtype_1_1network_1_1APacket.html", "classrtype_1_1network_1_1APacket" ],
     [ "IPacket", "classrtype_1_1network_1_1IPacket.html", "classrtype_1_1network_1_1IPacket" ],
     [ "PacketConnect", "classrtype_1_1network_1_1PacketConnect.html", "classrtype_1_1network_1_1PacketConnect" ],
+    [ "PacketEndGame", "classrtype_1_1network_1_1PacketEndGame.html", "classrtype_1_1network_1_1PacketEndGame" ],
     [ "PacketEnemiesData", "classrtype_1_1network_1_1PacketEnemiesData.html", "classrtype_1_1network_1_1PacketEnemiesData" ],
     [ "PacketFactory", "classrtype_1_1network_1_1PacketFactory.html", "classrtype_1_1network_1_1PacketFactory" ],
     [ "PacketPlayerCounter", "classrtype_1_1network_1_1PacketPlayerCounter.html", "classrtype_1_1network_1_1PacketPlayerCounter" ],
@@ -19,6 +20,7 @@ var namespacertype_1_1network =
       [ "PLAYERS_DATA", "namespacertype_1_1network.html#a6e33dcdcd158a1e8ce1f13336651a3f8ac622dc3e2c639993b60f4a1d7c0bf120", null ],
       [ "PLAYER_SHOOT", "namespacertype_1_1network.html#a6e33dcdcd158a1e8ce1f13336651a3f8a7ebe525a7107860a63e5687b25de4d3e", null ],
       [ "ENEMIES_DATA", "namespacertype_1_1network.html#a6e33dcdcd158a1e8ce1f13336651a3f8ae472978035378367864d3026534a18db", null ],
-      [ "START_GAME", "namespacertype_1_1network.html#a6e33dcdcd158a1e8ce1f13336651a3f8a82c5d4d920c04c96cf80bf400d5b6973", null ]
+      [ "START_GAME", "namespacertype_1_1network.html#a6e33dcdcd158a1e8ce1f13336651a3f8a82c5d4d920c04c96cf80bf400d5b6973", null ],
+      [ "END_GAME", "namespacertype_1_1network.html#a6e33dcdcd158a1e8ce1f13336651a3f8ab300924e28ebd7b4a5fd2b32b8a4fce2", null ]
     ] ]
 ];
