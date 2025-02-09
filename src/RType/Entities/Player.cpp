@@ -227,11 +227,11 @@ bool rtype::entities::Player::shoot(
     };
     if (projectileSound.buffer->loadFromFile(projectileSound.path)) {
         projectileSound.sound->setBuffer(*projectileSound.buffer);
-        projectileSound.sound->setVolume(50);
+        projectileSound.sound->setVolume(Config::getInstance().getSounds().volumes.effects);
         projectileSound.play = true;
         componentManager.addComponent(projectileId, projectileSound);
     } else
-        spdlog::error("Failed to load sound file");
+        spdlog::error("Failed to load sound from file");
 
     #endif
     componentManager.addComponent<components::Position>(projectileId, pos);
