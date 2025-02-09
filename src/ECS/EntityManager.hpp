@@ -10,6 +10,7 @@
 #include <unordered_set>
 #include <queue>
 #include <mutex>
+
 #include "ComponentManager.hpp"
 
 /**
@@ -60,10 +61,12 @@ namespace rtype::ecs
          * @param componentManager the component manager used for removing components of an entity
          */
         void destroyEntity(unsigned int entity, ComponentManager &componentManager) {
-            std::lock_guard lock(_entitiesMutex);
-            if (_activeEntities.find(entity) != _activeEntities.end()) {
-                _activeEntities.erase(entity);
-                _availableIds.push(entity);
+            {
+                std::lock_guard lock(_entitiesMutex);
+                if (_activeEntities.find(entity) != _activeEntities.end()) {
+                    _activeEntities.erase(entity);
+                    _availableIds.push(entity);
+                }
             }
             componentManager.removeAllComponent(entity);
         }

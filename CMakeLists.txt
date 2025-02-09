@@ -61,6 +61,10 @@ set(RTYPE_SRC
         src/ECS/Scene/AScene.hpp
         src/RType/Scenes/Game/Game.cpp
         src/RType/Scenes/Game/Game.hpp
+        src/RType/Scenes/Lose/Lose.cpp
+        src/RType/Scenes/Lose/Lose.hpp
+        src/RType/Scenes/Win/Win.cpp
+        src/RType/Scenes/Win/Win.hpp
         src/RType/Entities/Game.cpp
         src/RType/Entities/Game.hpp
         src/Network/Packets/Descriptors/PacketStartGame/PacketStartGame.cpp
@@ -93,6 +97,10 @@ set(RTYPE_SRC
         src/RType/Systems/Network/handlers/EnnemiesDataHandler/EnnemiesDataHandler.hpp
         src/RType/Systems/Network/handlers/PlayerDataHandler/PlayerDataHandler.cpp
         src/RType/Systems/Network/handlers/PlayerDataHandler/PlayerDataHandler.hpp
+        src/Network/Packets/Descriptors/PacketEndGame/PacketEndGame.cpp
+        src/Network/Packets/Descriptors/PacketEndGame/PacketEndGame.hpp
+        src/RType/Systems/Network/handlers/EndGameHandler/EndGameHandler.cpp
+        src/RType/Systems/Network/handlers/EndGameHandler/EndGameHandler.hpp
         src/RType/Models/EEnemyType.hpp
         src/RType/Levels/Level.hpp
         src/RType/Models/Spawn.hpp

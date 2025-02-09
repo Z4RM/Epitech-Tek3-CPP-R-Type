@@ -19,6 +19,8 @@
 #include "Levels/LevelManager.hpp"
 #include "Scenes/Game/Game.hpp"
 #include "Scenes/Menu/Menu.hpp"
+#include "Scenes/Lose/Lose.hpp"
+#include "Scenes/Win/Win.hpp"
 #include "Systems/AnimationProjectile.hpp"
 #include "Systems/LevelRunner.hpp"
 #include "Systems/Network/Network.hpp"
@@ -110,6 +112,12 @@ int rtype::RType::run() {
 
     std::shared_ptr<scenes::Game> game = std::make_shared<scenes::Game>(entityManager, componentManager);
     sceneManager.registerScene(1, std::move(game));
+
+    std::shared_ptr<scenes::Lose> lose = std::make_shared<scenes::Lose>(entityManager, componentManager);
+    sceneManager.registerScene(2, std::move(lose));
+
+    std::shared_ptr<scenes::Win> win = std::make_shared<scenes::Win>(entityManager, componentManager);
+    sceneManager.registerScene(3, std::move(win));
 
     //TODO: put this component in the game scene instead of here
     entities::Game gameSate(componentManager, entityManager);
