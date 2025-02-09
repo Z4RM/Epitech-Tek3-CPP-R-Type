@@ -2,14 +2,14 @@
 ** EPITECH PROJECT, 2025
 ** RType
 ** File description:
-** Sprite.hpp
+** Sound.hpp
 */
 
 #ifndef RTYPE_SPRITE_HPP_
 #define RTYPE_SPRITE_HPP_
 
+#include <memory>
 #include <SFML/Audio.hpp>
-#include "Components.hpp"
 
 namespace rtype::components {
     struct Sound {

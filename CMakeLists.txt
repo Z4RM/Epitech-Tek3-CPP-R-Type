@@ -135,6 +135,7 @@ set(CLIENT_SRC
         include/Networks.hpp
         src/RType/Components/Client/Sprite.hpp
         src/RType/Components/Client/Sound.hpp
+        src/RType/Components/Client/Music.hpp
         src/Network/Packets/Descriptors/PacketWelcome/PacketWelcome.cpp
         src/Network/Packets/Descriptors/PacketWelcome/PacketWelcome.hpp
         src/RType/Components/Shared/Network.hpp

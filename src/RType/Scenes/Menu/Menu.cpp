@@ -15,10 +15,11 @@
 
 #ifdef RTYPE_IS_CLIENT
 
+#include <SFML/Audio.hpp>
+#include "RType/Config/Config.hpp"
 #include "RType/Entities/Button.hpp"
 #include "RType/Entities/Image.hpp"
-#include "RType/Components/Client/OnClick.hpp"
-#include "RType/Components/Shared/GameState.hpp"
+#include "Components.hpp"
 
 void rtype::scenes::Menu::load() {
     components::Sprite logo;
@@ -47,7 +48,7 @@ void rtype::scenes::Menu::load() {
                 break;
             }
         }
-        for (const auto &entity : _entityManager.getEntities()) {
+        for (const auto &entity: _entityManager.getEntities()) {
             auto levelCounter = _componentManager.getComponent<components::Counter>(entity);
 
             if (levelCounter && levelCounter->name == "level") {
@@ -68,7 +69,7 @@ void rtype::scenes::Menu::load() {
     this->registerEntity(logoImage);
 
     unsigned int menuSateEntity = _entityManager.createEntity();
-    components::MenuState state = { 0 };
+    components::MenuState state = {0};
 
     unsigned int levelSelectorEntity = _entityManager.createEntity();
     std::string levelCounterName = "level";
@@ -78,7 +79,7 @@ void rtype::scenes::Menu::load() {
 
     components::OnClick changeLevel;
     changeLevel.fn = [this]() {
-        for (const auto &entity : _entityManager.getEntities()) {
+        for (const auto &entity: _entityManager.getEntities()) {
             auto counter = _componentManager.getComponent<components::Counter>(entity);
 
             if (counter && counter->name == "level") {
@@ -101,6 +102,23 @@ void rtype::scenes::Menu::load() {
     this->registerEntity(changeLevelButton);
 
     _componentManager.addComponent<components::MenuState>(menuSateEntity, state);
+
+    components::Music menuMusic = {
+            "assets/sounds/musics/menu.mp3",
+            std::make_shared<sf::Music>()
+    };
+
+    if (!menuMusic.music->openFromFile("assets/sounds/musics/menu.mp3"))
+        spdlog::error("Failed to load music from file");
+    menuMusic.music->setVolume(Config::getInstance().getSounds().volumes.music);
+    menuMusic.music->setLoopPoints(sf::Music::TimeSpan(sf::seconds(0), sf::seconds(8.25)));
+    menuMusic.music->setLoop(true);
+
+    // The music is not played in the system because it must be played only once and then the loop makes the rest
+    menuMusic.music->play();
+    // The music is added to the component manager so it's not destroyed once this function ends
+    _componentManager.addComponent(menuSateEntity, menuMusic);
+
     AScene::load();
 }
 

@@ -16,3 +16,4 @@
 #include "./Client/SlidingBg.hpp"
 #include "./Client/Sprite.hpp"
 #include "./Client/Sound.hpp"
+#include "./Client/Music.hpp"
