@@ -134,6 +134,7 @@ set(CLIENT_SRC
         src/Network/Packets/Descriptors/PacketConnect/PacketConnect.cpp
         include/Networks.hpp
         src/RType/Components/Client/Sprite.hpp
+        src/RType/Components/Client/Sound.hpp
         src/Network/Packets/Descriptors/PacketWelcome/PacketWelcome.cpp
         src/Network/Packets/Descriptors/PacketWelcome/PacketWelcome.hpp
         src/RType/Components/Shared/Network.hpp
@@ -177,6 +178,8 @@ set(CLIENT_SRC
         src/RType/Components/Shared/NoDamageToPlayer.hpp
         src/RType/Systems/Network/handlers/PlayerDataHandler/PlayerDataHandler.cpp
         src/RType/Systems/Network/handlers/PlayerDataHandler/PlayerDataHandler.hpp
+        src/RType/Systems/Sound/Sound.cpp
+        src/RType/Systems/Sound/Sound.hpp
 )
 
 set(RTYPE_HEADERS

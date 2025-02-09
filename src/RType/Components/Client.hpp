@@ -15,3 +15,4 @@
 #include "./Client/OnClick.hpp"
 #include "./Client/SlidingBg.hpp"
 #include "./Client/Sprite.hpp"
+#include "./Client/Sound.hpp"

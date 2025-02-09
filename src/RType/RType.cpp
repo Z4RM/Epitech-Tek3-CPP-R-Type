@@ -21,9 +21,6 @@
 #include "Scenes/Menu/Menu.hpp"
 #include "Scenes/Lose/Lose.hpp"
 #include "Scenes/Win/Win.hpp"
-#include "Systems/AnimationProjectile.hpp"
-#include "Systems/LevelRunner.hpp"
-#include "Systems/Network/Network.hpp"
 #ifdef RTYPE_IS_CLIENT
 #include "Entities/Window.hpp"
 #endif
@@ -79,6 +76,7 @@ int rtype::RType::run() {
             mode
     );
     systemManager.addSystem(rtype::systems::RenderWindowSys::render);
+    systemManager.addSystem(rtype::systems::SoundSys::play);
     systemManager.addSystem(rtype::systems::UpdateProjectilesSystem::updateProjectiles);
 #else
     systemManager.addSystem(rtype::systems::LevelRunner::process);
