@@ -10,7 +10,7 @@
 #include <map>
 #include <memory>
 #include <string>
-#include <SFML/Graphics/Texture.hpp>
+#include <SFML/Graphics.hpp>
 
 namespace rtype {
     class TextureManager {
