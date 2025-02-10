@@ -127,14 +127,17 @@ $(function(){initNavTree('RType_8hpp_source.html',''); initResizable(true); });
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>        <span class="comment">// TODO: documentation</span></div>
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>        <span class="keywordtype">void</span> stopServer();</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    };</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="preprocessor">#else</span><span class="preprocessor"></span></div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classrtype_1_1RType.html#a612e70ba6be62e27956cbae22e15fe83">loadLevels</a>();</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    };</div>
 </div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>}</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="preprocessor">#endif </span><span class="comment">/* !RTYPE_RTYPE_HPP_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>}</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span><span class="preprocessor">#endif </span><span class="comment">/* !RTYPE_RTYPE_HPP_ */</span><span class="preprocessor"></span></div>
 <div class="ttc" id="aclassrtype_1_1RType_html"><div class="ttname"><a href="classrtype_1_1RType.html">rtype::RType</a></div><div class="ttdoc">The main class of the R-Type, containing, among others, the entrypoint.</div><div class="ttdef"><b>Definition</b> RType.hpp:17</div></div>
-<div class="ttc" id="aclassrtype_1_1RType_html_a1e6ac934d0c8131ffd4a1452af4c162b"><div class="ttname"><a href="classrtype_1_1RType.html#a1e6ac934d0c8131ffd4a1452af4c162b">rtype::RType::run</a></div><div class="ttdeci">static int run()</div><div class="ttdoc">The entrypoint of the R-Type. Should be the only statement in the program main function,...</div><div class="ttdef"><b>Definition</b> RType.cpp:53</div></div>
+<div class="ttc" id="aclassrtype_1_1RType_html_a1e6ac934d0c8131ffd4a1452af4c162b"><div class="ttname"><a href="classrtype_1_1RType.html#a1e6ac934d0c8131ffd4a1452af4c162b">rtype::RType::run</a></div><div class="ttdeci">static int run()</div><div class="ttdoc">The entrypoint of the R-Type. Should be the only statement in the program main function,...</div><div class="ttdef"><b>Definition</b> RType.cpp:119</div></div>
+<div class="ttc" id="aclassrtype_1_1RType_html_a612e70ba6be62e27956cbae22e15fe83"><div class="ttname"><a href="classrtype_1_1RType.html#a612e70ba6be62e27956cbae22e15fe83">rtype::RType::loadLevels</a></div><div class="ttdeci">static void loadLevels()</div><div class="ttdoc">load json levels in the assets/levels folder</div><div class="ttdef"><b>Definition</b> RType.cpp:56</div></div>
 <div class="ttc" id="anamespacertype_html"><div class="ttname"><a href="namespacertype.html">rtype</a></div><div class="ttdef"><b>Definition</b> Keys.hpp:16</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

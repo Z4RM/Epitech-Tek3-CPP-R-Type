@@ -12,7 +12,7 @@ var searchData=
   ['win_2ecpp_9',['Win.cpp',['../Win_8cpp.html',1,'']]],
   ['win_2ehpp_10',['Win.hpp',['../Win_8hpp.html',1,'']]],
   ['window_11',['Window',['../classrtype_1_1entities_1_1Window.html',1,'rtype::entities::Window'],['../classrtype_1_1entities_1_1Window.html#a7c522cf51f3c5f9a0605e89a1f8f5f88',1,'rtype::entities::Window::Window()']]],
-  ['window_12',['window',['../structrtype_1_1entities_1_1RWindow.html#aac38c5c0f48a97af935138eb1e57935e',1,'rtype::entities::RWindow']]],
+  ['window_12',['window',['../structrtype_1_1entities_1_1RWindow.html#a01c663c6d0c183fb81f081ded8149684',1,'rtype::entities::RWindow']]],
   ['window_2ecpp_13',['Window.cpp',['../Window_8cpp.html',1,'']]],
   ['window_2ehpp_14',['Window.hpp',['../Window_8hpp.html',1,'']]],
   ['workerthread_15',['workerThread',['../classrtype_1_1ThreadPool.html#a67412cf17597fed5725f722ef48cc34d',1,'rtype::ThreadPool']]]

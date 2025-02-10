@@ -7,6 +7,7 @@ var namespacertype_1_1systems =
     [ "INetworkHandler", "classrtype_1_1systems_1_1INetworkHandler.html", "classrtype_1_1systems_1_1INetworkHandler" ],
     [ "InputSystem", "classrtype_1_1systems_1_1InputSystem.html", null ],
     [ "LevelRunner", "classrtype_1_1systems_1_1LevelRunner.html", null ],
+    [ "LevelsRegisteredHandler", "classrtype_1_1systems_1_1LevelsRegisteredHandler.html", "classrtype_1_1systems_1_1LevelsRegisteredHandler" ],
     [ "Movement", "classrtype_1_1systems_1_1Movement.html", "classrtype_1_1systems_1_1Movement" ],
     [ "Network", "classrtype_1_1systems_1_1Network.html", null ],
     [ "PlayerCountHandler", "classrtype_1_1systems_1_1PlayerCountHandler.html", "classrtype_1_1systems_1_1PlayerCountHandler" ],

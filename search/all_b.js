@@ -14,11 +14,12 @@ var searchData=
   ['getid_11',['getId',['../classrtype_1_1ecs_1_1AEntity.html#a59f3327952d4dd5bde28ae209071bd7e',1,'rtype::ecs::AEntity::getId()'],['../classrtype_1_1ecs_1_1IEntity.html#a870a79bc19e437c290109a94c6885979',1,'rtype::ecs::IEntity::getId()'],['../classrtype_1_1entities_1_1Player.html#a2b506207f597ad18179faffc7872b044',1,'rtype::entities::Player::getId()'],['../classrtype_1_1entities_1_1Window.html#af431b007224a4d7e38502c1e32f27f04',1,'rtype::entities::Window::getId()']]],
   ['getinstance_12',['getInstance',['../classrtype_1_1ecs_1_1SceneManager.html#aaf1b411889deee8ab6b5211cb7823abc',1,'rtype::ecs::SceneManager::getInstance()'],['../classrtype_1_1network_1_1TCPNetwork.html#ae1f84857ccc3f3816608633b37052742',1,'rtype::network::TCPNetwork::getInstance()'],['../classrtype_1_1network_1_1UDPNetwork.html#afc614ea8a1d2f6e667a4812eca0f26b6',1,'rtype::network::UDPNetwork::getInstance()'],['../classrtype_1_1Config.html#af514072f20a1f4871ce4b24185d0ff37',1,'rtype::Config::getInstance()'],['../classrtype_1_1levels_1_1LevelManager.html#ad1312382a6c10ce91bedca6a4f6438e6',1,'rtype::levels::LevelManager::getInstance()']]],
   ['getiocontext_13',['getIoContext',['../classrtype_1_1network_1_1UDPNetwork.html#ae70bf3a5f5ad5a364e06f1cc7e40fc52',1,'rtype::network::UDPNetwork']]],
-  ['getnetwork_14',['getNetwork',['../classrtype_1_1Config.html#a3139e1c09468d4344cea1e128e2ab6cc',1,'rtype::Config']]],
-  ['getnumber_15',['getNumber',['../classrtype_1_1levels_1_1Level.html#ad4a97b318dd3f0b0d001f3f0ce730b58',1,'rtype::levels::Level']]],
-  ['getserverendpoint_16',['getServerEndpoint',['../classrtype_1_1network_1_1UDPNetwork.html#af975e76b5b19904b439483589b41a702',1,'rtype::network::UDPNetwork']]],
-  ['getstarted_17',['getStarted',['../classrtype_1_1network_1_1TCPNetwork.html#a42fdcefb87b45be182e53d175d4561ec',1,'rtype::network::TCPNetwork::getStarted()'],['../classrtype_1_1network_1_1UDPNetwork.html#a1792c17cb054e01f47aaa1736320245c',1,'rtype::network::UDPNetwork::getStarted()']]],
-  ['getstop_18',['getStop',['../classrtype_1_1network_1_1TCPNetwork.html#a28529872bd09078f74f5864f6110b882',1,'rtype::network::TCPNetwork::getStop()'],['../classrtype_1_1network_1_1UDPNetwork.html#a3f04503f277b6fd48e17e84928e15530',1,'rtype::network::UDPNetwork::getStop()']]],
-  ['globalnetid_19',['globalNetId',['../classrtype_1_1systems_1_1Network.html#a1aa6c5536481c1bc865d2c481db3e7ca',1,'rtype::systems::Network']]],
-  ['guidelines_20',['Enforcement Guidelines',['../md_CODE__OF__CONDUCT.html#autotoc_md6',1,'']]]
+  ['getlevels_14',['getLevels',['../classrtype_1_1levels_1_1LevelManager.html#ab0696ad25e3a9855e7758933b20c5a2e',1,'rtype::levels::LevelManager']]],
+  ['getnetwork_15',['getNetwork',['../classrtype_1_1Config.html#a3139e1c09468d4344cea1e128e2ab6cc',1,'rtype::Config']]],
+  ['getnumber_16',['getNumber',['../classrtype_1_1levels_1_1Level.html#ad4a97b318dd3f0b0d001f3f0ce730b58',1,'rtype::levels::Level']]],
+  ['getserverendpoint_17',['getServerEndpoint',['../classrtype_1_1network_1_1UDPNetwork.html#af975e76b5b19904b439483589b41a702',1,'rtype::network::UDPNetwork']]],
+  ['getstarted_18',['getStarted',['../classrtype_1_1network_1_1TCPNetwork.html#a42fdcefb87b45be182e53d175d4561ec',1,'rtype::network::TCPNetwork::getStarted()'],['../classrtype_1_1network_1_1UDPNetwork.html#a1792c17cb054e01f47aaa1736320245c',1,'rtype::network::UDPNetwork::getStarted()']]],
+  ['getstop_19',['getStop',['../classrtype_1_1network_1_1TCPNetwork.html#a28529872bd09078f74f5864f6110b882',1,'rtype::network::TCPNetwork::getStop()'],['../classrtype_1_1network_1_1UDPNetwork.html#a3f04503f277b6fd48e17e84928e15530',1,'rtype::network::UDPNetwork::getStop()']]],
+  ['globalnetid_20',['globalNetId',['../classrtype_1_1systems_1_1Network.html#a1aa6c5536481c1bc865d2c481db3e7ca',1,'rtype::systems::Network']]],
+  ['guidelines_21',['Enforcement Guidelines',['../md_CODE__OF__CONDUCT.html#autotoc_md6',1,'']]]
 ];

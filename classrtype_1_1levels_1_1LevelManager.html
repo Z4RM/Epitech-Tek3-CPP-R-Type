@@ -110,14 +110,21 @@ $(function(){initNavTree('classrtype_1_1levels_1_1LevelManager.html',''); initRe
 </div><!--header-->
 <div class="contents">
 
+<p>Singleton used for managing levels.  
+ <a href="#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="LevelManager_8hpp_source.html">LevelManager.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a0727c17cbc6ac9c8ff6c3b30a574bca6" id="r_a0727c17cbc6ac9c8ff6c3b30a574bca6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0727c17cbc6ac9c8ff6c3b30a574bca6">registerLevel</a> (std::shared_ptr&lt; <a class="el" href="classrtype_1_1levels_1_1Level.html">Level</a> &gt; level)</td></tr>
 <tr class="separator:a0727c17cbc6ac9c8ff6c3b30a574bca6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acdbc0042fa3b1d65fdd0bb50c4d48a86" id="r_acdbc0042fa3b1d65fdd0bb50c4d48a86"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acdbc0042fa3b1d65fdd0bb50c4d48a86">processCurrentLevel</a> (<a class="el" href="classrtype_1_1ecs_1_1EntityManager.html">ecs::EntityManager</a> &amp;entityManager, <a class="el" href="classrtype_1_1ecs_1_1ComponentManager.html">ecs::ComponentManager</a> &amp;componentManager) const</td></tr>
-<tr class="separator:acdbc0042fa3b1d65fdd0bb50c4d48a86"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab0696ad25e3a9855e7758933b20c5a2e" id="r_ab0696ad25e3a9855e7758933b20c5a2e"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::shared_ptr&lt; <a class="el" href="classrtype_1_1levels_1_1Level.html">Level</a> &gt; &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab0696ad25e3a9855e7758933b20c5a2e">getLevels</a> ()</td></tr>
+<tr class="separator:ab0696ad25e3a9855e7758933b20c5a2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0080d7985de343855db4df55c452e7b2" id="r_a0080d7985de343855db4df55c452e7b2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0080d7985de343855db4df55c452e7b2">setLevels</a> (std::vector&lt; std::shared_ptr&lt; <a class="el" href="classrtype_1_1levels_1_1Level.html">Level</a> &gt; &gt; &amp;levels)</td></tr>
+<tr class="separator:a0080d7985de343855db4df55c452e7b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0e927c2b6996a8480102bddc9f3dd179" id="r_a0e927c2b6996a8480102bddc9f3dd179"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0e927c2b6996a8480102bddc9f3dd179">processCurrentLevel</a> (<a class="el" href="classrtype_1_1ecs_1_1EntityManager.html">ecs::EntityManager</a> &amp;entityManager, <a class="el" href="classrtype_1_1ecs_1_1ComponentManager.html">ecs::ComponentManager</a> &amp;componentManager)</td></tr>
+<tr class="separator:a0e927c2b6996a8480102bddc9f3dd179"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5da24bcf0e88fb9eb808139086d7f854" id="r_a5da24bcf0e88fb9eb808139086d7f854"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5da24bcf0e88fb9eb808139086d7f854">changeLevel</a> (int number)</td></tr>
 <tr class="separator:a5da24bcf0e88fb9eb808139086d7f854"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -126,7 +133,9 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:ad1312382a6c10ce91bedca6a4f6438e6" id="r_ad1312382a6c10ce91bedca6a4f6438e6"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classrtype_1_1levels_1_1LevelManager.html">LevelManager</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad1312382a6c10ce91bedca6a4f6438e6">getInstance</a> ()</td></tr>
 <tr class="separator:ad1312382a6c10ce91bedca6a4f6438e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Function Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Singleton used for managing levels. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a5da24bcf0e88fb9eb808139086d7f854" name="a5da24bcf0e88fb9eb808139086d7f854"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5da24bcf0e88fb9eb808139086d7f854">&#9670;&#160;</a></span>changeLevel()</h2>
 
@@ -169,8 +178,33 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="acdbc0042fa3b1d65fdd0bb50c4d48a86" name="acdbc0042fa3b1d65fdd0bb50c4d48a86"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acdbc0042fa3b1d65fdd0bb50c4d48a86">&#9670;&#160;</a></span>processCurrentLevel()</h2>
+<a id="ab0696ad25e3a9855e7758933b20c5a2e" name="ab0696ad25e3a9855e7758933b20c5a2e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab0696ad25e3a9855e7758933b20c5a2e">&#9670;&#160;</a></span>getLevels()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; std::shared_ptr&lt; <a class="el" href="classrtype_1_1levels_1_1Level.html">Level</a> &gt; &gt; &amp; rtype::levels::LevelManager::getLevels </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a0e927c2b6996a8480102bddc9f3dd179" name="a0e927c2b6996a8480102bddc9f3dd179"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0e927c2b6996a8480102bddc9f3dd179">&#9670;&#160;</a></span>processCurrentLevel()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -183,7 +217,7 @@ Static Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classrtype_1_1ecs_1_1ComponentManager.html">ecs::ComponentManager</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>componentManager</em></span>&#160;) const</td>
+          <td class="paramtype"><a class="el" href="classrtype_1_1ecs_1_1ComponentManager.html">ecs::ComponentManager</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>componentManager</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -203,6 +237,31 @@ Static Public Member Functions</h2></td></tr>
           <td class="memname">void rtype::levels::LevelManager::registerLevel </td>
           <td>(</td>
           <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classrtype_1_1levels_1_1Level.html">Level</a> &gt;</td>          <td class="paramname"><span class="paramname"><em>level</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a0080d7985de343855db4df55c452e7b2" name="a0080d7985de343855db4df55c452e7b2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0080d7985de343855db4df55c452e7b2">&#9670;&#160;</a></span>setLevels()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void rtype::levels::LevelManager::setLevels </td>
+          <td>(</td>
+          <td class="paramtype">std::vector&lt; std::shared_ptr&lt; <a class="el" href="classrtype_1_1levels_1_1Level.html">Level</a> &gt; &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>levels</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
