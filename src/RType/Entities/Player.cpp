@@ -8,9 +8,9 @@
 #include "RType/ModeManager/ModeManager.hpp"
 #include "Player.hpp"
 #include "RType/Config/Config.hpp"
-#include "RType/TextureManager/TextureManager.hpp"
 
 #ifdef RTYPE_IS_CLIENT
+#include "RType/TextureManager/TextureManager.hpp"
 
 rtype::entities::Player::Player(
         rtype::ecs::EntityManager &entityManager,

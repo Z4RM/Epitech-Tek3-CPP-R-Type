@@ -8,9 +8,8 @@
 
 #include "Enemy.hpp"
 
-#include "RType/TextureManager/TextureManager.hpp"
-
 #ifdef RTYPE_IS_CLIENT
+#include "RType/TextureManager/TextureManager.hpp"
 
 rtype::entities::Enemy::Enemy(
     rtype::ecs::EntityManager &entityManager,
