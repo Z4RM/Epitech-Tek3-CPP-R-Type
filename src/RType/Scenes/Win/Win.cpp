@@ -13,6 +13,7 @@
 #include "Network/TCPNetwork/TCPNetwork.hpp"
 #include "RType/Components/Shared/MenuState.hpp"
 #include "RType/Entities/PlayerCounter.hpp"
+#include "RType/Systems/Network/Network.hpp"
 
 #ifdef RTYPE_IS_CLIENT
 #include "RType/Entities/Button.hpp"

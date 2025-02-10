@@ -14,9 +14,18 @@
 #include "ECS/Scene/SceneManager.hpp"
 #include "Network/TCPNetwork/TCPNetwork.hpp"
 #include "RType/Services/EnemyService/EnemyService.hpp"
+#include "RType/Systems/Network/Network.hpp"
 
 //TODO: this code should be only in the server
 namespace rtype::levels {
+
+    void Level::restoreServerState() {
+        this->_started = false;
+        this->_ended = false;
+        systems::Network::globalNetId = 0;
+        ecs::SceneManager::getInstance().changeScene(0);
+    }
+
     void Level::process(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager) {
         std::random_device rd;
         std::mt19937 gen(rd());
@@ -27,8 +36,9 @@ namespace rtype::levels {
             this->_started = true;
         }
 
-        if (this->_ended)
+        if (this->_ended) {
             return;
+        }
 
         auto current_time = std::chrono::steady_clock::now();
         auto elapsed = std::chrono::duration_cast<std::chrono::seconds>(current_time - this->_start).count();
@@ -46,7 +56,7 @@ namespace rtype::levels {
         }*/
 
         if (this->isGameEnded(entityManager, componentManager)) {
-            this->_ended = true;
+            this->restoreServerState();
             return;
         }
 
@@ -93,11 +103,12 @@ namespace rtype::levels {
                 }
 
                 if (gameState) {
-                    componentManager.addComponent(entity, components::GameState{0, gameState->playerCount});
+                    componentManager.addComponent(entity, components::GameState{0, 0});
                 }
 
                 if (netCo) {
                     network::TCPNetwork::getInstance().sendPacket(network::PacketEndGame(true), netCo->socket);
+                    entityManager.destroyEntity(entity, componentManager);
                 }
             }
             spdlog::info("Game lose, all players are dead");
@@ -123,10 +134,11 @@ namespace rtype::levels {
                     auto gameState = componentManager.getComponent<components::GameState>(entity);
 
                     if (gameState) {
-                        componentManager.addComponent(entity, components::GameState{0, gameState->playerCount});
+                        componentManager.addComponent(entity, components::GameState{0, 0});
                     }
                     if (netCo) {
                         network::TCPNetwork::getInstance().sendPacket(network::PacketEndGame(false), netCo->socket);
+                        entityManager.destroyEntity(entity, componentManager);
                     }
                 }
                 spdlog::info("Game win, all enemies are dead");

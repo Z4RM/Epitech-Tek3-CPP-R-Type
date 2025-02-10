@@ -20,6 +20,8 @@ namespace rtype::systems {
         int lowestLevel = 2147483647;
 
         if (packetLevelsRegistered) {
+            levels::LevelManager::getInstance().reset();
+
             for (int level: packetLevelsRegistered->levels) {
                 levels::LevelManager::getInstance().registerLevel(std::make_shared<levels::Level>(
                     levels::LevelBuilder()
@@ -37,6 +39,7 @@ namespace rtype::systems {
                 if (counter && counter->name == "level") {
                     counter->update(lowestLevel);
                     _componentManager.addComponent<components::Counter>(entity, *counter);
+                    spdlog::warn("updated counter level");
                     return;
                 }
             }

@@ -107,6 +107,13 @@ void rtype::scenes::Menu::load() {
     this->registerEntity(changeLevelButton);
 
     _componentManager.addComponent<components::MenuState>(menuSateEntity, state);
+
+    /*
+    if (network::TCPNetwork::getInstance().connected) {
+        network::PacketConnect packet;
+        network::TCPNetwork::getInstance().sendPacket(packet);
+    }*/
+
     AScene::load();
 }
 
@@ -116,6 +123,9 @@ void rtype::scenes::Menu::load() {
     components::MenuState state = { 0 };
 
     _componentManager.addComponent<components::MenuState>(menuSateEntity, state);
+
+    this->registerEntity(menuSateEntity);
+
     AScene::load();
 }
 #endif
