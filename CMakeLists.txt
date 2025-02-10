@@ -78,8 +78,6 @@ set(RTYPE_SRC
         src/Network/Packets/Descriptors/PacketPlayerShoot/PacketPlayerShoot.cpp
         src/Network/Packets/Descriptors/PacketPlayerShoot/PacketPlayerShoot.hpp
         src/RType/Systems/Network/handlers/INetworkHandler.hpp
-        src/RType/Systems/Network/handlers/WelcomeHandler/WelcomeHandler.hpp
-        src/RType/Systems/Network/handlers/WelcomeHandler/WelcomeHandler.cpp
         src/RType/Systems/Network/handlers/ANetworkHandler.hpp
         src/RType/Services/PlayerService/PlayerService.cpp
         src/RType/Services/PlayerService/PlayerService.hpp
@@ -87,8 +85,6 @@ set(RTYPE_SRC
         src/RType/Systems/Network/handlers/PlayerShootHandler/PlayerShootHandler.hpp
         src/RType/Services/ProjectileService/ProjectileService.cpp
         src/RType/Services/ProjectileService/ProjectileService.hpp
-        src/RType/Systems/Network/handlers/PlayerCountHandler/PlayerCountHandler.cpp
-        src/RType/Systems/Network/handlers/PlayerCountHandler/PlayerCountHandler.hpp
         src/RType/Systems/Network/handlers/ConnectHandler/ConnectHandler.cpp
         src/RType/Systems/Network/handlers/ConnectHandler/ConnectHandler.hpp
         src/RType/Components/Shared/MenuState.hpp
@@ -100,8 +96,6 @@ set(RTYPE_SRC
         src/RType/Systems/Network/handlers/PlayerDataHandler/PlayerDataHandler.hpp
         src/Network/Packets/Descriptors/PacketEndGame/PacketEndGame.cpp
         src/Network/Packets/Descriptors/PacketEndGame/PacketEndGame.hpp
-        src/RType/Systems/Network/handlers/EndGameHandler/EndGameHandler.cpp
-        src/RType/Systems/Network/handlers/EndGameHandler/EndGameHandler.hpp
         src/RType/Models/EEnemyType.hpp
         src/RType/Levels/Level.hpp
         src/RType/Models/Spawn.hpp
@@ -115,11 +109,17 @@ set(RTYPE_SRC
         src/RType/Services/EnemyService/EnemyService.hpp
         src/Network/Packets/Descriptors/PacketLevelsRegistered/PacketLevelsRegistered.cpp
         src/Network/Packets/Descriptors/PacketLevelsRegistered/PacketLevelsRegistered.hpp
-        src/RType/Systems/Network/handlers/LevelsRegisteredHandler/LevelsRegisteredHandler.cpp
-        src/RType/Systems/Network/handlers/LevelsRegisteredHandler/LevelsRegisteredHandler.hpp
 )
 
 set(CLIENT_SRC
+        src/RType/Systems/Network/handlers/EndGameHandler/EndGameHandler.cpp
+        src/RType/Systems/Network/handlers/EndGameHandler/EndGameHandler.hpp
+        src/RType/Systems/Network/handlers/LevelsRegisteredHandler/LevelsRegisteredHandler.cpp
+        src/RType/Systems/Network/handlers/LevelsRegisteredHandler/LevelsRegisteredHandler.hpp
+        src/RType/Systems/Network/handlers/PlayerCountHandler/PlayerCountHandler.cpp
+        src/RType/Systems/Network/handlers/PlayerCountHandler/PlayerCountHandler.hpp
+        src/RType/Systems/Network/handlers/WelcomeHandler/WelcomeHandler.hpp
+        src/RType/Systems/Network/handlers/WelcomeHandler/WelcomeHandler.cpp
         src/RType/Entities/Window.cpp
         src/RType/Entities/Window.hpp
         src/RType/Systems/RenderWindow.cpp
@@ -150,6 +150,8 @@ set(CLIENT_SRC
         src/RType/Systems/AnimationProjectile.cpp
         src/RType/Systems/AnimationProjectile.hpp
         src/RType/Components/Shared/NoDamageToPlayer.hpp
+        src/RType/TextureManager/TextureManager.cpp
+        src/RType/TextureManager/TextureManager.hpp
 )
 
 

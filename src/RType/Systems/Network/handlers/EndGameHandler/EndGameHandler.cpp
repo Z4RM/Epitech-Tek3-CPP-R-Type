@@ -17,9 +17,8 @@
 #include "RType/Components/Shared/Counter.hpp"
 #include "RType/Components/Shared/GameState.hpp"
 #include "RType/Components/Shared/Network.hpp"
-#include "RType/Entities/Window.hpp"
 #include "RType/Levels/LevelManager.hpp"
-
+#include "RType/Entities/Window.hpp"
 
 namespace rtype::systems {
     void EndGameHandler::handle(std::unique_ptr<network::IPacket> packet, std::shared_ptr<asio::ip::tcp::socket> socket) {
@@ -41,6 +40,7 @@ namespace rtype::systems {
                     _componentManager.addComponent<components::GameState>(entity, *gameState);
                     continue;
                 }
+
                 if (window)
                     continue;
 
