@@ -126,63 +126,32 @@ set(CLIENT_SRC
         src/RType/Systems/RenderWindow.hpp
         src/RType/Systems/InputSystem.cpp
         src/RType/Systems/InputSystem.hpp
-        src/Network/UDPNetwork/UDPNetwork.cpp
-        src/Network/UDPNetwork/UDPNetwork.hpp
-        src/ThreadPool/ThreadPool.cpp
         include/ThreadPool.hpp
-        src/Network/TCPNetwork/TCPNetwork.cpp
-        src/Network/TCPNetwork/TCPNetwork.hpp
-        src/Network/TCPNetwork/TCPNetwork.cpp
         src/Network/Packets/IPacket.hpp
-        src/Network/Packets/PacketFactory/PacketFactory.cpp
-        src/Network/Packets/PacketFactory/PacketFactory.hpp
-        src/Network/Packets/Descriptors/PacketConnect/PacketConnect.cpp
         include/Networks.hpp
         src/RType/Components/Client/Sprite.hpp
-        src/Network/Packets/Descriptors/PacketWelcome/PacketWelcome.cpp
-        src/Network/Packets/Descriptors/PacketWelcome/PacketWelcome.hpp
-        src/RType/Components/Shared/Network.hpp
-        src/Network/Packets/Descriptors/PacketPlayersData/PacketPlayersData.cpp
-        src/Network/Packets/Descriptors/PacketPlayersData/PacketPlayersData.hpp
         src/RType/Models/PlayerData.hpp
         src/RType/Components/Shared/NetId.hpp
         src/RType/Components/Shared/ActualPlayer.hpp
         src/RType/Components/Shared/Speed.hpp
         src/RType/Components/Shared/Damage.hpp
-        src/Network/Packets/Descriptors/PacketEnemiesData/PacketEnemiesData.cpp
-        src/Network/Packets/Descriptors/PacketEnemiesData/PacketEnemiesData.hpp
         src/RType/Models/EnemyData.hpp
-        src/RType/Models/Scene.hpp
-        src/RType/Components/Shared/GameState.hpp
-        src/ECS/Scene/SceneManager.hpp
-        src/ECS/Scene/SceneManager.hpp
         src/ECS/Scene/IScene.hpp
-        src/RType/Scenes/Menu/Menu.cpp
-        src/RType/Scenes/Menu/Menu.hpp
-        src/ECS/Scene/AScene.hpp
         src/RType/Entities/Image.cpp
         src/RType/Entities/Image.hpp
         src/ECS/IEntity.hpp
         src/ECS/AEntity.hpp
-        src/ECS/AEntity.hpp
-        src/RType/Scenes/Game/Game.cpp
-        src/RType/Scenes/Game/Game.hpp
         src/RType/Components/Client/OnClick.hpp
         src/RType/Entities/Button.cpp
         src/RType/Entities/Button.hpp
         src/RType/Components/Client/SfText.hpp
         src/RType/Components/Shared/Counter.hpp
-        src/RType/Entities/Game.cpp
-        src/RType/Entities/Game.hpp
-        src/Network/Packets/Descriptors/PacketStartGame/PacketStartGame.cpp
-        src/Network/Packets/Descriptors/PacketStartGame/PacketStartGame.hpp
         src/RType/Components/Client/SlidingBg.hpp
         src/RType/Systems/AnimationProjectile.cpp
         src/RType/Systems/AnimationProjectile.hpp
         src/RType/Components/Shared/NoDamageToPlayer.hpp
-        src/RType/Systems/Network/handlers/PlayerDataHandler/PlayerDataHandler.cpp
-        src/RType/Systems/Network/handlers/PlayerDataHandler/PlayerDataHandler.hpp
 )
+
 
 set(RTYPE_HEADERS
         include/Components.hpp

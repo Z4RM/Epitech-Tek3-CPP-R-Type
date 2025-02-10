@@ -37,6 +37,4 @@ namespace rtype::network {
             currentSize += sizeof(this->levels[i]);
         }
     }
-
-
 }
