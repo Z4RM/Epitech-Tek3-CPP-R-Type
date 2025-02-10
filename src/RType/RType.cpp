@@ -24,9 +24,10 @@
 #include "Systems/AnimationProjectile.hpp"
 #include "Systems/LevelRunner.hpp"
 #include "Systems/Network/Network.hpp"
-#include "TextureManager/TextureManager.hpp"
+
 #ifdef RTYPE_IS_CLIENT
 #include "Entities/Window.hpp"
+#include "TextureManager/TextureManager.hpp"
 #endif
 
 #ifdef RTYPE_IS_CLIENT
