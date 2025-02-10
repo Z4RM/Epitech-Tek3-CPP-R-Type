@@ -49,6 +49,7 @@ namespace rtype::network {
                 break;
             case LEVELS_REGISTERED:
                 packet = std::make_unique<PacketLevelsRegistered>();
+                break;
             case END_GAME:
                 packet = std::make_unique<PacketEndGame>();
                 break;

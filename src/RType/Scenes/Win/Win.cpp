@@ -13,6 +13,7 @@
 #include "Network/TCPNetwork/TCPNetwork.hpp"
 #include "RType/Components/Shared/MenuState.hpp"
 #include "RType/Entities/PlayerCounter.hpp"
+#include "RType/Systems/Network/Network.hpp"
 
 #ifdef RTYPE_IS_CLIENT
 #include "RType/Entities/Button.hpp"
@@ -59,6 +60,8 @@ void rtype::scenes::Win::load() {
     components::MenuState state = { 0 };
 
     _componentManager.addComponent<components::MenuState>(winSateEntity, state);
+
+    this->registerEntity(winSateEntity);
     AScene::load();
 }
 #endif

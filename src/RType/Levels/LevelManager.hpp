@@ -33,6 +33,13 @@ namespace rtype::levels {
         static LevelManager &getInstance();
         void changeLevel(int number);
 
+        void reset() {
+            std::lock_guard lock(_mutex);
+
+            this->_currentLevel = nullptr;
+            this->_levels = {};
+        }
+
     private:
         LevelManager() = default;
         std::shared_ptr<Level> _currentLevel = nullptr;

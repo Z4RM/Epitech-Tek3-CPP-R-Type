@@ -41,9 +41,7 @@ namespace rtype::network {
         for (int i = 0; i < numThreads; i++) {
             this->_threadPool->addTask([this] {
                 try {
-                    while (!this->_ioContext.stopped()) {
-                        this->_ioContext.run_one();
-                    }
+                    this->_ioContext.run();
                 } catch (std::exception &e) {
                     spdlog::error("Exception in an UDP IO Thread: {}", e.what());
                 }
