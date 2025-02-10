@@ -146,14 +146,23 @@ $(function(){initNavTree('LevelManager_8hpp_source.html',''); initResizable(true
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>        <span class="keyword">static</span> <a class="code hl_class" href="classrtype_1_1levels_1_1LevelManager.html">LevelManager</a> &amp;<a class="code hl_function" href="classrtype_1_1levels_1_1LevelManager.html#ad1312382a6c10ce91bedca6a4f6438e6">getInstance</a>();</div>
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>        <span class="keywordtype">void</span> <a class="code hl_function" href="classrtype_1_1levels_1_1LevelManager.html#a5da24bcf0e88fb9eb808139086d7f854">changeLevel</a>(<span class="keywordtype">int</span> number);</div>
 <div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>        <a class="code hl_class" href="classrtype_1_1levels_1_1LevelManager.html">LevelManager</a>() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>        std::shared_ptr&lt;Level&gt; _currentLevel = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>        std::vector&lt;std::shared_ptr&lt;Level&gt;&gt; _levels {};</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>        std::mutex _mutex;</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    };</div>
+<div class="foldopen" id="foldopen00036" data-start="{" data-end="}">
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno"><a class="line" href="classrtype_1_1levels_1_1LevelManager.html#abdde07389c688e849020562595b5ceaa">   36</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="classrtype_1_1levels_1_1LevelManager.html#abdde07389c688e849020562595b5ceaa">reset</a>() {</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>            std::lock_guard lock(_mutex);</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>            this-&gt;_currentLevel = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>            this-&gt;_levels = {};</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>        }</div>
 </div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>}</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        <a class="code hl_class" href="classrtype_1_1levels_1_1LevelManager.html">LevelManager</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>        std::shared_ptr&lt;Level&gt; _currentLevel = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>        std::vector&lt;std::shared_ptr&lt;Level&gt;&gt; _levels {};</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>        std::mutex _mutex;</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    };</div>
+</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>}</div>
 <div class="ttc" id="aLevel_8hpp_html"><div class="ttname"><a href="Level_8hpp.html">Level.hpp</a></div></div>
 <div class="ttc" id="aclassrtype_1_1ecs_1_1ComponentManager_html"><div class="ttname"><a href="classrtype_1_1ecs_1_1ComponentManager.html">rtype::ecs::ComponentManager</a></div><div class="ttdef"><b>Definition</b> ComponentManager.hpp:26</div></div>
 <div class="ttc" id="aclassrtype_1_1ecs_1_1EntityManager_html"><div class="ttname"><a href="classrtype_1_1ecs_1_1EntityManager.html">rtype::ecs::EntityManager</a></div><div class="ttdef"><b>Definition</b> EntityManager.hpp:31</div></div>
@@ -163,8 +172,9 @@ $(function(){initNavTree('LevelManager_8hpp_source.html',''); initResizable(true
 <div class="ttc" id="aclassrtype_1_1levels_1_1LevelManager_html_a0e927c2b6996a8480102bddc9f3dd179"><div class="ttname"><a href="classrtype_1_1levels_1_1LevelManager.html#a0e927c2b6996a8480102bddc9f3dd179">rtype::levels::LevelManager::processCurrentLevel</a></div><div class="ttdeci">void processCurrentLevel(ecs::EntityManager &amp;entityManager, ecs::ComponentManager &amp;componentManager)</div><div class="ttdef"><b>Definition</b> LevelManager.cpp:33</div></div>
 <div class="ttc" id="aclassrtype_1_1levels_1_1LevelManager_html_a5da24bcf0e88fb9eb808139086d7f854"><div class="ttname"><a href="classrtype_1_1levels_1_1LevelManager.html#a5da24bcf0e88fb9eb808139086d7f854">rtype::levels::LevelManager::changeLevel</a></div><div class="ttdeci">void changeLevel(int number)</div><div class="ttdef"><b>Definition</b> LevelManager.cpp:14</div></div>
 <div class="ttc" id="aclassrtype_1_1levels_1_1LevelManager_html_ab0696ad25e3a9855e7758933b20c5a2e"><div class="ttname"><a href="classrtype_1_1levels_1_1LevelManager.html#ab0696ad25e3a9855e7758933b20c5a2e">rtype::levels::LevelManager::getLevels</a></div><div class="ttdeci">std::vector&lt; std::shared_ptr&lt; Level &gt; &gt; &amp; getLevels()</div><div class="ttdef"><b>Definition</b> LevelManager.hpp:23</div></div>
+<div class="ttc" id="aclassrtype_1_1levels_1_1LevelManager_html_abdde07389c688e849020562595b5ceaa"><div class="ttname"><a href="classrtype_1_1levels_1_1LevelManager.html#abdde07389c688e849020562595b5ceaa">rtype::levels::LevelManager::reset</a></div><div class="ttdeci">void reset()</div><div class="ttdef"><b>Definition</b> LevelManager.hpp:36</div></div>
 <div class="ttc" id="aclassrtype_1_1levels_1_1LevelManager_html_ad1312382a6c10ce91bedca6a4f6438e6"><div class="ttname"><a href="classrtype_1_1levels_1_1LevelManager.html#ad1312382a6c10ce91bedca6a4f6438e6">rtype::levels::LevelManager::getInstance</a></div><div class="ttdeci">static LevelManager &amp; getInstance()</div><div class="ttdef"><b>Definition</b> LevelManager.cpp:27</div></div>
-<div class="ttc" id="anamespacertype_1_1levels_html"><div class="ttname"><a href="namespacertype_1_1levels.html">rtype::levels</a></div><div class="ttdef"><b>Definition</b> Level.cpp:19</div></div>
+<div class="ttc" id="anamespacertype_1_1levels_html"><div class="ttname"><a href="namespacertype_1_1levels.html">rtype::levels</a></div><div class="ttdef"><b>Definition</b> Level.cpp:21</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.13.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>R-Type: rtype::RType Class Reference</title>
+<title>R-Type: rtype::TextureManager Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -76,7 +76,7 @@ $(function() { codefold.init(0); });
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(function(){initNavTree('classrtype_1_1RType.html',''); initResizable(true); });
+$(function(){initNavTree('classrtype_1_1TextureManager.html',''); initResizable(true); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -103,31 +103,30 @@ $(function(){initNavTree('classrtype_1_1RType.html',''); initResizable(true); })
 
 <div class="header">
   <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
-<a href="classrtype_1_1RType-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">rtype::RType Class Reference</div></div>
+<a href="classrtype_1_1TextureManager-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">rtype::TextureManager Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>The main class of the R-Type, containing, among others, the entrypoint.  
- <a href="#details">More...</a></p>
-
-<p><code>#include &lt;<a class="el" href="RType_8hpp_source.html">RType.hpp</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="TextureManager_8hpp_source.html">TextureManager.hpp</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:ac94c4277f0679b8fb65af2eb2f3d04e2" id="r_ac94c4277f0679b8fb65af2eb2f3d04e2"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; sf::Texture &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac94c4277f0679b8fb65af2eb2f3d04e2">getTexture</a> (std::string key)</td></tr>
+<tr class="separator:ac94c4277f0679b8fb65af2eb2f3d04e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e4616eac10804f2e0c4905de2d80af8" id="r_a1e4616eac10804f2e0c4905de2d80af8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1e4616eac10804f2e0c4905de2d80af8">registerTexture</a> (std::string key, std::string path, sf::IntRect rect)</td></tr>
+<tr class="separator:a1e4616eac10804f2e0c4905de2d80af8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a1e6ac934d0c8131ffd4a1452af4c162b" id="r_a1e6ac934d0c8131ffd4a1452af4c162b"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1e6ac934d0c8131ffd4a1452af4c162b">run</a> ()</td></tr>
-<tr class="memdesc:a1e6ac934d0c8131ffd4a1452af4c162b"><td class="mdescLeft">&#160;</td><td class="mdescRight">The entrypoint of the R-Type. Should be the only statement in the program main function, used as is:  <br /></td></tr>
-<tr class="separator:a1e6ac934d0c8131ffd4a1452af4c162b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a612e70ba6be62e27956cbae22e15fe83" id="r_a612e70ba6be62e27956cbae22e15fe83"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a612e70ba6be62e27956cbae22e15fe83">loadLevels</a> ()</td></tr>
-<tr class="memdesc:a612e70ba6be62e27956cbae22e15fe83"><td class="mdescLeft">&#160;</td><td class="mdescRight">load json levels in the assets/levels folder  <br /></td></tr>
-<tr class="separator:a612e70ba6be62e27956cbae22e15fe83"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad74ae35d55a2f91092d91a7eebf137c7" id="r_ad74ae35d55a2f91092d91a7eebf137c7"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classrtype_1_1TextureManager.html">TextureManager</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad74ae35d55a2f91092d91a7eebf137c7">getInstance</a> ()</td></tr>
+<tr class="separator:ad74ae35d55a2f91092d91a7eebf137c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>The main class of the R-Type, containing, among others, the entrypoint. </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a612e70ba6be62e27956cbae22e15fe83" name="a612e70ba6be62e27956cbae22e15fe83"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a612e70ba6be62e27956cbae22e15fe83">&#9670;&#160;</a></span>loadLevels()</h2>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="ad74ae35d55a2f91092d91a7eebf137c7" name="ad74ae35d55a2f91092d91a7eebf137c7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad74ae35d55a2f91092d91a7eebf137c7">&#9670;&#160;</a></span>getInstance()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -136,7 +135,7 @@ Static Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void rtype::RType::loadLevels </td>
+          <td class="memname">static <a class="el" href="classrtype_1_1TextureManager.html">TextureManager</a> &amp; rtype::TextureManager::getInstance </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
@@ -144,61 +143,66 @@ Static Public Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>load json levels in the assets/levels folder </p>
-
 </div>
 </div>
-<a id="a1e6ac934d0c8131ffd4a1452af4c162b" name="a1e6ac934d0c8131ffd4a1452af4c162b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1e6ac934d0c8131ffd4a1452af4c162b">&#9670;&#160;</a></span>run()</h2>
+<a id="ac94c4277f0679b8fb65af2eb2f3d04e2" name="ac94c4277f0679b8fb65af2eb2f3d04e2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac94c4277f0679b8fb65af2eb2f3d04e2">&#9670;&#160;</a></span>getTexture()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">int rtype::RType::run </td>
+          <td class="memname">std::shared_ptr&lt; sf::Texture &gt; rtype::TextureManager::getTexture </td>
           <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td class="paramtype">std::string</td>          <td class="paramname"><span class="paramname"><em>key</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
-<p>The entrypoint of the R-Type. Should be the only statement in the program main function, used as is: </p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="RType_8hpp.html">RType/RType.hpp</a>&quot;</span></div>
-<div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> <a class="code hl_function" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4">main</a>() {</div>
-<div class="line">    <span class="keywordflow">return</span> <a class="code hl_function" href="#a1e6ac934d0c8131ffd4a1452af4c162b">rtype::RType::run</a>();</div>
-<div class="line">}</div>
-<div class="ttc" id="aRType_8hpp_html"><div class="ttname"><a href="RType_8hpp.html">RType.hpp</a></div></div>
-<div class="ttc" id="aclassrtype_1_1RType_html_a1e6ac934d0c8131ffd4a1452af4c162b"><div class="ttname"><a href="#a1e6ac934d0c8131ffd4a1452af4c162b">rtype::RType::run</a></div><div class="ttdeci">static int run()</div><div class="ttdoc">The entrypoint of the R-Type. Should be the only statement in the program main function,...</div><div class="ttdef"><b>Definition</b> RType.cpp:121</div></div>
-<div class="ttc" id="amain_8cpp_html_ae66f6b31b5ad750f1fe042a706a4e3d4"><div class="ttname"><a href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4">main</a></div><div class="ttdeci">int main()</div><div class="ttdef"><b>Definition</b> main.cpp:15</div></div>
-</div><!-- fragment --><dl class="section return"><dt>Returns</dt><dd>The exit status of the program. </dd></dl>
+</div>
+</div>
+<a id="a1e4616eac10804f2e0c4905de2d80af8" name="a1e4616eac10804f2e0c4905de2d80af8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1e4616eac10804f2e0c4905de2d80af8">&#9670;&#160;</a></span>registerTexture()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void rtype::TextureManager::registerTexture </td>
+          <td>(</td>
+          <td class="paramtype">std::string</td>          <td class="paramname"><span class="paramname"><em>key</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string</td>          <td class="paramname"><span class="paramname"><em>path</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">sf::IntRect</td>          <td class="paramname"><span class="paramname"><em>rect</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>src/RType/<a class="el" href="RType_8hpp_source.html">RType.hpp</a></li>
-<li>src/RType/<a class="el" href="RType_8cpp.html">RType.cpp</a></li>
+<li>src/RType/TextureManager/<a class="el" href="TextureManager_8hpp_source.html">TextureManager.hpp</a></li>
+<li>src/RType/TextureManager/<a class="el" href="TextureManager_8cpp.html">TextureManager.cpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="namespacertype.html">rtype</a></li><li class="navelem"><a class="el" href="classrtype_1_1RType.html">RType</a></li>
+    <li class="navelem"><a class="el" href="namespacertype.html">rtype</a></li><li class="navelem"><a class="el" href="classrtype_1_1TextureManager.html">TextureManager</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.1 </li>
   </ul>
 </div>

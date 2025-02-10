@@ -146,17 +146,19 @@ $(function(){initNavTree('Level_8hpp_source.html',''); initResizable(true); });
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        std::chrono::time_point&lt;std::chrono::steady_clock&gt; _start; </div>
 <div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span></div>
 <div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>        <span class="keywordtype">bool</span> isGameEnded(<a class="code hl_class" href="classrtype_1_1ecs_1_1EntityManager.html">ecs::EntityManager</a> &amp;entityManager, <a class="code hl_class" href="classrtype_1_1ecs_1_1ComponentManager.html">ecs::ComponentManager</a> &amp;componentManager);</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    };</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span> </div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>        <span class="keywordtype">void</span> endGame(<a class="code hl_class" href="classrtype_1_1ecs_1_1EntityManager.html">ecs::EntityManager</a> &amp;entityManager, <a class="code hl_class" href="classrtype_1_1ecs_1_1ComponentManager.html">ecs::ComponentManager</a> &amp;componentManager, <span class="keywordtype">bool</span> isLose);</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    };</div>
 </div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>}</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>}</div>
 <div class="ttc" id="aECS_8hpp_html"><div class="ttname"><a href="ECS_8hpp.html">ECS.hpp</a></div></div>
 <div class="ttc" id="aSpawn_8hpp_html"><div class="ttname"><a href="Spawn_8hpp.html">Spawn.hpp</a></div></div>
 <div class="ttc" id="aclassrtype_1_1ecs_1_1ComponentManager_html"><div class="ttname"><a href="classrtype_1_1ecs_1_1ComponentManager.html">rtype::ecs::ComponentManager</a></div><div class="ttdef"><b>Definition</b> ComponentManager.hpp:26</div></div>
 <div class="ttc" id="aclassrtype_1_1ecs_1_1EntityManager_html"><div class="ttname"><a href="classrtype_1_1ecs_1_1EntityManager.html">rtype::ecs::EntityManager</a></div><div class="ttdef"><b>Definition</b> EntityManager.hpp:31</div></div>
 <div class="ttc" id="aclassrtype_1_1levels_1_1Level_html_a68914fba2e998eb025ca541eaf459ad7"><div class="ttname"><a href="classrtype_1_1levels_1_1Level.html#a68914fba2e998eb025ca541eaf459ad7">rtype::levels::Level::Level</a></div><div class="ttdeci">Level(int duration, std::vector&lt; models::SpawnPoint &gt; &amp;spawns, int number)</div><div class="ttdoc">Level constructor.</div><div class="ttdef"><b>Definition</b> Level.hpp:26</div></div>
-<div class="ttc" id="aclassrtype_1_1levels_1_1Level_html_a9bb96d171820276ebc62c144b12ce85a"><div class="ttname"><a href="classrtype_1_1levels_1_1Level.html#a9bb96d171820276ebc62c144b12ce85a">rtype::levels::Level::process</a></div><div class="ttdeci">void process(ecs::EntityManager &amp;entityManager, ecs::ComponentManager &amp;componentManager)</div><div class="ttdoc">process the level</div><div class="ttdef"><b>Definition</b> Level.cpp:20</div></div>
+<div class="ttc" id="aclassrtype_1_1levels_1_1Level_html_a9bb96d171820276ebc62c144b12ce85a"><div class="ttname"><a href="classrtype_1_1levels_1_1Level.html#a9bb96d171820276ebc62c144b12ce85a">rtype::levels::Level::process</a></div><div class="ttdeci">void process(ecs::EntityManager &amp;entityManager, ecs::ComponentManager &amp;componentManager)</div><div class="ttdoc">process the level</div><div class="ttdef"><b>Definition</b> Level.cpp:56</div></div>
 <div class="ttc" id="aclassrtype_1_1levels_1_1Level_html_ad4a97b318dd3f0b0d001f3f0ce730b58"><div class="ttname"><a href="classrtype_1_1levels_1_1Level.html#ad4a97b318dd3f0b0d001f3f0ce730b58">rtype::levels::Level::getNumber</a></div><div class="ttdeci">int getNumber() const</div><div class="ttdef"><b>Definition</b> Level.hpp:29</div></div>
-<div class="ttc" id="anamespacertype_1_1levels_html"><div class="ttname"><a href="namespacertype_1_1levels.html">rtype::levels</a></div><div class="ttdef"><b>Definition</b> Level.cpp:19</div></div>
+<div class="ttc" id="anamespacertype_1_1levels_html"><div class="ttname"><a href="namespacertype_1_1levels.html">rtype::levels</a></div><div class="ttdef"><b>Definition</b> Level.cpp:21</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

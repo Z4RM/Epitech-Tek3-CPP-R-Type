@@ -12,5 +12,6 @@ var namespacertype =
     [ "Config", "classrtype_1_1Config.html", "classrtype_1_1Config" ],
     [ "ModeManager", "classrtype_1_1ModeManager.html", null ],
     [ "RType", "classrtype_1_1RType.html", null ],
+    [ "TextureManager", "classrtype_1_1TextureManager.html", "classrtype_1_1TextureManager" ],
     [ "ThreadPool", "classrtype_1_1ThreadPool.html", "classrtype_1_1ThreadPool" ]
 ];

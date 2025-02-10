@@ -191,9 +191,9 @@ var NAVTREEINDEX0 =
 "ProjectileService_8hpp_source.html":[5,0,1,2,7,2,1],
 "Projectile_8hpp.html":[5,0,1,2,0,1,13],
 "Projectile_8hpp_source.html":[5,0,1,2,0,1,13],
-"RType_8cpp.html":[5,0,1,2,9],
-"RType_8hpp.html":[5,0,1,2,10],
-"RType_8hpp_source.html":[5,0,1,2,10],
+"RType_8cpp.html":[5,0,1,2,10],
+"RType_8hpp.html":[5,0,1,2,11],
+"RType_8hpp_source.html":[5,0,1,2,11],
 "RenderWindow_8cpp.html":[5,0,1,2,8,9],
 "RenderWindow_8hpp.html":[5,0,1,2,8,10],
 "RenderWindow_8hpp_source.html":[5,0,1,2,8,10],
@@ -238,6 +238,9 @@ var NAVTREEINDEX0 =
 "TCPNetwork_8hpp.html":[5,0,1,1,1,1],
 "TCPNetwork_8hpp.html#a6b20d41d6252e9871430c242cb1a56e7":[5,0,1,1,1,1,1],
 "TCPNetwork_8hpp_source.html":[5,0,1,1,1,1],
+"TextureManager_8cpp.html":[5,0,1,2,9,0],
+"TextureManager_8hpp.html":[5,0,1,2,9,1],
+"TextureManager_8hpp_source.html":[5,0,1,2,9,1],
 "ThreadPool_8cpp.html":[5,0,1,3,0],
 "UDPNetwork_8cpp.html":[5,0,1,1,2,0],
 "UDPNetwork_8hpp.html":[5,0,1,1,2,1],
@@ -246,8 +249,5 @@ var NAVTREEINDEX0 =
 "Velocity_8hpp.html":[5,0,1,2,0,1,18],
 "Velocity_8hpp_source.html":[5,0,1,2,0,1,18],
 "WelcomeHandler_8cpp.html":[5,0,1,2,8,0,0,8,0],
-"WelcomeHandler_8hpp.html":[5,0,1,2,8,0,0,8,1],
-"WelcomeHandler_8hpp_source.html":[5,0,1,2,8,0,0,8,1],
-"Win_8cpp.html":[5,0,1,2,6,3,0],
-"Win_8hpp.html":[5,0,1,2,6,3,1]
+"WelcomeHandler_8hpp.html":[5,0,1,2,8,0,0,8,1]
 };

@@ -108,6 +108,7 @@ var hierarchy =
     [ "rtype::ecs::SystemManager", "classrtype_1_1ecs_1_1SystemManager.html", null ],
     [ "SystemManager", "classSystemManager.html", null ],
     [ "rtype::network::TCPNetwork", "classrtype_1_1network_1_1TCPNetwork.html", null ],
+    [ "rtype::TextureManager", "classrtype_1_1TextureManager.html", null ],
     [ "rtype::ThreadPool", "classrtype_1_1ThreadPool.html", null ],
     [ "rtype::network::UDPNetwork", "classrtype_1_1network_1_1UDPNetwork.html", null ],
     [ "rtype::systems::UpdateProjectilesSystem", "classrtype_1_1systems_1_1UpdateProjectilesSystem.html", null ],

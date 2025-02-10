@@ -9,6 +9,7 @@ var dir_cfaa8b1245d753f7d25236ac2ffff0c0 =
     [ "Scenes", "dir_20bc351269f876e17cdc4bf0203ad127.html", "dir_20bc351269f876e17cdc4bf0203ad127" ],
     [ "Services", "dir_32e745b0ce87b5842c51d2d75a497599.html", "dir_32e745b0ce87b5842c51d2d75a497599" ],
     [ "Systems", "dir_9f3861c96afa0a41df42b9003a2370a7.html", "dir_9f3861c96afa0a41df42b9003a2370a7" ],
+    [ "TextureManager", "dir_4b0d98a2486368f2b482dff8147c87b0.html", "dir_4b0d98a2486368f2b482dff8147c87b0" ],
     [ "RType.cpp", "RType_8cpp.html", null ],
     [ "RType.hpp", "RType_8hpp.html", "RType_8hpp" ]
 ];
