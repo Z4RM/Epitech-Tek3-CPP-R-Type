@@ -8,10 +8,12 @@
 #include "Components.hpp"
 #include "InputSystem.hpp"
 
+#include "ECS/Scene/SceneManager.hpp"
+
 void rtype::systems::InputSystem::handleInput(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager, const
- sf::Event &event, entities::RWindow *window) {
+                                              sf::Event &event, entities::RWindow *window) {
     const auto entities = entityManager.getEntities();
-    for (const auto &entity : entities) {
+    for (const auto entity : entities) {
         auto inputHandler = componentManager.getComponent<rtype::components::InputHandler>(entity);
 
         //TODO: onclick should not depend on text
@@ -22,18 +24,20 @@ void rtype::systems::InputSystem::handleInput(ecs::EntityManager &entityManager,
 
         if (text) {
             if (text->text.getGlobalBounds().contains(worldPos)) {
+                text->text.setFillColor(sf::Color::Red);
+                componentManager.addComponent<components::SfText>(entity, *text);
                 if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
                     if (onClick) {
                         onClick->fn();
                     }
                 }
-                text->text.setFillColor(sf::Color::Red);
             } else {
                 sf::Color color = text->text.getFillColor();
-                if (color == sf::Color::Red)
+                if (color == sf::Color::Red) {
                     text->text.setFillColor(sf::Color::White);
+                    componentManager.addComponent<components::SfText>(entity, *text);
+                }
             }
-            componentManager.addComponent<components::SfText>(entity, *text);
         }
 
         if (!inputHandler)

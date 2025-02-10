@@ -28,6 +28,7 @@ namespace rtype::scenes {
         entities::Image img2(this->_componentManager, this->_entityManager, backgroundSprite2, true, true);
 
         this->registerEntity(img);
+        this->registerEntity(img2);
 #endif
         AScene::load();
     }

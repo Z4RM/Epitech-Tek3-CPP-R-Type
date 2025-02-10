@@ -20,6 +20,7 @@ namespace rtype::network {
 
         ENEMIES_DATA = 301,
 
-        START_GAME = 400
+        START_GAME = 400,
+        END_GAME = 401
     };
 }

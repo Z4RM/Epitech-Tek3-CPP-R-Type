@@ -17,6 +17,7 @@
 #include "Network/Packets/Descriptors/PacketPlayerShoot/PacketPlayerShoot.hpp"
 #include "Network/Packets/Descriptors/PacketStartGame/PacketStartGame.hpp"
 #include "Network/Packets/Descriptors/PacketWelcome/PacketWelcome.hpp"
+#include "Network/Packets/Descriptors/PacketEndGame/PacketEndGame.hpp"
 
 namespace rtype::network {
     std::unique_ptr<IPacket> PacketFactory::fromBuffer(const std::vector<char> &buffer) {
@@ -48,6 +49,8 @@ namespace rtype::network {
                 break;
             case LEVELS_REGISTERED:
                 packet = std::make_unique<PacketLevelsRegistered>();
+            case END_GAME:
+                packet = std::make_unique<PacketEndGame>();
                 break;
             default:
                 throw PacketFactoryException();
