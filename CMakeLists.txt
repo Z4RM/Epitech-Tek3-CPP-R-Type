@@ -14,6 +14,7 @@ find_package(inih REQUIRED)
 find_package(spdlog REQUIRED)
 find_package(asio REQUIRED)
 find_package(SFML 2.6 COMPONENTS system window graphics network audio REQUIRED)
+find_package(nlohmann_json REQUIRED)
 
 include_directories(include src)
 
@@ -112,6 +113,10 @@ set(RTYPE_SRC
         src/RType/Systems/LevelRunner.hpp
         src/RType/Services/EnemyService/EnemyService.cpp
         src/RType/Services/EnemyService/EnemyService.hpp
+        src/Network/Packets/Descriptors/PacketLevelsRegistered/PacketLevelsRegistered.cpp
+        src/Network/Packets/Descriptors/PacketLevelsRegistered/PacketLevelsRegistered.hpp
+        src/RType/Systems/Network/handlers/LevelsRegisteredHandler/LevelsRegisteredHandler.cpp
+        src/RType/Systems/Network/handlers/LevelsRegisteredHandler/LevelsRegisteredHandler.hpp
 )
 
 set(CLIENT_SRC
@@ -188,7 +193,7 @@ set(RTYPE_HEADERS
         include/Keys.hpp
 )
 
-link_libraries(inih::inireader spdlog::spdlog asio::asio)
+link_libraries(inih::inireader spdlog::spdlog asio::asio nlohmann_json::nlohmann_json)
 
 if(WIN32)
     add_compile_definitions(_WIN32_WINNT=0x0A00)

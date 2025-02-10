@@ -43,10 +43,16 @@ void rtype::systems::InputSystem::handleInput(ecs::EntityManager &entityManager,
         if (!inputHandler)
             continue;
 
-        auto action = inputHandler->keyActions.equal_range(event.key.code);
-        for (auto& todo = action.first; todo != action.second; todo++) {
-            if (event.type == todo->second.first)
-                todo->second.second();
+        if (event.type == sf::Event::KeyPressed || event.type == sf::Event::KeyReleased) {
+            auto [fst, snd] = inputHandler->keyActions.equal_range(event.key.code);
+
+            if (fst == inputHandler->keyActions.end())
+                return;
+
+            for (auto todo = fst; todo != snd; ++todo) {
+                if (event.type == todo->second.first)
+                    todo->second.second();
+            }
         }
     }
 }

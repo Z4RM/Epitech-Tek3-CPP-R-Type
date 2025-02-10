@@ -9,6 +9,7 @@
 
 #include <vector>
 #include "./EEnemyType.hpp"
+#include <nlohmann/json.hpp>
 
 namespace rtype::models {
     struct EnemySpawn {

@@ -118,7 +118,7 @@ void rtype::systems::Movement::move(rtype::ecs::EntityManager& entityManager,
                 }
             }
 
-            if (pos->x < 800 && pos->x > 0 && pos->y > 0 && pos->y < 600) {
+            if (pos->x < 780 && pos->x > 0 && pos->y > 0 && pos->y < 580) {
                 componentManager.addComponent<components::Position>(entity, *pos);
             }
 

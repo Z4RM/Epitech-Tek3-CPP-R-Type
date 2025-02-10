@@ -10,10 +10,10 @@
 namespace rtype::network {
     /** @brief Enum for packet codes **/
     enum EPacketCode {
-        //SHARED
         CONNECT = 100,
         WELCOME = 101,
         PLAYER_COUNT = 102,
+        LEVELS_REGISTERED = 103,
 
         PLAYERS_DATA = 201,
         PLAYER_SHOOT = 202,

@@ -17,7 +17,7 @@ rtype::entities::Window::Window(
     )
 {
     _id = entityManager.createEntity();
-    renderWindow.window = new sf::RenderWindow();
+    renderWindow.window = std::make_shared<sf::RenderWindow>();
     const uint32_t style = mode.style.none * sf::Style::None
         + mode.style.titleBar * sf::Style::Titlebar
         + mode.style.resize * sf::Style::Resize
