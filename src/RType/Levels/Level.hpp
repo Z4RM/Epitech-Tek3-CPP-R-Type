@@ -49,6 +49,6 @@ namespace rtype::levels {
          * **/
         bool isGameEnded(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager);
 
-        void restoreServerState();
+        void endGame(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager, bool isLose);
     };
 }

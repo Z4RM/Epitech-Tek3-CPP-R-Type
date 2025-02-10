@@ -17,6 +17,7 @@
 #include "RType/Components/Shared/Counter.hpp"
 #include "RType/Components/Shared/GameState.hpp"
 #include "RType/Components/Shared/Network.hpp"
+#include "RType/Entities/Window.hpp"
 #include "RType/Levels/LevelManager.hpp"
 
 
@@ -32,20 +33,18 @@ namespace rtype::systems {
                 auto actualPlayer = _componentManager.getComponent<components::ActualPlayer>(entity);
                 auto gameState = _componentManager.getComponent<components::GameState>(entity);
                 auto playerCount = _componentManager.getComponent<components::Counter>(entity);
+                auto window = _componentManager.getComponent<entities::RWindow>(entity);
 
                 if (gameState) {
                     gameState->isStarted = false;
                     gameState->playerCount = 0;
                     _componentManager.addComponent<components::GameState>(entity, *gameState);
+                    continue;
                 }
-                if (playerCount && playerCount->name == "players") {
-                    playerCount->update(0);
-                    _componentManager.addComponent<components::Counter>(entity, *playerCount);
-                }
+                if (window)
+                    continue;
 
-                if (actualPlayer || ai) {
-                    _entityManager.destroyEntity(entity, _componentManager);
-                }
+                _entityManager.destroyEntity(entity, _componentManager);
             }
             if (packetEndGame->isLose == true) {
                 ecs::SceneManager::getInstance().changeScene(2, true);

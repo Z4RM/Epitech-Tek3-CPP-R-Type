@@ -11,6 +11,7 @@
 #include <random>
 #include <Network/Packets/Descriptors/PacketEndGame/PacketEndGame.hpp>
 
+#include "LevelManager.hpp"
 #include "ECS/Scene/SceneManager.hpp"
 #include "Network/TCPNetwork/TCPNetwork.hpp"
 #include "RType/Services/EnemyService/EnemyService.hpp"
@@ -19,7 +20,33 @@
 //TODO: this code should be only in the server
 namespace rtype::levels {
 
-    void Level::restoreServerState() {
+    void Level::endGame(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager, bool isLose) {
+        for (const auto &entity : entityManager.getEntities()) {
+            auto netCo = componentManager.getComponent<components::NetworkConnection>(entity);
+            auto gameState = componentManager.getComponent<components::GameState>(entity);
+            auto menuState = componentManager.getComponent<components::MenuState>(entity);
+            auto ai = componentManager.getComponent<components::IA>(entity);
+
+            if (ai && isLose) {
+                entityManager.destroyEntity(entity, componentManager);
+            }
+
+            if (menuState) {
+                menuState->playerCount = 0;
+                componentManager.addComponent<components::MenuState>(entity, *menuState);
+            }
+
+            if (gameState) {
+                componentManager.addComponent(entity, components::GameState{0, 0});
+            }
+            if (netCo) {
+                network::TCPNetwork::getInstance().sendPacket(network::PacketEndGame(isLose), netCo->socket);
+                entityManager.destroyEntity(entity, componentManager);
+            }
+        }
+        for (auto &spawn : this->_spawns) {
+            spawn.spawned = false;
+        }
         this->_started = false;
         this->_ended = false;
         systems::Network::globalNetId = 0;
@@ -56,7 +83,6 @@ namespace rtype::levels {
         }*/
 
         if (this->isGameEnded(entityManager, componentManager)) {
-            this->restoreServerState();
             return;
         }
 
@@ -93,24 +119,7 @@ namespace rtype::levels {
         }
 
         if (playerAliveCount <= 0) {
-            for (const auto &entity : entityManager.getEntities()) {
-                auto netCo = componentManager.getComponent<components::NetworkConnection>(entity);
-                auto gameState = componentManager.getComponent<components::GameState>(entity);
-                auto ai = componentManager.getComponent<components::IA>(entity);
-
-                if (ai) {
-                    entityManager.destroyEntity(entity, componentManager);
-                }
-
-                if (gameState) {
-                    componentManager.addComponent(entity, components::GameState{0, 0});
-                }
-
-                if (netCo) {
-                    network::TCPNetwork::getInstance().sendPacket(network::PacketEndGame(true), netCo->socket);
-                    entityManager.destroyEntity(entity, componentManager);
-                }
-            }
+            this->endGame(entityManager, componentManager, true);
             spdlog::info("Game lose, all players are dead");
             return true;
         }
@@ -129,18 +138,7 @@ namespace rtype::levels {
                 }
             }
             if (enemyAliveCount <= 0) {
-                for (const auto &entity : entityManager.getEntities()) {
-                    auto netCo = componentManager.getComponent<components::NetworkConnection>(entity);
-                    auto gameState = componentManager.getComponent<components::GameState>(entity);
-
-                    if (gameState) {
-                        componentManager.addComponent(entity, components::GameState{0, 0});
-                    }
-                    if (netCo) {
-                        network::TCPNetwork::getInstance().sendPacket(network::PacketEndGame(false), netCo->socket);
-                        entityManager.destroyEntity(entity, componentManager);
-                    }
-                }
+                this->endGame(entityManager, componentManager, false);
                 spdlog::info("Game win, all enemies are dead");
                 return true;
             }

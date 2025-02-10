@@ -7,10 +7,14 @@
 
 #include "Menu.hpp"
 
+#include <spdlog/spdlog.h>
+
 #include "Network/Packets/Descriptors/PacketStartGame/PacketStartGame.hpp"
 #include "Network/TCPNetwork/TCPNetwork.hpp"
 #include "RType/Components/Shared/Counter.hpp"
 #include "RType/Components/Shared/MenuState.hpp"
+#include "RType/Config/Config.hpp"
+#include "RType/Entities/Game.hpp"
 #include "RType/Entities/PlayerCounter.hpp"
 #include "RType/Levels/LevelManager.hpp"
 
@@ -108,12 +112,11 @@ void rtype::scenes::Menu::load() {
 
     _componentManager.addComponent<components::MenuState>(menuSateEntity, state);
 
-    /*
-    if (network::TCPNetwork::getInstance().connected) {
+    network::TCPNetwork &network = network::TCPNetwork::getInstance(Config::getInstance().getNetwork().server.port);
+    if (network.getStarted()) {
         network::PacketConnect packet;
-        network::TCPNetwork::getInstance().sendPacket(packet);
-    }*/
-
+        network.sendPacket(packet);
+    }
     AScene::load();
 }
 

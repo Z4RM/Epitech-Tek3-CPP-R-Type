@@ -36,8 +36,8 @@ namespace rtype::levels {
         void reset() {
             std::lock_guard lock(_mutex);
 
-            this->_levels = {};
             this->_currentLevel = nullptr;
+            this->_levels = {};
         }
 
     private:

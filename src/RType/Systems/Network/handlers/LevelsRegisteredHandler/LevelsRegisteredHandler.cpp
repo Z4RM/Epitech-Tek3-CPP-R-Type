@@ -39,7 +39,6 @@ namespace rtype::systems {
                 if (counter && counter->name == "level") {
                     counter->update(lowestLevel);
                     _componentManager.addComponent<components::Counter>(entity, *counter);
-                    spdlog::warn("updated counter level");
                     return;
                 }
             }

@@ -60,6 +60,8 @@ void rtype::scenes::Win::load() {
     components::MenuState state = { 0 };
 
     _componentManager.addComponent<components::MenuState>(winSateEntity, state);
+
+    this->registerEntity(winSateEntity);
     AScene::load();
 }
 #endif

@@ -59,6 +59,8 @@ void rtype::scenes::Lose::load() {
     components::MenuState state = { 0 };
 
     _componentManager.addComponent<components::MenuState>(loseSateEntity, state);
+
+    this->registerEntity(loseSateEntity);
     AScene::load();
 }
 #endif
