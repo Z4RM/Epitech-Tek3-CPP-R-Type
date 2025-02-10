@@ -24,6 +24,7 @@
 #include "Systems/AnimationProjectile.hpp"
 #include "Systems/LevelRunner.hpp"
 #include "Systems/Network/Network.hpp"
+#include "TextureManager/TextureManager.hpp"
 #ifdef RTYPE_IS_CLIENT
 #include "Entities/Window.hpp"
 #endif
@@ -144,6 +145,9 @@ int rtype::RType::run() {
             renderWindow,
             mode
     );
+    TextureManager::getInstance().registerTexture("player", "assets/sprites/players.gif", {0, 0, 33, 17});
+    TextureManager::getInstance().registerTexture("enemy", "assets/sprites/enemy.gif", {0, 0, 33, 36});
+
     systemManager.addSystem(rtype::systems::RenderWindowSys::render);
     systemManager.addSystem(rtype::systems::UpdateProjectilesSystem::updateProjectiles);
 #else
