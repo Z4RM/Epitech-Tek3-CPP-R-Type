@@ -12,14 +12,16 @@
 namespace rtype::levels {
 
     void LevelManager::changeLevel(int number) {
+        std::lock_guard lock(_mutex);
+
         for (const auto &level : this->_levels) {
-            if (level->getNumber() == number)
+            if (level->getNumber() == number) {
                 this->_currentLevel = level;
-            else {
-                this->_currentLevel = nullptr;
-                spdlog::error("Bad level selected");
+                return;
             }
         }
+        this->_currentLevel = nullptr;
+        spdlog::error("Bad level selected");
     }
 
     LevelManager &LevelManager::getInstance() {
@@ -28,7 +30,9 @@ namespace rtype::levels {
         return instance;
     }
 
-    void LevelManager::processCurrentLevel(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager) const {
+    void LevelManager::processCurrentLevel(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager) {
+        std::lock_guard lock(_mutex);
+
         if (this->_currentLevel) {
             this->_currentLevel->process(entityManager, componentManager);
         }

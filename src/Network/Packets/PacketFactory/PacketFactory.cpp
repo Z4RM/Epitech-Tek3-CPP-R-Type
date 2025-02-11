@@ -11,6 +11,7 @@
 
 #include "Network/Packets/Descriptors/PacketConnect/PacketConnect.hpp"
 #include "Network/Packets/Descriptors/PacketEnemiesData/PacketEnemiesData.hpp"
+#include "Network/Packets/Descriptors/PacketLevelsRegistered/PacketLevelsRegistered.hpp"
 #include "Network/Packets/Descriptors/PacketPlayerCounter/PacketPlayerCounter.hpp"
 #include "Network/Packets/Descriptors/PacketPlayersData/PacketPlayersData.hpp"
 #include "Network/Packets/Descriptors/PacketPlayerShoot/PacketPlayerShoot.hpp"
@@ -45,6 +46,9 @@ namespace rtype::network {
                 break;
             case PLAYER_SHOOT:
                 packet = std::make_unique<PacketPlayerShoot>();
+                break;
+            case LEVELS_REGISTERED:
+                packet = std::make_unique<PacketLevelsRegistered>();
                 break;
             case END_GAME:
                 packet = std::make_unique<PacketEndGame>();

@@ -25,6 +25,7 @@ namespace rtype::components {
         std::string name;
 #ifdef RTYPE_IS_CLIENT
         std::optional<SfText> text;
+        bool displayMax = false;
 #endif
 
         Counter(int iniCount, int max, std::string &name)
@@ -32,17 +33,26 @@ namespace rtype::components {
 
 #ifdef RTYPE_IS_CLIENT
 
-        Counter(int iniCount, int max, std::string &name, const sf::Vector2f pos, int charSize)
+        Counter(int iniCount, int max, std::string &name, const sf::Vector2f pos, int charSize, bool displayMax = true)
                 : count(std::make_shared<std::atomic<int>>(iniCount)),
                   max(max),
                   name(name),
-                  text(std::make_optional<SfText>(
-                          (name + ": " + std::to_string(iniCount) + "/" + std::to_string(max)),
+                  displayMax(displayMax) {
+            std::string defaultText;
+
+            if (displayMax) {
+               defaultText = name + ": " + std::to_string(iniCount) + "/" + std::to_string(max);
+            } else {
+                defaultText = name + ": " + std::to_string(iniCount);
+            }
+            this->text = std::make_optional<SfText>(
+                          defaultText,
                           "./assets/fonts/Starborn.ttf",
                           sf::Color::White,
                           charSize,
                           pos
-                  )) {}
+            );
+        }
 
 #endif
 
@@ -54,8 +64,15 @@ namespace rtype::components {
             count->store(newCount);
 
 #ifdef RTYPE_IS_CLIENT
+            std::string newStr;
+
+            if (this->displayMax) {
+                newStr = name + ": " + std::to_string(count->load()) + "/" + std::to_string(max);
+            } else {
+                newStr = name + ": " + std::to_string(count->load());
+            }
             if (text.has_value())
-                text->text.setString(name + ": " + std::to_string(count->load()) + "/" + std::to_string(max));
+                text->text.setString(newStr);
 #endif
         }
     };

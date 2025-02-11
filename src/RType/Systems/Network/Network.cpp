@@ -19,6 +19,7 @@
 #include "Components.hpp"
 #include "handlers/ConnectHandler/ConnectHandler.hpp"
 #include "handlers/EnnemiesDataHandler/EnnemiesDataHandler.hpp"
+#include "handlers/LevelsRegisteredHandler/LevelsRegisteredHandler.hpp"
 #include "handlers/PlayerCountHandler/PlayerCountHandler.hpp"
 #include "handlers/PlayerDataHandler/PlayerDataHandler.hpp"
 #include "handlers/PlayerShootHandler/PlayerShootHandler.hpp"
@@ -174,14 +175,15 @@ namespace rtype::systems {
                     }
                 });
 
-                if (IS_SERVER) {
+#ifndef RTYPE_IS_CLIENT
                     network.registerNetHandler(network::CONNECT, std::make_unique<ConnectHandler>(componentManager, entityManager));
                     network.registerNetHandler(network::START_GAME, std::make_unique<StartGameHandler>(componentManager, entityManager));
-                } else {
+ #else
                     network.registerNetHandler(network::WELCOME, std::make_unique<WelcomeHandler>(componentManager, entityManager));
                     network.registerNetHandler(network::PLAYER_COUNT, std::make_unique<PlayerCountHandler>(componentManager, entityManager));
+                    network.registerNetHandler(network::LEVELS_REGISTERED, std::make_unique<LevelsRegisteredHandler>(componentManager, entityManager));
                     network.registerNetHandler(network::END_GAME, std::make_unique<EndGameHandler>(componentManager, entityManager));
-                }
+#endif
                 network.registerNetHandler(network::PLAYER_SHOOT, std::make_unique<PlayerShootHandler>(componentManager, entityManager));
                 network.start();
             } catch (std::exception &e) {

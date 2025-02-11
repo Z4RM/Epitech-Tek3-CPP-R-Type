@@ -27,7 +27,7 @@ namespace rtype::services {
         entities::Player player2(
                 entityManager,
                 componentManager,
-                {10, 50, 0},
+                {20, 20, 0},
                 {0, 0, 0},
                 {64, 64},
                 sprite2,
@@ -48,7 +48,7 @@ namespace rtype::services {
             rtype::entities::Player playerShip(
                     entityManager,
                     componentManager,
-                    {10, 50, 0},
+                    {20, 20, 0},
                     {0, 0, 0},
                     {64, 64},
                     {std::move(socket)},

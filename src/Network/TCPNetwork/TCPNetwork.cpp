@@ -35,7 +35,7 @@ namespace rtype::network {
 
 
     void TCPNetwork::start() {
-        int numThreads = 2;
+        int numThreads = 10;
         this->_threadPool.emplace(numThreads);
 
         if (IS_SERVER) {
@@ -50,9 +50,7 @@ namespace rtype::network {
         for (int i = 0; i < numThreads; i++) {
             this->_threadPool->addTask([this] {
                 try {
-                    while (!this->_ioContext.stopped()) {
-                        this->_ioContext.run_one();
-                    }
+                    this->_ioContext.run();
                 } catch (std::exception &e) {
                     spdlog::error("Exception in a TCP IO Thread: {}", e.what());
                 }
@@ -152,6 +150,7 @@ namespace rtype::network {
             spdlog::debug("TCP packet [{}] received from {}:{}", std::to_string(packet->getCode()), address, port);
 
             auto it = this->_netHandlers.find(packet->getCode());
+
             if (it != this->_netHandlers.end()) {
                 it->second->handle(std::move(packet), socket);
                 return;

@@ -37,6 +37,9 @@ namespace rtype {
 
         // TODO: documentation
         void stopServer();
+#else
+        /** @brief load json levels in the assets/levels folder **/
+        static void loadLevels();
 #endif
     };
 }

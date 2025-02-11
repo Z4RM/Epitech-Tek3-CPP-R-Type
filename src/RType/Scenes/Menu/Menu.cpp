@@ -7,11 +7,16 @@
 
 #include "Menu.hpp"
 
+#include <spdlog/spdlog.h>
+
 #include "Network/Packets/Descriptors/PacketStartGame/PacketStartGame.hpp"
 #include "Network/TCPNetwork/TCPNetwork.hpp"
 #include "RType/Components/Shared/Counter.hpp"
 #include "RType/Components/Shared/MenuState.hpp"
+#include "RType/Config/Config.hpp"
+#include "RType/Entities/Game.hpp"
 #include "RType/Entities/PlayerCounter.hpp"
+#include "RType/Levels/LevelManager.hpp"
 
 #ifdef RTYPE_IS_CLIENT
 
@@ -72,7 +77,7 @@ void rtype::scenes::Menu::load() {
 
     unsigned int levelSelectorEntity = _entityManager.createEntity();
     std::string levelCounterName = "level";
-    components::Counter count(1, 8, levelCounterName, {260, 475}, 35);
+    components::Counter count(1, 8, levelCounterName, {260, 475}, 35, false);
     _componentManager.addComponent<components::Counter>(levelSelectorEntity, count);
 
 
@@ -83,17 +88,22 @@ void rtype::scenes::Menu::load() {
 
             if (counter && counter->name == "level") {
                 int count = counter->getCount();
+                std::vector<std::shared_ptr<levels::Level>> &levels = levels::LevelManager::getInstance().getLevels();
 
-                count += 1;
-                if (count > 8)
-                    counter->update(1);
-                else
-                    counter->update(count);
+                for (int i = 0; i < levels.size(); i++) {
+                    if (levels[i]->getNumber() == count) {
+                        if (i + 1 < levels.size()) {
+                            counter->update(levels[i + 1]->getNumber());
+                        } else {
+                            counter->update(levels[0]->getNumber());
+                        }
+                    }
+                }
                 _componentManager.addComponent<components::Counter>(entity, *counter);
             }
         }
     };
-    components::SfText changeLevelText("->", "./assets/fonts/Starborn.ttf", sf::Color::White, 50, {500, 465});
+    components::SfText changeLevelText("->", "./assets/fonts/Starborn.ttf", sf::Color::White, 50, {475, 465});
     entities::Button changeLevelButton(_componentManager, _entityManager, changeLevel, changeLevelText);
 
     this->registerEntity(levelSelectorEntity);
@@ -101,6 +111,12 @@ void rtype::scenes::Menu::load() {
     this->registerEntity(changeLevelButton);
 
     _componentManager.addComponent<components::MenuState>(menuSateEntity, state);
+
+    network::TCPNetwork &network = network::TCPNetwork::getInstance(Config::getInstance().getNetwork().server.port);
+    if (network.getStarted()) {
+        network::PacketConnect packet;
+        network.sendPacket(packet);
+    }
 
     systems::Sound::createMusic("assets/sounds/musics/menu.mp3", _componentManager, menuSateEntity, true, 8.25);
 
@@ -113,6 +129,9 @@ void rtype::scenes::Menu::load() {
     components::MenuState state = { 0 };
 
     _componentManager.addComponent<components::MenuState>(menuSateEntity, state);
+
+    this->registerEntity(menuSateEntity);
+
     AScene::load();
 }
 #endif

@@ -9,6 +9,7 @@
 #include "Enemy.hpp"
 
 #ifdef RTYPE_IS_CLIENT
+#include "RType/TextureManager/TextureManager.hpp"
 
 rtype::entities::Enemy::Enemy(
     rtype::ecs::EntityManager &entityManager,
@@ -22,12 +23,8 @@ rtype::entities::Enemy::Enemy(
     components::Speed speed
 ) {
     _id = entityManager.createEntity();
-    sprite.texture = std::make_shared<sf::Texture>();
     sprite.sprite = std::make_shared<sf::Sprite>();
-    const int width = static_cast<int>(sprite.size.width);
-    const int height = static_cast<int>(sprite.size.height);
-    const sf::IntRect rect(0, 0, width, height);
-    sprite.texture->loadFromFile(sprite.path, rect);
+    sprite.texture = TextureManager::getInstance().getTexture("enemy");
     sprite.sprite->setTexture(*sprite.texture);
     sprite.sprite->setPosition({pos.x, pos.y});
     sprite.sprite->setScale(2, 2);

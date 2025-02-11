@@ -11,6 +11,7 @@
 #include "Player.hpp"
 
 #ifdef RTYPE_IS_CLIENT
+#include "RType/TextureManager/TextureManager.hpp"
 
 rtype::entities::Player::Player(
         rtype::ecs::EntityManager &entityManager,
@@ -25,12 +26,8 @@ rtype::entities::Player::Player(
         const components::Speed speed
 ) {
     this->_id = entityManager.createEntity();
-    sprite.texture = std::make_shared<sf::Texture>();
     sprite.sprite = std::make_shared<sf::Sprite>();
-    const int width = static_cast<int>(sprite.size.width);
-    const int height = static_cast<int>(sprite.size.height);
-    const sf::IntRect rect(0, 0, width, height);
-    sprite.texture->loadFromFile(sprite.path, rect);
+    sprite.texture = TextureManager::getInstance().getTexture("player");
     sprite.sprite->setTexture(*sprite.texture);
     sprite.sprite->setPosition({pos.x, pos.y});
     sprite.sprite->setScale(2, 2);

@@ -9,7 +9,9 @@
 
 #include "RType/Systems/Network/Network.hpp"
 #include "Components.hpp"
+#include "Network/Packets/Descriptors/PacketLevelsRegistered/PacketLevelsRegistered.hpp"
 #include "Network/Packets/Descriptors/PacketPlayerCounter/PacketPlayerCounter.hpp"
+#include "RType/Levels/LevelManager.hpp"
 #include "RType/Services/PlayerService/PlayerService.hpp"
 #include "spdlog/spdlog.h"
 
@@ -32,19 +34,34 @@ namespace rtype::systems {
         if (newState.playerCount < 4) {
             newState.playerCount += 1;
             network::PacketPlayerCounter packetCount(newState.playerCount);
+            std::vector<int> levels;
+
+            for (auto &level : levels::LevelManager::getInstance().getLevels()) {
+                levels.emplace_back(level->getNumber());
+            }
+
+            network::PacketLevelsRegistered packetLevelsRegistered(levels);
 
 #ifdef RTYPE_IS_SERVER
             services::PlayerService::createPlayer(_entityManager, _componentManager, socket);
 #endif
 
+            _componentManager.addComponent<components::MenuState>(menuStateEntity, newState);
+            std::vector<std::shared_ptr<components::NetworkConnection>> players = {};
+
             for (auto &entity : _entityManager.getEntities()) {
                 auto netCo = _componentManager.getComponent<components::NetworkConnection>(entity);
 
                 if (netCo) {
-                    network::TCPNetwork::getInstance().sendPacket(packetCount, netCo->socket);
+                    network::TCPNetwork::getInstance().sendPacket(packetLevelsRegistered, netCo->socket);
+                    players.emplace_back(netCo);
                 }
             }
-            _componentManager.addComponent<components::MenuState>(menuStateEntity, newState);
+
+            for (auto &p : players) {
+                network::TCPNetwork::getInstance().sendPacket(packetCount, p->socket);
+            }
+
             spdlog::info("New player created with network ID {}", Network::globalNetId.load());
         } else {
             //todo: send packet game already started to the client

@@ -23,6 +23,7 @@
 #include "Scenes/Win/Win.hpp"
 #ifdef RTYPE_IS_CLIENT
 #include "Entities/Window.hpp"
+#include "TextureManager/TextureManager.hpp"
 #endif
 
 #ifdef RTYPE_IS_CLIENT
@@ -44,6 +45,72 @@ void rtype::RType::stopServer() {
     DISABLE_SERVER();
     // TODO
 }
+
+#else
+#include <filesystem>
+#include <fstream>
+#include <nlohmann/json.hpp>
+
+    void rtype::RType::loadLevels() {
+        std::string folder = "./assets/levels"; //TODO: make this configurable in the .ini file
+
+        if (!std::filesystem::exists(folder) || !std::filesystem::is_directory(folder)) {
+            spdlog::error("Levels folder: {} does not exist", folder);
+            throw std::runtime_error("Failing to load levels");
+        }
+
+       for (const auto& entry : std::filesystem::directory_iterator(folder)) {
+            if (entry.is_regular_file() && entry.path().extension() == ".json") {
+                spdlog::info("loading level: {}", entry.path().filename().string());
+
+                std::ifstream file(entry.path());
+                if (!file.is_open()) {
+                    spdlog::error("Error while opening: {}", entry.path().string());
+                    continue;
+                }
+
+                try {
+                    nlohmann::json jsonData;
+                    file >> jsonData;
+
+                    if (jsonData.contains("id") && jsonData.contains("duration") && jsonData.contains("spawns")) {
+                        int id = jsonData["id"].get<int>();
+
+                        if (id < 0)
+                            continue;
+                        int duration = jsonData["duration"].get<int>();
+                        levels::LevelBuilder builder;
+
+                        builder.setDuration(duration);
+                        builder.setNumber(id);
+                        for (auto &spawn : jsonData["spawns"]) {
+                            models::SpawnPoint spawnPoint;
+
+                            if (spawn.contains("time") && spawn.contains("enemies")) {
+                                int time = spawn["time"].get<int>();
+
+                                spawnPoint.time = time;
+                                for (auto &enemySpawn : spawn["enemies"]) {
+                                    if (enemySpawn.contains("quantity") && enemySpawn.contains("type")) {
+                                        int quantity = enemySpawn["quantity"].get<int>();
+                                        auto type = static_cast<models::EEnemyType>(enemySpawn["type"].get<int>());
+                                        models::EnemySpawn enemy = {quantity, type};
+
+                                        spawnPoint.enemies.emplace_back(enemy);
+                                    }
+                                }
+                            }
+                            builder.addSpawnPoint(spawnPoint);
+                        }
+                        levels::LevelManager::getInstance().registerLevel(std::make_unique<levels::Level>(builder.build()));
+                        spdlog::debug("Level {} registered", id);
+                    }
+                } catch (const nlohmann::json::parse_error& e) {
+                    spdlog::error("Parsing error in {} : {}", entry.path().string(), e.what());
+                }
+            }
+        }
+    }
 
 #endif
 
@@ -75,31 +142,15 @@ int rtype::RType::run() {
             renderWindow,
             mode
     );
+    TextureManager::getInstance().registerTexture("player", "assets/sprites/players.gif", {0, 0, 33, 17});
+    TextureManager::getInstance().registerTexture("enemy", "assets/sprites/enemy.gif", {0, 0, 33, 36});
+
     systemManager.addSystem(rtype::systems::RenderWindowSys::render);
     systemManager.addSystem(rtype::systems::Sound::play);
     systemManager.addSystem(rtype::systems::UpdateProjectilesSystem::updateProjectiles);
 #else
-    systemManager.addSystem(rtype::systems::LevelRunner::process);
-    rtype::models::SpawnPoint spawn1{5, {
-                {3, models::EEnemyType::BASIC}}
-    };
-
-    rtype::models::SpawnPoint spawn2{7, {
-                    {4, models::EEnemyType::BASIC},
-                }
-    };
-
-    rtype::models::SpawnPoint spawn3{10, {
-                        {3, models::EEnemyType::BASIC},
-                    }
-    };
-    levels::Level test = levels::LevelBuilder().setDuration(1000)
-    .setNumber(1)
-    .addSpawnPoint(spawn1)
-    .addSpawnPoint(spawn2)
-    .addSpawnPoint(spawn3)
-    .build();
-    levels::LevelManager::getInstance().registerLevel(std::make_shared<levels::Level>(test));
+    loadLevels();
+    systemManager.addSystem(systems::LevelRunner::process);
 #endif
     systemManager.addSystem(rtype::systems::Movement::move);
     systemManager.addSystem(rtype::systems::Network::udpProcess);
@@ -119,6 +170,8 @@ int rtype::RType::run() {
 
     //TODO: put this component in the game scene instead of here
     entities::Game gameSate(componentManager, entityManager);
+
+    sceneManager.changeScene(0);
 
     while (true) {
         for (auto &entity: entityManager.getEntities()) {
