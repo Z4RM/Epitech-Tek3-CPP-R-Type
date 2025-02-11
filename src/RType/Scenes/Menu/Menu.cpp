@@ -15,11 +15,10 @@
 
 #ifdef RTYPE_IS_CLIENT
 
-#include <SFML/Audio.hpp>
-#include "RType/Config/Config.hpp"
 #include "RType/Entities/Button.hpp"
 #include "RType/Entities/Image.hpp"
 #include "Components.hpp"
+#include "Systems.hpp"
 
 void rtype::scenes::Menu::load() {
     components::Sprite logo;
@@ -103,21 +102,7 @@ void rtype::scenes::Menu::load() {
 
     _componentManager.addComponent<components::MenuState>(menuSateEntity, state);
 
-    components::Music menuMusic = {
-            "assets/sounds/musics/menu.mp3",
-            std::make_shared<sf::Music>()
-    };
-
-    if (!menuMusic.music->openFromFile("assets/sounds/musics/menu.mp3"))
-        spdlog::error("Failed to load music from file");
-    menuMusic.music->setVolume(Config::getInstance().getSounds().volumes.music);
-    menuMusic.music->setLoopPoints(sf::Music::TimeSpan(sf::seconds(0), sf::seconds(8.25)));
-    menuMusic.music->setLoop(true);
-
-    // The music is not played in the system because it must be played only once and then the loop makes the rest
-    menuMusic.music->play();
-    // The music is added to the component manager so it's not destroyed once this function ends
-    _componentManager.addComponent(menuSateEntity, menuMusic);
+    systems::Sound::createMusic("assets/sounds/musics/menu.mp3", _componentManager, menuSateEntity, true, 8.25);
 
     AScene::load();
 }

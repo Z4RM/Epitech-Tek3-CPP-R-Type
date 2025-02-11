@@ -5,9 +5,10 @@
 ** Player.hpp
 */
 
+#include "Systems.hpp"
 #include "RType/ModeManager/ModeManager.hpp"
-#include "Player.hpp"
 #include "RType/Config/Config.hpp"
+#include "Player.hpp"
 
 #ifdef RTYPE_IS_CLIENT
 
@@ -220,18 +221,7 @@ bool rtype::entities::Player::shoot(
     componentManager.addComponent<components::Animation>(projectileId, projAnim);
     componentManager.addComponent<components::Sprite>(projectileId, projectileSprite);
 
-    components::Sound projectileSound = {
-            "assets/sounds/shoot.wav",
-            std::make_shared<sf::SoundBuffer>(),
-            std::make_shared<sf::Sound>()
-    };
-    if (projectileSound.buffer->loadFromFile(projectileSound.path)) {
-        projectileSound.sound->setBuffer(*projectileSound.buffer);
-        projectileSound.sound->setVolume(Config::getInstance().getSounds().volumes.effects);
-        projectileSound.play = true;
-        componentManager.addComponent(projectileId, projectileSound);
-    } else
-        spdlog::error("Failed to load sound from file");
+    systems::Sound::createEffect("assets/sounds/effects/shoot.wav", componentManager, projectileId);
 
     #endif
     componentManager.addComponent<components::Position>(projectileId, pos);

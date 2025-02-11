@@ -28,6 +28,16 @@ namespace rtype::systems {
          * @param componentManager A reference to the `ComponentManager` that manages drawable and rendering-related components.
          */
         static void play(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager);
+
+        static void createEffect(const std::string &path, ecs::ComponentManager &componentManager, unsigned int entity);
+
+        static void createMusic(
+                const std::string &path,
+                ecs::ComponentManager &componentManager,
+                unsigned int entity,
+                bool loop,
+                std::optional<float> duration
+        );
     };
 }
 
