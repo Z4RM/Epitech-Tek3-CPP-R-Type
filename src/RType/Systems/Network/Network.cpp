@@ -33,8 +33,10 @@
 #include "Network/Packets/Descriptors/PacketPlayerCounter/PacketPlayerCounter.hpp"
 #include "RType/Components/Shared/Bonus.hpp"
 #include "RType/Components/Shared/EventId.hpp"
+#include "RType/Components/Shared/ProjectileInfo.hpp"
 #include "RType/Entities/Player.hpp"
 #include "RType/Models/BonusData.hpp"
+#include "RType/Models/ProjectileData.hpp"
 
 namespace rtype::systems {
     std::atomic<int> Network::globalNetId = 0;
@@ -48,6 +50,7 @@ namespace rtype::systems {
                     network.registerNetHandler(network::ENEMIES_DATA, std::make_unique<EnnemiesDataHandler>(componentManager, entityManager));
                 }
                 network.registerNetHandler(network::PLAYERS_DATA, std::make_unique<PlayerDataHandler>(componentManager, entityManager));
+                network.registerNetHandler(network::PLAYER_SHOOT, std::make_unique<PlayerShootHandler>(componentManager, entityManager));
             #ifdef RTYPE_IS_CLIENT
                 network.registerNetHandler(network::BONUS_SPAWN, std::make_unique<BonusHandler>(componentManager, entityManager));
             #endif
@@ -66,16 +69,22 @@ namespace rtype::systems {
             std::vector<models::PlayerData> playerDatas;
             std::vector<models::EnemyData> enemyDatas;
             std::vector<models::BonusData> bonuses;
+            std::vector<models::ProjectileData> projectiles;
             bool inGame = false;
+            int actualPlayerNetId = -1;
 
             //TODO: Maybe add a service or handle state differently to avoid loop like that in different part of the code
             for (const auto &entity: entityManager.getEntities()) {
                 const auto gameState = componentManager.getComponent<components::GameState>(entity);
+                const auto actualPlayer = componentManager.getComponent<components::ActualPlayer>(entity);
+                const auto netId = componentManager.getComponent<components::NetId>(entity);
 
                 if (gameState) {
                     if (gameState->isStarted)
                         inGame = true;
-                    break;
+                }
+                if (actualPlayer && netId && actualPlayer->value == true) {
+                    actualPlayerNetId = netId->id;
                 }
             }
 
@@ -90,7 +99,18 @@ namespace rtype::systems {
                     const auto ai = componentManager.getComponent<components::IA>(entity);
                     auto event = componentManager.getComponent<components::EventId>(entity);
                     auto bonus = componentManager.getComponent<components::Bonus>(entity);
+                    auto projectileInfo = componentManager.getComponent<components::ProjectileInfo>(entity);
 
+                    if (projectileInfo && event) {
+
+                        if (!IS_SERVER && event->netIdEmitter == actualPlayerNetId) {
+                            models::ProjectileData projectileData = {*event, *projectileInfo, *pos};
+                            projectiles.emplace_back(projectileData);
+                        } else if (IS_SERVER) {
+                            models::ProjectileData projectileData = {*event, *projectileInfo, *pos};
+                            projectiles.emplace_back(projectileData);
+                        }
+                    }
                     if (IS_SERVER && pos && event && bonus) {
                         models::BonusData bonusData = {{pos->x, pos->y}, event->value, bonus->type};
                         bonuses.emplace_back(bonusData);
@@ -112,27 +132,35 @@ namespace rtype::systems {
                         }
                     }
                 }
-            }
-            network::PacketPlayersData packetPlayersData(playerDatas);
-            network::PacketEnemiesData packetEnemyDatas(enemyDatas);
+                network::PacketPlayersData packetPlayersData(playerDatas);
+                network::PacketEnemiesData packetEnemyDatas(enemyDatas);
 
-            if (!IS_SERVER) {
-                if (!playerDatas.empty())
-                    network.sendPacket(packetPlayersData, network.getServerEndpoint());
-            }
-            else {
-                for (const auto &entity : entityManager.getEntities()) {
-                    const auto net = componentManager.getComponent<components::NetworkConnection>(entity);
-                    if (net && net->endpoint.has_value()) {
-                        if (!playerDatas.empty())
-                            network.sendPacket(packetPlayersData, net->endpoint.value());
-                        if (!enemyDatas.empty())
-                            network.sendPacket(packetEnemyDatas, net->endpoint.value());
-                        if (IS_SERVER) {
+                if (!IS_SERVER) {
+                    if (!playerDatas.empty())
+                        network.sendPacket(packetPlayersData, network.getServerEndpoint());
+                    for (auto &projectile: projectiles) {
+                        network::PacketPlayerShoot packetPlayerShoot(projectile.event.netIdEmitter, projectile
+                        .projectileInfo.isSuperProjectile, projectile.event.value, projectile.pos);
+                        network.sendPacket(packetPlayerShoot, network.getServerEndpoint());
+                    }
+                }
+                else {
+                    for (const auto &entity : entityManager.getEntities()) {
+                        const auto net = componentManager.getComponent<components::NetworkConnection>(entity);
+                        auto netId = componentManager.getComponent<components::NetId>(entity);
+                        if (net && net->endpoint.has_value()) {
+                            if (!playerDatas.empty())
+                                network.sendPacket(packetPlayersData, net->endpoint.value());
+                            if (!enemyDatas.empty())
+                                network.sendPacket(packetEnemyDatas, net->endpoint.value());
                             for (auto &bonus: bonuses) {
                                 network::PacketBonus packetBonus(bonus.bonusType, bonus.pos, bonus.eventId);
                                 network.sendPacket(packetBonus, net->endpoint.value());
-                                spdlog::debug("sending bonus");
+                            }
+                            for (auto &projectile : projectiles) {
+                                network::PacketPlayerShoot packetPlayerShoot(projectile.event.netIdEmitter, projectile
+                                .projectileInfo.isSuperProjectile, projectile.event.value, projectile.pos);
+                                network.sendPacket(packetPlayerShoot, net->endpoint.value());
                             }
                         }
                     }
@@ -206,7 +234,6 @@ namespace rtype::systems {
                     network.registerNetHandler(network::LEVELS_REGISTERED, std::make_unique<LevelsRegisteredHandler>(componentManager, entityManager));
                     network.registerNetHandler(network::END_GAME, std::make_unique<EndGameHandler>(componentManager, entityManager));
 #endif
-                network.registerNetHandler(network::PLAYER_SHOOT, std::make_unique<PlayerShootHandler>(componentManager, entityManager));
                 network.start();
             } catch (std::exception &e) {
                 spdlog::error("Unable to start TCP socket: {}", e.what());

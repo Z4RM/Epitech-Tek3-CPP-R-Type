@@ -7,6 +7,8 @@
 
 #pragma once
 
+#include <atomic>
+
 namespace rtype::components {
     static std::atomic<long> globalEventId = 0;
     struct EventId {

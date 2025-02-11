@@ -7,11 +7,12 @@
 
 #include "ProjectileService.hpp"
 #include "Components.hpp"
+#include "RType/Components/Shared/ProjectileInfo.hpp"
 #include "RType/TextureManager/TextureManager.hpp"
 
 namespace rtype::services {
     void ProjectileService::createProjectile(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager,
-    std::shared_ptr<components::Position> shooterPos, bool isSuperProjectile) {
+    std::shared_ptr<components::Position> shooterPos, bool isSuperProjectile, components::EventId eventId) {
         const auto projectileSpritePath = isSuperProjectile ? "assets/sprites/projectile/player-shots-charged.gif" : "assets/sprites/projectile/player-shots.gif";
         std::string projectileTextureKey = isSuperProjectile ? "super_projectile" : "projectile";
         const float projectileVelX = isSuperProjectile ? 0.25 : 2.0;
@@ -26,6 +27,8 @@ namespace rtype::services {
         componentManager.addComponent<components::Speed>(projectileId, {250}, entityManager);
         componentManager.addComponent<components::Damage>(projectileId, {projectileDamage}, entityManager);
         componentManager.addComponent<components::NoDamageToPlayer>(projectileId, {true}, entityManager);
+        componentManager.addComponent<components::EventId>(projectileId, eventId, entityManager);
+        componentManager.addComponent<components::ProjectileInfo>(projectileId, {isSuperProjectile}, entityManager);
         #ifdef RTYPE_IS_CLIENT
         sf::RectangleShape hitboxRect;
 
@@ -42,9 +45,11 @@ namespace rtype::services {
             projectileSpritePath,
             {1},
             {1.0, 1.0},
+            std::make_shared<sf::Texture>(),
+            std::make_shared<sf::Sprite>()
         };
         projectileSprite.texture = TextureManager::getInstance().getTexture(projectileTextureKey);
-        projectileSprite.sprite->setTexture(*projectileSprite.texture);
+        projectileSprite.sprite->setTexture(*projectileSprite.texture, false);
         sf::IntRect textureRect(82, 165, 82, 18);
         projectileSprite.sprite->setTextureRect(textureRect);
         sf::Vector2f spriteSize(82.f, 18.f);

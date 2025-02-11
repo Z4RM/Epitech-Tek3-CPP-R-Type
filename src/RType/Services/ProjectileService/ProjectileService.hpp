@@ -10,11 +10,12 @@
 
 #include "ECS/ComponentManager.hpp"
 #include "ECS/EntityManager.hpp"
+#include "RType/Components/Shared/EventId.hpp"
 
 namespace rtype::services {
     class ProjectileService {
     public:
         static void createProjectile(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager,
-        std::shared_ptr<components::Position> shooterPos, bool isSuperProjectile);
+        std::shared_ptr<components::Position> shooterPos, bool isSuperProjectile, components::EventId eventId);
     };
 }

@@ -10,6 +10,10 @@
 #include "Components.hpp"
 #include "Movement.hpp"
 
+#include <spdlog/spdlog.h>
+
+#include "RType/Components/Shared/ProjectileInfo.hpp"
+
 float rtype::systems::Movement::getDistanceBetweenPositions(const rtype::components::Position *pos1,
                                                             const rtype::components::Position *pos2) {
     return std::sqrt(
@@ -109,6 +113,7 @@ void rtype::systems::Movement::move(rtype::ecs::EntityManager& entityManager,
         const auto speed = componentManager.getComponent<components::Speed>(entity);
         const auto health = componentManager.getComponent<components::Health>(entity);
         const auto peaceful = componentManager.getComponent<components::NoDamageToPlayer>(entity);
+        const auto projectileInfo = componentManager.getComponent<components::ProjectileInfo>(entity);
 
         if (pos && vel) {
             if (hitBox) {
@@ -129,16 +134,17 @@ void rtype::systems::Movement::move(rtype::ecs::EntityManager& entityManager,
             pos->y += newPosY;
             pos->z += newPosZ;
 
-            if (peaceful) {
+            if (projectileInfo) {
                 if (pos->x > 800 || pos->x < 0 || pos->y < 0 || pos->y > 600) {
                     entityManager.destroyEntity(entity);
                     componentManager.removeAllComponent(entity);
                     continue;
                 }
-            }
-
-            if (pos->x < 780 && pos->x > 0 && pos->y > 0 && pos->y < 580) {
                 componentManager.addComponent<components::Position>(entity, *pos, entityManager);
+            } else {
+                if (pos->x < 780 && pos->x > 0 && pos->y > 0 && pos->y < 580) {
+                    componentManager.addComponent<components::Position>(entity, *pos, entityManager);
+                }
             }
         }
 

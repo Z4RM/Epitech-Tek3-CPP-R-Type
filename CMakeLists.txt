@@ -117,6 +117,7 @@ set(RTYPE_SRC
         src/Network/Packets/Descriptors/PacketBonus/PacketBonus.hpp
         src/RType/Components/Shared/EventId.hpp
         src/RType/Models/BonusData.hpp
+        src/RType/Models/ProjectileData.hpp
 )
 
 set(CLIENT_SRC
@@ -172,6 +173,7 @@ set(RTYPE_HEADERS
         include/Packets.hpp
         include/Networks.hpp
         include/Keys.hpp
+        src/RType/Components/Shared/ProjectileInfo.hpp
 )
 
 link_libraries(inih::inireader spdlog::spdlog asio::asio nlohmann_json::nlohmann_json)

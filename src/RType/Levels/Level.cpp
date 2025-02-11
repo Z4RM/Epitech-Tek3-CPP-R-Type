@@ -16,6 +16,7 @@
 #include "Network/Packets/Descriptors/PacketBonus/PacketBonus.hpp"
 #include "Network/TCPNetwork/TCPNetwork.hpp"
 #include "RType/Components/Shared/EventId.hpp"
+#include "RType/Components/Shared/ProjectileInfo.hpp"
 #include "RType/Services/BonusService/BonusService.hpp"
 #include "RType/Services/EnemyService/EnemyService.hpp"
 #include "RType/Systems/Network/Network.hpp"
@@ -29,10 +30,18 @@ namespace rtype::levels {
             auto gameState = componentManager.getComponent<components::GameState>(entity);
             auto menuState = componentManager.getComponent<components::MenuState>(entity);
             auto ai = componentManager.getComponent<components::IA>(entity);
+            auto projectileInfo = componentManager.getComponent<components::ProjectileInfo>(entity);
+
+            if (projectileInfo) {
+                entityManager.destroyEntity(entity);
+                componentManager.removeAllComponent(entity);
+                continue;
+            }
 
             if (ai && isLose) {
                 entityManager.destroyEntity(entity);
                 componentManager.removeAllComponent(entity);
+                continue;
             }
 
             if (menuState) {

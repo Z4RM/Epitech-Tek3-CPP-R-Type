@@ -41,13 +41,6 @@ void rtype::systems::UpdateProjectilesSystem::updateProjectiles(
         if (!projectile || !sprite || !pos)
             continue;
 
-        if (pos->x < 0 || pos->x >= 760 ||
-        pos->y < 0 || pos->y >= 590) {
-            entityManager.destroyEntity(entity);
-            componentManager.removeAllComponent(entity);
-            continue;
-        }
-
         float elapsedTime = projectile->animationClock.getElapsedTime().asSeconds();
         int frame = static_cast<int>(elapsedTime * projectile->animation.frameRate) % projectile->animation.nbFrames;
         int frameWidth = static_cast<int>(sprite->size.width);

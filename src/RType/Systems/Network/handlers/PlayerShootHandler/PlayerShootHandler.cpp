@@ -7,6 +7,8 @@
 
 #include "PlayerShootHandler.hpp"
 
+#include <spdlog/spdlog.h>
+
 #include "Network/Packets/Descriptors/PacketPlayerShoot/PacketPlayerShoot.hpp"
 #include "RType/Components/Shared/Network.hpp"
 #include "Components.hpp"
@@ -15,37 +17,33 @@
 #include "RType/Services/ProjectileService/ProjectileService.hpp"
 
 namespace rtype::systems {
-    void PlayerShootHandler::handle(std::unique_ptr<network::IPacket> packet, std::shared_ptr<asio::ip::tcp::socket> socket) {
+    void PlayerShootHandler::handle(std::unique_ptr<network::IPacket> packet, asio::ip::udp::endpoint) {
         auto* packetPlayerShoot = dynamic_cast<network::PacketPlayerShoot*>(packet.get());
 
         if (packetPlayerShoot) {
+            bool gameStarted = false;
             for (auto &entity: _entityManager.getEntities()) {
-                //TODO: use directly health component instead of this useless component
-                const auto health = _componentManager.getComponent<components::Health>(entity);
+                auto gameState = _componentManager.getComponent<components::GameState>(entity);
 
-                if (health && health->value <= 0)
-                    continue;
-
-                auto netco = _componentManager.getComponent<components::NetworkConnection>(entity);
-                auto netId = _componentManager.getComponent<components::NetId>(entity);
-                auto playerPos = _componentManager.getComponent<components::Position>(entity);
-
-                if (netId && netId->id == packetPlayerShoot->netId) {
-                    services::ProjectileService::createProjectile(_entityManager, _componentManager, playerPos, packetPlayerShoot->isSuperProjectile);
-                    if (IS_SERVER) {
-                        network::PacketPlayerShoot newPacket(packetPlayerShoot->netId, packetPlayerShoot->isSuperProjectile);
-                        for (auto &playerEntity : _entityManager.getEntities()) {
-                            auto networkConnection = _componentManager.getComponent<components::NetworkConnection>(playerEntity);
-                            auto networkId = _componentManager.getComponent<components::NetId>(playerEntity);
-
-                            if (networkConnection && networkConnection->socket != socket) {
-                                network::TCPNetwork::getInstance().sendPacket(newPacket, networkConnection->socket);
-                            }
-                        }
-                    }
-                    break;
+                if (gameState) {
+                    gameStarted = true;
                 }
             }
+            if (!gameStarted)
+                return;
+            for (auto &entity : _entityManager.getEntities()) {
+                const auto event = _componentManager.getComponent<components::EventId>(entity);
+                const auto pos = _componentManager.getComponent<components::Position>(entity);
+
+                if (event && event->value == packetPlayerShoot->eventId && event->netIdEmitter == packetPlayerShoot->netId) {
+                    if (!IS_SERVER) {
+                        _componentManager.addComponent<components::Position>(entity, packetPlayerShoot->pos, _entityManager);
+                    }
+                    return;
+                }
+            }
+            services::ProjectileService::createProjectile(_entityManager, _componentManager, std::make_shared<components::Position>(packetPlayerShoot->pos),
+            packetPlayerShoot->isSuperProjectile, {packetPlayerShoot->eventId, packetPlayerShoot->netId});
         }
     }
 }

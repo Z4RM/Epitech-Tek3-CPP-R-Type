@@ -2,15 +2,13 @@
 ** EPITECH PROJECT, 2025
 ** RType
 ** File description:
-** Position.hpp
+**  ProjectileInfo component
 */
 
 #pragma once
+
 namespace rtype::components {
-    struct Position
-    {
-        float x = 0;
-        float y = 0;
-        float z = 0;
+    struct ProjectileInfo {
+        bool isSuperProjectile = false;
     };
 }

@@ -7,11 +7,14 @@
 
 #include "TextureManager.hpp"
 
+#include <spdlog/spdlog.h>
+
 namespace rtype {
     std::shared_ptr<sf::Texture> TextureManager::getTexture(std::string key) {
         if (this->_textures.find(key) != this->_textures.end()) {
             return this->_textures[key];
         }
+        spdlog::error("Unknow texture");
         return nullptr;
     }
 
