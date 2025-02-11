@@ -8,6 +8,7 @@
 #include "ProjectileService.hpp"
 #include "Components.hpp"
 #include "RType/Components/Shared/ProjectileInfo.hpp"
+#include "RType/Systems/Sound/Sound.hpp"
 
 #ifdef RTYPE_IS_CLIENT
 #include "RType/TextureManager/TextureManager.hpp"
@@ -72,6 +73,7 @@ namespace rtype::services {
             projectileSprite
         };
         componentManager.addComponent<components::Projectile>(projectileId, projectile, entityManager);
+        systems::Sound::createEffect("assets/sounds/effects/shoot.wav", componentManager, entityManager, projectileId);
         #else
         componentManager.addComponent<components::Hitbox>(projectileId, {pos, {10.0f, 10.0f}}, entityManager);
         #endif

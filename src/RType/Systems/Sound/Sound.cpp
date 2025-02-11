@@ -20,7 +20,7 @@ void rtype::systems::Sound::play(
         if (sound && sound->play) {
             sound->sound->play();
             sound->play = false;
-            componentManager.addComponent(entity, *sound);
+            componentManager.addComponent<components::Sound>(entity, *sound, entityManager);
         }
     }
 }
@@ -28,6 +28,7 @@ void rtype::systems::Sound::play(
 void rtype::systems::Sound::createEffect(
         const std::string &path,
         ecs::ComponentManager &componentManager,
+        ecs::EntityManager &entityManager,
         unsigned int entity
 ) {
     components::Sound projectileSound = {
@@ -45,12 +46,13 @@ void rtype::systems::Sound::createEffect(
     projectileSound.sound->setVolume(Config::getInstance().getSounds().volumes.effects);
     projectileSound.play = true;
 
-    componentManager.addComponent(entity, projectileSound);
+    componentManager.addComponent(entity, projectileSound, entityManager);
 }
 
 void rtype::systems::Sound::createMusic(
         const std::string &path,
         ecs::ComponentManager &componentManager,
+        ecs::EntityManager &entityManager,
         unsigned int entity,
         bool loop,
         std::optional<float> duration
@@ -75,5 +77,5 @@ void rtype::systems::Sound::createMusic(
     menuMusic.music->play();
 
     // The music is added to the component manager so it's not destroyed once this function ends
-    componentManager.addComponent(entity, menuMusic);
+    componentManager.addComponent(entity, menuMusic, entityManager);
 }

@@ -52,7 +52,7 @@ void rtype::scenes::Lose::load() {
     components::MenuState state = {0};
     _componentManager.addComponent<components::MenuState>(loseSateEntity, state, _entityManager);
 
-    systems::Sound::createEffect("assets/sounds/effects/loser.mp3", _componentManager, loseSateEntity);
+    systems::Sound::createEffect("assets/sounds/effects/loser.mp3", _componentManager, _entityManager, loseSateEntity);
 
     AScene::load();
 }

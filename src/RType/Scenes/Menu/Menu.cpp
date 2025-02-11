@@ -118,7 +118,7 @@ void rtype::scenes::Menu::load() {
         network.sendPacket(packet);
     }
 
-    systems::Sound::createMusic("assets/sounds/musics/menu.mp3", _componentManager, menuSateEntity, true, 8.25);
+    systems::Sound::createMusic("assets/sounds/musics/menu.mp3", _componentManager, _entityManager, menuSateEntity, true, 8.25);
 
     AScene::load();
 }

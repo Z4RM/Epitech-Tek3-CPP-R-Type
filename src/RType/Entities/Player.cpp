@@ -206,7 +206,6 @@ bool rtype::entities::Player::shoot(
     components::globalEventId.store(components::globalEventId.load() + 1);
     components::EventId event = {components::globalEventId.load(), netId->id};
     services::ProjectileService::createProjectile(entityManager, componentManager, playerPos, isSuperProjectile, event);
-    //systems::Sound::createEffect("assets/sounds/effects/shoot.wav", componentManager, projectileId);
     return true;
 }
 
