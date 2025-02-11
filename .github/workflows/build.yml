@@ -83,7 +83,7 @@ jobs:
         run: ctest --build-config Release
 
       - name: Upload artifact with built binaries
-        if: startsWith(github.ref, 'refs/tags/')
+        #if: startsWith(github.ref, 'refs/tags/')
         uses: actions/upload-artifact@v4
         with:
           name: build-${{ matrix.os }}
