@@ -15,9 +15,11 @@
 #include "RType/Entities/PlayerCounter.hpp"
 
 #ifdef RTYPE_IS_CLIENT
+
 #include "RType/Entities/Button.hpp"
 #include "RType/Entities/Image.hpp"
 #include "RType/Components/Client/OnClick.hpp"
+#include "Systems.hpp"
 
 void rtype::scenes::Win::load() {
     components::Sprite win;
@@ -35,7 +37,7 @@ void rtype::scenes::Win::load() {
     entities::Image backgroundImage(this->_componentManager, this->_entityManager, bg, true);
 
     components::OnClick onClick;
-    onClick.fn = [this]() {
+    onClick.fn = []() {
         ecs::SceneManager::getInstance().changeScene(0, true);
     };
 
@@ -47,9 +49,12 @@ void rtype::scenes::Win::load() {
     this->registerEntity(winImage);
 
     unsigned int winSateEntity = _entityManager.createEntity();
-    components::MenuState state = { 0 };
+    components::MenuState state = {0};
 
     _componentManager.addComponent<components::MenuState>(winSateEntity, state);
+
+    systems::Sound::createEffect("assets/sounds/effects/winner.mp3", _componentManager, winSateEntity);
+
     AScene::load();
 }
 
