@@ -13,7 +13,10 @@
 #include "Network/Packets/Descriptors/PacketPlayersData/PacketPlayersData.hpp"
 #include "RType/Components/Shared/PlayerBonuses.hpp"
 #include "RType/Services/PlayerService/PlayerService.hpp"
+
+#ifdef RTYPE_IS_CLIENT
 #include "RType/TextureManager/TextureManager.hpp"
+#endif
 
 namespace rtype::systems {
     void PlayerDataHandler::handle(std::unique_ptr<network::IPacket> packet, asio::ip::udp::endpoint endpoint) {
