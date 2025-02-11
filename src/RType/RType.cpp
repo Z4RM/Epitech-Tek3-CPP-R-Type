@@ -146,7 +146,10 @@ int rtype::RType::run() {
             renderWindow,
             mode
     );
-    TextureManager::getInstance().registerTexture("player", "assets/sprites/players.gif", {0, 0, 33, 17});
+    TextureManager::getInstance().registerTexture("player", "assets/sprites/players.gif", {0, 3, 32, 14});
+    TextureManager::getInstance().registerTexture("player2", "assets/sprites/players.gif", {0, 20, 32, 14});
+    TextureManager::getInstance().registerTexture("player3", "assets/sprites/players.gif", {0, 37, 32, 14});
+    TextureManager::getInstance().registerTexture("player4", "assets/sprites/players.gif", {0, 54, 32, 14});
     TextureManager::getInstance().registerTexture("enemy", "assets/sprites/enemy.gif", {0, 0, 33, 36});
 
     systemManager.addSystem(rtype::systems::RenderWindowSys::render);

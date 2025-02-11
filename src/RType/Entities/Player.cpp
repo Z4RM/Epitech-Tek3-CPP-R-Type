@@ -26,7 +26,11 @@ rtype::entities::Player::Player(
 ) {
     this->_id = entityManager.createEntity();
     sprite.sprite = std::make_shared<sf::Sprite>();
-    sprite.texture = TextureManager::getInstance().getTexture("player");
+    std::string textureName = "player" + std::to_string(network.id);
+    if (network.id > 1 && network.id < 5)
+        sprite.texture = TextureManager::getInstance().getTexture(textureName);
+    else
+        sprite.texture = TextureManager::getInstance().getTexture("player");
     sprite.sprite->setTexture(*sprite.texture);
     sf::Vector2f spriteSize(sprite.sprite->getTextureRect().width, sprite.sprite->getTextureRect().height);
     sprite.sprite->setOrigin(spriteSize.x / 2, spriteSize.y / 2);
