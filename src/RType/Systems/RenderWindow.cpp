@@ -12,6 +12,7 @@
 
 #include "RType/Components/Client/SlidingBg.hpp"
 #include "RType/Components/Shared/Counter.hpp"
+#include "RType/Components/Shared/PlayerBonuses.hpp"
 #include "RType/Config/Config.hpp"
 
 void rtype::systems::RenderWindowSys::render(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager)
@@ -85,6 +86,8 @@ void rtype::systems::RenderWindowSys::render(ecs::EntityManager &entityManager, 
             auto text = componentManager.getComponent<components::SfText>(e);
             auto counter = componentManager.getComponent<components::Counter>(e);
             auto hitbox = componentManager.getComponent<components::Hitbox>(e);
+            auto playerBonuses = componentManager.getComponent<components::PlayerBonuses>(e);
+
 
             if (text) {
                 renderWindow->window->draw(text->text);
@@ -94,6 +97,11 @@ void rtype::systems::RenderWindowSys::render(ecs::EntityManager &entityManager, 
             }
             if (hitbox && Config::getInstance().isDebug()) {
                 renderWindow->window->draw(hitbox->rect);
+            }
+            if (playerBonuses) {
+                for (auto &bonus: playerBonuses->bonuses) {
+                    renderWindow->window->draw(bonus.second);
+                }
             }
         }
         renderWindow->window->display();

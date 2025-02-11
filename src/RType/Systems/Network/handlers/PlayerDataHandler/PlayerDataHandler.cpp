@@ -11,7 +11,9 @@
 #include <spdlog/spdlog.h>
 
 #include "Network/Packets/Descriptors/PacketPlayersData/PacketPlayersData.hpp"
+#include "RType/Components/Shared/PlayerBonuses.hpp"
 #include "RType/Services/PlayerService/PlayerService.hpp"
+#include "RType/TextureManager/TextureManager.hpp"
 
 namespace rtype::systems {
     void PlayerDataHandler::handle(std::unique_ptr<network::IPacket> packet, asio::ip::udp::endpoint endpoint) {
@@ -52,6 +54,24 @@ namespace rtype::systems {
                                 const auto localPos = _componentManager.getComponent<components::Position>(entity);
                                 const auto vel = _componentManager.getComponent<components::Velocity>(entity);
                                 const auto health = _componentManager.getComponent<components::Health>(entity);
+                                #ifdef RTYPE_IS_CLIENT
+                                const auto playerBonuses = _componentManager.getComponent<components::PlayerBonuses>(entity);
+                                components::PlayerBonuses newBonuses;
+                                for (auto &bonus: data.bonuses) {
+                                    if (playerBonuses) {
+                                        newBonuses = *playerBonuses;
+                                    }
+                                    if (newBonuses.bonuses.find(bonus) == newBonuses.bonuses.end()) {
+                                        newBonuses.bonuses[bonus] = sf::Sprite();
+                                        auto texture = TextureManager::getInstance().getTexture("force");
+                                        newBonuses.bonuses[bonus].setTexture(*texture);
+                                        newBonuses.bonuses[bonus].setPosition({data.pos.x, data.pos.y});
+                                        newBonuses.bonuses[bonus].setOrigin(texture->getSize().x / 2, texture->getSize().y / 2);
+                                        _componentManager.addComponent<components::PlayerBonuses>(entity, newBonuses, _entityManager);
+                                        spdlog::debug("A player got a bonus ! ");
+                                    }
+                                }
+                                #endif
 
                                 if (health) {
                                     if (data.health != health->value) {

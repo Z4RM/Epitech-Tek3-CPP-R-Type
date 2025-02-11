@@ -118,6 +118,7 @@ set(RTYPE_SRC
         src/RType/Components/Shared/EventId.hpp
         src/RType/Models/BonusData.hpp
         src/RType/Models/ProjectileData.hpp
+        src/RType/Components/Shared/PlayerBonuses.hpp
 )
 
 set(CLIENT_SRC

@@ -38,7 +38,7 @@ namespace rtype::services {
         hitboxRect.setOutlineColor(sf::Color::Green);
         hitboxRect.setOutlineThickness(2.f);
         hitboxRect.setFillColor(sf::Color::Transparent);
-        componentManager.addComponent<components::Hitbox>(projectileId, {pos, {10.0f, 10.0f}, hitboxRect}, entityManager);
+        componentManager.addComponent<components::Hitbox>(projectileId, {pos, {82.0f, 18.0f}, hitboxRect}, entityManager);
         components::Sprite projectileSprite = {
             pos,
             {82.0f, 18.0f},

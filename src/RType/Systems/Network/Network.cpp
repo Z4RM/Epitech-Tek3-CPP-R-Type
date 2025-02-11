@@ -33,6 +33,7 @@
 #include "Network/Packets/Descriptors/PacketPlayerCounter/PacketPlayerCounter.hpp"
 #include "RType/Components/Shared/Bonus.hpp"
 #include "RType/Components/Shared/EventId.hpp"
+#include "RType/Components/Shared/PlayerBonuses.hpp"
 #include "RType/Components/Shared/ProjectileInfo.hpp"
 #include "RType/Entities/Player.hpp"
 #include "RType/Models/BonusData.hpp"
@@ -100,6 +101,7 @@ namespace rtype::systems {
                     auto event = componentManager.getComponent<components::EventId>(entity);
                     auto bonus = componentManager.getComponent<components::Bonus>(entity);
                     auto projectileInfo = componentManager.getComponent<components::ProjectileInfo>(entity);
+                    auto playerBonuses = componentManager.getComponent<components::PlayerBonuses>(entity);
 
                     if (projectileInfo && event) {
 
@@ -116,7 +118,13 @@ namespace rtype::systems {
                         bonuses.emplace_back(bonusData);
                     }
                     if (vel && pos && size && netId && health) {
-                        models::PlayerData pdata{*pos, *vel, *size, *netId, health->value};
+                        std::vector<models::EBonusType> actualPlayerBonuses = {};
+                        #ifdef RTYPE_IS_SERVER
+                        if (playerBonuses) {
+                            actualPlayerBonuses = playerBonuses->bonuses;
+                        }
+                        #endif
+                        models::PlayerData pdata{*pos, *vel, *size, *netId, health->value, actualPlayerBonuses};
                         models::EnemyData edata{*pos, *vel, *size, *netId, health->value};
 
                         if (actualPlayer && actualPlayer->value == true && !IS_SERVER) {

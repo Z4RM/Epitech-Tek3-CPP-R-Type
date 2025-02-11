@@ -12,7 +12,10 @@
 
 #include <spdlog/spdlog.h>
 
+#include "RType/Components/Shared/Bonus.hpp"
+#include "RType/Components/Shared/PlayerBonuses.hpp"
 #include "RType/Components/Shared/ProjectileInfo.hpp"
+#include <random>
 
 float rtype::systems::Movement::getDistanceBetweenPositions(const rtype::components::Position *pos1,
                                                             const rtype::components::Position *pos2) {
@@ -51,6 +54,10 @@ void rtype::systems::Movement::handleCollisions(unsigned int entity, components:
                                                 ecs::ComponentManager &componentManager,
                                                 components::Velocity *vel,
                                                 ecs::EntityManager &entityManager) {
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<int> dist(1, 100);
+
     for (auto &collisionEntity: entities) {
         if (collisionEntity == entity)
             continue;
@@ -61,8 +68,11 @@ void rtype::systems::Movement::handleCollisions(unsigned int entity, components:
         const auto colliderDamage = componentManager.getComponent<components::Damage>(collisionEntity);
         const auto peaceful = componentManager.getComponent<components::NoDamageToPlayer>(collisionEntity);
         const auto player = componentManager.getComponent<components::NetworkConnection>(entity);
+        const auto actualPlayer = componentManager.getComponent<components::ActualPlayer>(entity);
         const auto ai1 = componentManager.getComponent<components::IA>(entity);
         const auto ai2 = componentManager.getComponent<components::IA>(collisionEntity);
+        auto bonus = componentManager.getComponent<components::Bonus>(collisionEntity);
+        auto playerBonuses = componentManager.getComponent<components::PlayerBonuses>(entity);
 
         if (ai1 && ai2)
             continue;
@@ -71,6 +81,34 @@ void rtype::systems::Movement::handleCollisions(unsigned int entity, components:
             continue;
 
         if (isColliding(pos, hitBox, colliderPos.get(), colliderHitBox.get())) {
+            if (actualPlayer && bonus) {
+                entityManager.destroyEntity(collisionEntity);
+                componentManager.removeAllComponent(collisionEntity);
+                continue;
+            }
+#ifdef RTYPE_IS_SERVER
+            if (player && bonus) {
+                components::PlayerBonuses newBonuses = {};
+                if (playerBonuses) {
+                    newBonuses = *playerBonuses;
+                }
+                newBonuses.bonuses.emplace_back(bonus->type);
+                componentManager.addComponent<components::PlayerBonuses>(entity, newBonuses, entityManager);
+                entityManager.destroyEntity(collisionEntity);
+                componentManager.removeAllComponent(collisionEntity);
+            }
+
+            bool isDodging = false;
+            if (playerBonuses) {
+                for (auto bonuses : playerBonuses->bonuses) {
+                    if (bonuses == models::FORCE) {
+                        isDodging = (dist(gen) <= 30); // 30% dodge
+                    }
+                }
+            }
+            if (isDodging)
+                continue;
+#endif
             if (entityHealthBar && colliderDamage && entityHealthBar->value > 0) {
                 if (player && peaceful) {
                     continue;
@@ -146,50 +184,59 @@ void rtype::systems::Movement::move(rtype::ecs::EntityManager& entityManager,
                     componentManager.addComponent<components::Position>(entity, *pos, entityManager);
                 }
             }
-        }
-
-        const auto ia = componentManager.getComponent<components::IA>(entity);
-        const auto pos2 = componentManager.getComponent<components::Position>(entity);
-
-        if (ia && pos2 && !peaceful) {
-            const auto move = ia->moves.begin();
-            components::Velocity velTarget = move->second;
-
-            if (hitBox) {
-                handleCollisions(entity, pos2.get(), hitBox.get(), entities, componentManager, &velTarget, entityManager);
-            }
-
-            auto newPosX = velTarget.x * elapsedTime.count() * 1.2;
-            auto newPosY = velTarget.y * elapsedTime.count() * 1.2;
-            auto newPosZ = velTarget.z * elapsedTime.count() * 1.2;
-
-            if (speed) {
-                newPosX *= speed->value;
-                newPosY *= speed->value;
-                newPosZ *= speed->value;
-            }
-            pos2->x += newPosX;
-            pos2->y += newPosY;
-            pos2->z += newPosZ;
-
-            if (IS_SERVER && (pos2->x > 900 || pos2->x < -50 || pos2->y < -50 || pos2->y > 800)) {
-                entityManager.destroyEntity(entity);
-                componentManager.removeAllComponent(entity);
-                return;
-            }
-
-            componentManager.addComponent<components::Position>(entity, *pos2, entityManager);
-        }
 #ifdef RTYPE_IS_CLIENT
-        if (hitBox) {
-            hitBox->rect.setPosition({pos->x, pos->y});
-            componentManager.addComponent<components::Hitbox>(entity, *hitBox, entityManager);
-        }
-        if (health && pos2) {
-            health->bgBar.setPosition({pos2->x - 25, pos2->y - 20});
-            health->healthBar.setPosition({pos2->x - 25, pos2->y - 20});
-            componentManager.addComponent<components::Health>(entity, *health, entityManager);
-        }
+            auto playerBonuses = componentManager.getComponent<components::PlayerBonuses>(entity);
+            if (playerBonuses && pos) {
+                for (auto &bonuses: playerBonuses->bonuses) {
+                    bonuses.second.setPosition(pos->x + 32, pos->y);
+                }
+                componentManager.addComponent<components::PlayerBonuses>(entity, *playerBonuses, entityManager);
+            }
 #endif
+
+            const auto ia = componentManager.getComponent<components::IA>(entity);
+            const auto pos2 = componentManager.getComponent<components::Position>(entity);
+
+            if (ia && pos2 && !peaceful) {
+                const auto move = ia->moves.begin();
+                components::Velocity velTarget = move->second;
+
+                if (hitBox) {
+                    handleCollisions(entity, pos2.get(), hitBox.get(), entities, componentManager, &velTarget, entityManager);
+                }
+
+                auto newPosX = velTarget.x * elapsedTime.count() * 1.2;
+                auto newPosY = velTarget.y * elapsedTime.count() * 1.2;
+                auto newPosZ = velTarget.z * elapsedTime.count() * 1.2;
+
+                if (speed) {
+                    newPosX *= speed->value;
+                    newPosY *= speed->value;
+                    newPosZ *= speed->value;
+                }
+                pos2->x += newPosX;
+                pos2->y += newPosY;
+                pos2->z += newPosZ;
+
+                if (IS_SERVER && (pos2->x > 900 || pos2->x < -50 || pos2->y < -50 || pos2->y > 800)) {
+                    entityManager.destroyEntity(entity);
+                    componentManager.removeAllComponent(entity);
+                    return;
+                }
+
+                componentManager.addComponent<components::Position>(entity, *pos2, entityManager);
+            }
+#ifdef RTYPE_IS_CLIENT
+            if (hitBox) {
+                hitBox->rect.setPosition({pos->x, pos->y});
+                componentManager.addComponent<components::Hitbox>(entity, *hitBox, entityManager);
+            }
+            if (health && pos2) {
+                health->bgBar.setPosition({pos2->x - 25, pos2->y - 20});
+                health->healthBar.setPosition({pos2->x - 25, pos2->y - 20});
+                componentManager.addComponent<components::Health>(entity, *health, entityManager);
+            }
+#endif
+        }
     }
 }
