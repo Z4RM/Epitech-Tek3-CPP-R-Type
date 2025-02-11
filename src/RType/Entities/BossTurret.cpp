@@ -52,12 +52,10 @@ namespace rtype::entities {
         componentManager.addComponent<components::Damage>(_id, damage, entityManager);
 
 
-        std::unordered_map<float, components::Velocity> move;
-        move.insert({
-            0,
-            {0, 0, 0}
-        });
-        componentManager.addComponent<components::IA>(_id, {move, models::BOSS_TURRET}, entityManager);
+        std::vector<components::Velocity> move;
+        move.emplace_back(components::Velocity({0, 1, 0}));
+        move.emplace_back(components::Velocity({0, -1, 0}));
+        componentManager.addComponent<components::IA>(_id, {move, models::BOSS_TURRET, 1, 2}, entityManager);
         componentManager.addComponent<components::Sprite>(_id, sprite, entityManager);
     }
 }
@@ -72,7 +70,7 @@ namespace rtype::entities {
         componentManager.addComponent<components::NetId>(_id, netId, entityManager);
         componentManager.addComponent<components::Velocity>(_id, {0, 0}, entityManager);
         componentManager.addComponent<components::Size>(_id, {592 / 2, 176 / 2}, entityManager);
-        componentManager.addComponent<components::Speed>(_id, {0}, entityManager);
+        componentManager.addComponent<components::Speed>(_id, {200 }, entityManager);
 
         components::Health health(2000);
         componentManager.addComponent<components::Health>(_id, health, entityManager);
@@ -80,12 +78,10 @@ namespace rtype::entities {
         components::Damage damage = {200};
         componentManager.addComponent<components::Damage>(_id, damage, entityManager);
 
-        std::unordered_map<float, components::Velocity> move;
-        move.insert({
-            0,
-            {0, 0, 0}
-        });
-        componentManager.addComponent<components::IA>(_id, {move, models::BOSS_TURRET}, entityManager);
+        std::vector<components::Velocity> move;
+        move.emplace_back(components::Velocity({0, 1, 0}));
+        move.emplace_back(components::Velocity({0, -1, 0}));
+        componentManager.addComponent<components::IA>(_id, {move, models::BOSS_TURRET, 1, 2}, entityManager);
     }
 }
 #endif

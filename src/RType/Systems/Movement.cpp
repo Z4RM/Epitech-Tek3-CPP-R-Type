@@ -140,7 +140,10 @@ void rtype::systems::Movement::move(rtype::ecs::EntityManager& entityManager,
     static auto lastUpdateTime = std::chrono::steady_clock::now();
     auto currentTime = std::chrono::steady_clock::now();
     std::chrono::duration<float> elapsedTime = currentTime - lastUpdateTime;
+    float deltaTime = elapsedTime.count();
     lastUpdateTime = currentTime;
+    std::random_device rd;
+    std::mt19937 gen(rd());
 
     const auto entities = entityManager.getEntities();
 
@@ -158,9 +161,9 @@ void rtype::systems::Movement::move(rtype::ecs::EntityManager& entityManager,
                 handleCollisions(entity, pos.get(), hitBox.get(), entities, componentManager, vel.get(), entityManager);
             }
 
-            auto newPosX = vel->x * elapsedTime.count();
-            auto newPosY = vel->y * elapsedTime.count();
-            auto newPosZ = vel->z * elapsedTime.count();
+            auto newPosX = vel->x * deltaTime;
+            auto newPosY = vel->y * deltaTime;
+            auto newPosZ = vel->z * deltaTime;
 
             if (speed) {
                 newPosX *= speed->value;
@@ -198,16 +201,46 @@ void rtype::systems::Movement::move(rtype::ecs::EntityManager& entityManager,
             const auto pos2 = componentManager.getComponent<components::Position>(entity);
 
             if (ia && pos2 && !peaceful) {
-                const auto move = ia->moves.begin();
-                components::Velocity velTarget = move->second;
+                ia->timeUntilNextMove -= deltaTime;
+                if (ia->moves.empty())
+                    continue;
+
+                if ( ia->timeUntilNextMove <= 0.0f) {
+                    std::uniform_int_distribution<size_t> dist(0, ia->moves.size() - 1);
+                    int newMoveIndex = dist(gen);
+
+                    if (ia->lastMoveIndex != -1) {
+                        std::unordered_set<int> invalidMoves;
+                        invalidMoves.insert(ia->lastMoveIndex);
+
+                        std::vector<int> validMoves;
+                        for (size_t i = 0; i < ia->moves.size(); ++i) {
+                            if (invalidMoves.find(i) == invalidMoves.end()) {
+                                validMoves.push_back(i);
+                            }
+                        }
+
+                        if (!validMoves.empty()) {
+                            std::uniform_int_distribution<size_t> dist(0, validMoves.size() - 1);
+                            newMoveIndex = validMoves[dist(gen)];
+                        }
+                    }
+
+                    ia->lastMoveIndex = newMoveIndex;
+                    std::uniform_real_distribution<float> timeDist(ia->minMoveTime, ia->maxMoveTime);
+                    spdlog::warn(ia->lastMoveIndex);
+                    ia->timeUntilNextMove = timeDist(gen);
+                }
+                componentManager.addComponent(entity, *ia, entityManager);
+                components::Velocity velTarget = ia->moves[ia->lastMoveIndex];
 
                 if (hitBox) {
                     handleCollisions(entity, pos2.get(), hitBox.get(), entities, componentManager, &velTarget, entityManager);
                 }
 
-                auto newPosX = velTarget.x * elapsedTime.count() * 1.2;
-                auto newPosY = velTarget.y * elapsedTime.count() * 1.2;
-                auto newPosZ = velTarget.z * elapsedTime.count() * 1.2;
+                auto newPosX = velTarget.x * deltaTime * 1.2;
+                auto newPosY = velTarget.y * deltaTime * 1.2;
+                auto newPosZ = velTarget.z * deltaTime * 1.2;
 
                 if (speed) {
                     newPosX *= speed->value;
@@ -218,13 +251,14 @@ void rtype::systems::Movement::move(rtype::ecs::EntityManager& entityManager,
                 pos2->y += newPosY;
                 pos2->z += newPosZ;
 
-                if (IS_SERVER && (pos2->x > 900 || pos2->x < -50 || pos2->y < -50 || pos2->y > 800)) {
+                if (IS_SERVER && (pos2->x > 900 || pos2->x < -50)) {
                     entityManager.destroyEntity(entity);
                     componentManager.removeAllComponent(entity);
                     return;
                 }
 
-                componentManager.addComponent<components::Position>(entity, *pos2, entityManager);
+                if (pos2->y > 0 && pos2->y < 600)
+                    componentManager.addComponent<components::Position>(entity, *pos2, entityManager);
             }
 #ifdef RTYPE_IS_CLIENT
             if (hitBox) {
