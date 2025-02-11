@@ -7,5 +7,6 @@ var searchData=
   ['modemanager_2ecpp_4',['ModeManager.cpp',['../ModeManager_8cpp.html',1,'']]],
   ['modemanager_2ehpp_5',['ModeManager.hpp',['../ModeManager_8hpp.html',1,'']]],
   ['movement_2ecpp_6',['Movement.cpp',['../Movement_8cpp.html',1,'']]],
-  ['movement_2ehpp_7',['Movement.hpp',['../Movement_8hpp.html',1,'']]]
+  ['movement_2ehpp_7',['Movement.hpp',['../Movement_8hpp.html',1,'']]],
+  ['music_2ehpp_8',['Music.hpp',['../Music_8hpp.html',1,'']]]
 ];

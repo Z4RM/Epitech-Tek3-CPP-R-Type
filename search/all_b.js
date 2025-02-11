@@ -18,9 +18,10 @@ var searchData=
   ['getnetwork_15',['getNetwork',['../classrtype_1_1Config.html#a3139e1c09468d4344cea1e128e2ab6cc',1,'rtype::Config']]],
   ['getnumber_16',['getNumber',['../classrtype_1_1levels_1_1Level.html#ad4a97b318dd3f0b0d001f3f0ce730b58',1,'rtype::levels::Level']]],
   ['getserverendpoint_17',['getServerEndpoint',['../classrtype_1_1network_1_1UDPNetwork.html#af975e76b5b19904b439483589b41a702',1,'rtype::network::UDPNetwork']]],
-  ['getstarted_18',['getStarted',['../classrtype_1_1network_1_1TCPNetwork.html#a42fdcefb87b45be182e53d175d4561ec',1,'rtype::network::TCPNetwork::getStarted()'],['../classrtype_1_1network_1_1UDPNetwork.html#a1792c17cb054e01f47aaa1736320245c',1,'rtype::network::UDPNetwork::getStarted()']]],
-  ['getstop_19',['getStop',['../classrtype_1_1network_1_1TCPNetwork.html#a28529872bd09078f74f5864f6110b882',1,'rtype::network::TCPNetwork::getStop()'],['../classrtype_1_1network_1_1UDPNetwork.html#a3f04503f277b6fd48e17e84928e15530',1,'rtype::network::UDPNetwork::getStop()']]],
-  ['gettexture_20',['getTexture',['../classrtype_1_1TextureManager.html#ac94c4277f0679b8fb65af2eb2f3d04e2',1,'rtype::TextureManager']]],
-  ['globalnetid_21',['globalNetId',['../classrtype_1_1systems_1_1Network.html#a1aa6c5536481c1bc865d2c481db3e7ca',1,'rtype::systems::Network']]],
-  ['guidelines_22',['Enforcement Guidelines',['../md_CODE__OF__CONDUCT.html#autotoc_md6',1,'']]]
+  ['getsounds_18',['getSounds',['../classrtype_1_1Config.html#a5b4244c9c6b599f4955231f3ac1b1589',1,'rtype::Config']]],
+  ['getstarted_19',['getStarted',['../classrtype_1_1network_1_1TCPNetwork.html#a42fdcefb87b45be182e53d175d4561ec',1,'rtype::network::TCPNetwork::getStarted()'],['../classrtype_1_1network_1_1UDPNetwork.html#a1792c17cb054e01f47aaa1736320245c',1,'rtype::network::UDPNetwork::getStarted()']]],
+  ['getstop_20',['getStop',['../classrtype_1_1network_1_1TCPNetwork.html#a28529872bd09078f74f5864f6110b882',1,'rtype::network::TCPNetwork::getStop()'],['../classrtype_1_1network_1_1UDPNetwork.html#a3f04503f277b6fd48e17e84928e15530',1,'rtype::network::UDPNetwork::getStop()']]],
+  ['gettexture_21',['getTexture',['../classrtype_1_1TextureManager.html#ac94c4277f0679b8fb65af2eb2f3d04e2',1,'rtype::TextureManager']]],
+  ['globalnetid_22',['globalNetId',['../classrtype_1_1systems_1_1Network.html#a1aa6c5536481c1bc865d2c481db3e7ca',1,'rtype::systems::Network']]],
+  ['guidelines_23',['Enforcement Guidelines',['../md_CODE__OF__CONDUCT.html#autotoc_md6',1,'']]]
 ];

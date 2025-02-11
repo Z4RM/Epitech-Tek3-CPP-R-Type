@@ -14,6 +14,7 @@ var namespacertype_1_1systems =
     [ "PlayerDataHandler", "classrtype_1_1systems_1_1PlayerDataHandler.html", "classrtype_1_1systems_1_1PlayerDataHandler" ],
     [ "PlayerShootHandler", "classrtype_1_1systems_1_1PlayerShootHandler.html", "classrtype_1_1systems_1_1PlayerShootHandler" ],
     [ "RenderWindowSys", "classrtype_1_1systems_1_1RenderWindowSys.html", null ],
+    [ "Sound", "classrtype_1_1systems_1_1Sound.html", null ],
     [ "StartGameHandler", "classrtype_1_1systems_1_1StartGameHandler.html", "classrtype_1_1systems_1_1StartGameHandler" ],
     [ "UpdateProjectilesSystem", "classrtype_1_1systems_1_1UpdateProjectilesSystem.html", null ],
     [ "WelcomeHandler", "classrtype_1_1systems_1_1WelcomeHandler.html", "classrtype_1_1systems_1_1WelcomeHandler" ]

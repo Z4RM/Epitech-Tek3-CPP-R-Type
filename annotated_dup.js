@@ -13,6 +13,7 @@ var annotated_dup =
         [ "IA", "structrtype_1_1components_1_1IA.html", "structrtype_1_1components_1_1IA" ],
         [ "InputHandler", "structrtype_1_1components_1_1InputHandler.html", "structrtype_1_1components_1_1InputHandler" ],
         [ "MenuState", "structrtype_1_1components_1_1MenuState.html", "structrtype_1_1components_1_1MenuState" ],
+        [ "Music", "structrtype_1_1components_1_1Music.html", "structrtype_1_1components_1_1Music" ],
         [ "NetId", "structrtype_1_1components_1_1NetId.html", "structrtype_1_1components_1_1NetId" ],
         [ "NetworkConnection", "structrtype_1_1components_1_1NetworkConnection.html", "structrtype_1_1components_1_1NetworkConnection" ],
         [ "NoDamageToPlayer", "structrtype_1_1components_1_1NoDamageToPlayer.html", "structrtype_1_1components_1_1NoDamageToPlayer" ],
@@ -23,6 +24,7 @@ var annotated_dup =
         [ "SfText", "structrtype_1_1components_1_1SfText.html", "structrtype_1_1components_1_1SfText" ],
         [ "Size", "structrtype_1_1components_1_1Size.html", "structrtype_1_1components_1_1Size" ],
         [ "SlidingBg", "structrtype_1_1components_1_1SlidingBg.html", "structrtype_1_1components_1_1SlidingBg" ],
+        [ "Sound", "structrtype_1_1components_1_1Sound.html", "structrtype_1_1components_1_1Sound" ],
         [ "Speed", "structrtype_1_1components_1_1Speed.html", "structrtype_1_1components_1_1Speed" ],
         [ "Sprite", "structrtype_1_1components_1_1Sprite.html", "structrtype_1_1components_1_1Sprite" ],
         [ "String", "structrtype_1_1components_1_1String.html", "structrtype_1_1components_1_1String" ],
@@ -108,6 +110,7 @@ var annotated_dup =
         [ "PlayerDataHandler", "classrtype_1_1systems_1_1PlayerDataHandler.html", "classrtype_1_1systems_1_1PlayerDataHandler" ],
         [ "PlayerShootHandler", "classrtype_1_1systems_1_1PlayerShootHandler.html", "classrtype_1_1systems_1_1PlayerShootHandler" ],
         [ "RenderWindowSys", "classrtype_1_1systems_1_1RenderWindowSys.html", null ],
+        [ "Sound", "classrtype_1_1systems_1_1Sound.html", null ],
         [ "StartGameHandler", "classrtype_1_1systems_1_1StartGameHandler.html", "classrtype_1_1systems_1_1StartGameHandler" ],
         [ "UpdateProjectilesSystem", "classrtype_1_1systems_1_1UpdateProjectilesSystem.html", null ],
         [ "WelcomeHandler", "classrtype_1_1systems_1_1WelcomeHandler.html", "classrtype_1_1systems_1_1WelcomeHandler" ]
@@ -121,6 +124,7 @@ var annotated_dup =
     [ "ComponentManager", "classComponentManager.html", null ],
     [ "EntityManager", "classEntityManager.html", null ],
     [ "Player", "classPlayer.html", null ],
+    [ "SoundSys", "classSoundSys.html", null ],
     [ "SparseSet", "classSparseSet.html", null ],
     [ "SystemManager", "classSystemManager.html", null ]
 ];

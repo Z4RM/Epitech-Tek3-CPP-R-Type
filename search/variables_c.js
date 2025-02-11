@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['path_0',['path',['../structrtype_1_1components_1_1Animation.html#a5a0d5081e3e7190436a08d10f009e55f',1,'rtype::components::Animation::path'],['../structrtype_1_1components_1_1Sprite.html#a5d292a69f1102efb73eb03e4e7946f8b',1,'rtype::components::Sprite::path']]],
-  ['playercount_1',['playerCount',['../structrtype_1_1components_1_1GameState.html#adc9946de5afec9852a280ffb8fda28c7',1,'rtype::components::GameState::playerCount'],['../structrtype_1_1components_1_1MenuState.html#aed45dfe691d061a015cc35eba91ba95b',1,'rtype::components::MenuState::playerCount']]],
-  ['pos_2',['pos',['../structrtype_1_1components_1_1Sprite.html#aa161cdb51f91bd7e4aaaabfc99c67d7d',1,'rtype::components::Sprite::pos'],['../structrtype_1_1components_1_1Hitbox.html#ae851d0e72f8f25772eb9bac864233c54',1,'rtype::components::Hitbox::pos'],['../structrtype_1_1models_1_1EnemyData.html#a8239912ac8129c182b97c68e2f6bd9e3',1,'rtype::models::EnemyData::pos'],['../structrtype_1_1models_1_1PlayerData.html#a291c0d4eb49486fd67958d1a0869a705',1,'rtype::models::PlayerData::pos']]],
-  ['position_3',['position',['../structrtype_1_1components_1_1Projectile.html#aa57eeb92aa877a0ae05864c94e12e5ee',1,'rtype::components::Projectile']]],
-  ['priority_4',['priority',['../structrtype_1_1components_1_1Sprite.html#a8f8193ba798783f453fa76b034d2f106',1,'rtype::components::Sprite']]]
+  ['name_0',['name',['../structrtype_1_1components_1_1Counter.html#a1754d5657c5cdb5455382ecac672216d',1,'rtype::components::Counter']]],
+  ['nbframes_1',['nbFrames',['../structrtype_1_1components_1_1Animation.html#a2d2d5e48f29066acc9df62be14467a75',1,'rtype::components::Animation']]],
+  ['netid_2',['netId',['../classrtype_1_1network_1_1PacketPlayerShoot.html#a5b4cf21c0f2d6d916dba99172a560690',1,'rtype::network::PacketPlayerShoot::netId'],['../classrtype_1_1network_1_1PacketWelcome.html#a9fc4bb01e78ad9943df509b9c3d671b7',1,'rtype::network::PacketWelcome::netId'],['../structrtype_1_1models_1_1EnemyData.html#a8f823c37f3403daa7d2c549aa85c92d8',1,'rtype::models::EnemyData::netId'],['../structrtype_1_1models_1_1PlayerData.html#aef273821036ae27de72cf9377801e1ce',1,'rtype::models::PlayerData::netId']]],
+  ['network_3',['network',['../structrtype_1_1models_1_1PlayerData.html#a9f20636a63464c8a8db816988934257e',1,'rtype::models::PlayerData']]],
+  ['none_4',['none',['../structrtype_1_1entities_1_1Style.html#a4ea93ebb931add49424625424bab49d1',1,'rtype::entities::Style']]]
 ];

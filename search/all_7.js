@@ -40,9 +40,11 @@ var searchData=
   ['created_37',['Created',['../structrtype_1_1components_1_1Created.html',1,'rtype::components']]],
   ['created_38',['created',['../structrtype_1_1components_1_1Sprite.html#ae061bd10cc6221f217ae872f2440281d',1,'rtype::components::Sprite']]],
   ['created_2ehpp_39',['Created.hpp',['../Created_8hpp.html',1,'']]],
-  ['createenemy_40',['createEnemy',['../classrtype_1_1services_1_1EnemyService.html#aa6d1f65f7834cdff2f0b640db5827d83',1,'rtype::services::EnemyService']]],
-  ['createentity_41',['createEntity',['../classrtype_1_1ecs_1_1EntityManager.html#ad2181c79220abfc1fbdcfdac622fe1f3',1,'rtype::ecs::EntityManager']]],
-  ['createplayer_42',['createPlayer',['../classrtype_1_1services_1_1PlayerService.html#a204434aa546d043a2f79651cee21c82e',1,'rtype::services::PlayerService']]],
-  ['createprojectile_43',['createProjectile',['../classrtype_1_1services_1_1ProjectileService.html#a596f41b99469086fb29849df3f5a8019',1,'rtype::services::ProjectileService']]],
-  ['createwindow_44',['createWindow',['../classrtype_1_1systems_1_1RenderWindowSys.html#ab2961155614aa4060c5d7f8e894ed5af',1,'rtype::systems::RenderWindowSys']]]
+  ['createeffect_40',['createEffect',['../classrtype_1_1systems_1_1Sound.html#a0b3f36413f6aa15fc084c4c03de34ca8',1,'rtype::systems::Sound']]],
+  ['createenemy_41',['createEnemy',['../classrtype_1_1services_1_1EnemyService.html#aa6d1f65f7834cdff2f0b640db5827d83',1,'rtype::services::EnemyService']]],
+  ['createentity_42',['createEntity',['../classrtype_1_1ecs_1_1EntityManager.html#ad2181c79220abfc1fbdcfdac622fe1f3',1,'rtype::ecs::EntityManager']]],
+  ['createmusic_43',['createMusic',['../classrtype_1_1systems_1_1Sound.html#af974792aa7bd9c1d5a43e410cd5ea707',1,'rtype::systems::Sound']]],
+  ['createplayer_44',['createPlayer',['../classrtype_1_1services_1_1PlayerService.html#a204434aa546d043a2f79651cee21c82e',1,'rtype::services::PlayerService']]],
+  ['createprojectile_45',['createProjectile',['../classrtype_1_1services_1_1ProjectileService.html#a596f41b99469086fb29849df3f5a8019',1,'rtype::services::ProjectileService']]],
+  ['createwindow_46',['createWindow',['../classrtype_1_1systems_1_1RenderWindowSys.html#ab2961155614aa4060c5d7f8e894ed5af',1,'rtype::systems::RenderWindowSys']]]
 ];

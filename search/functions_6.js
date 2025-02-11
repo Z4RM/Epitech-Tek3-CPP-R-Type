@@ -13,7 +13,8 @@ var searchData=
   ['getnetwork_10',['getNetwork',['../classrtype_1_1Config.html#a3139e1c09468d4344cea1e128e2ab6cc',1,'rtype::Config']]],
   ['getnumber_11',['getNumber',['../classrtype_1_1levels_1_1Level.html#ad4a97b318dd3f0b0d001f3f0ce730b58',1,'rtype::levels::Level']]],
   ['getserverendpoint_12',['getServerEndpoint',['../classrtype_1_1network_1_1UDPNetwork.html#af975e76b5b19904b439483589b41a702',1,'rtype::network::UDPNetwork']]],
-  ['getstarted_13',['getStarted',['../classrtype_1_1network_1_1TCPNetwork.html#a42fdcefb87b45be182e53d175d4561ec',1,'rtype::network::TCPNetwork::getStarted()'],['../classrtype_1_1network_1_1UDPNetwork.html#a1792c17cb054e01f47aaa1736320245c',1,'rtype::network::UDPNetwork::getStarted()']]],
-  ['getstop_14',['getStop',['../classrtype_1_1network_1_1TCPNetwork.html#a28529872bd09078f74f5864f6110b882',1,'rtype::network::TCPNetwork::getStop()'],['../classrtype_1_1network_1_1UDPNetwork.html#a3f04503f277b6fd48e17e84928e15530',1,'rtype::network::UDPNetwork::getStop()']]],
-  ['gettexture_15',['getTexture',['../classrtype_1_1TextureManager.html#ac94c4277f0679b8fb65af2eb2f3d04e2',1,'rtype::TextureManager']]]
+  ['getsounds_13',['getSounds',['../classrtype_1_1Config.html#a5b4244c9c6b599f4955231f3ac1b1589',1,'rtype::Config']]],
+  ['getstarted_14',['getStarted',['../classrtype_1_1network_1_1TCPNetwork.html#a42fdcefb87b45be182e53d175d4561ec',1,'rtype::network::TCPNetwork::getStarted()'],['../classrtype_1_1network_1_1UDPNetwork.html#a1792c17cb054e01f47aaa1736320245c',1,'rtype::network::UDPNetwork::getStarted()']]],
+  ['getstop_15',['getStop',['../classrtype_1_1network_1_1TCPNetwork.html#a28529872bd09078f74f5864f6110b882',1,'rtype::network::TCPNetwork::getStop()'],['../classrtype_1_1network_1_1UDPNetwork.html#a3f04503f277b6fd48e17e84928e15530',1,'rtype::network::UDPNetwork::getStop()']]],
+  ['gettexture_16',['getTexture',['../classrtype_1_1TextureManager.html#ac94c4277f0679b8fb65af2eb2f3d04e2',1,'rtype::TextureManager']]]
 ];

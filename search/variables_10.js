@@ -1,8 +1,11 @@
 var searchData=
 [
-  ['text_0',['text',['../structrtype_1_1components_1_1SfText.html#a6727fbdf82ef2ea6bf4445cc3e539ced',1,'rtype::components::SfText']]],
-  ['texture_1',['texture',['../structrtype_1_1components_1_1Sprite.html#a4147c310d7a36de058a3534c73cfe07d',1,'rtype::components::Sprite']]],
-  ['time_2',['time',['../structrtype_1_1models_1_1SpawnPoint.html#a3f40432aa780dba5bd18b83e87fd62a5',1,'rtype::models::SpawnPoint']]],
-  ['titlebar_3',['titleBar',['../structrtype_1_1entities_1_1Style.html#a29eae3b029b7b4ac4353a5cb0a9e4136',1,'rtype::entities::Style']]],
-  ['type_4',['type',['../structrtype_1_1models_1_1EnemySpawn.html#af029104507aff576b1ea2056a384fab3',1,'rtype::models::EnemySpawn']]]
+  ['s_0',['s',['../structrtype_1_1components_1_1String.html#aa8f614206dfb39fa4f2f8a7327bcdd1e',1,'rtype::components::String']]],
+  ['scale_1',['scale',['../structrtype_1_1components_1_1Sprite.html#a8c7325539cab9454fdd7b792c4fe43c4',1,'rtype::components::Sprite']]],
+  ['size_2',['size',['../structrtype_1_1components_1_1Sprite.html#a015b96ebf2d8cdb5142f7ee68b94227c',1,'rtype::components::Sprite::size'],['../structrtype_1_1components_1_1Hitbox.html#aaad103552c86e50916548bc83bd79c0b',1,'rtype::components::Hitbox::size'],['../structrtype_1_1models_1_1EnemyData.html#a01943912fcefb5ba83e13157eb4962f7',1,'rtype::models::EnemyData::size'],['../structrtype_1_1models_1_1PlayerData.html#a69a3c77f25ae8e2d02b8d52df20b59c8',1,'rtype::models::PlayerData::size']]],
+  ['socket_3',['socket',['../structrtype_1_1components_1_1NetworkConnection.html#ac47fdd1ddd6a3b36a04ea8ec358f8e4a',1,'rtype::components::NetworkConnection']]],
+  ['sound_4',['sound',['../structrtype_1_1components_1_1Sound.html#a4a744192da47bdbfda9a6d6649e23361',1,'rtype::components::Sound']]],
+  ['spawned_5',['spawned',['../structrtype_1_1models_1_1SpawnPoint.html#a8261061dfe1f070974ba16f0a7cbf3c7',1,'rtype::models::SpawnPoint']]],
+  ['sprite_6',['sprite',['../structrtype_1_1components_1_1Sprite.html#a1248ca92bb5f998821a524f43f262f38',1,'rtype::components::Sprite']]],
+  ['style_7',['style',['../structrtype_1_1entities_1_1Style.html#acbdfcfe911b89a7d39182b8bbbfa33e1',1,'rtype::entities::Style::style'],['../structrtype_1_1entities_1_1Mode.html#a9cf4078acf5056b18e1f4b514a056ab7',1,'rtype::entities::Mode::style']]]
 ];

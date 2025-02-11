@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['endpoint_0',['endpoint',['../structrtype_1_1components_1_1NetworkConnection.html#a933df7478b78c6b3d26281819cda74a5',1,'rtype::components::NetworkConnection']]],
-  ['enemies_1',['enemies',['../structrtype_1_1models_1_1SpawnPoint.html#a4c68e992bf09d4600ebff90e173cbe5a',1,'rtype::models::SpawnPoint']]],
-  ['entitymanager_2',['entityManager',['../structrtype_1_1models_1_1Scene.html#a25ceaededdb46d4c2fad4cad8ac275c2',1,'rtype::models::Scene']]]
+  ['datas_0',['datas',['../classrtype_1_1network_1_1PacketEnemiesData.html#aac0ddc75b5a6710aee3a872b00c7fe70',1,'rtype::network::PacketEnemiesData::datas'],['../classrtype_1_1network_1_1PacketPlayersData.html#ab48d94e264aa3b235127666e6c2b4dd1',1,'rtype::network::PacketPlayersData::datas']]],
+  ['defaults_1',['defaults',['../structrtype_1_1entities_1_1Style.html#acafb9d769b5eece546930bebf2199b40',1,'rtype::entities::Style']]]
 ];

@@ -1,5 +1,15 @@
 var NAVTREEINDEX2 =
 {
+"classrtype_1_1network_1_1APacket.html#a477fcf28489574cc26489b3093f0e86c":[3,0,0,5,0,2],
+"classrtype_1_1network_1_1APacket.html#a477fcf28489574cc26489b3093f0e86c":[4,0,0,5,0,2],
+"classrtype_1_1network_1_1APacket.html#a7e61f67ed25598f00f1f11f5ac2be814":[3,0,0,5,0,0],
+"classrtype_1_1network_1_1APacket.html#a7e61f67ed25598f00f1f11f5ac2be814":[4,0,0,5,0,0],
+"classrtype_1_1network_1_1IPacket.html":[3,0,0,5,1],
+"classrtype_1_1network_1_1IPacket.html":[4,0,0,5,1],
+"classrtype_1_1network_1_1IPacket.html#a32fa5952113b1e72d3a732254206b688":[3,0,0,5,1,2],
+"classrtype_1_1network_1_1IPacket.html#a32fa5952113b1e72d3a732254206b688":[4,0,0,5,1,2],
+"classrtype_1_1network_1_1IPacket.html#ac2d619c38219747052017c7fa2f40a98":[3,0,0,5,1,0],
+"classrtype_1_1network_1_1IPacket.html#ac2d619c38219747052017c7fa2f40a98":[4,0,0,5,1,0],
 "classrtype_1_1network_1_1IPacket.html#ad0b0134520391aa03b665bfe43894152":[3,0,0,5,1,3],
 "classrtype_1_1network_1_1IPacket.html#ad0b0134520391aa03b665bfe43894152":[4,0,0,5,1,3],
 "classrtype_1_1network_1_1IPacket.html#afff793deb387e2c0dd59f22fdabdccfd":[3,0,0,5,1,1],
@@ -239,15 +249,5 @@ var NAVTREEINDEX2 =
 "classrtype_1_1systems_1_1EndGameHandler.html#af33c9b673872a6f4d1ab65e5df3ea4b7":[3,0,0,8,2,0],
 "classrtype_1_1systems_1_1EndGameHandler.html#af33c9b673872a6f4d1ab65e5df3ea4b7":[4,0,0,8,2,0],
 "classrtype_1_1systems_1_1EnnemiesDataHandler.html":[3,0,0,8,3],
-"classrtype_1_1systems_1_1EnnemiesDataHandler.html":[4,0,0,8,3],
-"classrtype_1_1systems_1_1EnnemiesDataHandler.html#a48fc084feb62449d2c6a4d468383fcf5":[3,0,0,8,3,1],
-"classrtype_1_1systems_1_1EnnemiesDataHandler.html#a48fc084feb62449d2c6a4d468383fcf5":[4,0,0,8,3,1],
-"classrtype_1_1systems_1_1EnnemiesDataHandler.html#a57d8789effd0fd70c288fe641dd0942e":[3,0,0,8,3,0],
-"classrtype_1_1systems_1_1EnnemiesDataHandler.html#a57d8789effd0fd70c288fe641dd0942e":[4,0,0,8,3,0],
-"classrtype_1_1systems_1_1INetworkHandler.html":[3,0,0,8,4],
-"classrtype_1_1systems_1_1INetworkHandler.html":[4,0,0,8,4],
-"classrtype_1_1systems_1_1INetworkHandler.html#a2e20862103ca9f321eddf3db6d5f73c7":[3,0,0,8,4,2],
-"classrtype_1_1systems_1_1INetworkHandler.html#a2e20862103ca9f321eddf3db6d5f73c7":[4,0,0,8,4,2],
-"classrtype_1_1systems_1_1INetworkHandler.html#a2f0a70a9e54765929b2591c1d971f162":[3,0,0,8,4,0],
-"classrtype_1_1systems_1_1INetworkHandler.html#a2f0a70a9e54765929b2591c1d971f162":[4,0,0,8,4,0]
+"classrtype_1_1systems_1_1EnnemiesDataHandler.html":[4,0,0,8,3]
 };
