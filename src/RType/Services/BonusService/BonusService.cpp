@@ -12,10 +12,12 @@
 
 #include "RType/Components/Shared/Bonus.hpp"
 #include <spdlog/spdlog.h>
-
-#include "RType/Components/Client/Sprite.hpp"
 #include "RType/Components/Shared/EventId.hpp"
+
+#ifdef RTYPE_IS_CLIENT
+#include "RType/Components/Client/Sprite.hpp"
 #include "RType/TextureManager/TextureManager.hpp"
+#endif
 
 namespace rtype::services {
     void BonusService::createBonus(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager,
