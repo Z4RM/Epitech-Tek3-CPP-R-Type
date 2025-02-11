@@ -76,7 +76,7 @@ int rtype::RType::run() {
             mode
     );
     systemManager.addSystem(rtype::systems::RenderWindowSys::render);
-    systemManager.addSystem(rtype::systems::SoundSys::play);
+    systemManager.addSystem(rtype::systems::Sound::play);
     systemManager.addSystem(rtype::systems::UpdateProjectilesSystem::updateProjectiles);
 #else
     systemManager.addSystem(rtype::systems::LevelRunner::process);

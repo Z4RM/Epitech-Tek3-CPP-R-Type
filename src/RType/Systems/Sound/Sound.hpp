@@ -16,7 +16,7 @@ namespace rtype::systems {
      *
      * @brief Manages sounds in the ECS framework.
      */
-    class SoundSys {
+    class Sound {
     public:
         /**
          * @brief Plays sounds in the ECS system.

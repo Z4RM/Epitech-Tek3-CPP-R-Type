@@ -8,7 +8,7 @@
 #include "Components.hpp"
 #include "Sound.hpp"
 
-void rtype::systems::SoundSys::play(
+void rtype::systems::Sound::play(
         rtype::ecs::EntityManager &entityManager,
         rtype::ecs::ComponentManager &componentManager
 ) {
