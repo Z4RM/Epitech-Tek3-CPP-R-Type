@@ -8,7 +8,10 @@
 #include "ProjectileService.hpp"
 #include "Components.hpp"
 #include "RType/Components/Shared/ProjectileInfo.hpp"
+
+#ifdef RTYPE_IS_CLIENT
 #include "RType/TextureManager/TextureManager.hpp"
+#endif
 
 namespace rtype::services {
     void ProjectileService::createProjectile(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager,
