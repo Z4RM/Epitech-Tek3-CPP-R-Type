@@ -30,6 +30,15 @@ shoot=Space
 ; The key to charged shoot.
 charged_shoot=E
 
+[sounds]
+; The volume of the sound effects.
+; Must be in the range [0, 100] (default: 50)
+effects_volume=100
+
+; The volume of the music.
+; Must be in the range [0, 100] (default: 10)
+music_volume=100
+
 [log]
 ; The logging level
 ; trace    | Highly detailed logs for tracing program execution.

@@ -5,9 +5,10 @@
 ** Player.hpp
 */
 
+#include "Systems.hpp"
 #include "RType/ModeManager/ModeManager.hpp"
-#include "Player.hpp"
 #include "RType/Config/Config.hpp"
+#include "Player.hpp"
 
 #ifdef RTYPE_IS_CLIENT
 #include "RType/TextureManager/TextureManager.hpp"
@@ -61,7 +62,7 @@ rtype::entities::Player::Player(
         shootKeybinding,
         {sf::Event::KeyPressed, [this, &entityManager, &componentManager, id, netId]() {
             static auto clock = std::chrono::steady_clock::now();
-            bool result = this->shoot(entityManager, componentManager, id, clock, false);
+            bool result = shoot(entityManager, componentManager, id, clock, false);
             if (result) {
                 network::PacketPlayerShoot sendPlayerShoot(netId, false);
                 network::TCPNetwork::getInstance().sendPacket(sendPlayerShoot);
@@ -75,7 +76,7 @@ rtype::entities::Player::Player(
             static auto clock = std::chrono::steady_clock::now();
             auto health = componentManager.getComponent<components::Health>(id);
             if (health->value > 0) {
-              bool result = this->shoot(entityManager, componentManager, id, clock, true);
+              bool result = shoot(entityManager, componentManager, id, clock, true);
               if (result) {
                   network::PacketPlayerShoot sendPlayerShoot(netId, true);
                   network::TCPNetwork::getInstance().sendPacket(sendPlayerShoot);
@@ -167,8 +168,13 @@ rtype::entities::Player::Player(
     componentManager.addComponent<components::InputHandler>(id, _inputs);
 }
 
-bool rtype::entities::Player::shoot(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager, size_t id,
-std::chrono::steady_clock::time_point &clock, bool isSuperProjectile) {
+bool rtype::entities::Player::shoot(
+        ecs::EntityManager &entityManager,
+        ecs::ComponentManager &componentManager,
+        size_t id,
+        std::chrono::steady_clock::time_point &clock,
+        bool isSuperProjectile
+) {
     const auto cooldown = isSuperProjectile ? 1.5 : 0.2;
     const auto projectileSpritePath = isSuperProjectile ? "assets/sprites/projectile/player-shots-charged.gif" : "assets/sprites/projectile/player-shots.gif";
     const int projectileDamage = isSuperProjectile ? 35 : 20;
@@ -211,6 +217,9 @@ std::chrono::steady_clock::time_point &clock, bool isSuperProjectile) {
     };
     componentManager.addComponent<components::Animation>(projectileId, projAnim);
     componentManager.addComponent<components::Sprite>(projectileId, projectileSprite);
+
+    systems::Sound::createEffect("assets/sounds/effects/shoot.wav", componentManager, projectileId);
+
     #endif
     componentManager.addComponent<components::Position>(projectileId, pos);
     componentManager.addComponent<components::Velocity>(projectileId, vel);

@@ -130,6 +130,8 @@ set(CLIENT_SRC
         src/Network/Packets/IPacket.hpp
         include/Networks.hpp
         src/RType/Components/Client/Sprite.hpp
+        src/RType/Components/Client/Sound.hpp
+        src/RType/Components/Client/Music.hpp
         src/RType/Models/PlayerData.hpp
         src/RType/Components/Shared/NetId.hpp
         src/RType/Components/Shared/ActualPlayer.hpp
@@ -150,6 +152,8 @@ set(CLIENT_SRC
         src/RType/Systems/AnimationProjectile.cpp
         src/RType/Systems/AnimationProjectile.hpp
         src/RType/Components/Shared/NoDamageToPlayer.hpp
+        src/RType/Systems/Sound/Sound.cpp
+        src/RType/Systems/Sound/Sound.hpp
         src/RType/TextureManager/TextureManager.cpp
         src/RType/TextureManager/TextureManager.hpp
 )

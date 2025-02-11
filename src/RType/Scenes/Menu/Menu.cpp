@@ -22,8 +22,8 @@
 
 #include "RType/Entities/Button.hpp"
 #include "RType/Entities/Image.hpp"
-#include "RType/Components/Client/OnClick.hpp"
-#include "RType/Components/Shared/GameState.hpp"
+#include "Components.hpp"
+#include "Systems.hpp"
 
 void rtype::scenes::Menu::load() {
     components::Sprite logo;
@@ -52,7 +52,7 @@ void rtype::scenes::Menu::load() {
                 break;
             }
         }
-        for (const auto &entity : _entityManager.getEntities()) {
+        for (const auto &entity: _entityManager.getEntities()) {
             auto levelCounter = _componentManager.getComponent<components::Counter>(entity);
 
             if (levelCounter && levelCounter->name == "level") {
@@ -73,7 +73,7 @@ void rtype::scenes::Menu::load() {
     this->registerEntity(logoImage);
 
     unsigned int menuSateEntity = _entityManager.createEntity();
-    components::MenuState state = { 0 };
+    components::MenuState state = {0};
 
     unsigned int levelSelectorEntity = _entityManager.createEntity();
     std::string levelCounterName = "level";
@@ -83,7 +83,7 @@ void rtype::scenes::Menu::load() {
 
     components::OnClick changeLevel;
     changeLevel.fn = [this]() {
-        for (const auto &entity : _entityManager.getEntities()) {
+        for (const auto &entity: _entityManager.getEntities()) {
             auto counter = _componentManager.getComponent<components::Counter>(entity);
 
             if (counter && counter->name == "level") {
@@ -117,6 +117,9 @@ void rtype::scenes::Menu::load() {
         network::PacketConnect packet;
         network.sendPacket(packet);
     }
+
+    systems::Sound::createMusic("assets/sounds/musics/menu.mp3", _componentManager, menuSateEntity, true, 8.25);
+
     AScene::load();
 }
 
