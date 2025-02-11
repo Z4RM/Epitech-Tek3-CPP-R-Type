@@ -136,6 +136,7 @@ namespace rtype::systems {
                         if (IS_SERVER && !ai) {
                             playerDatas.emplace_back(pdata);
                         } else if (IS_SERVER && ai) {
+                            edata.type = ai->type;
                             enemyDatas.emplace_back(edata);
                         }
                     }

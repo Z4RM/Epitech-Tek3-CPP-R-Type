@@ -16,5 +16,6 @@ namespace rtype::models {
         components::Size size{};
         components::NetId netId;
         int health = 0;
+        EEnemyType type = EEnemyType::BASIC;
     };
 }

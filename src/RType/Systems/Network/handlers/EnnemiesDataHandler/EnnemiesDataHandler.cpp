@@ -63,8 +63,9 @@ namespace rtype::systems {
                 }
 
                 if (!created) {
-                    spdlog::debug("Creating new enemy in the game with netId: {}", data.netId.id);
-                    services::EnemyService::createEnemy(_entityManager, _componentManager, data.pos, data.netId.id);
+                    spdlog::debug("Creating new enemy in the game with netId: {} with type : {}", data.netId.id,
+                    std::to_string(data.type));
+                    services::EnemyService::createEnemy(_entityManager, _componentManager, data.pos, data.netId.id, data.type);
                 }
             }
 

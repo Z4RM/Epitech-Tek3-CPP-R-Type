@@ -9,6 +9,7 @@
 
 namespace rtype::models {
     enum EEnemyType {
-        BASIC
+        BASIC = 1,
+        BOSS_TURRET = 2
     };
 }

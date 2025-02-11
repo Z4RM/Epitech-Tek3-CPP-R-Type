@@ -13,14 +13,10 @@
     },
     {
       "time": 5,
-      "bonuses": [
-        1,
-        1
-      ],
       "enemies": [
         {
-          "type": 1,
-          "quantity": 5
+          "type": 2,
+          "quantity": 1
         }
       ]
     }

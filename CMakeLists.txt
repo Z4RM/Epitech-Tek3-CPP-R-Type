@@ -119,6 +119,8 @@ set(RTYPE_SRC
         src/RType/Models/BonusData.hpp
         src/RType/Models/ProjectileData.hpp
         src/RType/Components/Shared/PlayerBonuses.hpp
+        src/RType/Entities/BossTurret.cpp
+        src/RType/Entities/BossTurret.hpp
 )
 
 set(CLIENT_SRC

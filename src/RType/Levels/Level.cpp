@@ -113,15 +113,20 @@ namespace rtype::levels {
                 for (auto &enemySpawn : spawn.enemies) {
                     spdlog::debug("Spawning {} ennemies of type {}", enemySpawn.quantity, std::to_string(enemySpawn.type));
                     for (int i = 0; i < enemySpawn.quantity; i++) {
-                        const auto y = static_cast<float>(dis(gen));
-                        services::EnemyService::createEnemy(entityManager, componentManager, {800, y, 0});
+                        auto y = static_cast<float>(dis(gen));
+                        float x = 800.f;
+
+                        if (enemySpawn.type == 2) {
+                            x = 600.f;
+                            y = 300;
+                        }
+                        services::EnemyService::createEnemy(entityManager, componentManager, {x, y, 0}, 0, enemySpawn.type);
                     }
                 }
 
                 for (models::EBonusType bonus : spawn.bonuses) {
                     const auto y = static_cast<float>(dis(gen));
                     const auto x = static_cast<float>(dis(gen));
-
 
                     components::globalEventId.store(components::globalEventId.load() + 1);
                     services::BonusService::createBonus(entityManager, componentManager, bonus, {x, y, 0}, components::globalEventId.load());

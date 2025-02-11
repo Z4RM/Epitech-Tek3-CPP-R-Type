@@ -14,6 +14,6 @@ namespace rtype::services {
     class EnemyService {
     public:
         static void createEnemy(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager,
-        components::Position pos, int netId = 0);
+        components::Position pos, int netId = 0, models::EEnemyType type = models::BASIC);
     };
 }
