@@ -17,6 +17,7 @@
 
 #include "RType/Config/Config.hpp"
 #include "Components.hpp"
+#include "handlers/BonusHandler/BonusHandler.hpp"
 #include "handlers/ConnectHandler/ConnectHandler.hpp"
 #include "handlers/EnnemiesDataHandler/EnnemiesDataHandler.hpp"
 #include "handlers/LevelsRegisteredHandler/LevelsRegisteredHandler.hpp"
@@ -26,10 +27,14 @@
 #include "handlers/StartGameHandler/StartGameHandler.hpp"
 #include "handlers/WelcomeHandler/WelcomeHandler.hpp"
 #include "handlers/EndGameHandler/EndGameHandler.hpp"
+#include "Network/Packets/Descriptors/PacketBonus/PacketBonus.hpp"
 #include "Network/Packets/Descriptors/PacketPlayersData/PacketPlayersData.hpp"
 #include "Network/Packets/Descriptors/PacketEnemiesData/PacketEnemiesData.hpp"
 #include "Network/Packets/Descriptors/PacketPlayerCounter/PacketPlayerCounter.hpp"
+#include "RType/Components/Shared/Bonus.hpp"
+#include "RType/Components/Shared/EventId.hpp"
 #include "RType/Entities/Player.hpp"
+#include "RType/Models/BonusData.hpp"
 
 namespace rtype::systems {
     std::atomic<int> Network::globalNetId = 0;
@@ -43,6 +48,9 @@ namespace rtype::systems {
                     network.registerNetHandler(network::ENEMIES_DATA, std::make_unique<EnnemiesDataHandler>(componentManager, entityManager));
                 }
                 network.registerNetHandler(network::PLAYERS_DATA, std::make_unique<PlayerDataHandler>(componentManager, entityManager));
+            #ifdef RTYPE_IS_CLIENT
+                network.registerNetHandler(network::BONUS_SPAWN, std::make_unique<BonusHandler>(componentManager, entityManager));
+            #endif
                 auto timer = std::make_shared<asio::steady_timer>(network.getIoContext());
                 schedulePacketSending(entityManager, componentManager, network, timer);
                 network.start();
@@ -57,6 +65,7 @@ namespace rtype::systems {
         try {
             std::vector<models::PlayerData> playerDatas;
             std::vector<models::EnemyData> enemyDatas;
+            std::vector<models::BonusData> bonuses;
             bool inGame = false;
 
             //TODO: Maybe add a service or handle state differently to avoid loop like that in different part of the code
@@ -79,7 +88,13 @@ namespace rtype::systems {
                     const auto actualPlayer = componentManager.getComponent<components::ActualPlayer>(entity);
                     const auto health = componentManager.getComponent<components::Health>(entity);
                     const auto ai = componentManager.getComponent<components::IA>(entity);
+                    auto event = componentManager.getComponent<components::EventId>(entity);
+                    auto bonus = componentManager.getComponent<components::Bonus>(entity);
 
+                    if (IS_SERVER && pos && event && bonus) {
+                        models::BonusData bonusData = {{pos->x, pos->y}, event->value, bonus->type};
+                        bonuses.emplace_back(bonusData);
+                    }
                     if (vel && pos && size && netId && health) {
                         models::PlayerData pdata{*pos, *vel, *size, *netId, health->value};
                         models::EnemyData edata{*pos, *vel, *size, *netId, health->value};
@@ -113,9 +128,16 @@ namespace rtype::systems {
                             network.sendPacket(packetPlayersData, net->endpoint.value());
                         if (!enemyDatas.empty())
                             network.sendPacket(packetEnemyDatas, net->endpoint.value());
+                        if (IS_SERVER) {
+                            for (auto &bonus: bonuses) {
+                                network::PacketBonus packetBonus(bonus.bonusType, bonus.pos, bonus.eventId);
+                                network.sendPacket(packetBonus, net->endpoint.value());
+                                spdlog::debug("sending bonus");
+                            }
                         }
                     }
                 }
+            }
             timer->expires_after(std::chrono::milliseconds(16));
             timer->async_wait([&entityManager, &componentManager, &network, timer](const asio::error_code& ec) {
                 if (!ec) {

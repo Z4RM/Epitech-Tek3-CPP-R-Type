@@ -42,6 +42,7 @@ namespace rtype::levels {
         std::vector<models::SpawnPoint> _spawns {}; ///< spawns of the level stored
         std::chrono::time_point<std::chrono::steady_clock> _start; ///< start clock of the level
 
+
         /** @brief Used to know of a current level have ended
          * @param entityManager entityManager of the game
          * @param componentManager componentManager of the game

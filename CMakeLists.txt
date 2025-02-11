@@ -109,6 +109,14 @@ set(RTYPE_SRC
         src/RType/Services/EnemyService/EnemyService.hpp
         src/Network/Packets/Descriptors/PacketLevelsRegistered/PacketLevelsRegistered.cpp
         src/Network/Packets/Descriptors/PacketLevelsRegistered/PacketLevelsRegistered.hpp
+        src/RType/Models/EBonusType.hpp
+        src/RType/Components/Shared/Bonus.hpp
+        src/RType/Services/BonusService/BonusService.cpp
+        src/RType/Services/BonusService/BonusService.hpp
+        src/Network/Packets/Descriptors/PacketBonus/PacketBonus.cpp
+        src/Network/Packets/Descriptors/PacketBonus/PacketBonus.hpp
+        src/RType/Components/Shared/EventId.hpp
+        src/RType/Models/BonusData.hpp
 )
 
 set(CLIENT_SRC
@@ -152,6 +160,8 @@ set(CLIENT_SRC
         src/RType/Components/Shared/NoDamageToPlayer.hpp
         src/RType/TextureManager/TextureManager.cpp
         src/RType/TextureManager/TextureManager.hpp
+        src/RType/Systems/Network/handlers/BonusHandler/BonusHandler.cpp
+        src/RType/Systems/Network/handlers/BonusHandler/BonusHandler.hpp
 )
 
 

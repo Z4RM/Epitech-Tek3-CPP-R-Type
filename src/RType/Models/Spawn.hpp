@@ -11,6 +11,8 @@
 #include "./EEnemyType.hpp"
 #include <nlohmann/json.hpp>
 
+#include "EBonusType.hpp"
+
 namespace rtype::models {
     struct EnemySpawn {
         int quantity;
@@ -20,6 +22,7 @@ namespace rtype::models {
     struct SpawnPoint {
         int time;
         std::vector<EnemySpawn> enemies;
+        std::vector<EBonusType> bonuses = {};
         bool spawned = false;
     };
 }

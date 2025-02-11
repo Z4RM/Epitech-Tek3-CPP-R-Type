@@ -13,7 +13,10 @@
 
 #include "LevelManager.hpp"
 #include "ECS/Scene/SceneManager.hpp"
+#include "Network/Packets/Descriptors/PacketBonus/PacketBonus.hpp"
 #include "Network/TCPNetwork/TCPNetwork.hpp"
+#include "RType/Components/Shared/EventId.hpp"
+#include "RType/Services/BonusService/BonusService.hpp"
 #include "RType/Services/EnemyService/EnemyService.hpp"
 #include "RType/Systems/Network/Network.hpp"
 
@@ -98,6 +101,15 @@ namespace rtype::levels {
                         const auto y = static_cast<float>(dis(gen));
                         services::EnemyService::createEnemy(entityManager, componentManager, {800, y, 0});
                     }
+                }
+
+                for (models::EBonusType bonus : spawn.bonuses) {
+                    const auto y = static_cast<float>(dis(gen));
+                    const auto x = static_cast<float>(dis(gen));
+
+
+                    components::globalEventId.store(components::globalEventId.load() + 1);
+                    services::BonusService::createBonus(entityManager, componentManager, bonus, {x, y, 0}, components::globalEventId.load());
                 }
                 spawn.spawned = true;
             }

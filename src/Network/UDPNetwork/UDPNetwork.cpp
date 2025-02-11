@@ -79,12 +79,6 @@ namespace rtype::network {
         try {
             std::unique_ptr<IPacket> packet = PacketFactory::fromBuffer(buffer);
             std::string codeStr = std::to_string(packet->getCode());
-            for (auto& handler : _handlers) {
-                if (handler.first == packet->getCode()) {
-                    handler.second(std::move(packet), endpoint);
-                    return;
-                }
-            }
 
             auto it = this->_netHandlers.find(packet->getCode());
             if (it != this->_netHandlers.end()) {
@@ -111,11 +105,6 @@ namespace rtype::network {
                 std::string codeStr = std::to_string(code);
             }
         });
-    }
-
-    void UDPNetwork::addHandler(EPacketCode code, std::function<void(std::unique_ptr<IPacket>, asio::ip::udp::endpoint endpoint)>
-    handler) {
-        this->_handlers.push_back({code, handler});
     }
 
     void UDPNetwork::setStop(bool state) {

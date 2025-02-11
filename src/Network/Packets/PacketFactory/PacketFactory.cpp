@@ -9,6 +9,7 @@
 
 #include <Network/Packets/EPacketCode.hpp>
 
+#include "Network/Packets/Descriptors/PacketBonus/PacketBonus.hpp"
 #include "Network/Packets/Descriptors/PacketConnect/PacketConnect.hpp"
 #include "Network/Packets/Descriptors/PacketEnemiesData/PacketEnemiesData.hpp"
 #include "Network/Packets/Descriptors/PacketLevelsRegistered/PacketLevelsRegistered.hpp"
@@ -52,6 +53,9 @@ namespace rtype::network {
                 break;
             case END_GAME:
                 packet = std::make_unique<PacketEndGame>();
+                break;
+            case BONUS_SPAWN:
+                packet = std::make_unique<PacketBonus>();
                 break;
             default:
                 throw PacketFactoryException();

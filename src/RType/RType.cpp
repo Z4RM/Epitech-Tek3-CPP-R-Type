@@ -90,17 +90,25 @@ void rtype::RType::stopServer() {
                         for (auto &spawn : jsonData["spawns"]) {
                             models::SpawnPoint spawnPoint;
 
-                            if (spawn.contains("time") && spawn.contains("enemies")) {
+                            if (spawn.contains("time")) {
                                 int time = spawn["time"].get<int>();
 
                                 spawnPoint.time = time;
-                                for (auto &enemySpawn : spawn["enemies"]) {
-                                    if (enemySpawn.contains("quantity") && enemySpawn.contains("type")) {
-                                        int quantity = enemySpawn["quantity"].get<int>();
-                                        auto type = static_cast<models::EEnemyType>(enemySpawn["type"].get<int>());
-                                        models::EnemySpawn enemy = {quantity, type};
+                                if (spawn.contains("enemies")) {
+                                    for (auto &enemySpawn : spawn["enemies"]) {
+                                        if (enemySpawn.contains("quantity") && enemySpawn.contains("type")) {
+                                            int quantity = enemySpawn["quantity"].get<int>();
+                                            auto type = static_cast<models::EEnemyType>(enemySpawn["type"].get<int>());
+                                            models::EnemySpawn enemy = {quantity, type};
 
-                                        spawnPoint.enemies.emplace_back(enemy);
+                                            spawnPoint.enemies.emplace_back(enemy);
+                                        }
+                                    }
+                                }
+                                if (spawn.contains("bonuses")) {
+                                    for (auto &bonus : spawn["bonuses"]) {
+                                        auto bonusType = static_cast<models::EBonusType>(bonus.get<int>());
+                                        spawnPoint.bonuses.emplace_back(bonusType);
                                     }
                                 }
                             }
@@ -151,6 +159,8 @@ int rtype::RType::run() {
     TextureManager::getInstance().registerTexture("player3", "assets/sprites/players.gif", {0, 37, 32, 14});
     TextureManager::getInstance().registerTexture("player4", "assets/sprites/players.gif", {0, 54, 32, 14});
     TextureManager::getInstance().registerTexture("enemy", "assets/sprites/enemy.gif", {0, 0, 33, 36});
+    TextureManager::getInstance().registerTexture("projectile", "assets/sprites/projectile/player-shots.gif");
+    TextureManager::getInstance().registerTexture("super_projectile", "assets/sprites/projectile/player-shots-charged.gif");
 
     systemManager.addSystem(rtype::systems::RenderWindowSys::render);
     systemManager.addSystem(rtype::systems::UpdateProjectilesSystem::updateProjectiles);

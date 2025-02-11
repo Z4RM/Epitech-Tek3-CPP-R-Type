@@ -7,11 +7,13 @@
 
 #include "ProjectileService.hpp"
 #include "Components.hpp"
+#include "RType/TextureManager/TextureManager.hpp"
 
 namespace rtype::services {
     void ProjectileService::createProjectile(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager,
     std::shared_ptr<components::Position> shooterPos, bool isSuperProjectile) {
         const auto projectileSpritePath = isSuperProjectile ? "assets/sprites/projectile/player-shots-charged.gif" : "assets/sprites/projectile/player-shots.gif";
+        std::string projectileTextureKey = isSuperProjectile ? "super_projectile" : "projectile";
         const float projectileVelX = isSuperProjectile ? 0.25 : 2.0;
         const int projectileDamage = isSuperProjectile ? 35 : 20;
         size_t projectileId = entityManager.createEntity();
@@ -40,10 +42,8 @@ namespace rtype::services {
             projectileSpritePath,
             {1},
             {1.0, 1.0},
-            std::make_shared<sf::Texture>(),
-            std::make_shared<sf::Sprite>()
         };
-        projectileSprite.texture->loadFromFile(projectileSprite.path);
+        projectileSprite.texture = TextureManager::getInstance().getTexture(projectileTextureKey);
         projectileSprite.sprite->setTexture(*projectileSprite.texture);
         sf::IntRect textureRect(82, 165, 82, 18);
         projectileSprite.sprite->setTextureRect(textureRect);

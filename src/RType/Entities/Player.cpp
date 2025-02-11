@@ -184,6 +184,7 @@ rtype::entities::Player::Player(
 bool rtype::entities::Player::shoot(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager, size_t id,
 std::chrono::steady_clock::time_point &clock, bool isSuperProjectile) {
     const auto cooldown = isSuperProjectile ? 1.5 : 0.2;
+    std::string projectileTextureKey = isSuperProjectile ? "super_projectile" : "projectile";
     const auto projectileSpritePath = isSuperProjectile ? "assets/sprites/projectile/player-shots-charged.gif" : "assets/sprites/projectile/player-shots.gif";
     const int projectileDamage = isSuperProjectile ? 35 : 20;
     auto now = std::chrono::steady_clock::now();
@@ -213,7 +214,7 @@ std::chrono::steady_clock::time_point &clock, bool isSuperProjectile) {
         std::make_shared<sf::Texture>(),
         std::make_shared<sf::Sprite>()
     };
-    projectileSprite.texture->loadFromFile(projectileSprite.path);
+    projectileSprite.texture = TextureManager::getInstance().getTexture(projectileTextureKey);
     projectileSprite.sprite->setTexture(*projectileSprite.texture);
     sf::IntRect textureRect(82, 165, 82, 18);
     projectileSprite.sprite->setTextureRect(textureRect);
