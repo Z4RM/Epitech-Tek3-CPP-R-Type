@@ -5,12 +5,16 @@
 ** Player.hpp
 */
 
+#include "Systems.hpp"
 #include "RType/ModeManager/ModeManager.hpp"
 #include "Player.hpp"
 
 #include "RType/Components/Shared/EventId.hpp"
 #include "RType/Config/Config.hpp"
 #include "RType/Services/ProjectileService/ProjectileService.hpp"
+#include "RType/Config/Config.hpp"
+#include "Player.hpp"
+
 
 #ifdef RTYPE_IS_CLIENT
 #include "RType/TextureManager/TextureManager.hpp"
@@ -179,8 +183,13 @@ rtype::entities::Player::Player(
     componentManager.addComponent<components::InputHandler>(id, _inputs, entityManager);
 }
 
-bool rtype::entities::Player::shoot(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager, size_t id,
-std::chrono::steady_clock::time_point &clock, bool isSuperProjectile) {
+bool rtype::entities::Player::shoot(
+        ecs::EntityManager &entityManager,
+        ecs::ComponentManager &componentManager,
+        size_t id,
+        std::chrono::steady_clock::time_point &clock,
+        bool isSuperProjectile
+) {
     const auto cooldown = isSuperProjectile ? 1.5 : 0.2;
     auto now = std::chrono::steady_clock::now();
     std::chrono::duration<double> elapsed = now - clock;
@@ -197,6 +206,7 @@ std::chrono::steady_clock::time_point &clock, bool isSuperProjectile) {
     components::globalEventId.store(components::globalEventId.load() + 1);
     components::EventId event = {components::globalEventId.load(), netId->id};
     services::ProjectileService::createProjectile(entityManager, componentManager, playerPos, isSuperProjectile, event);
+    //systems::Sound::createEffect("assets/sounds/effects/shoot.wav", componentManager, projectileId);
     return true;
 }
 

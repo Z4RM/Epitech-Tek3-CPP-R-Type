@@ -15,9 +15,11 @@
 #include "RType/Entities/PlayerCounter.hpp"
 
 #ifdef RTYPE_IS_CLIENT
+
 #include "RType/Entities/Button.hpp"
 #include "RType/Entities/Image.hpp"
 #include "RType/Components/Client/OnClick.hpp"
+#include "Systems.hpp"
 
 void rtype::scenes::Lose::load() {
     components::Sprite lose;
@@ -35,7 +37,7 @@ void rtype::scenes::Lose::load() {
     entities::Image backgroundImage(this->_componentManager, this->_entityManager, bg, true);
 
     components::OnClick onClick;
-    onClick.fn = [this]() {
+    onClick.fn = []() {
         ecs::SceneManager::getInstance().changeScene(0, true);
     };
 
@@ -47,9 +49,11 @@ void rtype::scenes::Lose::load() {
     this->registerEntity(loseImage);
 
     unsigned int loseSateEntity = _entityManager.createEntity();
-    components::MenuState state = { 0 };
-
+    components::MenuState state = {0};
     _componentManager.addComponent<components::MenuState>(loseSateEntity, state, _entityManager);
+
+    systems::Sound::createEffect("assets/sounds/effects/loser.mp3", _componentManager, loseSateEntity);
+
     AScene::load();
 }
 

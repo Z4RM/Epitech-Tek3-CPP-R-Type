@@ -25,6 +25,9 @@ bool rtype::Config::_valid = true;
 rtype::Config::Config(const std::string &filename) : _reader(filename) {
     _setLogLevel();
     _initializeNetwork();
+#ifdef RTYPE_IS_CLIENT
+    _initializeSounds();
+#endif
 }
 
 void rtype::Config::_setLogLevel() {
@@ -62,6 +65,22 @@ rtype::Config::Network rtype::Config::getNetwork() const {
 }
 
 #ifdef RTYPE_IS_CLIENT
+void rtype::Config::_initializeSounds() {
+    try {
+        _sounds.volumes.effects = std::stof(_reader.GetString("sounds", "effects_volume", "50"));
+        _sounds.volumes.music = std::stof(_reader.GetString("sounds", "music_volume", "10"));
+    } catch (const std::invalid_argument &exception) {
+        spdlog::warn("Invalid volume value provided");
+    }
+    spdlog::info("{} {}", _sounds.volumes.effects, _sounds.volumes.music);
+}
+
+rtype::Config::Sounds rtype::Config::getSounds() const {
+    return _sounds;
+}
+#endif
+
+#ifdef RTYPE_IS_CLIENT
 sf::Keyboard::Key rtype::Config::getKeybinding(const std::string &key, sf::Keyboard::Key fallback) const {
     const auto keybinding = _reader.GetString("keybindings", key, "");
 
@@ -77,4 +96,5 @@ sf::Keyboard::Key rtype::Config::getKeybinding(const std::string &key, sf::Keybo
 
     return keys.at(keybinding);
 }
+
 #endif

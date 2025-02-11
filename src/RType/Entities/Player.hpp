@@ -25,7 +25,7 @@ namespace rtype::entities {
     class Player {
     public:
 #ifdef RTYPE_IS_CLIENT
-        bool shoot(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager, size_t id,
+        static bool shoot(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager, size_t id,
         std::chrono::steady_clock::time_point &clock, bool isSuperProjectile);
         std::chrono::steady_clock::time_point _elaspedShoot= std::chrono::steady_clock::now();
         double _shootCooldown = 0.8;

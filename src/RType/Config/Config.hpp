@@ -50,6 +50,28 @@ namespace rtype {
             } server;
         };
 
+        /**
+         * @brief Sound configuration keys.
+         *
+         * @see `config.ini.example`
+         */
+        struct Sounds {
+            /**
+             * @brief The sound volumes.
+             */
+            struct {
+                /**
+                 * @brief The volume of the sound effects.
+                 */
+                float effects = 50.0f;
+
+                /**
+                 * @brief The volume of the music.
+                 */
+                float music = 10.0f;
+            } volumes;
+        };
+
     public:
         /**
          * @brief Get the singleton instance of Config.
@@ -84,6 +106,10 @@ namespace rtype {
         [[nodiscard]] Network getNetwork() const;
 
         bool isDebug() { return isLogLevelDebug; }
+        /**
+         * @return The sounds configuration.
+         */
+        [[nodiscard]] Sounds getSounds() const;
 
 #ifdef RTYPE_IS_CLIENT
         /**
@@ -126,6 +152,13 @@ namespace rtype {
          */
         void _initializeNetwork();
 
+#ifdef RTYPE_IS_CLIENT
+        /**
+         * @brief Get, validate and store the sounds configuration values.
+         */
+        void _initializeSounds();
+#endif
+
         /*%
          * @var The INIReader where to get the configuration value from.
          */
@@ -149,8 +182,14 @@ namespace rtype {
          * @see Network
          */
         Network _network;
-
+      
         bool isLogLevelDebug = false;
+        /**
+         * @var The sounds configuration.
+         *
+         * @see Sounds
+         */
+        Sounds _sounds;
     };
 }
 

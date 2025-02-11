@@ -21,10 +21,6 @@
 #include "Scenes/Menu/Menu.hpp"
 #include "Scenes/Lose/Lose.hpp"
 #include "Scenes/Win/Win.hpp"
-#include "Systems/AnimationProjectile.hpp"
-#include "Systems/LevelRunner.hpp"
-#include "Systems/Network/Network.hpp"
-
 #ifdef RTYPE_IS_CLIENT
 #include "Entities/Window.hpp"
 #include "TextureManager/TextureManager.hpp"
@@ -165,6 +161,7 @@ int rtype::RType::run() {
     TextureManager::getInstance().registerTexture("boss_turret", "assets/sprites/boss_turret.gif", {1, 1, 592, 176});
 
     systemManager.addSystem(rtype::systems::RenderWindowSys::render);
+    systemManager.addSystem(rtype::systems::Sound::play);
     systemManager.addSystem(rtype::systems::UpdateProjectilesSystem::updateProjectiles);
 #else
     loadLevels();
