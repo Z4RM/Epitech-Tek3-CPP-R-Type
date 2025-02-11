@@ -38,7 +38,7 @@ namespace rtype::systems {
 
                 if (counter && counter->name == "level") {
                     counter->update(lowestLevel);
-                    _componentManager.addComponent<components::Counter>(entity, *counter);
+                    _componentManager.addComponent<components::Counter>(entity, *counter, _entityManager);
                     return;
                 }
             }

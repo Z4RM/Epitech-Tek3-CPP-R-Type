@@ -9,6 +9,7 @@
 
 #include <atomic>
 #include <string>
+#include <memory>
 
 #ifdef RTYPE_IS_CLIENT
 #include <optional>

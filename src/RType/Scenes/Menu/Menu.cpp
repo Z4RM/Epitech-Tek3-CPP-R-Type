@@ -48,7 +48,7 @@ void rtype::scenes::Menu::load() {
             auto gameState = _componentManager.getComponent<components::GameState>(entity);
             if (gameState) {
                 gameState->isStarted = true;
-                _componentManager.addComponent<components::GameState>(entity, *gameState);
+                _componentManager.addComponent<components::GameState>(entity, *gameState, _entityManager);
                 break;
             }
         }
@@ -78,7 +78,7 @@ void rtype::scenes::Menu::load() {
     unsigned int levelSelectorEntity = _entityManager.createEntity();
     std::string levelCounterName = "level";
     components::Counter count(1, 8, levelCounterName, {260, 475}, 35, false);
-    _componentManager.addComponent<components::Counter>(levelSelectorEntity, count);
+    _componentManager.addComponent<components::Counter>(levelSelectorEntity, count, _entityManager);
 
 
     components::OnClick changeLevel;
@@ -99,7 +99,7 @@ void rtype::scenes::Menu::load() {
                         }
                     }
                 }
-                _componentManager.addComponent<components::Counter>(entity, *counter);
+                _componentManager.addComponent<components::Counter>(entity, *counter, _entityManager);
             }
         }
     };
@@ -110,7 +110,7 @@ void rtype::scenes::Menu::load() {
     this->registerEntity(menuSateEntity);
     this->registerEntity(changeLevelButton);
 
-    _componentManager.addComponent<components::MenuState>(menuSateEntity, state);
+    _componentManager.addComponent<components::MenuState>(menuSateEntity, state, _entityManager);
 
     network::TCPNetwork &network = network::TCPNetwork::getInstance(Config::getInstance().getNetwork().server.port);
     if (network.getStarted()) {
@@ -125,7 +125,7 @@ void rtype::scenes::Menu::load() {
     unsigned int menuSateEntity = _entityManager.createEntity();
     components::MenuState state = { 0 };
 
-    _componentManager.addComponent<components::MenuState>(menuSateEntity, state);
+    _componentManager.addComponent<components::MenuState>(menuSateEntity, state, _entityManager);
 
     this->registerEntity(menuSateEntity);
 

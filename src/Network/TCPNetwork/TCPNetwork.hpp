@@ -75,7 +75,6 @@ namespace rtype::network {
             };
 
             void setStop(bool state);
-            bool getStop();
 
         private:
             unsigned short _port; ///< port of the server
@@ -87,9 +86,6 @@ namespace rtype::network {
             std::function<void(std::shared_ptr<asio::ip::tcp::socket>)> _onPlayerDisconnect;
 
             std::map<EPacketCode, std::unique_ptr<systems::INetworkHandler>> _netHandlers {};
-
-            std::mutex _stopMutex;
-            bool _stop = false;
     };
 
 }

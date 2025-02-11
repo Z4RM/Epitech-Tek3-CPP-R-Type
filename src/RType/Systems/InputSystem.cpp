@@ -25,7 +25,7 @@ void rtype::systems::InputSystem::handleInput(ecs::EntityManager &entityManager,
         if (text) {
             if (text->text.getGlobalBounds().contains(worldPos)) {
                 text->text.setFillColor(sf::Color::Red);
-                componentManager.addComponent<components::SfText>(entity, *text);
+                componentManager.addComponent<components::SfText>(entity, *text, entityManager);
                 if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
                     if (onClick) {
                         onClick->fn();
@@ -35,7 +35,7 @@ void rtype::systems::InputSystem::handleInput(ecs::EntityManager &entityManager,
                 sf::Color color = text->text.getFillColor();
                 if (color == sf::Color::Red) {
                     text->text.setFillColor(sf::Color::White);
-                    componentManager.addComponent<components::SfText>(entity, *text);
+                    componentManager.addComponent<components::SfText>(entity, *text, entityManager);
                 }
             }
         }

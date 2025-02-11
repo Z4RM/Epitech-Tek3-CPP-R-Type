@@ -34,13 +34,13 @@ namespace rtype::systems {
                             if (net->id == data.netId.id) {
                                 if (!netCo->endpoint.has_value()) {
                                     spdlog::info("New player in the game with network ID {}", net->id);
-                                    _componentManager.addComponent<components::NetworkConnection>(entity, {netCo->socket, endpoint});
+                                    _componentManager.addComponent<components::NetworkConnection>(entity, {netCo->socket, endpoint}, _entityManager);
                                 }
                                     //*pos = data.pos;
                                 *vel = data.vel;
                                 *size = data.size;
-                                _componentManager.addComponent<components::Velocity>(entity, *vel);
-                                _componentManager.addComponent<components::Size>(entity, *size);
+                                _componentManager.addComponent<components::Velocity>(entity, *vel, _entityManager);
+                                _componentManager.addComponent<components::Size>(entity, *size, _entityManager);
                             }
                         }
                     } else {
@@ -57,7 +57,7 @@ namespace rtype::systems {
                                     if (data.health != health->value) {
                                         health->setHealth(data.health);
                                         health->_elapsedDamage = std::chrono::steady_clock::now();
-                                        _componentManager.addComponent<components::Health>(entity, *health);
+                                        _componentManager.addComponent<components::Health>(entity, *health, _entityManager);
                                     }
                                 }
 
@@ -70,13 +70,13 @@ namespace rtype::systems {
                                     const float positionThreshold = 0.1f;
                                     if (distance > positionThreshold) {
                                         *localPos = data.pos;
-                                        _componentManager.addComponent<components::Position>(entity, *localPos);
+                                        _componentManager.addComponent<components::Position>(entity, *localPos, _entityManager);
                                     }
                                 }
 
                                 if (!actualPlayer->value) {
                                     *vel = data.vel;
-                                    _componentManager.addComponent<components::Velocity>(entity, *vel);
+                                    _componentManager.addComponent<components::Velocity>(entity, *vel, _entityManager);
                                 }
                                 break;
                             }
@@ -105,7 +105,8 @@ namespace rtype::systems {
                         }
                         if (isDead) {
                             spdlog::debug("Destroying disconnected player");
-                            _entityManager.destroyEntity(entity, _componentManager);
+                            _entityManager.destroyEntity(entity);
+                            _componentManager.removeAllComponent(entity);
                         }
                     }
                 }

@@ -33,18 +33,23 @@ namespace rtype::systems {
                 auto gameState = _componentManager.getComponent<components::GameState>(entity);
                 auto playerCount = _componentManager.getComponent<components::Counter>(entity);
                 auto window = _componentManager.getComponent<entities::RWindow>(entity);
+                auto run = _componentManager.getComponent<components::Running>(entity);
+
+                if (run)
+                    continue;
 
                 if (gameState) {
                     gameState->isStarted = false;
                     gameState->playerCount = 0;
-                    _componentManager.addComponent<components::GameState>(entity, *gameState);
+                    _componentManager.addComponent<components::GameState>(entity, *gameState, _entityManager);
                     continue;
                 }
 
                 if (window)
                     continue;
 
-                _entityManager.destroyEntity(entity, _componentManager);
+                _entityManager.destroyEntity(entity);
+                _componentManager.removeAllComponent(entity);
             }
             if (packetEndGame->isLose == true) {
                 ecs::SceneManager::getInstance().changeScene(2, true);

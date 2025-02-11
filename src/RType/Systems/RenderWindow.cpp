@@ -12,6 +12,7 @@
 
 #include "RType/Components/Client/SlidingBg.hpp"
 #include "RType/Components/Shared/Counter.hpp"
+#include "RType/Config/Config.hpp"
 
 void rtype::systems::RenderWindowSys::render(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager)
 {
@@ -32,7 +33,7 @@ void rtype::systems::RenderWindowSys::render(ecs::EntityManager &entityManager, 
                     auto component = componentManager.getComponent<components::Running>(entity);
                     if (component) {
                         component->running = false;
-                        componentManager.addComponent<components::Running>(entity, *component);
+                        componentManager.addComponent<components::Running>(entity, *component, entityManager);
                         break;
                     }
                 }
@@ -83,18 +84,23 @@ void rtype::systems::RenderWindowSys::render(ecs::EntityManager &entityManager, 
         for (auto e: entityManager.getEntities()) {
             auto text = componentManager.getComponent<components::SfText>(e);
             auto counter = componentManager.getComponent<components::Counter>(e);
+            auto hitbox = componentManager.getComponent<components::Hitbox>(e);
+
             if (text) {
                 renderWindow->window->draw(text->text);
             }
             if (counter && counter->text.has_value()) {
                 renderWindow->window->draw(counter->text->text);
             }
+            if (hitbox && Config::getInstance().isDebug()) {
+                renderWindow->window->draw(hitbox->rect);
+            }
         }
         renderWindow->window->display();
     }
 }
 
-void rtype::systems::RenderWindowSys::createWindow(const ecs::EntityManager& entityManager, ecs::ComponentManager& componentManager)
+void rtype::systems::RenderWindowSys::createWindow(ecs::EntityManager& entityManager, ecs::ComponentManager& componentManager)
 {
     for (const auto& entity : entityManager.getEntities()) {
         const auto renderWindow = componentManager.getComponent<rtype::entities::RWindow>(entity);
@@ -106,7 +112,7 @@ void rtype::systems::RenderWindowSys::createWindow(const ecs::EntityManager& ent
             renderWindow->window->create(mode->mode, title->s, mode->style.style);
             renderWindow->window->setFramerateLimit(mode->limit);
             created->isCreate = true;
-            componentManager.addComponent<components::Created>(entity, *created);
+            componentManager.addComponent<components::Created>(entity, *created, entityManager);
         }
     }
 }

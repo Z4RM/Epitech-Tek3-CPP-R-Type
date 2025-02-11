@@ -28,20 +28,22 @@ namespace rtype::levels {
             auto ai = componentManager.getComponent<components::IA>(entity);
 
             if (ai && isLose) {
-                entityManager.destroyEntity(entity, componentManager);
+                entityManager.destroyEntity(entity);
+                componentManager.removeAllComponent(entity);
             }
 
             if (menuState) {
                 menuState->playerCount = 0;
-                componentManager.addComponent<components::MenuState>(entity, *menuState);
+                componentManager.addComponent<components::MenuState>(entity, *menuState, entityManager);
             }
 
             if (gameState) {
-                componentManager.addComponent(entity, components::GameState{0, 0});
+                componentManager.addComponent(entity, components::GameState{0, 0}, entityManager);
             }
             if (netCo) {
                 network::TCPNetwork::getInstance().sendPacket(network::PacketEndGame(isLose), netCo->socket);
-                entityManager.destroyEntity(entity, componentManager);
+                entityManager.destroyEntity(entity);
+                componentManager.removeAllComponent(entity);
             }
         }
         for (auto &spawn : this->_spawns) {

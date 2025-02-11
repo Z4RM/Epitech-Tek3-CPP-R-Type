@@ -49,7 +49,7 @@ void rtype::scenes::Lose::load() {
     unsigned int loseSateEntity = _entityManager.createEntity();
     components::MenuState state = { 0 };
 
-    _componentManager.addComponent<components::MenuState>(loseSateEntity, state);
+    _componentManager.addComponent<components::MenuState>(loseSateEntity, state, _entityManager);
     AScene::load();
 }
 
@@ -58,7 +58,7 @@ void rtype::scenes::Lose::load() {
     unsigned int loseSateEntity = _entityManager.createEntity();
     components::MenuState state = { 0 };
 
-    _componentManager.addComponent<components::MenuState>(loseSateEntity, state);
+    _componentManager.addComponent<components::MenuState>(loseSateEntity, state, _entityManager);
 
     this->registerEntity(loseSateEntity);
     AScene::load();

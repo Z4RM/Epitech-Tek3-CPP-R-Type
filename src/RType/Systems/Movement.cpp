@@ -21,10 +21,25 @@ float rtype::systems::Movement::getDistanceBetweenPositions(const rtype::compone
 
 bool rtype::systems::Movement::isColliding(components::Position *pos, components::Hitbox *hitBox,
                                            components::Position *colliderPos, components::Hitbox *colliderHitBox) {
-    const auto distanceToCollider = getDistanceBetweenPositions(pos, colliderPos);
-    const auto combinedWidth = (hitBox->size.width + colliderHitBox->size.width) / 2.0f;
-    const auto combinedHeight = (hitBox->size.height + colliderHitBox->size.height) / 2.0f;
-    return distanceToCollider <= combinedWidth || distanceToCollider <= combinedHeight;
+    float halfWidthA = hitBox->size.width / 2.0f;
+    float halfHeightA = hitBox->size.height / 2.0f;
+    float halfWidthB = colliderHitBox->size.width / 2.0f;
+    float halfHeightB = colliderHitBox->size.height / 2.0f;
+
+    float leftA = pos->x - halfWidthA;
+    float rightA = pos->x + halfWidthA;
+    float topA = pos->y - halfHeightA;
+    float bottomA = pos->y + halfHeightA;
+
+    float leftB = colliderPos->x - halfWidthB;
+    float rightB = colliderPos->x + halfWidthB;
+    float topB = colliderPos->y - halfHeightB;
+    float bottomB = colliderPos->y + halfHeightB;
+
+    bool xOverlap = (leftA < rightB) && (rightA > leftB);
+    bool yOverlap = (topA < bottomB) && (bottomA > topB);
+
+    return xOverlap && yOverlap;
 }
 
 void rtype::systems::Movement::handleCollisions(unsigned int entity, components::Position *pos, components::Hitbox *hitBox,
@@ -61,13 +76,16 @@ void rtype::systems::Movement::handleCollisions(unsigned int entity, components:
                 if (elapsed.count() > 0.8 || (peaceful && ai1)) {
                     entityHealthBar->takeDamage(colliderDamage->collisionDamage);
                     entityHealthBar->_elapsedDamage = now;
-                    componentManager.addComponent<components::Health>(entity, *entityHealthBar);
+                    componentManager.addComponent<components::Health>(entity, *entityHealthBar, entityManager);
                     if (entityHealthBar->value <= 0) {
-                        if (!player)
-                            entityManager.destroyEntity(entity, componentManager);
+                        if (!player) {
+                            entityManager.destroyEntity(entity);
+                            componentManager.removeAllComponent(entity);
+                        }
                     }
                     if (peaceful && ai1) {
-                        entityManager.destroyEntity(collisionEntity, componentManager);
+                        entityManager.destroyEntity(collisionEntity);
+                        componentManager.removeAllComponent(collisionEntity);
                     }
                 }
             }
@@ -113,23 +131,15 @@ void rtype::systems::Movement::move(rtype::ecs::EntityManager& entityManager,
 
             if (peaceful) {
                 if (pos->x > 800 || pos->x < 0 || pos->y < 0 || pos->y > 600) {
-                    entityManager.destroyEntity(entity, componentManager);
+                    entityManager.destroyEntity(entity);
+                    componentManager.removeAllComponent(entity);
                     continue;
                 }
             }
 
             if (pos->x < 780 && pos->x > 0 && pos->y > 0 && pos->y < 580) {
-                componentManager.addComponent<components::Position>(entity, *pos);
+                componentManager.addComponent<components::Position>(entity, *pos, entityManager);
             }
-
-        #ifdef RTYPE_IS_CLIENT
-            if (health && hitBox && !peaceful) {
-                health->bgBar.setPosition({pos->x + hitBox->size.width / 5, pos->y});
-                health->healthBar.setPosition({pos->x + hitBox->size.width / 5, pos->y});
-                componentManager.addComponent<components::Health>(entity, *health);
-            }
-        #endif
-
         }
 
         const auto ia = componentManager.getComponent<components::IA>(entity);
@@ -157,19 +167,23 @@ void rtype::systems::Movement::move(rtype::ecs::EntityManager& entityManager,
             pos2->z += newPosZ;
 
             if (IS_SERVER && (pos2->x > 900 || pos2->x < -50 || pos2->y < -50 || pos2->y > 800)) {
-                entityManager.destroyEntity(entity, componentManager);
+                entityManager.destroyEntity(entity);
+                componentManager.removeAllComponent(entity);
                 return;
             }
 
-            componentManager.addComponent<components::Position>(entity, *pos2);
-        #ifdef RTYPE_IS_CLIENT
-            if (health && hitBox) {
-                health->bgBar.setPosition({pos2->x + hitBox->size.width / 5, pos2->y});
-                health->healthBar.setPosition({pos2->x + hitBox->size.width / 5, pos2->y});
-                componentManager.addComponent<components::Health>(entity, *health);
-            }
-        #endif
-
+            componentManager.addComponent<components::Position>(entity, *pos2, entityManager);
         }
+#ifdef RTYPE_IS_CLIENT
+        if (hitBox) {
+            hitBox->rect.setPosition({pos->x, pos->y});
+            componentManager.addComponent<components::Hitbox>(entity, *hitBox, entityManager);
+        }
+        if (health && pos2) {
+            health->bgBar.setPosition({pos2->x - 25, pos2->y - 20});
+            health->healthBar.setPosition({pos2->x - 25, pos2->y - 20});
+            componentManager.addComponent<components::Health>(entity, *health, entityManager);
+        }
+#endif
     }
 }

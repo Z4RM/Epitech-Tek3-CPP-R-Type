@@ -13,7 +13,7 @@ namespace rtype::entities {
     Button::Button(ecs::ComponentManager &componentManager, ecs::EntityManager &entityManager, components::OnClick onClick,
     components::SfText text) :
     AEntity(entityManager) {
-        componentManager.addComponent<components::OnClick>(_id, onClick);
-        componentManager.addComponent<components::SfText>(_id, text);
+        componentManager.addComponent<components::OnClick>(_id, onClick, entityManager);
+        componentManager.addComponent<components::SfText>(_id, text, entityManager);
     }
 }

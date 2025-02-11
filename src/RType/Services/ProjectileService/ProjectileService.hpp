@@ -8,6 +8,7 @@
 #pragma once
 #include <RType/Components/Shared/Position.hpp>
 
+#include "ECS/ComponentManager.hpp"
 #include "ECS/EntityManager.hpp"
 
 namespace rtype::services {

@@ -50,7 +50,7 @@ void rtype::scenes::Win::load() {
     unsigned int winSateEntity = _entityManager.createEntity();
     components::MenuState state = { 0 };
 
-    _componentManager.addComponent<components::MenuState>(winSateEntity, state);
+    _componentManager.addComponent<components::MenuState>(winSateEntity, state, _entityManager);
     AScene::load();
 }
 
@@ -59,7 +59,7 @@ void rtype::scenes::Win::load() {
     unsigned int winSateEntity = _entityManager.createEntity();
     components::MenuState state = { 0 };
 
-    _componentManager.addComponent<components::MenuState>(winSateEntity, state);
+    _componentManager.addComponent<components::MenuState>(winSateEntity, state, _entityManager);
 
     this->registerEntity(winSateEntity);
     AScene::load();

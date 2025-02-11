@@ -83,6 +83,8 @@ namespace rtype {
          */
         [[nodiscard]] Network getNetwork() const;
 
+        bool isDebug() { return isLogLevelDebug; }
+
 #ifdef RTYPE_IS_CLIENT
         /**
          * @brief Get the keybinding from the configuration file.
@@ -147,6 +149,8 @@ namespace rtype {
          * @see Network
          */
         Network _network;
+
+        bool isLogLevelDebug = false;
     };
 }
 

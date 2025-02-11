@@ -34,7 +34,6 @@
 namespace rtype::systems {
     std::atomic<int> Network::globalNetId = 0;
 
-    //TODO: check why this udp running entity is needed for closing correctly the client when the window close
     void Network::udpProcess(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager) {
         network::UDPNetwork &network = network::UDPNetwork::getInstance(Config::getInstance().getNetwork().server.port);
 
@@ -147,14 +146,15 @@ namespace rtype::systems {
                             if (menuState) {
                                 menuState->playerCount -= 1;
                                 newCount = menuState->playerCount;
-                                componentManager.addComponent<components::MenuState>(entity, *menuState);
+                                componentManager.addComponent<components::MenuState>(entity, *menuState, entityManager);
                                 stateUpdated = true;
                                 if (playerDestroyed)
                                     break;
                             }
 
                             if (netCo && netCo->socket == socket) {
-                                entityManager.destroyEntity(entity, componentManager);
+                                entityManager.destroyEntity(entity);
+                                componentManager.removeAllComponent(entity);
                                 playerDestroyed = true;
                                 spdlog::info("Player destroyed");
                                 if (stateUpdated)

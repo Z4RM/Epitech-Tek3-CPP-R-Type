@@ -129,7 +129,7 @@ int rtype::RType::run() {
 
     size_t rtype = entityManager.createEntity();
 
-    componentManager.addComponent<components::Running>(rtype, {true});
+    componentManager.addComponent<components::Running>(rtype, {true}, entityManager);
 
 #ifdef RTYPE_IS_CLIENT
     systemManager.addSystem(rtype::systems::RenderWindowSys::createWindow);

@@ -38,9 +38,9 @@ namespace rtype::entities {
 
         if (isSlide) {
             components::SlidingBg slide;
-            componentManager.addComponent<components::SlidingBg>(_id, slide);
+            componentManager.addComponent<components::SlidingBg>(_id, slide, entityManager);
         }
 
-        componentManager.addComponent<components::Sprite>(_id, sprite);
+        componentManager.addComponent<components::Sprite>(_id, sprite, entityManager);
     };
 }

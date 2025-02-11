@@ -24,7 +24,7 @@ namespace rtype::systems {
                 auto gameState = _componentManager.getComponent<components::GameState>(entity);
                 if (gameState) {
                     gameState->isStarted = true;
-                    _componentManager.addComponent<components::GameState>(entity, *gameState);
+                    _componentManager.addComponent<components::GameState>(entity, *gameState, _entityManager);
                 }
             }
         #ifdef RTYPE_IS_CLIENT

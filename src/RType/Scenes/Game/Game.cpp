@@ -7,8 +7,6 @@
 
 #include "Game.hpp"
 
-#include "RType/Components/Client/SlidingBg.hpp"
-
 #ifdef RTYPE_IS_CLIENT
 
 #include "Components.hpp"

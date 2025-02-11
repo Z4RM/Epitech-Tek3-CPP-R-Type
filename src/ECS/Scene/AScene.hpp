@@ -21,7 +21,8 @@ namespace rtype::ecs {
 
         void unload() final {
             for (const auto &entity : _entities) {
-                _entityManager.destroyEntity(entity, this->_componentManager);
+                _entityManager.destroyEntity(entity);
+                _componentManager.removeAllComponent(entity);
             }
             this->_loaded = false;
         };
