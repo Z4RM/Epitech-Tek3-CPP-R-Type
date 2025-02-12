@@ -17,6 +17,8 @@ namespace rtype::models {
         PABLITOS = 6,
         BOSS_HEART = 7,
         BOSS_STAROS = 8,
-        BOSS_ALIEN = 9
+        BOSS_ALIEN = 9,
+        BOSS_CASK = 10,
+        BOSS_ROBOT = 11
     };
 }

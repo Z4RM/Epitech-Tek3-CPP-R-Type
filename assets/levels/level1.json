@@ -10,7 +10,7 @@
       ],
       "enemies": [
         {
-          "type": 9,
+          "type": 11,
           "quantity": 1
         }
       ]

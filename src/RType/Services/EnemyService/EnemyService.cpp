@@ -11,7 +11,9 @@
 
 #include "RType/Components/Server/AiShoot.hpp"
 #include "RType/Entities/BossAlien.hpp"
+#include "RType/Entities/BossCask.hpp"
 #include "RType/Entities/BossHeart.hpp"
+#include "RType/Entities/BossRobot.hpp"
 #include "RType/Entities/BossStaros.hpp"
 #include "RType/Entities/BossTurret.hpp"
 #include "RType/Entities/EnemyCornus.hpp"
@@ -64,6 +66,14 @@ namespace rtype::services {
         }
         if (type == models::BOSS_ALIEN) {
             entities::BossAlien alien(componentManager, entityManager, pos, {currentNetId});
+            return;
+        }
+        if (type == models::BOSS_CASK) {
+            entities::BossCask cask(componentManager, entityManager, pos, {currentNetId});
+            return;
+        }
+        if (type == models::BOSS_ROBOT) {
+            entities::BossRobot robot(componentManager, entityManager, pos, {currentNetId});
             return;
         }
 #ifdef RTYPE_IS_CLIENT

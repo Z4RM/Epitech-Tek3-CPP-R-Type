@@ -300,7 +300,12 @@ void rtype::systems::Movement::move(rtype::ecs::EntityManager& entityManager,
                 }
 
                 if (pos->y > 10 && pos->y < 560 && !parentEntity) {
-                    componentManager.addComponent<components::Position>(entity, *pos, entityManager);
+                    if (ia->type == models::BOSS_CASK || ia->type == models::BOSS_ALIEN || ia->type == models::BOSS_TURRET || ia->type ==
+                     models::BOSS_STAROS || ia->type == models::BOSS_HEART || models::BOSS_ROBOT) {
+                        if (pos->x > 0 && pos->x < 800)
+                            componentManager.addComponent<components::Position>(entity, *pos, entityManager);
+                    } else
+                        componentManager.addComponent<components::Position>(entity, *pos, entityManager);
                 } else if (parentEntity) {
                     componentManager.addComponent<components::Position>(entity, *pos, entityManager);
                 }
