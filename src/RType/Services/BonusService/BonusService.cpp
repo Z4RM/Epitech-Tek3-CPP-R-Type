@@ -24,6 +24,15 @@ namespace rtype::services {
     models::EBonusType type, components::Position pos, long eventId) {
         unsigned int entityId = entityManager.createEntity();
 
+        components::Size size {};
+
+        if (type == models::FORCE) {
+            size.width = 32.0;
+            size.height = 20.0;
+        } else {
+            size.width = 40;
+            size.height = 34;
+        }
         components::Bonus bonus = { type };
         components::EventId event = { eventId };
         componentManager.addComponent<components::Bonus>(entityId, bonus, entityManager);
@@ -37,24 +46,27 @@ namespace rtype::services {
         sf::RectangleShape hitboxRect;
 
         hitboxRect.setPosition(pos.x, pos.y);
-        hitboxRect.setOrigin(32.f / 2, 20.f / 2);
-        hitboxRect.setSize({32.0f, 20.0f});
+        hitboxRect.setOrigin(size.width / 2, size.height / 2);
+        hitboxRect.setSize({size.width, size.height});
         hitboxRect.setOutlineColor(sf::Color::Green);
         hitboxRect.setOutlineThickness(2.f);
         hitboxRect.setFillColor(sf::Color::Transparent);
-        componentManager.addComponent<components::Hitbox>(entityId, {pos, {32.0f, 20.0f}, hitboxRect}, entityManager);
+        componentManager.addComponent<components::Hitbox>(entityId, {pos, {size.width, size.height}, hitboxRect}, entityManager);
         components::Sprite bonusSprite = {
             pos,
-            {82.0f, 18.0f},
+            {size.width, size.height},
             "assets/sprites/force.gif",
             {1},
             {1.0, 1.0},
             std::make_shared<sf::Texture>(),
             std::make_shared<sf::Sprite>()
         };
-        bonusSprite.texture = TextureManager::getInstance().getTexture("force");
+        if (type == models::FORCE)
+            bonusSprite.texture = TextureManager::getInstance().getTexture("force");
+        else
+            bonusSprite.texture = TextureManager::getInstance().getTexture("shield");
         bonusSprite.sprite->setTexture(*bonusSprite.texture, false);
-        sf::Vector2f spriteSize(32.f, 20.f);
+        sf::Vector2f spriteSize(size.width, size.height);
         bonusSprite.sprite->setOrigin(spriteSize.x / 2, spriteSize.y / 2);
         bonusSprite.sprite->setPosition({pos.x, pos.y});
         componentManager.addComponent<components::Sprite>(entityId, bonusSprite, entityManager);

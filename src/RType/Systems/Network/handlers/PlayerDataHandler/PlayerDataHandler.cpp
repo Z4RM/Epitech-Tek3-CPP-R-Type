@@ -67,6 +67,8 @@ namespace rtype::systems {
                                     if (newBonuses.bonuses.find(bonus) == newBonuses.bonuses.end()) {
                                         newBonuses.bonuses[bonus] = sf::Sprite();
                                         auto texture = TextureManager::getInstance().getTexture("force");
+                                        if (bonus == models::SHIELD)
+                                            texture = TextureManager::getInstance().getTexture("shield");
                                         newBonuses.bonuses[bonus].setTexture(*texture);
                                         newBonuses.bonuses[bonus].setPosition({data.pos.x, data.pos.y});
                                         newBonuses.bonuses[bonus].setOrigin(texture->getSize().x / 2, texture->getSize().y / 2);

@@ -4,6 +4,10 @@
   "spawns":[
     {
       "time": 5,
+      "bonuses": [
+        2,
+        1
+      ],
       "enemies": [
         {
           "type": 7,

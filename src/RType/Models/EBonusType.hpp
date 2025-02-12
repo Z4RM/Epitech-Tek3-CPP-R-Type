@@ -10,5 +10,6 @@
 namespace rtype::models {
     enum EBonusType {
         FORCE = 1,
+        SHIELD = 2
     };
 }

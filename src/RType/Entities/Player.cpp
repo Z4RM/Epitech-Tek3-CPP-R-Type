@@ -15,6 +15,8 @@
 #include "RType/Config/Config.hpp"
 #include "Player.hpp"
 
+#include "RType/Components/Shared/PlayerBonuses.hpp"
+
 
 #ifdef RTYPE_IS_CLIENT
 #include "RType/TextureManager/TextureManager.hpp"
@@ -190,7 +192,18 @@ bool rtype::entities::Player::shoot(
         std::chrono::steady_clock::time_point &clock,
         bool isSuperProjectile
 ) {
-    const auto cooldown = isSuperProjectile ? 2.0 : 0.2;
+    auto cooldown = isSuperProjectile ? 2.0 : 0.2;
+    auto playerBonuses = componentManager.getComponent<components::PlayerBonuses>(id);
+
+    if (playerBonuses) {
+        if (playerBonuses) {
+            for (auto bonuses : playerBonuses->bonuses) {
+                if (bonuses.first == models::FORCE) {
+                    cooldown = isSuperProjectile ? 1.0 : 0.1;
+                }
+            }
+        }
+    }
     auto now = std::chrono::steady_clock::now();
     std::chrono::duration<double> elapsed = now - clock;
 
