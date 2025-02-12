@@ -116,16 +116,16 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:ab8601e6ea5e232e6a318c22e8df870da" id="r_ab8601e6ea5e232e6a318c22e8df870da"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab8601e6ea5e232e6a318c22e8df870da">play</a> (<a class="el" href="classrtype_1_1ecs_1_1EntityManager.html">ecs::EntityManager</a> &amp;entityManager, <a class="el" href="classrtype_1_1ecs_1_1ComponentManager.html">ecs::ComponentManager</a> &amp;componentManager)</td></tr>
 <tr class="memdesc:ab8601e6ea5e232e6a318c22e8df870da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Plays sounds in the ECS system.  <br /></td></tr>
 <tr class="separator:ab8601e6ea5e232e6a318c22e8df870da"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0b3f36413f6aa15fc084c4c03de34ca8" id="r_a0b3f36413f6aa15fc084c4c03de34ca8"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0b3f36413f6aa15fc084c4c03de34ca8">createEffect</a> (const std::string &amp;path, <a class="el" href="classrtype_1_1ecs_1_1ComponentManager.html">ecs::ComponentManager</a> &amp;componentManager, unsigned int entity)</td></tr>
-<tr class="memdesc:a0b3f36413f6aa15fc084c4c03de34ca8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new sound effect using the ECS framework.  <br /></td></tr>
-<tr class="separator:a0b3f36413f6aa15fc084c4c03de34ca8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af974792aa7bd9c1d5a43e410cd5ea707" id="r_af974792aa7bd9c1d5a43e410cd5ea707"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af974792aa7bd9c1d5a43e410cd5ea707">createMusic</a> (const std::string &amp;path, <a class="el" href="classrtype_1_1ecs_1_1ComponentManager.html">ecs::ComponentManager</a> &amp;componentManager, unsigned int entity, bool loop, std::optional&lt; float &gt; duration)</td></tr>
-<tr class="memdesc:af974792aa7bd9c1d5a43e410cd5ea707"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new music using the ECS framework.  <br /></td></tr>
-<tr class="separator:af974792aa7bd9c1d5a43e410cd5ea707"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad72efe485bab58abbeaa90590a679380" id="r_ad72efe485bab58abbeaa90590a679380"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad72efe485bab58abbeaa90590a679380">createEffect</a> (const std::string &amp;path, <a class="el" href="classrtype_1_1ecs_1_1ComponentManager.html">ecs::ComponentManager</a> &amp;componentManager, <a class="el" href="classrtype_1_1ecs_1_1EntityManager.html">ecs::EntityManager</a> &amp;entityManager, unsigned int entity)</td></tr>
+<tr class="memdesc:ad72efe485bab58abbeaa90590a679380"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new sound effect using the ECS framework.  <br /></td></tr>
+<tr class="separator:ad72efe485bab58abbeaa90590a679380"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a16cbbe731a094283c9bdc7c333e52091" id="r_a16cbbe731a094283c9bdc7c333e52091"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a16cbbe731a094283c9bdc7c333e52091">createMusic</a> (const std::string &amp;path, <a class="el" href="classrtype_1_1ecs_1_1ComponentManager.html">ecs::ComponentManager</a> &amp;componentManager, <a class="el" href="classrtype_1_1ecs_1_1EntityManager.html">ecs::EntityManager</a> &amp;entityManager, unsigned int entity, bool loop, std::optional&lt; float &gt; duration)</td></tr>
+<tr class="memdesc:a16cbbe731a094283c9bdc7c333e52091"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new music using the ECS framework.  <br /></td></tr>
+<tr class="separator:a16cbbe731a094283c9bdc7c333e52091"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a0b3f36413f6aa15fc084c4c03de34ca8" name="a0b3f36413f6aa15fc084c4c03de34ca8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0b3f36413f6aa15fc084c4c03de34ca8">&#9670;&#160;</a></span>createEffect()</h2>
+<a id="ad72efe485bab58abbeaa90590a679380" name="ad72efe485bab58abbeaa90590a679380"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad72efe485bab58abbeaa90590a679380">&#9670;&#160;</a></span>createEffect()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -142,6 +142,11 @@ Static Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="classrtype_1_1ecs_1_1ComponentManager.html">ecs::ComponentManager</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>componentManager</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classrtype_1_1ecs_1_1EntityManager.html">ecs::EntityManager</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>entityManager</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -168,8 +173,8 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="af974792aa7bd9c1d5a43e410cd5ea707" name="af974792aa7bd9c1d5a43e410cd5ea707"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af974792aa7bd9c1d5a43e410cd5ea707">&#9670;&#160;</a></span>createMusic()</h2>
+<a id="a16cbbe731a094283c9bdc7c333e52091" name="a16cbbe731a094283c9bdc7c333e52091"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a16cbbe731a094283c9bdc7c333e52091">&#9670;&#160;</a></span>createMusic()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -186,6 +191,11 @@ Static Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="classrtype_1_1ecs_1_1ComponentManager.html">ecs::ComponentManager</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>componentManager</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classrtype_1_1ecs_1_1EntityManager.html">ecs::EntityManager</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>entityManager</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>

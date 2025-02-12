@@ -1,6 +1,7 @@
 var namespacertype_1_1systems =
 [
     [ "ANetworkHandler", "classrtype_1_1systems_1_1ANetworkHandler.html", "classrtype_1_1systems_1_1ANetworkHandler" ],
+    [ "BonusHandler", "classrtype_1_1systems_1_1BonusHandler.html", "classrtype_1_1systems_1_1BonusHandler" ],
     [ "ConnectHandler", "classrtype_1_1systems_1_1ConnectHandler.html", "classrtype_1_1systems_1_1ConnectHandler" ],
     [ "EndGameHandler", "classrtype_1_1systems_1_1EndGameHandler.html", "classrtype_1_1systems_1_1EndGameHandler" ],
     [ "EnnemiesDataHandler", "classrtype_1_1systems_1_1EnnemiesDataHandler.html", "classrtype_1_1systems_1_1EnnemiesDataHandler" ],

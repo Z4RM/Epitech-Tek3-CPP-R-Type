@@ -113,10 +113,10 @@ $(function(){initNavTree('classrtype_1_1ecs_1_1ComponentManager.html',''); initR
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a621de9a68f98d9543ed59c0cf61d3032" id="r_a621de9a68f98d9543ed59c0cf61d3032"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
-<tr class="memitem:a621de9a68f98d9543ed59c0cf61d3032"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a621de9a68f98d9543ed59c0cf61d3032">addComponent</a> (unsigned int entity, const T &amp;component)</td></tr>
-<tr class="memdesc:a621de9a68f98d9543ed59c0cf61d3032"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a component to an entity.  <br /></td></tr>
-<tr class="separator:a621de9a68f98d9543ed59c0cf61d3032"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a680a4f6fec1e9dd18db9f989180a78d2" id="r_a680a4f6fec1e9dd18db9f989180a78d2"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
+<tr class="memitem:a680a4f6fec1e9dd18db9f989180a78d2"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a680a4f6fec1e9dd18db9f989180a78d2">addComponent</a> (unsigned int entity, const T &amp;component, <a class="el" href="classrtype_1_1ecs_1_1EntityManager.html">EntityManager</a> &amp;entityManager)</td></tr>
+<tr class="memdesc:a680a4f6fec1e9dd18db9f989180a78d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a component to an entity.  <br /></td></tr>
+<tr class="separator:a680a4f6fec1e9dd18db9f989180a78d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a06b2ea546dcbacdc35c7992ec373f447" id="r_a06b2ea546dcbacdc35c7992ec373f447"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
 <tr class="memitem:a06b2ea546dcbacdc35c7992ec373f447"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a06b2ea546dcbacdc35c7992ec373f447">removeComponent</a> (unsigned int entity)</td></tr>
 <tr class="memdesc:a06b2ea546dcbacdc35c7992ec373f447"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes a component from an entity.  <br /></td></tr>
@@ -129,8 +129,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a2cdb3d0364c255c3495bce093f6d4e7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a621de9a68f98d9543ed59c0cf61d3032" name="a621de9a68f98d9543ed59c0cf61d3032"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a621de9a68f98d9543ed59c0cf61d3032">&#9670;&#160;</a></span>addComponent()</h2>
+<a id="a680a4f6fec1e9dd18db9f989180a78d2" name="a680a4f6fec1e9dd18db9f989180a78d2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a680a4f6fec1e9dd18db9f989180a78d2">&#9670;&#160;</a></span>addComponent()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -148,7 +148,12 @@ template&lt;typename T&gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const T &amp;</td>          <td class="paramname"><span class="paramname"><em>component</em></span>&#160;)</td>
+          <td class="paramtype">const T &amp;</td>          <td class="paramname"><span class="paramname"><em>component</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classrtype_1_1ecs_1_1EntityManager.html">EntityManager</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>entityManager</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -170,6 +175,7 @@ template&lt;typename T&gt; </div>
   <table class="params">
     <tr><td class="paramname">entity</td><td>The unique identifier of the entity. </td></tr>
     <tr><td class="paramname">component</td><td>The component to add. </td></tr>
+    <tr><td class="paramname">entityManager</td><td>the entityManager for verifying if the entity is alive </td></tr>
   </table>
   </dd>
 </dl>

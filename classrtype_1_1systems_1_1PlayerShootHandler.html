@@ -125,11 +125,11 @@ Inheritance diagram for rtype::systems::PlayerShootHandler:</div>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a1b5259628d3a6bdcd1e9b082ed52e3eb" id="r_a1b5259628d3a6bdcd1e9b082ed52e3eb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1b5259628d3a6bdcd1e9b082ed52e3eb">PlayerShootHandler</a> (<a class="el" href="classrtype_1_1ecs_1_1ComponentManager.html">ecs::ComponentManager</a> &amp;componentManager, <a class="el" href="classrtype_1_1ecs_1_1EntityManager.html">ecs::EntityManager</a> &amp;entityManager)</td></tr>
 <tr class="separator:a1b5259628d3a6bdcd1e9b082ed52e3eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae6571b12c9265cc75059e3345ea27a44" id="r_ae6571b12c9265cc75059e3345ea27a44"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae6571b12c9265cc75059e3345ea27a44">handle</a> (std::unique_ptr&lt; <a class="el" href="classrtype_1_1network_1_1IPacket.html">network::IPacket</a> &gt; packet, std::shared_ptr&lt; asio::ip::tcp::socket &gt; socket) override</td></tr>
-<tr class="separator:ae6571b12c9265cc75059e3345ea27a44"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a139a7f012555650e0f5e37c36b949eb3" id="r_a139a7f012555650e0f5e37c36b949eb3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a139a7f012555650e0f5e37c36b949eb3">handle</a> (std::unique_ptr&lt; <a class="el" href="classrtype_1_1network_1_1IPacket.html">network::IPacket</a> &gt; packet, asio::ip::udp::endpoint endpoint) override</td></tr>
+<tr class="separator:a139a7f012555650e0f5e37c36b949eb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classrtype_1_1systems_1_1ANetworkHandler"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_classrtype_1_1systems_1_1ANetworkHandler')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classrtype_1_1systems_1_1ANetworkHandler.html">rtype::systems::ANetworkHandler</a></td></tr>
-<tr class="memitem:acd3029423af95dd6f2d9d59930749e74 inherit pub_methods_classrtype_1_1systems_1_1ANetworkHandler" id="r_acd3029423af95dd6f2d9d59930749e74"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrtype_1_1systems_1_1ANetworkHandler.html#acd3029423af95dd6f2d9d59930749e74">handle</a> (std::unique_ptr&lt; <a class="el" href="classrtype_1_1network_1_1IPacket.html">network::IPacket</a> &gt; packet, asio::ip::udp::endpoint endpoint) override</td></tr>
-<tr class="separator:acd3029423af95dd6f2d9d59930749e74 inherit pub_methods_classrtype_1_1systems_1_1ANetworkHandler"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a876c6b3acdc4865c352a6ea994024eb3 inherit pub_methods_classrtype_1_1systems_1_1ANetworkHandler" id="r_a876c6b3acdc4865c352a6ea994024eb3"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrtype_1_1systems_1_1ANetworkHandler.html#a876c6b3acdc4865c352a6ea994024eb3">handle</a> (std::unique_ptr&lt; <a class="el" href="classrtype_1_1network_1_1IPacket.html">network::IPacket</a> &gt; packet, std::shared_ptr&lt; asio::ip::tcp::socket &gt; socket) override</td></tr>
+<tr class="separator:a876c6b3acdc4865c352a6ea994024eb3 inherit pub_methods_classrtype_1_1systems_1_1ANetworkHandler"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classrtype_1_1systems_1_1INetworkHandler"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_classrtype_1_1systems_1_1INetworkHandler')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classrtype_1_1systems_1_1INetworkHandler.html">rtype::systems::INetworkHandler</a></td></tr>
 <tr class="memitem:a2f0a70a9e54765929b2591c1d971f162 inherit pub_methods_classrtype_1_1systems_1_1INetworkHandler" id="r_a2f0a70a9e54765929b2591c1d971f162"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrtype_1_1systems_1_1INetworkHandler.html#a2f0a70a9e54765929b2591c1d971f162">~INetworkHandler</a> ()=default</td></tr>
 <tr class="separator:a2f0a70a9e54765929b2591c1d971f162 inherit pub_methods_classrtype_1_1systems_1_1INetworkHandler"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -176,8 +176,8 @@ Additional Inherited Members</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="ae6571b12c9265cc75059e3345ea27a44" name="ae6571b12c9265cc75059e3345ea27a44"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae6571b12c9265cc75059e3345ea27a44">&#9670;&#160;</a></span>handle()</h2>
+<a id="a139a7f012555650e0f5e37c36b949eb3" name="a139a7f012555650e0f5e37c36b949eb3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a139a7f012555650e0f5e37c36b949eb3">&#9670;&#160;</a></span>handle()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -193,7 +193,7 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::shared_ptr&lt; asio::ip::tcp::socket &gt;</td>          <td class="paramname"><span class="paramname"><em>socket</em></span>&#160;)</td>
+          <td class="paramtype">asio::ip::udp::endpoint</td>          <td class="paramname"><span class="paramname"><em>endpoint</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -203,7 +203,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Reimplemented from <a class="el" href="classrtype_1_1systems_1_1ANetworkHandler.html#a876c6b3acdc4865c352a6ea994024eb3">rtype::systems::ANetworkHandler</a>.</p>
+<p>Reimplemented from <a class="el" href="classrtype_1_1systems_1_1ANetworkHandler.html#acd3029423af95dd6f2d9d59930749e74">rtype::systems::ANetworkHandler</a>.</p>
 
 </div>
 </div>

@@ -3,10 +3,14 @@ var annotated_dup =
     [ "rtype", "namespacertype.html", [
       [ "components", "namespacertype_1_1components.html", [
         [ "ActualPlayer", "structrtype_1_1components_1_1ActualPlayer.html", "structrtype_1_1components_1_1ActualPlayer" ],
+        [ "AiShoot", "structrtype_1_1components_1_1AiShoot.html", "structrtype_1_1components_1_1AiShoot" ],
         [ "Animation", "structrtype_1_1components_1_1Animation.html", "structrtype_1_1components_1_1Animation" ],
+        [ "Bonus", "structrtype_1_1components_1_1Bonus.html", "structrtype_1_1components_1_1Bonus" ],
+        [ "ChildEntities", "structrtype_1_1components_1_1ChildEntities.html", "structrtype_1_1components_1_1ChildEntities" ],
         [ "Counter", "structrtype_1_1components_1_1Counter.html", "structrtype_1_1components_1_1Counter" ],
         [ "Created", "structrtype_1_1components_1_1Created.html", "structrtype_1_1components_1_1Created" ],
         [ "Damage", "structrtype_1_1components_1_1Damage.html", "structrtype_1_1components_1_1Damage" ],
+        [ "EventId", "structrtype_1_1components_1_1EventId.html", "structrtype_1_1components_1_1EventId" ],
         [ "GameState", "structrtype_1_1components_1_1GameState.html", "structrtype_1_1components_1_1GameState" ],
         [ "Health", "structrtype_1_1components_1_1Health.html", "structrtype_1_1components_1_1Health" ],
         [ "Hitbox", "structrtype_1_1components_1_1Hitbox.html", "structrtype_1_1components_1_1Hitbox" ],
@@ -18,8 +22,11 @@ var annotated_dup =
         [ "NetworkConnection", "structrtype_1_1components_1_1NetworkConnection.html", "structrtype_1_1components_1_1NetworkConnection" ],
         [ "NoDamageToPlayer", "structrtype_1_1components_1_1NoDamageToPlayer.html", "structrtype_1_1components_1_1NoDamageToPlayer" ],
         [ "OnClick", "structrtype_1_1components_1_1OnClick.html", "structrtype_1_1components_1_1OnClick" ],
+        [ "ParentEntity", "structrtype_1_1components_1_1ParentEntity.html", "structrtype_1_1components_1_1ParentEntity" ],
+        [ "PlayerBonuses", "structrtype_1_1components_1_1PlayerBonuses.html", "structrtype_1_1components_1_1PlayerBonuses" ],
         [ "Position", "structrtype_1_1components_1_1Position.html", "structrtype_1_1components_1_1Position" ],
         [ "Projectile", "structrtype_1_1components_1_1Projectile.html", "structrtype_1_1components_1_1Projectile" ],
+        [ "ProjectileInfo", "structrtype_1_1components_1_1ProjectileInfo.html", "structrtype_1_1components_1_1ProjectileInfo" ],
         [ "Running", "structrtype_1_1components_1_1Running.html", "structrtype_1_1components_1_1Running" ],
         [ "SfText", "structrtype_1_1components_1_1SfText.html", "structrtype_1_1components_1_1SfText" ],
         [ "Size", "structrtype_1_1components_1_1Size.html", "structrtype_1_1components_1_1Size" ],
@@ -45,8 +52,19 @@ var annotated_dup =
         [ "SystemManager", "classrtype_1_1ecs_1_1SystemManager.html", "classrtype_1_1ecs_1_1SystemManager" ]
       ] ],
       [ "entities", "namespacertype_1_1entities.html", [
+        [ "BossAlien", "classrtype_1_1entities_1_1BossAlien.html", "classrtype_1_1entities_1_1BossAlien" ],
+        [ "BossCask", "classrtype_1_1entities_1_1BossCask.html", "classrtype_1_1entities_1_1BossCask" ],
+        [ "BossDarkplayer", "classrtype_1_1entities_1_1BossDarkplayer.html", "classrtype_1_1entities_1_1BossDarkplayer" ],
+        [ "BossHeart", "classrtype_1_1entities_1_1BossHeart.html", "classrtype_1_1entities_1_1BossHeart" ],
+        [ "BossMachin", "classrtype_1_1entities_1_1BossMachin.html", "classrtype_1_1entities_1_1BossMachin" ],
+        [ "BossRobot", "classrtype_1_1entities_1_1BossRobot.html", "classrtype_1_1entities_1_1BossRobot" ],
+        [ "BossStaros", "classrtype_1_1entities_1_1BossStaros.html", "classrtype_1_1entities_1_1BossStaros" ],
+        [ "BossTurret", "classrtype_1_1entities_1_1BossTurret.html", "classrtype_1_1entities_1_1BossTurret" ],
         [ "Button", "classrtype_1_1entities_1_1Button.html", "classrtype_1_1entities_1_1Button" ],
         [ "Enemy", "classrtype_1_1entities_1_1Enemy.html", "classrtype_1_1entities_1_1Enemy" ],
+        [ "EnemyCornus", "classrtype_1_1entities_1_1EnemyCornus.html", "classrtype_1_1entities_1_1EnemyCornus" ],
+        [ "EnemyCrabus", "classrtype_1_1entities_1_1EnemyCrabus.html", "classrtype_1_1entities_1_1EnemyCrabus" ],
+        [ "EnemyPablitos", "classrtype_1_1entities_1_1EnemyPablitos.html", "classrtype_1_1entities_1_1EnemyPablitos" ],
         [ "Game", "classrtype_1_1entities_1_1Game.html", "classrtype_1_1entities_1_1Game" ],
         [ "Image", "classrtype_1_1entities_1_1Image.html", "classrtype_1_1entities_1_1Image" ],
         [ "Mode", "structrtype_1_1entities_1_1Mode.html", "structrtype_1_1entities_1_1Mode" ],
@@ -62,15 +80,18 @@ var annotated_dup =
         [ "LevelManager", "classrtype_1_1levels_1_1LevelManager.html", "classrtype_1_1levels_1_1LevelManager" ]
       ] ],
       [ "models", "namespacertype_1_1models.html", [
+        [ "BonusData", "structrtype_1_1models_1_1BonusData.html", "structrtype_1_1models_1_1BonusData" ],
         [ "EnemyData", "structrtype_1_1models_1_1EnemyData.html", "structrtype_1_1models_1_1EnemyData" ],
         [ "EnemySpawn", "structrtype_1_1models_1_1EnemySpawn.html", "structrtype_1_1models_1_1EnemySpawn" ],
         [ "PlayerData", "structrtype_1_1models_1_1PlayerData.html", "structrtype_1_1models_1_1PlayerData" ],
+        [ "ProjectileData", "structrtype_1_1models_1_1ProjectileData.html", "structrtype_1_1models_1_1ProjectileData" ],
         [ "Scene", "structrtype_1_1models_1_1Scene.html", "structrtype_1_1models_1_1Scene" ],
         [ "SpawnPoint", "structrtype_1_1models_1_1SpawnPoint.html", "structrtype_1_1models_1_1SpawnPoint" ]
       ] ],
       [ "network", "namespacertype_1_1network.html", [
         [ "APacket", "classrtype_1_1network_1_1APacket.html", "classrtype_1_1network_1_1APacket" ],
         [ "IPacket", "classrtype_1_1network_1_1IPacket.html", "classrtype_1_1network_1_1IPacket" ],
+        [ "PacketBonus", "classrtype_1_1network_1_1PacketBonus.html", "classrtype_1_1network_1_1PacketBonus" ],
         [ "PacketConnect", "classrtype_1_1network_1_1PacketConnect.html", "classrtype_1_1network_1_1PacketConnect" ],
         [ "PacketEndGame", "classrtype_1_1network_1_1PacketEndGame.html", "classrtype_1_1network_1_1PacketEndGame" ],
         [ "PacketEnemiesData", "classrtype_1_1network_1_1PacketEnemiesData.html", "classrtype_1_1network_1_1PacketEnemiesData" ],
@@ -91,12 +112,14 @@ var annotated_dup =
         [ "Win", "classrtype_1_1scenes_1_1Win.html", "classrtype_1_1scenes_1_1Win" ]
       ] ],
       [ "services", "namespacertype_1_1services.html", [
+        [ "BonusService", "classrtype_1_1services_1_1BonusService.html", null ],
         [ "EnemyService", "classrtype_1_1services_1_1EnemyService.html", null ],
         [ "PlayerService", "classrtype_1_1services_1_1PlayerService.html", null ],
         [ "ProjectileService", "classrtype_1_1services_1_1ProjectileService.html", null ]
       ] ],
       [ "systems", "namespacertype_1_1systems.html", [
         [ "ANetworkHandler", "classrtype_1_1systems_1_1ANetworkHandler.html", "classrtype_1_1systems_1_1ANetworkHandler" ],
+        [ "BonusHandler", "classrtype_1_1systems_1_1BonusHandler.html", "classrtype_1_1systems_1_1BonusHandler" ],
         [ "ConnectHandler", "classrtype_1_1systems_1_1ConnectHandler.html", "classrtype_1_1systems_1_1ConnectHandler" ],
         [ "EndGameHandler", "classrtype_1_1systems_1_1EndGameHandler.html", "classrtype_1_1systems_1_1EndGameHandler" ],
         [ "EnnemiesDataHandler", "classrtype_1_1systems_1_1EnnemiesDataHandler.html", "classrtype_1_1systems_1_1EnnemiesDataHandler" ],

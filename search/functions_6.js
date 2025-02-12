@@ -10,11 +10,11 @@ var searchData=
   ['getinstance_7',['getInstance',['../classrtype_1_1ecs_1_1SceneManager.html#aaf1b411889deee8ab6b5211cb7823abc',1,'rtype::ecs::SceneManager::getInstance()'],['../classrtype_1_1network_1_1TCPNetwork.html#ae1f84857ccc3f3816608633b37052742',1,'rtype::network::TCPNetwork::getInstance()'],['../classrtype_1_1network_1_1UDPNetwork.html#afc614ea8a1d2f6e667a4812eca0f26b6',1,'rtype::network::UDPNetwork::getInstance()'],['../classrtype_1_1Config.html#af514072f20a1f4871ce4b24185d0ff37',1,'rtype::Config::getInstance()'],['../classrtype_1_1levels_1_1LevelManager.html#ad1312382a6c10ce91bedca6a4f6438e6',1,'rtype::levels::LevelManager::getInstance()'],['../classrtype_1_1TextureManager.html#ad74ae35d55a2f91092d91a7eebf137c7',1,'rtype::TextureManager::getInstance()']]],
   ['getiocontext_8',['getIoContext',['../classrtype_1_1network_1_1UDPNetwork.html#ae70bf3a5f5ad5a364e06f1cc7e40fc52',1,'rtype::network::UDPNetwork']]],
   ['getlevels_9',['getLevels',['../classrtype_1_1levels_1_1LevelManager.html#ab0696ad25e3a9855e7758933b20c5a2e',1,'rtype::levels::LevelManager']]],
-  ['getnetwork_10',['getNetwork',['../classrtype_1_1Config.html#a3139e1c09468d4344cea1e128e2ab6cc',1,'rtype::Config']]],
-  ['getnumber_11',['getNumber',['../classrtype_1_1levels_1_1Level.html#ad4a97b318dd3f0b0d001f3f0ce730b58',1,'rtype::levels::Level']]],
-  ['getserverendpoint_12',['getServerEndpoint',['../classrtype_1_1network_1_1UDPNetwork.html#af975e76b5b19904b439483589b41a702',1,'rtype::network::UDPNetwork']]],
-  ['getsounds_13',['getSounds',['../classrtype_1_1Config.html#a5b4244c9c6b599f4955231f3ac1b1589',1,'rtype::Config']]],
-  ['getstarted_14',['getStarted',['../classrtype_1_1network_1_1TCPNetwork.html#a42fdcefb87b45be182e53d175d4561ec',1,'rtype::network::TCPNetwork::getStarted()'],['../classrtype_1_1network_1_1UDPNetwork.html#a1792c17cb054e01f47aaa1736320245c',1,'rtype::network::UDPNetwork::getStarted()']]],
-  ['getstop_15',['getStop',['../classrtype_1_1network_1_1TCPNetwork.html#a28529872bd09078f74f5864f6110b882',1,'rtype::network::TCPNetwork::getStop()'],['../classrtype_1_1network_1_1UDPNetwork.html#a3f04503f277b6fd48e17e84928e15530',1,'rtype::network::UDPNetwork::getStop()']]],
+  ['getmutex_10',['getMutex',['../classrtype_1_1ecs_1_1EntityManager.html#af0c8c98fe55dd4a99de40ee7480f5e18',1,'rtype::ecs::EntityManager']]],
+  ['getnetwork_11',['getNetwork',['../classrtype_1_1Config.html#a3139e1c09468d4344cea1e128e2ab6cc',1,'rtype::Config']]],
+  ['getnumber_12',['getNumber',['../classrtype_1_1levels_1_1Level.html#ad4a97b318dd3f0b0d001f3f0ce730b58',1,'rtype::levels::Level']]],
+  ['getserverendpoint_13',['getServerEndpoint',['../classrtype_1_1network_1_1UDPNetwork.html#af975e76b5b19904b439483589b41a702',1,'rtype::network::UDPNetwork']]],
+  ['getsounds_14',['getSounds',['../classrtype_1_1Config.html#a5b4244c9c6b599f4955231f3ac1b1589',1,'rtype::Config']]],
+  ['getstarted_15',['getStarted',['../classrtype_1_1network_1_1TCPNetwork.html#a42fdcefb87b45be182e53d175d4561ec',1,'rtype::network::TCPNetwork::getStarted()'],['../classrtype_1_1network_1_1UDPNetwork.html#a1792c17cb054e01f47aaa1736320245c',1,'rtype::network::UDPNetwork::getStarted()']]],
   ['gettexture_16',['getTexture',['../classrtype_1_1TextureManager.html#ac94c4277f0679b8fb65af2eb2f3d04e2',1,'rtype::TextureManager']]]
 ];

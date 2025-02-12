@@ -1,5 +1,6 @@
 var dir_18804810527003ba054d854ed1a54070 =
 [
+    [ "BonusHandler", "dir_51b5cc476a0ac30c9eaed4f39c6a7f45.html", "dir_51b5cc476a0ac30c9eaed4f39c6a7f45" ],
     [ "ConnectHandler", "dir_2460275b455524cee41dd72017ab0f0a.html", "dir_2460275b455524cee41dd72017ab0f0a" ],
     [ "EndGameHandler", "dir_282f76dc8a3ef10eed3a5f733fa6b5c7.html", "dir_282f76dc8a3ef10eed3a5f733fa6b5c7" ],
     [ "EnnemiesDataHandler", "dir_adc5da529df93f5e5c2dcc39c828f681.html", "dir_adc5da529df93f5e5c2dcc39c828f681" ],

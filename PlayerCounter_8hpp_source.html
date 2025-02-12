@@ -115,31 +115,31 @@ $(function(){initNavTree('PlayerCounter_8hpp_source.html',''); initResizable(tru
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &quot;<a class="code" href="AEntity_8hpp.html">ECS/AEntity.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &quot;<a class="code" href="ComponentManager_8hpp.html">ECS/ComponentManager.hpp</a>&quot;</span></div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#ifdef RTYPE_IS_CLIENT</span></div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &lt;SFML/System/Vector2.hpp&gt;</span></div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacertype_1_1entities.html">rtype::entities</a> {</div>
-<div class="foldopen" id="foldopen00019" data-start="{" data-end="};">
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno"><a class="line" href="classrtype_1_1entities_1_1PlayerCounter.html">   19</a></span>    <span class="keyword">class </span><a class="code hl_function" href="classrtype_1_1entities_1_1PlayerCounter.html#ad024cb1bf7fa45bce4fa6ddf1fac6083">PlayerCounter</a> final: <span class="keyword">public</span> <a class="code hl_class" href="classrtype_1_1ecs_1_1AEntity.html">ecs::AEntity</a> {</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#ifdef RTYPE_IS_CLIENT</span></div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>        <a class="code hl_function" href="classrtype_1_1entities_1_1PlayerCounter.html#ad024cb1bf7fa45bce4fa6ddf1fac6083">PlayerCounter</a>(<a class="code hl_class" href="classrtype_1_1ecs_1_1ComponentManager.html">ecs::ComponentManager</a> &amp;componentManager, <a class="code hl_class" href="classrtype_1_1ecs_1_1EntityManager.html">ecs::EntityManager</a> &amp;entityManager, sf::Vector2f pos);</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="preprocessor">#else</span></div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>        <a class="code hl_function" href="classrtype_1_1entities_1_1PlayerCounter.html#ad024cb1bf7fa45bce4fa6ddf1fac6083">PlayerCounter</a>(<a class="code hl_class" href="classrtype_1_1ecs_1_1ComponentManager.html">ecs::ComponentManager</a> &amp;componentManager, <a class="code hl_class" href="classrtype_1_1ecs_1_1EntityManager.html">ecs::EntityManager</a> &amp;entityManager);</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    };</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#ifdef RTYPE_IS_CLIENT</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &lt;SFML/System/Vector2.hpp&gt;</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacertype_1_1entities.html">rtype::entities</a> {</div>
+<div class="foldopen" id="foldopen00018" data-start="{" data-end="};">
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno"><a class="line" href="classrtype_1_1entities_1_1PlayerCounter.html">   18</a></span>    <span class="keyword">class </span><a class="code hl_function" href="classrtype_1_1entities_1_1PlayerCounter.html#ad024cb1bf7fa45bce4fa6ddf1fac6083">PlayerCounter</a> final : <span class="keyword">public</span> <a class="code hl_class" href="classrtype_1_1ecs_1_1AEntity.html">ecs::AEntity</a> {</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#ifdef RTYPE_IS_CLIENT</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>        <a class="code hl_function" href="classrtype_1_1entities_1_1PlayerCounter.html#ad024cb1bf7fa45bce4fa6ddf1fac6083">PlayerCounter</a>(<a class="code hl_class" href="classrtype_1_1ecs_1_1ComponentManager.html">ecs::ComponentManager</a> &amp;componentManager, <a class="code hl_class" href="classrtype_1_1ecs_1_1EntityManager.html">ecs::EntityManager</a> &amp;entityManager, sf::Vector2f pos);</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="preprocessor">#else</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>        <a class="code hl_function" href="classrtype_1_1entities_1_1PlayerCounter.html#ad024cb1bf7fa45bce4fa6ddf1fac6083">PlayerCounter</a>(<a class="code hl_class" href="classrtype_1_1ecs_1_1ComponentManager.html">ecs::ComponentManager</a> &amp;componentManager, <a class="code hl_class" href="classrtype_1_1ecs_1_1EntityManager.html">ecs::EntityManager</a> &amp;entityManager);</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    };</div>
 </div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>}</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>}</div>
 <div class="ttc" id="aAEntity_8hpp_html"><div class="ttname"><a href="AEntity_8hpp.html">AEntity.hpp</a></div></div>
+<div class="ttc" id="aComponentManager_8hpp_html"><div class="ttname"><a href="ComponentManager_8hpp.html">ComponentManager.hpp</a></div></div>
 <div class="ttc" id="aclassrtype_1_1ecs_1_1AEntity_html"><div class="ttname"><a href="classrtype_1_1ecs_1_1AEntity.html">rtype::ecs::AEntity</a></div><div class="ttdef"><b>Definition</b> AEntity.hpp:13</div></div>
-<div class="ttc" id="aclassrtype_1_1ecs_1_1ComponentManager_html"><div class="ttname"><a href="classrtype_1_1ecs_1_1ComponentManager.html">rtype::ecs::ComponentManager</a></div><div class="ttdef"><b>Definition</b> ComponentManager.hpp:26</div></div>
-<div class="ttc" id="aclassrtype_1_1ecs_1_1EntityManager_html"><div class="ttname"><a href="classrtype_1_1ecs_1_1EntityManager.html">rtype::ecs::EntityManager</a></div><div class="ttdef"><b>Definition</b> EntityManager.hpp:31</div></div>
-<div class="ttc" id="aclassrtype_1_1entities_1_1PlayerCounter_html_ad024cb1bf7fa45bce4fa6ddf1fac6083"><div class="ttname"><a href="classrtype_1_1entities_1_1PlayerCounter.html#ad024cb1bf7fa45bce4fa6ddf1fac6083">rtype::entities::PlayerCounter::PlayerCounter</a></div><div class="ttdeci">PlayerCounter(ecs::ComponentManager &amp;componentManager, ecs::EntityManager &amp;entityManager)</div><div class="ttdef"><b>Definition</b> PlayerCounter.cpp:21</div></div>
-<div class="ttc" id="anamespacertype_1_1entities_html"><div class="ttname"><a href="namespacertype_1_1entities.html">rtype::entities</a></div><div class="ttdef"><b>Definition</b> Button.cpp:12</div></div>
+<div class="ttc" id="aclassrtype_1_1ecs_1_1ComponentManager_html"><div class="ttname"><a href="classrtype_1_1ecs_1_1ComponentManager.html">rtype::ecs::ComponentManager</a></div><div class="ttdef"><b>Definition</b> ComponentManager.hpp:30</div></div>
+<div class="ttc" id="aclassrtype_1_1ecs_1_1EntityManager_html"><div class="ttname"><a href="classrtype_1_1ecs_1_1EntityManager.html">rtype::ecs::EntityManager</a></div><div class="ttdef"><b>Definition</b> EntityManager.hpp:30</div></div>
+<div class="ttc" id="aclassrtype_1_1entities_1_1PlayerCounter_html_ad024cb1bf7fa45bce4fa6ddf1fac6083"><div class="ttname"><a href="classrtype_1_1entities_1_1PlayerCounter.html#ad024cb1bf7fa45bce4fa6ddf1fac6083">rtype::entities::PlayerCounter::PlayerCounter</a></div><div class="ttdeci">PlayerCounter(ecs::ComponentManager &amp;componentManager, ecs::EntityManager &amp;entityManager)</div><div class="ttdef"><b>Definition</b> PlayerCounter.cpp:20</div></div>
+<div class="ttc" id="anamespacertype_1_1entities_html"><div class="ttname"><a href="namespacertype_1_1entities.html">rtype::entities</a></div><div class="ttdef"><b>Definition</b> BossAlien.cpp:19</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

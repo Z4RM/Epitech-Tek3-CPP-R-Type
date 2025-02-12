@@ -111,11 +111,15 @@ $(function(){initNavTree('namespacertype_1_1models.html',''); initResizable(true
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrtype_1_1models_1_1BonusData.html">BonusData</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrtype_1_1models_1_1EnemyData.html">EnemyData</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrtype_1_1models_1_1EnemySpawn.html">EnemySpawn</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrtype_1_1models_1_1PlayerData.html">PlayerData</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrtype_1_1models_1_1ProjectileData.html">ProjectileData</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrtype_1_1models_1_1Scene.html">Scene</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -124,11 +128,50 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:a25dc1bce3e480831a3881452fa482800" id="r_a25dc1bce3e480831a3881452fa482800"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a25dc1bce3e480831a3881452fa482800">EEnemyType</a> { <a class="el" href="#a25dc1bce3e480831a3881452fa482800a38b07779db37a2161c1f635b7c990519">BASIC</a>
+<tr class="memitem:aab33e013c1ad9ecff755d4b05bf2e41e" id="r_aab33e013c1ad9ecff755d4b05bf2e41e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aab33e013c1ad9ecff755d4b05bf2e41e">EBonusType</a> { <a class="el" href="#aab33e013c1ad9ecff755d4b05bf2e41eafc6a680c8cdf7a929e079b39a174ace7">FORCE</a> = 1
+, <a class="el" href="#aab33e013c1ad9ecff755d4b05bf2e41ea9c544de82c80b979691c95cca3752363">SHIELD</a> = 2
+ }</td></tr>
+<tr class="separator:aab33e013c1ad9ecff755d4b05bf2e41e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25dc1bce3e480831a3881452fa482800" id="r_a25dc1bce3e480831a3881452fa482800"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a25dc1bce3e480831a3881452fa482800">EEnemyType</a> { <br />
+&#160;&#160;<a class="el" href="#a25dc1bce3e480831a3881452fa482800a38b07779db37a2161c1f635b7c990519">BASIC</a> = 1
+, <a class="el" href="#a25dc1bce3e480831a3881452fa482800aa7d6112082787d28da81611a85c8809c">BOSS_TURRET</a> = 2
+, <a class="el" href="#a25dc1bce3e480831a3881452fa482800a94bf69fd524fcf8012c9bf395874de50">TURRET</a> = 3
+, <a class="el" href="#a25dc1bce3e480831a3881452fa482800aff6f0595bba91b30931febea68568718">CORNUS</a> = 4
+, <br />
+&#160;&#160;<a class="el" href="#a25dc1bce3e480831a3881452fa482800a0e82bfa0f4022f90d8e92c6f8157ff0a">CRABUS</a> = 5
+, <a class="el" href="#a25dc1bce3e480831a3881452fa482800a0111b40bb13aebf92aef322ded3b59c6">PABLITOS</a> = 6
+, <a class="el" href="#a25dc1bce3e480831a3881452fa482800a75959b85e949abca53050cc700b5efe5">BOSS_HEART</a> = 7
+, <a class="el" href="#a25dc1bce3e480831a3881452fa482800afb4282952e3328d2ab7e6273863c75d6">BOSS_STAROS</a> = 8
+, <br />
+&#160;&#160;<a class="el" href="#a25dc1bce3e480831a3881452fa482800ab10ab8f81734452e7ecb161aa362e0f4">BOSS_ALIEN</a> = 9
+, <a class="el" href="#a25dc1bce3e480831a3881452fa482800a8332253f59dd33c4b961724827e65c47">BOSS_CASK</a> = 10
+, <a class="el" href="#a25dc1bce3e480831a3881452fa482800a83d447b54805e72a42cf44895a91dfd9">BOSS_ROBOT</a> = 11
+, <a class="el" href="#a25dc1bce3e480831a3881452fa482800ac1b2d552ff1a175f40ef7cd5bbac017b">BOSS_MACHIN</a> = 12
+, <br />
+&#160;&#160;<a class="el" href="#a25dc1bce3e480831a3881452fa482800ac42a20cb20292f98b1b341bccba7f20b">BOSS_DARKPLAYER</a> = 13
+<br />
  }</td></tr>
 <tr class="separator:a25dc1bce3e480831a3881452fa482800"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="aab33e013c1ad9ecff755d4b05bf2e41e" name="aab33e013c1ad9ecff755d4b05bf2e41e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aab33e013c1ad9ecff755d4b05bf2e41e">&#9670;&#160;</a></span>EBonusType</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="#aab33e013c1ad9ecff755d4b05bf2e41e">rtype::models::EBonusType</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="aab33e013c1ad9ecff755d4b05bf2e41eafc6a680c8cdf7a929e079b39a174ace7" name="aab33e013c1ad9ecff755d4b05bf2e41eafc6a680c8cdf7a929e079b39a174ace7"></a>FORCE&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="aab33e013c1ad9ecff755d4b05bf2e41ea9c544de82c80b979691c95cca3752363" name="aab33e013c1ad9ecff755d4b05bf2e41ea9c544de82c80b979691c95cca3752363"></a>SHIELD&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+</div>
+</div>
 <a id="a25dc1bce3e480831a3881452fa482800" name="a25dc1bce3e480831a3881452fa482800"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a25dc1bce3e480831a3881452fa482800">&#9670;&#160;</a></span>EEnemyType</h2>
 
@@ -142,6 +185,18 @@ Enumerations</h2></td></tr>
 </div><div class="memdoc">
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a25dc1bce3e480831a3881452fa482800a38b07779db37a2161c1f635b7c990519" name="a25dc1bce3e480831a3881452fa482800a38b07779db37a2161c1f635b7c990519"></a>BASIC&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a25dc1bce3e480831a3881452fa482800aa7d6112082787d28da81611a85c8809c" name="a25dc1bce3e480831a3881452fa482800aa7d6112082787d28da81611a85c8809c"></a>BOSS_TURRET&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a25dc1bce3e480831a3881452fa482800a94bf69fd524fcf8012c9bf395874de50" name="a25dc1bce3e480831a3881452fa482800a94bf69fd524fcf8012c9bf395874de50"></a>TURRET&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a25dc1bce3e480831a3881452fa482800aff6f0595bba91b30931febea68568718" name="a25dc1bce3e480831a3881452fa482800aff6f0595bba91b30931febea68568718"></a>CORNUS&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a25dc1bce3e480831a3881452fa482800a0e82bfa0f4022f90d8e92c6f8157ff0a" name="a25dc1bce3e480831a3881452fa482800a0e82bfa0f4022f90d8e92c6f8157ff0a"></a>CRABUS&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a25dc1bce3e480831a3881452fa482800a0111b40bb13aebf92aef322ded3b59c6" name="a25dc1bce3e480831a3881452fa482800a0111b40bb13aebf92aef322ded3b59c6"></a>PABLITOS&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a25dc1bce3e480831a3881452fa482800a75959b85e949abca53050cc700b5efe5" name="a25dc1bce3e480831a3881452fa482800a75959b85e949abca53050cc700b5efe5"></a>BOSS_HEART&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a25dc1bce3e480831a3881452fa482800afb4282952e3328d2ab7e6273863c75d6" name="a25dc1bce3e480831a3881452fa482800afb4282952e3328d2ab7e6273863c75d6"></a>BOSS_STAROS&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a25dc1bce3e480831a3881452fa482800ab10ab8f81734452e7ecb161aa362e0f4" name="a25dc1bce3e480831a3881452fa482800ab10ab8f81734452e7ecb161aa362e0f4"></a>BOSS_ALIEN&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a25dc1bce3e480831a3881452fa482800a8332253f59dd33c4b961724827e65c47" name="a25dc1bce3e480831a3881452fa482800a8332253f59dd33c4b961724827e65c47"></a>BOSS_CASK&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a25dc1bce3e480831a3881452fa482800a83d447b54805e72a42cf44895a91dfd9" name="a25dc1bce3e480831a3881452fa482800a83d447b54805e72a42cf44895a91dfd9"></a>BOSS_ROBOT&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a25dc1bce3e480831a3881452fa482800ac1b2d552ff1a175f40ef7cd5bbac017b" name="a25dc1bce3e480831a3881452fa482800ac1b2d552ff1a175f40ef7cd5bbac017b"></a>BOSS_MACHIN&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a25dc1bce3e480831a3881452fa482800ac42a20cb20292f98b1b341bccba7f20b" name="a25dc1bce3e480831a3881452fa482800ac42a20cb20292f98b1b341bccba7f20b"></a>BOSS_DARKPLAYER&#160;</td><td class="fielddoc"></td></tr>
 </table>
 
 </div>

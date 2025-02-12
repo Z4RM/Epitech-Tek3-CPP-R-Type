@@ -4,7 +4,6 @@ var classrtype_1_1network_1_1TCPNetwork =
     [ "~TCPNetwork", "classrtype_1_1network_1_1TCPNetwork.html#ad6607877dda1c19286fce214f030a1bf", null ],
     [ "connect", "classrtype_1_1network_1_1TCPNetwork.html#a386a34817636f915d07be1a26c418de5", null ],
     [ "getStarted", "classrtype_1_1network_1_1TCPNetwork.html#a42fdcefb87b45be182e53d175d4561ec", null ],
-    [ "getStop", "classrtype_1_1network_1_1TCPNetwork.html#a28529872bd09078f74f5864f6110b882", null ],
     [ "handleClient", "classrtype_1_1network_1_1TCPNetwork.html#a28c3f94ccf6af83e11d149991760e821", null ],
     [ "handlePacket", "classrtype_1_1network_1_1TCPNetwork.html#a4d39f4eaec68b08fc5f7dfa467fd4697", null ],
     [ "registerNetHandler", "classrtype_1_1network_1_1TCPNetwork.html#a2bbebb85cab5200f68e0ba5072e4f3f2", null ],

@@ -134,15 +134,16 @@ $(function(){initNavTree('TextureManager_8hpp_source.html',''); initResizable(tr
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>        std::shared_ptr&lt;sf::Texture&gt; <a class="code hl_function" href="classrtype_1_1TextureManager.html#ac94c4277f0679b8fb65af2eb2f3d04e2">getTexture</a>(std::string key);</div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>        <span class="keywordtype">void</span> <a class="code hl_function" href="classrtype_1_1TextureManager.html#a1e4616eac10804f2e0c4905de2d80af8">registerTexture</a>(std::string key, std::string path, sf::IntRect rect);</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>        std::map&lt;std::string, std::shared_ptr&lt;sf::Texture&gt;&gt; _textures;</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    };</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>        <span class="keywordtype">void</span> <a class="code hl_function" href="classrtype_1_1TextureManager.html#a1e4616eac10804f2e0c4905de2d80af8">registerTexture</a>(std::string key, std::string path);</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>        std::map&lt;std::string, std::shared_ptr&lt;sf::Texture&gt;&gt; _textures;</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    };</div>
 </div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>}</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>}</div>
 <div class="ttc" id="aclassrtype_1_1TextureManager_html"><div class="ttname"><a href="classrtype_1_1TextureManager.html">rtype::TextureManager</a></div><div class="ttdef"><b>Definition</b> TextureManager.hpp:16</div></div>
-<div class="ttc" id="aclassrtype_1_1TextureManager_html_a1e4616eac10804f2e0c4905de2d80af8"><div class="ttname"><a href="classrtype_1_1TextureManager.html#a1e4616eac10804f2e0c4905de2d80af8">rtype::TextureManager::registerTexture</a></div><div class="ttdeci">void registerTexture(std::string key, std::string path, sf::IntRect rect)</div><div class="ttdef"><b>Definition</b> TextureManager.cpp:18</div></div>
-<div class="ttc" id="aclassrtype_1_1TextureManager_html_ac94c4277f0679b8fb65af2eb2f3d04e2"><div class="ttname"><a href="classrtype_1_1TextureManager.html#ac94c4277f0679b8fb65af2eb2f3d04e2">rtype::TextureManager::getTexture</a></div><div class="ttdeci">std::shared_ptr&lt; sf::Texture &gt; getTexture(std::string key)</div><div class="ttdef"><b>Definition</b> TextureManager.cpp:11</div></div>
+<div class="ttc" id="aclassrtype_1_1TextureManager_html_a1e4616eac10804f2e0c4905de2d80af8"><div class="ttname"><a href="classrtype_1_1TextureManager.html#a1e4616eac10804f2e0c4905de2d80af8">rtype::TextureManager::registerTexture</a></div><div class="ttdeci">void registerTexture(std::string key, std::string path, sf::IntRect rect)</div><div class="ttdef"><b>Definition</b> TextureManager.cpp:21</div></div>
+<div class="ttc" id="aclassrtype_1_1TextureManager_html_ac94c4277f0679b8fb65af2eb2f3d04e2"><div class="ttname"><a href="classrtype_1_1TextureManager.html#ac94c4277f0679b8fb65af2eb2f3d04e2">rtype::TextureManager::getTexture</a></div><div class="ttdeci">std::shared_ptr&lt; sf::Texture &gt; getTexture(std::string key)</div><div class="ttdef"><b>Definition</b> TextureManager.cpp:13</div></div>
 <div class="ttc" id="aclassrtype_1_1TextureManager_html_ad74ae35d55a2f91092d91a7eebf137c7"><div class="ttname"><a href="classrtype_1_1TextureManager.html#ad74ae35d55a2f91092d91a7eebf137c7">rtype::TextureManager::getInstance</a></div><div class="ttdeci">static TextureManager &amp; getInstance()</div><div class="ttdef"><b>Definition</b> TextureManager.hpp:18</div></div>
 <div class="ttc" id="anamespacertype_html"><div class="ttname"><a href="namespacertype.html">rtype</a></div><div class="ttdef"><b>Definition</b> Keys.hpp:16</div></div>
 </div><!-- fragment --></div><!-- contents -->

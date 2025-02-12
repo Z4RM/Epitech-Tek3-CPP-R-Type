@@ -16,9 +16,11 @@ var searchData=
   ['threadpool_2ecpp_13',['ThreadPool.cpp',['../ThreadPool_8cpp.html',1,'']]],
   ['threadpool_2ehpp_14',['ThreadPool.hpp',['../include_2ThreadPool_8hpp.html',1,'(Global Namespace)'],['../src_2ThreadPool_2ThreadPool_8hpp.html',1,'(Global Namespace)']]],
   ['time_15',['time',['../structrtype_1_1models_1_1SpawnPoint.html#a3f40432aa780dba5bd18b83e87fd62a5',1,'rtype::models::SpawnPoint']]],
-  ['titlebar_16',['titleBar',['../structrtype_1_1entities_1_1Style.html#a29eae3b029b7b4ac4353a5cb0a9e4136',1,'rtype::entities::Style']]],
-  ['type_17',['R-Type',['../md_README.html#autotoc_md24',1,'']]],
-  ['type_18',['type',['../structrtype_1_1models_1_1EnemySpawn.html#af029104507aff576b1ea2056a384fab3',1,'rtype::models::EnemySpawn']]],
-  ['types_19',['Commit Types',['../md_CONTRIBUTING.html#autotoc_md21',1,'']]],
-  ['types_20of_20branches_20',['Types of Branches',['../md_CONTRIBUTING.html#autotoc_md15',1,'']]]
+  ['timeuntilnextmove_16',['timeUntilNextMove',['../structrtype_1_1components_1_1IA.html#aeadb2c61df64870dd132ad0c606d5e3f',1,'rtype::components::IA']]],
+  ['titlebar_17',['titleBar',['../structrtype_1_1entities_1_1Style.html#a29eae3b029b7b4ac4353a5cb0a9e4136',1,'rtype::entities::Style']]],
+  ['turret_18',['TURRET',['../namespacertype_1_1models.html#a25dc1bce3e480831a3881452fa482800a94bf69fd524fcf8012c9bf395874de50',1,'rtype::models']]],
+  ['type_19',['R-Type',['../md_README.html#autotoc_md24',1,'']]],
+  ['type_20',['type',['../classrtype_1_1network_1_1PacketBonus.html#a366e42383c0a08bce6e7fa781f2caf3c',1,'rtype::network::PacketBonus::type'],['../structrtype_1_1components_1_1Bonus.html#a61ad4d004f16df8337bf4afcf0e98813',1,'rtype::components::Bonus::type'],['../structrtype_1_1components_1_1IA.html#ac533aa0e6a9a6a66be1935d15c19f9e5',1,'rtype::components::IA::type'],['../structrtype_1_1models_1_1EnemyData.html#abd332b3d1ec752ff03c187852232a082',1,'rtype::models::EnemyData::type'],['../structrtype_1_1models_1_1EnemySpawn.html#af029104507aff576b1ea2056a384fab3',1,'rtype::models::EnemySpawn::type']]],
+  ['types_21',['Commit Types',['../md_CONTRIBUTING.html#autotoc_md21',1,'']]],
+  ['types_20of_20branches_22',['Types of Branches',['../md_CONTRIBUTING.html#autotoc_md15',1,'']]]
 ];
