@@ -157,6 +157,9 @@ void rtype::systems::Movement::handleCollisions(unsigned int entity, components:
                                 }
                             }
                         }
+                        if (playerBonuses) {
+                            componentManager.removeComponent<components::PlayerBonuses>(entity);
+                        }
                     }
                     if (projectileInfo && ai1) {
                         if (!projectileInfo->isSuperProjectile) {

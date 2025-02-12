@@ -30,7 +30,7 @@ namespace rtype::entities {
         components::Health health(100);
         componentManager.addComponent<components::Health>(_id, health, entityManager);
 
-        components::Damage damage = {500};
+        components::Damage damage = {600};
         componentManager.addComponent<components::Damage>(_id, damage, entityManager);
 
         std::vector<components::Velocity> move;

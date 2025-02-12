@@ -31,7 +31,7 @@ namespace rtype::entities {
         componentManager.addComponent<components::Size>(_id, size, entityManager);
         componentManager.addComponent<components::Speed>(_id, { 0 }, entityManager);
 
-        components::Health health(3000);
+        components::Health health(5000);
         componentManager.addComponent<components::Health>(_id, health, entityManager);
 
         components::Damage damage = {500};

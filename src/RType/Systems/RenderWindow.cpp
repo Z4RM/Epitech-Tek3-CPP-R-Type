@@ -88,6 +88,7 @@ void rtype::systems::RenderWindowSys::render(ecs::EntityManager &entityManager, 
             auto counter = componentManager.getComponent<components::Counter>(e);
             auto hitbox = componentManager.getComponent<components::Hitbox>(e);
             auto playerBonuses = componentManager.getComponent<components::PlayerBonuses>(e);
+            auto health = componentManager.getComponent<components::Health>(e);
 
 
             if (text) {
@@ -100,8 +101,10 @@ void rtype::systems::RenderWindowSys::render(ecs::EntityManager &entityManager, 
                 renderWindow->window->draw(hitbox->rect);
             }
             if (playerBonuses) {
-                for (auto &bonus: playerBonuses->bonuses) {
-                    renderWindow->window->draw(bonus.second);
+                if (health && health->value > 0) {
+                    for (auto &bonus: playerBonuses->bonuses) {
+                        renderWindow->window->draw(bonus.second);
+                    }
                 }
             }
         }

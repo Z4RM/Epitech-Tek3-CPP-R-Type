@@ -80,7 +80,7 @@ rtype::entities::Enemy::Enemy(
     componentManager.addComponent<components::Speed>(_id, speed, entityManager);
     componentManager.addComponent<components::NetId>(_id, netId, entityManager);
 
-    components::Health health(50);
+    components::Health health(200);
     componentManager.addComponent<components::Health>(_id, health, entityManager);
 
     components::Damage damage = {200};

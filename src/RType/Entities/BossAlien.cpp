@@ -19,7 +19,7 @@
 namespace rtype::entities {
     BossAlien::BossAlien(ecs::ComponentManager &componentManager, ecs::EntityManager &entityManager, components::Position
     pos, components::NetId netId) : AEntity(entityManager){
-        components::Size size = {64, 64};
+        components::Size size = {155, 204};
         componentManager.addComponent<components::Position>(_id, pos, entityManager);
 #ifdef RTYPE_IS_SERVER
         componentManager.addComponent<components::Hitbox>(_id, {pos, size.width, size.height}, entityManager);
