@@ -8,7 +8,7 @@
 #include "PacketPlayerShoot.hpp"
 namespace rtype::network {
     std::vector<char> PacketPlayerShoot::bufferize() const {
-        std::vector<char> buffer(sizeof(this->_code) + sizeof(this->netId) + sizeof(this->isSuperProjectile) + sizeof
+        std::vector<char> buffer(sizeof(this->_code) + sizeof(this->netId) + sizeof(bool) + sizeof
         (this->eventId) + sizeof(pos.x) + sizeof(pos.y) + sizeof(isPlayer));
 
         size_t currentSize = 0;
@@ -17,8 +17,8 @@ namespace rtype::network {
         currentSize += sizeof(this->_code);
         std::memcpy(buffer.data() + currentSize, &this->netId, sizeof(this->netId));
         currentSize += sizeof(this->netId);
-        std::memcpy(buffer.data() + currentSize, &this->isSuperProjectile, sizeof(this->isSuperProjectile));
-        currentSize+= sizeof(this->isSuperProjectile);
+        std::memcpy(buffer.data() + currentSize, &this->isSuperProjectile, sizeof(bool));
+        currentSize+= sizeof(bool);
         std::memcpy(buffer.data() + currentSize, &this->eventId, sizeof(this->eventId));
         currentSize += sizeof(this->eventId);
         std::memcpy(buffer.data() + currentSize, &this->pos.x, sizeof(this->pos.x));
@@ -33,8 +33,8 @@ namespace rtype::network {
         size_t currentSize = sizeof(this->_code);
         std::memcpy(&this->netId, buffer.data() + currentSize, sizeof(this->netId));
         currentSize += sizeof(this->netId);
-        std::memcpy(&this->isSuperProjectile, buffer.data() + currentSize, sizeof(this->isSuperProjectile));
-        currentSize += sizeof(this->isSuperProjectile);
+        std::memcpy(&this->isSuperProjectile, buffer.data() + currentSize, sizeof(bool));
+        currentSize += sizeof(bool);
         std::memcpy(&this->eventId, buffer.data() + currentSize, sizeof(this->eventId));
         currentSize += sizeof(this->eventId);
         std::memcpy(&this->pos.x, buffer.data() + currentSize, sizeof(this->pos.x));

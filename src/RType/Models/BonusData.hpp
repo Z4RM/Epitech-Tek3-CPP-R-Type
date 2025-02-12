@@ -14,7 +14,7 @@
 namespace rtype::models {
     struct BonusData {
         components::Position pos = {};
-        long eventId = 0;
+        int eventId = 0;
         EBonusType bonusType = EBonusType::FORCE;
     };
 }
