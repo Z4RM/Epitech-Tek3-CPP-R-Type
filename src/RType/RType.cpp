@@ -170,6 +170,8 @@ int rtype::RType::run() {
     TextureManager::getInstance().registerTexture("boss_alien", "assets/sprites/boss-alien.gif", {27, 2, 155, 204});
     TextureManager::getInstance().registerTexture("boss_cask", "assets/sprites/boss-cask.gif", {253, 1, 64, 80});
     TextureManager::getInstance().registerTexture("boss_robot", "assets/sprites/boss-robot.gif", {2, 2, 176, 144});
+    TextureManager::getInstance().registerTexture("boss_machin", "assets/sprites/boss-machin.gif", {1, 1, 128, 48});
+    TextureManager::getInstance().registerTexture("boss_darkplayer", "assets/sprites/players.gif", {133, 70, 32, 14});
 
     systemManager.addSystem(rtype::systems::RenderWindowSys::render);
     systemManager.addSystem(rtype::systems::Sound::play);

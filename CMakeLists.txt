@@ -140,6 +140,10 @@ set(RTYPE_SRC
         src/RType/Entities/BossCask.hpp
         src/RType/Entities/BossRobot.cpp
         src/RType/Entities/BossRobot.hpp
+        src/RType/Entities/BossMachin.cpp
+        src/RType/Entities/BossMachin.hpp
+        src/RType/Entities/BossDarkplayer.cpp
+        src/RType/Entities/BossDarkplayer.hpp
 )
 
 set(CLIENT_SRC
