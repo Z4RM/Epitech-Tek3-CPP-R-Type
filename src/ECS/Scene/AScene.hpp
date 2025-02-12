@@ -19,11 +19,17 @@ namespace rtype::ecs {
 
         void update(SystemManager &sysMg) final { sysMg.updateSystems(_entityManager, _componentManager); }
 
-        void unload() final { for (const auto &entity : _entities) {
-            _entityManager.destroyEntity(entity, this->_componentManager);
-        }};
+        void unload() final {
+            for (const auto &entity : _entities) {
+                _entityManager.destroyEntity(entity);
+                _componentManager.removeAllComponent(entity);
+            }
+            this->_loaded = false;
+        };
 
         void registerEntity(IEntity &entity) final { this->_entities.emplace_back(entity.getId()); }
+
+        void registerEntity(unsigned int entity) final { this->_entities.emplace_back(entity); }
 
         bool isLoaded() final { return this->_loaded; }
 

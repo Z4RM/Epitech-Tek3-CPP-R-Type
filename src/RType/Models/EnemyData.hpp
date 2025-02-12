@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2025
 ** RType
 ** File description:
-** TODO: add description
+** EnemyData.hpp
 */
 
 #pragma once
@@ -16,5 +16,6 @@ namespace rtype::models {
         components::Size size{};
         components::NetId netId;
         int health = 0;
+        EEnemyType type = EEnemyType::BASIC;
     };
 }

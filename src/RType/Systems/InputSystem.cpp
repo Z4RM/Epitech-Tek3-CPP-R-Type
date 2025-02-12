@@ -5,16 +5,15 @@
 ** InputSystem.cpp
 */
 
+#include "Components.hpp"
 #include "InputSystem.hpp"
 
-#include <spdlog/spdlog.h>
-
-#include "Components.hpp"
+#include "ECS/Scene/SceneManager.hpp"
 
 void rtype::systems::InputSystem::handleInput(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager, const
- sf::Event &event, entities::RWindow *window) {
+                                              sf::Event &event, entities::RWindow *window) {
     const auto entities = entityManager.getEntities();
-    for (const auto &entity : entities) {
+    for (const auto entity : entities) {
         auto inputHandler = componentManager.getComponent<rtype::components::InputHandler>(entity);
 
         //TODO: onclick should not depend on text
@@ -25,27 +24,35 @@ void rtype::systems::InputSystem::handleInput(ecs::EntityManager &entityManager,
 
         if (text) {
             if (text->text.getGlobalBounds().contains(worldPos)) {
+                text->text.setFillColor(sf::Color::Red);
+                componentManager.addComponent<components::SfText>(entity, *text, entityManager);
                 if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
                     if (onClick) {
                         onClick->fn();
                     }
                 }
-                text->text.setFillColor(sf::Color::Red);
             } else {
                 sf::Color color = text->text.getFillColor();
-                if (color == sf::Color::Red)
+                if (color == sf::Color::Red) {
                     text->text.setFillColor(sf::Color::White);
+                    componentManager.addComponent<components::SfText>(entity, *text, entityManager);
+                }
             }
-            componentManager.addComponent<components::SfText>(entity, *text);
         }
 
         if (!inputHandler)
             continue;
 
-        auto action = inputHandler->keyActions.equal_range(event.key.code);
-        for (auto& todo = action.first; todo != action.second; todo++) {
-            if (event.type == todo->second.first)
-                todo->second.second();
+        if (event.type == sf::Event::KeyPressed || event.type == sf::Event::KeyReleased) {
+            auto [fst, snd] = inputHandler->keyActions.equal_range(event.key.code);
+
+            if (fst == inputHandler->keyActions.end())
+                return;
+
+            for (auto todo = fst; todo != snd; ++todo) {
+                if (event.type == todo->second.first)
+                    todo->second.second();
+            }
         }
     }
 }

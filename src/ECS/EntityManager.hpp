@@ -10,7 +10,7 @@
 #include <unordered_set>
 #include <queue>
 #include <mutex>
-#include "ComponentManager.hpp"
+
 
 /**
  * @class EntityManager
@@ -59,13 +59,12 @@ namespace rtype::ecs
          * @param entity The unique ID of the entity to destroy.
          * @param componentManager the component manager used for removing components of an entity
          */
-        void destroyEntity(unsigned int entity, ComponentManager &componentManager) {
+        void destroyEntity(unsigned int entity) {
             std::lock_guard lock(_entitiesMutex);
             if (_activeEntities.find(entity) != _activeEntities.end()) {
                 _activeEntities.erase(entity);
                 _availableIds.push(entity);
             }
-            componentManager.removeAllComponent(entity);
         }
 
         /**
@@ -77,7 +76,6 @@ namespace rtype::ecs
          * @return `true` if the entity is active, otherwise `false`.
          */
         bool isEntityActive(unsigned int entity) const {
-            std::unique_lock lock(_entitiesMutex);
             return _activeEntities.find(entity) != _activeEntities.end();
         }
 
@@ -94,6 +92,8 @@ namespace rtype::ecs
             std::unique_lock lock(_entitiesMutex);
             return _activeEntities;
         }
+
+        std::mutex &getMutex() { return this->_entitiesMutex; }
 
     private:
         /**

@@ -9,6 +9,7 @@
 #include "Enemy.hpp"
 
 #ifdef RTYPE_IS_CLIENT
+#include "RType/TextureManager/TextureManager.hpp"
 
 rtype::entities::Enemy::Enemy(
     rtype::ecs::EntityManager &entityManager,
@@ -22,37 +23,42 @@ rtype::entities::Enemy::Enemy(
     components::Speed speed
 ) {
     _id = entityManager.createEntity();
-    sprite.texture = std::make_shared<sf::Texture>();
     sprite.sprite = std::make_shared<sf::Sprite>();
-    const int width = static_cast<int>(sprite.size.width);
-    const int height = static_cast<int>(sprite.size.height);
-    const sf::IntRect rect(0, 0, width, height);
-    sprite.texture->loadFromFile(sprite.path, rect);
+    sprite.texture = TextureManager::getInstance().getTexture("enemy");
     sprite.sprite->setTexture(*sprite.texture);
+    sf::Vector2f spriteSize(sprite.sprite->getTextureRect().width, sprite.sprite->getTextureRect().height);
+    sprite.sprite->setOrigin(spriteSize.x / 2, spriteSize.y / 2);
     sprite.sprite->setPosition({pos.x, pos.y});
     sprite.sprite->setScale(2, 2);
-    componentManager.addComponent<components::Sprite>(_id, sprite);
-    componentManager.addComponent<components::Animation>(_id, animation);
-    componentManager.addComponent<components::Position>(_id, pos);
-    componentManager.addComponent<components::Velocity>(_id, vel);
-    componentManager.addComponent<components::Size>(_id, size);
-    componentManager.addComponent<components::Hitbox>(_id, {pos, size});
-    componentManager.addComponent<components::Speed>(_id, speed);
-    componentManager.addComponent<components::NetId>(_id, netId);
+
+    sf::RectangleShape hitboxRect;
+
+    hitboxRect.setOrigin(size.width / 2, size.height / 2);
+    hitboxRect.setPosition(pos.x, pos.y);
+    hitboxRect.setSize({size.width, size.height});
+    hitboxRect.setOutlineColor(sf::Color::Green);
+    hitboxRect.setOutlineThickness(2.f);
+    hitboxRect.setFillColor(sf::Color::Transparent);
+    componentManager.addComponent<components::Animation>(_id, animation, entityManager);
+    componentManager.addComponent<components::Position>(_id, pos, entityManager);
+    componentManager.addComponent<components::Velocity>(_id, vel, entityManager);
+    componentManager.addComponent<components::Size>(_id, size, entityManager);
+    componentManager.addComponent<components::Hitbox>(_id, {pos, size, hitboxRect}, entityManager);
+    componentManager.addComponent<components::Speed>(_id, speed, entityManager);
+    componentManager.addComponent<components::NetId>(_id, netId, entityManager);
 
     components::Health health(50, {sprite.pos.x, sprite.pos.y}, size);
-    componentManager.addComponent<components::Health>(_id, health);
+    componentManager.addComponent<components::Health>(_id, health, entityManager);
 
     components::Damage damage = {200};
-    componentManager.addComponent<components::Damage>(_id, damage);
+    componentManager.addComponent<components::Damage>(_id, damage, entityManager);
 
 
-    std::unordered_map<float, components::Velocity> move;
-    move.insert({
-        0,
-        {-0.5, 0, 0}
-    });
-    componentManager.addComponent<components::IA>(_id, {move});
+    std::vector<components::Velocity> move;
+    move.emplace_back(components::Velocity({-1, -1, 0}));
+    move.emplace_back(components::Velocity({-1, 1, 0}));
+    componentManager.addComponent<components::IA>(_id, {move, models::BASIC, 0.2, 0.7}, entityManager);
+    componentManager.addComponent<components::Sprite>(_id, sprite, entityManager);
 }
 
 #else
@@ -67,25 +73,22 @@ rtype::entities::Enemy::Enemy(
     components::Speed speed
 ) {
     _id = entityManager.createEntity();
-    componentManager.addComponent<components::Position>(_id, pos);
-    componentManager.addComponent<components::Velocity>(_id, vel);
-    componentManager.addComponent<components::Size>(_id, size);
-    componentManager.addComponent<components::Hitbox>(_id, {pos, size});
-    componentManager.addComponent<components::Speed>(_id, speed);
-    componentManager.addComponent<components::NetId>(_id, netId);
+    componentManager.addComponent<components::Position>(_id, pos, entityManager);
+    componentManager.addComponent<components::Velocity>(_id, vel, entityManager);
+    componentManager.addComponent<components::Size>(_id, size, entityManager);
+    componentManager.addComponent<components::Hitbox>(_id, {pos, size}, entityManager);
+    componentManager.addComponent<components::Speed>(_id, speed, entityManager);
+    componentManager.addComponent<components::NetId>(_id, netId, entityManager);
 
-    components::Health health = { 50, 50};
-    componentManager.addComponent<components::Health>(_id, health);
+    components::Health health(200);
+    componentManager.addComponent<components::Health>(_id, health, entityManager);
 
     components::Damage damage = {200};
-    componentManager.addComponent<components::Damage>(_id, damage);
+    componentManager.addComponent<components::Damage>(_id, damage, entityManager);
 
-    std::unordered_map<float, components::Velocity> move;
-    move.insert({
-        0,
-        {-0.5, 0, 0}
-    });
-    componentManager.addComponent<components::IA>(_id, {move});
+    std::vector<components::Velocity> move;
+    move.emplace_back(components::Velocity({-1, -1, 0}));
+    move.emplace_back(components::Velocity({-1, 1, 0}));
+    componentManager.addComponent<components::IA>(_id, {move, models::BASIC, 0.2, 0.7}, entityManager);
 }
-
 #endif

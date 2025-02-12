@@ -18,6 +18,7 @@ namespace rtype::ecs {
         virtual void update(SystemManager &sysMg) = 0;
         virtual bool isLoaded() = 0;
         virtual void registerEntity(IEntity &entity) = 0;
+        virtual void registerEntity(unsigned int entity) = 0;
     };
 
 }

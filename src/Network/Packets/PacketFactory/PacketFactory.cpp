@@ -8,16 +8,17 @@
 #include "PacketFactory.hpp"
 
 #include <Network/Packets/EPacketCode.hpp>
-#include <spdlog/spdlog.h>
 
+#include "Network/Packets/Descriptors/PacketBonus/PacketBonus.hpp"
 #include "Network/Packets/Descriptors/PacketConnect/PacketConnect.hpp"
 #include "Network/Packets/Descriptors/PacketEnemiesData/PacketEnemiesData.hpp"
-#include "Network/Packets/Descriptors/PacketNewPlayer/PacketNewPlayer.hpp"
+#include "Network/Packets/Descriptors/PacketLevelsRegistered/PacketLevelsRegistered.hpp"
 #include "Network/Packets/Descriptors/PacketPlayerCounter/PacketPlayerCounter.hpp"
 #include "Network/Packets/Descriptors/PacketPlayersData/PacketPlayersData.hpp"
 #include "Network/Packets/Descriptors/PacketPlayerShoot/PacketPlayerShoot.hpp"
 #include "Network/Packets/Descriptors/PacketStartGame/PacketStartGame.hpp"
 #include "Network/Packets/Descriptors/PacketWelcome/PacketWelcome.hpp"
+#include "Network/Packets/Descriptors/PacketEndGame/PacketEndGame.hpp"
 
 namespace rtype::network {
     std::unique_ptr<IPacket> PacketFactory::fromBuffer(const std::vector<char> &buffer) {
@@ -31,9 +32,6 @@ namespace rtype::network {
                 break;
             case WELCOME:
                 packet = std::make_unique<PacketWelcome>();
-                break;
-            case NEW_PLAYER:
-                packet = std::make_unique<PacketNewPlayer>();
                 break;
             case PLAYERS_DATA:
                 packet = std::make_unique<PacketPlayersData>();
@@ -49,6 +47,15 @@ namespace rtype::network {
                 break;
             case PLAYER_SHOOT:
                 packet = std::make_unique<PacketPlayerShoot>();
+                break;
+            case LEVELS_REGISTERED:
+                packet = std::make_unique<PacketLevelsRegistered>();
+                break;
+            case END_GAME:
+                packet = std::make_unique<PacketEndGame>();
+                break;
+            case BONUS_SPAWN:
+                packet = std::make_unique<PacketBonus>();
                 break;
             default:
                 throw PacketFactoryException();

@@ -28,20 +28,20 @@ namespace rtype::network {
                 this->connect(serverEndpoint);
                 this->handleClient(this->_socket);
             } catch (std::exception &e) {
-                spdlog::error("Error while creating a endpoint to the server tcp network: {}:{}", address, port);
+                spdlog::error("Unable to connect to TCP socket at {}:{}: {}", address, port, e.what());
             }
         }
     }
 
 
     void TCPNetwork::start() {
-        int numThreads = 2;
+        int numThreads = 10;
         this->_threadPool.emplace(numThreads);
 
         if (IS_SERVER) {
             this->startAccept();
 
-            spdlog::info("Server TCP network started on port: {}", this->_port);
+            spdlog::info("Server's TCP socket started on port {}", this->_port);
         } else {
             PacketConnect packet;
             this->sendPacket(packet);
@@ -50,9 +50,7 @@ namespace rtype::network {
         for (int i = 0; i < numThreads; i++) {
             this->_threadPool->addTask([this] {
                 try {
-                    while (!this->_ioContext.stopped()) {
-                        this->_ioContext.run_one();
-                    }
+                    this->_ioContext.run();
                 } catch (std::exception &e) {
                     spdlog::error("Exception in a TCP IO Thread: {}", e.what());
                 }
@@ -63,7 +61,8 @@ namespace rtype::network {
 
     TCPNetwork::~TCPNetwork() {
         this->setStop(true);
-        this->_socket->close();
+        if (this->_socket)
+            this->_socket->close();
     };
 
 
@@ -74,10 +73,10 @@ namespace rtype::network {
                 std::string address = socket->remote_endpoint().address().to_string();
                 int port = socket->remote_endpoint().port();
 
-                spdlog::info("New client TCP connexion: {}:{}", address, port);
+                spdlog::info("New client connected to TCP socket: {}:{}", address, port);
                 handleClient(socket);
             } else {
-                spdlog::error("TCP Accept error: {}", error.message());
+                spdlog::error("Unable to accept connection on TCP socket: {}", error.message());
             }
             this->startAccept();
         });
@@ -89,7 +88,7 @@ namespace rtype::network {
         socket->async_read_some(asio::buffer(*buffer),
     [this, socket, buffer](const asio::error_code& error, std::size_t bytes_transferred) {
             if (!socket->is_open()) {
-                spdlog::warn("Socket closed before read operation.");
+                spdlog::warn("TCP socket closed before reading operation could be performed");
                 return;
             }
         std::string address = socket->remote_endpoint().address().to_string();
@@ -100,10 +99,10 @@ namespace rtype::network {
             } else {
                 // On Linux, the error code is `asio::error::eof`, but on Windows, it's `asio::error::connection_reset`
                 if (error == asio::error::eof || error == asio::error::connection_reset) {
-                    spdlog::warn("TCP Remote {}:{} closed the connection", address, port);
+                    spdlog::info("Remote {}:{} closed the connection on TCP socket", address, port);
                     this->_onPlayerDisconnect(socket);
                 } else {
-                    spdlog::error("Receive error while reading client: {}", error.message());
+                    spdlog::error("Unable to read client: {}", error.message());
                 }
             }
         });
@@ -112,7 +111,7 @@ namespace rtype::network {
     void TCPNetwork::connect(const asio::ip::tcp::endpoint endpoint) {
         this->_socket->async_connect(endpoint, [this](const asio::error_code& ec) {
             if (ec) {
-                spdlog::error("TCP connect failed: {}", ec.message());
+                spdlog::error("Unable to connect to TCP socket: {}", ec.message());
             }
         });
     }
@@ -123,6 +122,8 @@ namespace rtype::network {
 
         auto targetSocket = socket ? socket : this->_socket;
 
+        if (_socket && !_socket->is_open())
+            return;
         if (!targetSocket || !targetSocket->is_open())
             return;
 
@@ -130,11 +131,9 @@ namespace rtype::network {
         asio::error_code& ec,
         std::size_t) {
             if (ec) {
-                spdlog::error("TCP Error while sending message: {}", ec.message());
+                spdlog::error("Unable to send message on TCP socket: {}", ec.message());
             } else {
-                std::string codeStr = std::to_string(code);
-
-                spdlog::info("TCP Packet {}: successfully sended", codeStr);
+                spdlog::debug("TCP packet [{}] successfully sent", std::to_string(code));
             }
         });
     }
@@ -145,43 +144,37 @@ namespace rtype::network {
         int port = socket->remote_endpoint().port();
 
         if (buffer.size() < 4) {
-            spdlog::error("Invalid TCP Packet received from {}:{}", address, port);
+            spdlog::error("Invalid TCP packet received from {}:{}", address, port);
             return;
         }
 
         try {
             std::unique_ptr<IPacket> packet = PacketFactory::fromBuffer(buffer);
-            spdlog::info("TCP Packet {}: received from {}:{}", std::to_string(packet->getCode()), address, port);
+            spdlog::debug("TCP packet [{}] received from {}:{}", std::to_string(packet->getCode()), address, port);
 
-            for (auto &handler : this->_handlers) {
-                if (handler.first == packet->getCode()) {
-                    handler.second(std::move(packet), socket);
-                    return;
-                }
+            auto it = this->_netHandlers.find(packet->getCode());
+
+            if (it != this->_netHandlers.end()) {
+                it->second->handle(std::move(packet), socket);
+                return;
             }
-            spdlog::warn("No handler found for packet: {}", std::to_string(packet->getCode()));
-        } catch (std::exception &e) {
-            spdlog::error(e.what());
-        }
-    }
 
-    void TCPNetwork::addHandler(EPacketCode code, std::function<void(std::unique_ptr<IPacket>,
-        std::shared_ptr<asio::ip::tcp::socket> socket)> handler) {
-        this->_handlers.push_back({code, handler});
+            spdlog::warn("No handler found for packet [{}]", std::to_string(packet->getCode()));
+        } catch (std::exception &e) {
+            spdlog::error("Unable to handle TCP packet: {}", e.what());
+        }
     }
 
     void TCPNetwork::setStop(bool state) {
-        std::lock_guard<std::mutex> lock(this->_stopMutex);
-        this->_stop = state;
-
-        if (state) {
+        if (state)
             this->_ioContext.stop();
-        }
     }
 
-    bool TCPNetwork::getStop() {
-        std::lock_guard<std::mutex> lock(this->_stopMutex);
-        return this->_stop;
+    TCPNetwork &TCPNetwork::getInstance(unsigned short port) {
+        static TCPNetwork instance(port);
+
+        return instance;
     }
+
 
 }

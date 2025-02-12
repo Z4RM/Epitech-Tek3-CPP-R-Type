@@ -17,7 +17,7 @@ rtype::entities::Window::Window(
     )
 {
     _id = entityManager.createEntity();
-    renderWindow.window = new sf::RenderWindow();
+    renderWindow.window = std::make_shared<sf::RenderWindow>();
     const uint32_t style = mode.style.none * sf::Style::None
         + mode.style.titleBar * sf::Style::Titlebar
         + mode.style.resize * sf::Style::Resize
@@ -28,9 +28,9 @@ rtype::entities::Window::Window(
     const int width = static_cast<int>(size.width);
     const int height = static_cast<int>(size.height);
     mode.mode = sf::VideoMode(width, height);
-    componentManager.addComponent<components::Size>(_id, size);
-    componentManager.addComponent<components::String>(_id, title);
-    componentManager.addComponent<RWindow>(_id, renderWindow);
-    componentManager.addComponent<Mode>(_id, mode);
-    componentManager.addComponent<components::Created>(_id, components::Created{false});
+    componentManager.addComponent<components::Size>(_id, size, entityManager);
+    componentManager.addComponent<components::String>(_id, title, entityManager);
+    componentManager.addComponent<RWindow>(_id, renderWindow, entityManager);
+    componentManager.addComponent<Mode>(_id, mode, entityManager);
+    componentManager.addComponent<components::Created>(_id, components::Created{false}, entityManager);
 }

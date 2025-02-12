@@ -12,7 +12,10 @@
 #include <memory>
 #include <mutex>
 #include <typeindex>
+
+#include "EntityManager.hpp"
 #include "SparseSet.hpp"
+
 
 /**
  * @class ComponentManager
@@ -23,6 +26,7 @@
  */
 namespace rtype::ecs
 {
+
     class ComponentManager {
     public:
         /**
@@ -34,11 +38,15 @@ namespace rtype::ecs
          * @tparam T The type of the component.
          * @param entity The unique identifier of the entity.
          * @param component The component to add.
+         * @param entityManager the entityManager for verifying if the entity is alive
          */
         template <typename T>
-        void addComponent(unsigned int entity, const T& component) {
+        void addComponent(unsigned int entity, const T& component, EntityManager &entityManager) {
+            std::unique_lock entityLock(entityManager.getMutex());
             std::lock_guard lock(_componentsMutex);
 
+            if (!entityManager.isEntityActive(entity))
+                return;
             if (_componentSets.find(typeid(T)) == _componentSets.end()) {
                 _componentSets[typeid(T)] = std::make_shared<SparseSet<T>>();
             }

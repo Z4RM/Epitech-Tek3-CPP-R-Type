@@ -9,6 +9,7 @@
 
 namespace rtype::components {
     struct GameState {
-        bool isStarted = true;
+        bool isStarted = false;
+        int playerCount = 0;
     };
 }

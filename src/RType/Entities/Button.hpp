@@ -7,6 +7,7 @@
 
 #pragma once
 #include "ECS/AEntity.hpp"
+#include "ECS/ComponentManager.hpp"
 #include "RType/Components/Client/OnClick.hpp"
 #include "RType/Components/Client/SfText.hpp"
 

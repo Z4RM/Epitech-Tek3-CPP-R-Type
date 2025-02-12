@@ -6,7 +6,9 @@
 */
 
 #pragma once
+
 #include "ECS/AEntity.hpp"
+#include "ECS/ComponentManager.hpp"
 
 namespace rtype::entities {
     class Game final : ecs::AEntity {
