@@ -143,6 +143,12 @@ void rtype::systems::Movement::handleCollisions(unsigned int entity, components:
                         if (!player && !parentEntity) {
                             entityManager.destroyEntity(entity);
                             componentManager.removeAllComponent(entity);
+                            if (childEntities) {
+                                for (auto &childEntity : childEntities->childEntities) {
+                                    entityManager.destroyEntity(childEntity);
+                                    componentManager.removeAllComponent(childEntity);
+                                }
+                            }
                         }
                     }
                     if (projectileInfo && ai1) {

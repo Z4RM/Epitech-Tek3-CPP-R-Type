@@ -116,7 +116,7 @@ namespace rtype::levels {
                         auto y = static_cast<float>(dis(gen));
                         float x = 800.f;
 
-                        if (enemySpawn.type == 2) {
+                        if (enemySpawn.type != 1) {
                             x = 600.f;
                             y = 300;
                         }

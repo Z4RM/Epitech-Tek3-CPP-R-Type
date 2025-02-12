@@ -124,6 +124,8 @@ set(RTYPE_SRC
         src/RType/Components/Shared/ParentEntity.hpp
         src/RType/Components/Shared/ChildEntities.hpp
         src/RType/Components/Server/AiShoot.hpp
+        src/RType/Entities/EnemyCornus.cpp
+        src/RType/Entities/EnemyCornus.hpp
 )
 
 set(CLIENT_SRC

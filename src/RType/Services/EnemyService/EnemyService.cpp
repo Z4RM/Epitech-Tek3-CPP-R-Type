@@ -11,6 +11,7 @@
 
 #include "RType/Components/Server/AiShoot.hpp"
 #include "RType/Entities/BossTurret.hpp"
+#include "RType/Entities/EnemyCornus.hpp"
 #include "RType/Systems/Network/Network.hpp"
 
 #ifdef RTYPE_IS_CLIENT
@@ -29,6 +30,10 @@ namespace rtype::services {
             EnemyService::createTurret(entityManager, componentManager, pos, netId);
             return;
         }
+        if (type == models::CORNUS) {
+            entities::EnemyCornus cornus(componentManager, entityManager, pos, {netId});
+            return;
+        }
         components::Sprite sprite3 = {{600, 100, 0}, {33, 36}, "assets/sprites/enemy.gif", {1}};
         rtype::entities::Enemy enemy(
             entityManager,
@@ -45,6 +50,10 @@ namespace rtype::services {
 
         if (type == models::BOSS_TURRET) {
             entities::BossTurret boss(componentManager, entityManager, pos, {systems::Network::globalNetId.load()});
+            return;
+        }
+        if (type == models::CORNUS) {
+            entities::EnemyCornus cornus(componentManager, entityManager, pos, {systems::Network::globalNetId.load()});
             return;
         }
         rtype::entities::Enemy enemy(
