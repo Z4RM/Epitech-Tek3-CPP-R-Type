@@ -21,7 +21,7 @@
 
 namespace rtype::services {
     void BonusService::createBonus(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager,
-    models::EBonusType type, components::Position pos, long eventId) {
+    models::EBonusType type, components::Position pos, int eventId) {
         unsigned int entityId = entityManager.createEntity();
 
         components::Size size {};

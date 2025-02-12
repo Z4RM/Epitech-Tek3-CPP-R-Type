@@ -11,6 +11,7 @@
 
 namespace rtype::components {
     static std::atomic<int> globalEventId = 0;
+
     struct EventId {
         int value = 0;
         int netIdEmitter = -1;

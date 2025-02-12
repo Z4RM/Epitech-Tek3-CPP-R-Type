@@ -20,7 +20,7 @@
     {
       "time": 30,
       "enemies": [
-        { "type": 7, "quantity": 1 }
+        { "type": 2, "quantity": 1 }
       ]
     }
   ]

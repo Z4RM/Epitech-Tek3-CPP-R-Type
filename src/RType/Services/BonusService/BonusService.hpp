@@ -17,6 +17,6 @@ namespace rtype::services {
     class BonusService {
     public:
         static void createBonus(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager, models::EBonusType
-        type, components::Position pos, long eventId);
+        type, components::Position pos, int eventId);
     };
 }
