@@ -121,6 +121,8 @@ set(RTYPE_SRC
         src/RType/Components/Shared/PlayerBonuses.hpp
         src/RType/Entities/BossTurret.cpp
         src/RType/Entities/BossTurret.hpp
+        src/RType/Components/Shared/ParentEntity.hpp
+        src/RType/Components/Shared/ChildEntities.hpp
 )
 
 set(CLIENT_SRC

@@ -72,7 +72,6 @@ void rtype::Config::_initializeSounds() {
     } catch (const std::invalid_argument &exception) {
         spdlog::warn("Invalid volume value provided");
     }
-    spdlog::info("{} {}", _sounds.volumes.effects, _sounds.volumes.music);
 }
 
 rtype::Config::Sounds rtype::Config::getSounds() const {

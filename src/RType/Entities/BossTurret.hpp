@@ -19,7 +19,12 @@ namespace rtype::entities {
             ecs::ComponentManager &componentManager,
             ecs::EntityManager &entityManager,
             components::Position pos,
-            components::NetId
+            components::NetId netId
             );
+
+#ifdef RTYPE_IS_SERVER
+        static void createTurret(unsigned int parentEntity, ecs::ComponentManager &componentManager, ecs::EntityManager
+         &entityManager, components::Position turretPos);
+#endif
     };
 }

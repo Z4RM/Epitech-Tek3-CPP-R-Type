@@ -17,6 +17,8 @@
 #include "RType/Components/Shared/ProjectileInfo.hpp"
 #include <random>
 
+#include "RType/Components/Shared/ParentEntity.hpp"
+
 float rtype::systems::Movement::getDistanceBetweenPositions(const rtype::components::Position *pos1,
                                                             const rtype::components::Position *pos2) {
     return std::sqrt(
@@ -198,76 +200,86 @@ void rtype::systems::Movement::move(rtype::ecs::EntityManager& entityManager,
 #endif
 
             const auto ia = componentManager.getComponent<components::IA>(entity);
-            const auto pos2 = componentManager.getComponent<components::Position>(entity);
+            const auto parentEntity = componentManager.getComponent<components::ParentEntity>(entity);
 
-            if (ia && pos2 && !peaceful) {
-                ia->timeUntilNextMove -= deltaTime;
-                if (ia->moves.empty())
-                    continue;
+            if (parentEntity && ia && pos) {
+                auto parentPos = componentManager.getComponent<components::Position>(parentEntity->entity);
 
-                if ( ia->timeUntilNextMove <= 0.0f) {
-                    std::uniform_int_distribution<size_t> dist(0, ia->moves.size() - 1);
-                    int newMoveIndex = dist(gen);
+                if (parentPos) {
+                    pos->y = parentPos->y + parentEntity->yOffset;
+                }
+            }
 
-                    if (ia->lastMoveIndex != -1) {
-                        std::unordered_set<int> invalidMoves;
-                        invalidMoves.insert(ia->lastMoveIndex);
+            if (ia && pos && !peaceful) {
+                if (!ia->moves.empty()) {
+                    ia->timeUntilNextMove -= deltaTime;
 
-                        std::vector<int> validMoves;
-                        for (size_t i = 0; i < ia->moves.size(); ++i) {
-                            if (invalidMoves.find(i) == invalidMoves.end()) {
-                                validMoves.push_back(i);
+                    if ( ia->timeUntilNextMove <= 0.0f) {
+                        std::uniform_int_distribution<size_t> dist(0, ia->moves.size() - 1);
+                        int newMoveIndex = dist(gen);
+
+                        if (ia->lastMoveIndex != -1) {
+                            std::unordered_set<int> invalidMoves;
+                            invalidMoves.insert(ia->lastMoveIndex);
+
+                            std::vector<int> validMoves;
+                            for (size_t i = 0; i < ia->moves.size(); ++i) {
+                                if (invalidMoves.find(i) == invalidMoves.end()) {
+                                    validMoves.push_back(i);
+                                }
+                            }
+
+                            if (!validMoves.empty()) {
+                                std::uniform_int_distribution<size_t> dist(0, validMoves.size() - 1);
+                                newMoveIndex = validMoves[dist(gen)];
                             }
                         }
 
-                        if (!validMoves.empty()) {
-                            std::uniform_int_distribution<size_t> dist(0, validMoves.size() - 1);
-                            newMoveIndex = validMoves[dist(gen)];
-                        }
+                        ia->lastMoveIndex = newMoveIndex;
+                        std::uniform_real_distribution<float> timeDist(ia->minMoveTime, ia->maxMoveTime);
+                        ia->timeUntilNextMove = timeDist(gen);
+                    }
+                    componentManager.addComponent(entity, *ia, entityManager);
+                    components::Velocity velTarget = ia->moves[ia->lastMoveIndex];
+
+                    if (hitBox) {
+                        handleCollisions(entity, pos.get(), hitBox.get(), entities, componentManager, &velTarget, entityManager);
                     }
 
-                    ia->lastMoveIndex = newMoveIndex;
-                    std::uniform_real_distribution<float> timeDist(ia->minMoveTime, ia->maxMoveTime);
-                    spdlog::warn(ia->lastMoveIndex);
-                    ia->timeUntilNextMove = timeDist(gen);
-                }
-                componentManager.addComponent(entity, *ia, entityManager);
-                components::Velocity velTarget = ia->moves[ia->lastMoveIndex];
+                    auto newPosX = velTarget.x * deltaTime * 1.2;
+                    auto newPosY = velTarget.y * deltaTime * 1.2;
+                    auto newPosZ = velTarget.z * deltaTime * 1.2;
 
-                if (hitBox) {
-                    handleCollisions(entity, pos2.get(), hitBox.get(), entities, componentManager, &velTarget, entityManager);
-                }
+                    if (speed) {
+                        newPosX *= speed->value;
+                        newPosY *= speed->value;
+                        newPosZ *= speed->value;
+                    }
+                    pos->x += newPosX;
+                    pos->y += newPosY;
+                    pos->z += newPosZ;
 
-                auto newPosX = velTarget.x * deltaTime * 1.2;
-                auto newPosY = velTarget.y * deltaTime * 1.2;
-                auto newPosZ = velTarget.z * deltaTime * 1.2;
-
-                if (speed) {
-                    newPosX *= speed->value;
-                    newPosY *= speed->value;
-                    newPosZ *= speed->value;
-                }
-                pos2->x += newPosX;
-                pos2->y += newPosY;
-                pos2->z += newPosZ;
-
-                if (IS_SERVER && (pos2->x > 900 || pos2->x < -50)) {
-                    entityManager.destroyEntity(entity);
-                    componentManager.removeAllComponent(entity);
-                    return;
+                    if (IS_SERVER && (pos->x > 900 || pos->x < -50)) {
+                        entityManager.destroyEntity(entity);
+                        componentManager.removeAllComponent(entity);
+                        return;
+                    }
                 }
 
-                if (pos2->y > 0 && pos2->y < 600)
-                    componentManager.addComponent<components::Position>(entity, *pos2, entityManager);
+                if (pos->y > 10 && pos->y < 560 && !parentEntity) {
+                    componentManager.addComponent<components::Position>(entity, *pos, entityManager);
+                } else if (parentEntity) {
+                    componentManager.addComponent<components::Position>(entity, *pos, entityManager);
+                }
             }
 #ifdef RTYPE_IS_CLIENT
             if (hitBox) {
                 hitBox->rect.setPosition({pos->x, pos->y});
                 componentManager.addComponent<components::Hitbox>(entity, *hitBox, entityManager);
             }
-            if (health && pos2) {
-                health->bgBar.setPosition({pos2->x - 25, pos2->y - 20});
-                health->healthBar.setPosition({pos2->x - 25, pos2->y - 20});
+            if (health && pos) {
+                health->bgBar.setPosition({pos->x - 25, pos->y - 20});
+                health->healthBar.setPosition({pos->x - 25, pos->y - 20});
                 componentManager.addComponent<components::Health>(entity, *health, entityManager);
             }
 #endif

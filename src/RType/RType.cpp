@@ -159,6 +159,7 @@ int rtype::RType::run() {
     TextureManager::getInstance().registerTexture("super_projectile", "assets/sprites/projectile/player-shots-charged.gif");
     TextureManager::getInstance().registerTexture("force", "assets/sprites/force.gif", {162, 411, 32, 20});
     TextureManager::getInstance().registerTexture("boss_turret", "assets/sprites/boss_turret.gif", {1, 1, 592, 176});
+    TextureManager::getInstance().registerTexture("turret", "assets/sprites/boss_turret.gif", {153, 908, 32, 15});
 
     systemManager.addSystem(rtype::systems::RenderWindowSys::render);
     systemManager.addSystem(rtype::systems::Sound::play);

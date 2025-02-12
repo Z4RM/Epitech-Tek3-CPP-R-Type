@@ -3,18 +3,6 @@
   "duration":10,
   "spawns":[
     {
-      "time": 3,
-      "bonuses": [
-        1
-      ],
-      "enemies": [
-        {
-          "type": 1,
-          "quantity": 3
-        }
-      ]
-    },
-    {
       "time": 5,
       "enemies": [
         {

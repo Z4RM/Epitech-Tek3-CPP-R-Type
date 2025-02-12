@@ -10,6 +10,10 @@
 #include <spdlog/spdlog.h>
 
 #include "Components.hpp"
+#include "RType/Components/Shared/ChildEntities.hpp"
+#include "RType/Components/Shared/ParentEntity.hpp"
+#include "RType/Services/EnemyService/EnemyService.hpp"
+#include "RType/Systems/Network/Network.hpp"
 
 #ifdef RTYPE_IS_CLIENT
 #include "RType/TextureManager/TextureManager.hpp"
@@ -82,6 +86,25 @@ namespace rtype::entities {
         move.emplace_back(components::Velocity({0, 1, 0}));
         move.emplace_back(components::Velocity({0, -1, 0}));
         componentManager.addComponent<components::IA>(_id, {move, models::BOSS_TURRET, 1, 2}, entityManager);
+        componentManager.addComponent<components::ChildEntities>(_id,  {}, entityManager);
+        BossTurret::createTurret(_id, componentManager, entityManager, {pos.x - 110, pos.y - 20});
+        BossTurret::createTurret(_id, componentManager, entityManager, {pos.x - 170, pos.y});
+        BossTurret::createTurret(_id, componentManager, entityManager, {pos.x - 110, pos.y + 40});
+    }
+
+     void BossTurret::createTurret(unsigned int parentEntity, ecs::ComponentManager &componentManager,
+    ecs::EntityManager &entityManager, components::Position turretPos) {
+        systems::Network::globalNetId.store(systems::Network::globalNetId.load() + 1);
+        auto parentPos = componentManager.getComponent<components::Position>(parentEntity);
+
+        unsigned int turretEntity = services::EnemyService::createTurret(entityManager, componentManager, turretPos, systems::Network::globalNetId.load());
+        componentManager.addComponent<components::ParentEntity>(turretEntity, { parentEntity, turretPos.x - parentPos->x, turretPos.y - parentPos->y }, entityManager);
+
+        auto childEntities = componentManager.getComponent<components::ChildEntities>(parentEntity);
+        if (childEntities) {
+            childEntities->childEntities.emplace_back(turretEntity);
+            componentManager.addComponent<components::ChildEntities>(parentEntity, *childEntities, entityManager);
+        }
     }
 }
 #endif

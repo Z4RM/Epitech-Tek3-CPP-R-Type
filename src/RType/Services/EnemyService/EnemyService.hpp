@@ -15,5 +15,8 @@ namespace rtype::services {
     public:
         static void createEnemy(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager,
         components::Position pos, int netId = 0, models::EEnemyType type = models::BASIC);
+
+        static unsigned int createTurret(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager,
+        components::Position pos, int netId);
     };
 }
