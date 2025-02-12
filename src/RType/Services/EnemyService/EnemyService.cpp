@@ -10,6 +10,7 @@
 #include <spdlog/spdlog.h>
 
 #include "RType/Components/Server/AiShoot.hpp"
+#include "RType/Entities/BossHeart.hpp"
 #include "RType/Entities/BossTurret.hpp"
 #include "RType/Entities/EnemyCornus.hpp"
 #include "RType/Entities/EnemyCrabus.hpp"
@@ -49,6 +50,10 @@ namespace rtype::services {
         }
         if (type == models::PABLITOS) {
             entities::EnemyPablitos pablitos(componentManager, entityManager, pos, {currentNetId});
+            return;
+        }
+        if (type == models::BOSS_HEART) {
+            entities::BossHeart bossHeart(componentManager, entityManager, pos, { currentNetId });
             return;
         }
 #ifdef RTYPE_IS_CLIENT
@@ -112,7 +117,6 @@ namespace rtype::services {
         componentManager.addComponent<components::Sprite>(turretEntity, sprite, entityManager);
 #else
         componentManager.addComponent<components::Hitbox>(turretEntity, {pos, 32 * 1.2, 15 * 1.2}, entityManager);
-        componentManager.addComponent<components::AiShoot>(turretEntity, {0.5f}, entityManager);
 #endif
         return turretEntity;
     }

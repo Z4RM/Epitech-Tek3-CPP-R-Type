@@ -130,6 +130,8 @@ set(RTYPE_SRC
         src/RType/Entities/EnemyCrabus.hpp
         src/RType/Entities/EnemyPablitos.cpp
         src/RType/Entities/EnemyPablitos.hpp
+        src/RType/Entities/BossHeart.cpp
+        src/RType/Entities/BossHeart.hpp
 )
 
 set(CLIENT_SRC

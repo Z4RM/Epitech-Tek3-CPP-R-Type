@@ -164,6 +164,7 @@ int rtype::RType::run() {
     TextureManager::getInstance().registerTexture("cornus", "assets/sprites/enemy-cornus.gif", {223, 140, 62, 46});
     TextureManager::getInstance().registerTexture("crabus", "assets/sprites/enemy-crabus.gif", {135, 36, 29, 28});
     TextureManager::getInstance().registerTexture("pablitos", "assets/sprites/enemy-pablitos.gif", {1, 20, 32, 28});
+    TextureManager::getInstance().registerTexture("boss_heart", "assets/sprites/boss-heart.gif", {2, 292, 256, 142});
 
     systemManager.addSystem(rtype::systems::RenderWindowSys::render);
     systemManager.addSystem(rtype::systems::Sound::play);

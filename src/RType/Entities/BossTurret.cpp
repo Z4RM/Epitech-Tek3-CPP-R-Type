@@ -10,6 +10,7 @@
 #include <spdlog/spdlog.h>
 
 #include "Components.hpp"
+#include "RType/Components/Server/AiShoot.hpp"
 #include "RType/Components/Shared/ChildEntities.hpp"
 #include "RType/Components/Shared/ParentEntity.hpp"
 #include "RType/Services/EnemyService/EnemyService.hpp"
@@ -93,7 +94,7 @@ namespace rtype::entities {
     }
 
      void BossTurret::createTurret(unsigned int parentEntity, ecs::ComponentManager &componentManager,
-    ecs::EntityManager &entityManager, components::Position turretPos) {
+    ecs::EntityManager &entityManager, components::Position turretPos, float cooldown) {
         systems::Network::globalNetId.store(systems::Network::globalNetId.load() + 1);
         auto parentPos = componentManager.getComponent<components::Position>(parentEntity);
 
@@ -105,6 +106,7 @@ namespace rtype::entities {
             childEntities->childEntities.emplace_back(turretEntity);
             componentManager.addComponent<components::ChildEntities>(parentEntity, *childEntities, entityManager);
         }
+        componentManager.addComponent<components::AiShoot>(turretEntity, { cooldown }, entityManager);
     }
 }
 #endif
