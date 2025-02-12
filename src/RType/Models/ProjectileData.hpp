@@ -11,8 +11,8 @@
 
 namespace rtype::models {
     struct ProjectileData {
-        components::EventId event;
-        components::ProjectileInfo projectileInfo;
-        components::Position pos;
+        components::EventId event {};
+        components::ProjectileInfo projectileInfo {};
+        components::Position pos {};
     };
 }

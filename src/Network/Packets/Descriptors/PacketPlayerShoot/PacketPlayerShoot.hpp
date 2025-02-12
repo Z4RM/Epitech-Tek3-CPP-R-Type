@@ -13,17 +13,16 @@ namespace rtype::network {
     class PacketPlayerShoot : public APacket {
     public:
         ~PacketPlayerShoot() override = default;
-        explicit PacketPlayerShoot(const int id = 0, const bool isSuperProjectile = false, long eventId = 0,
-        components::Position pos = {0, 0, 0}, bool isPlayer = true) : APacket
-        (EPacketCode::PLAYER_SHOOT), netId(id), isSuperProjectile(isSuperProjectile), eventId(eventId), pos(pos), isPlayer(isPlayer) {};
+        explicit PacketPlayerShoot(const int id = 0, const bool isSuperProjectile = false, int eventId = 0,
+        components::Position pos = {0, 0, 0}, bool isPlayer = true) : APacket(EPacketCode::PLAYER_SHOOT), netId(id), isSuperProjectile(isSuperProjectile), eventId(eventId), pos(pos), isPlayer(isPlayer) {};
 
         [[nodiscard]] std::vector<char> bufferize() const override;
         void fillData(const std::vector<char> &buffer) override;
 
         int netId = 0;
         bool isSuperProjectile = false;
-        long eventId = 0;
-        components::Position pos;
+        int eventId = 0;
+        components::Position pos {};
         bool isPlayer = true;
     };
 }

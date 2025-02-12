@@ -12,6 +12,7 @@
 /**
  * @see rtype::RType::run
  */
+
 int main() {
     // TODO: remove this try/catch and catch at the right place(s)
     try {

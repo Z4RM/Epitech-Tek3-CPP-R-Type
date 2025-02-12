@@ -10,9 +10,10 @@
 #include <atomic>
 
 namespace rtype::components {
-    static std::atomic<long> globalEventId = 0;
+    static std::atomic<int> globalEventId = 0;
+
     struct EventId {
-        long value = 0;
+        int value = 0;
         int netIdEmitter = -1;
     };
 }
