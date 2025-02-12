@@ -126,18 +126,12 @@ void rtype::systems::Movement::handleCollisions(unsigned int entity, components:
                 std::chrono::duration<double> elapsed = now - entityHealthBar->_elapsedDamage;
                 if (elapsed.count() > 0.8 || (projectileInfo && projectileInfo->isPlayer && ai1)) {
                     bool isDodging = false;
-#ifdef RTYPE_IS_SERVER
                     if (playerBonuses) {
                         for (auto bonuses : playerBonuses->bonuses) {
-                            if (bonuses == models::SHIELD) {
-                                int nb = dist(gen);
-                                spdlog::warn(nb);
-                                if (nb <= 30) //30% dodge
-                                    isDodging = true;
-                            }
+                            if (bonuses == models::SHIELD && dist(gen) <= 30) // 30% dodge
+                                isDodging = true;
                         }
                     }
-#endif
                     if (isDodging) {
                         entityHealthBar->_elapsedDamage = now;
                         componentManager.addComponent<components::Health>(entity, *entityHealthBar, entityManager);
@@ -145,6 +139,7 @@ void rtype::systems::Movement::handleCollisions(unsigned int entity, components:
                     }
                     if (IS_SERVER)
                         entityHealthBar->takeDamage(colliderDamage->collisionDamage);
+=======
                     entityHealthBar->_elapsedDamage = now;
                     componentManager.addComponent<components::Health>(entity, *entityHealthBar, entityManager);
                     if (entityHealthBar->value <= 0) {

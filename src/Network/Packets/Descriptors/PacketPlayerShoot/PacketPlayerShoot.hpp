@@ -23,6 +23,7 @@ namespace rtype::network {
         bool isSuperProjectile = false;
         int eventId = 0;
         components::Position pos {};
+
         bool isPlayer = true;
     };
 }

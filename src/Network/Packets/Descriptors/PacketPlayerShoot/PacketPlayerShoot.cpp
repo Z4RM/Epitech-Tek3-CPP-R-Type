@@ -8,9 +8,9 @@
 #include "PacketPlayerShoot.hpp"
 namespace rtype::network {
     std::vector<char> PacketPlayerShoot::bufferize() const {
-        // Calcul de la taille totale du buffer à envoyer
-        size_t size = sizeof(this->_code) + sizeof(netId) + sizeof(bool) +
-                      sizeof(eventId) + sizeof(pos.x) + sizeof(pos.y) + sizeof(isPlayer);
+
+        std::vector<char> buffer(sizeof(this->_code) + sizeof(this->netId) + sizeof(bool) + sizeof
+        (this->eventId) + sizeof(pos.x) + sizeof(pos.y) + sizeof(isPlayer));
 
         std::vector<char> buffer(size);
         size_t currentSize = 0;
@@ -23,7 +23,7 @@ namespace rtype::network {
         currentSize += sizeof(this->netId);
 
         std::memcpy(buffer.data() + currentSize, &this->isSuperProjectile, sizeof(bool));
-        currentSize += sizeof(bool);
+        currentSize+= sizeof(bool);
 
         std::memcpy(buffer.data() + currentSize, &this->eventId, sizeof(this->eventId));
         currentSize += sizeof(this->eventId);
