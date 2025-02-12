@@ -162,6 +162,7 @@ int rtype::RType::run() {
     TextureManager::getInstance().registerTexture("turret", "assets/sprites/boss_turret.gif", {153, 908, 32, 15});
     TextureManager::getInstance().registerTexture("enemy_projectile", "assets/sprites/enemy-projectile.gif");
     TextureManager::getInstance().registerTexture("cornus", "assets/sprites/enemy-cornus.gif", {223, 140, 62, 46});
+    TextureManager::getInstance().registerTexture("crabus", "assets/sprites/enemy-crabus.gif", {135, 36, 29, 28});
 
     systemManager.addSystem(rtype::systems::RenderWindowSys::render);
     systemManager.addSystem(rtype::systems::Sound::play);

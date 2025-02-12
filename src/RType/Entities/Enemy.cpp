@@ -55,10 +55,9 @@ rtype::entities::Enemy::Enemy(
 
 
     std::vector<components::Velocity> move;
-    move.emplace_back(components::Velocity({-0.5, 0, 0}));
-    move.emplace_back(components::Velocity({-0.5, -0.5, 0}));
-    move.emplace_back(components::Velocity({-0.5, 0.5, 0}));
-    componentManager.addComponent<components::IA>(_id, {move, models::BASIC, 0.5, 1}, entityManager);
+    move.emplace_back(components::Velocity({-1, -1, 0}));
+    move.emplace_back(components::Velocity({-1, 1, 0}));
+    componentManager.addComponent<components::IA>(_id, {move, models::BASIC, 0.2, 0.7}, entityManager);
     componentManager.addComponent<components::Sprite>(_id, sprite, entityManager);
 }
 
@@ -88,9 +87,8 @@ rtype::entities::Enemy::Enemy(
     componentManager.addComponent<components::Damage>(_id, damage, entityManager);
 
     std::vector<components::Velocity> move;
-    move.emplace_back(components::Velocity({-0.5, 0, 0}));
-    move.emplace_back(components::Velocity({-0.5, -0.5, 0}));
-    move.emplace_back(components::Velocity({-0.5, 0.5, 0}));
-    componentManager.addComponent<components::IA>(_id, {move, models::BASIC, 0.5, 1}, entityManager);
+    move.emplace_back(components::Velocity({-1, -1, 0}));
+    move.emplace_back(components::Velocity({-1, 1, 0}));
+    componentManager.addComponent<components::IA>(_id, {move, models::BASIC, 0.2, 0.7}, entityManager);
 }
 #endif

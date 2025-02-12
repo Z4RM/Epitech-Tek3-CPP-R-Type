@@ -12,6 +12,7 @@
 #include "RType/Components/Server/AiShoot.hpp"
 #include "RType/Entities/BossTurret.hpp"
 #include "RType/Entities/EnemyCornus.hpp"
+#include "RType/Entities/EnemyCrabus.hpp"
 #include "RType/Systems/Network/Network.hpp"
 
 #ifdef RTYPE_IS_CLIENT
@@ -21,19 +22,31 @@
 namespace rtype::services {
     void EnemyService::createEnemy(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager,
     components::Position pos, int netId, models::EEnemyType type) {
-#ifdef RTYPE_IS_CLIENT
+
+        int currentNetId = netId;
+
+        if (IS_SERVER) {
+            systems::Network::globalNetId.store(systems::Network::globalNetId.load() + 1);
+            currentNetId = systems::Network::globalNetId.load();
+        }
+
         if (type == models::BOSS_TURRET) {
-            entities::BossTurret boss(componentManager, entityManager, pos, {netId});
+            entities::BossTurret boss(componentManager, entityManager, pos, {currentNetId});
             return;
         }
-        if (type == models::TURRET) {
-            EnemyService::createTurret(entityManager, componentManager, pos, netId);
+        if (type == models::TURRET && !IS_SERVER) {
+            EnemyService::createTurret(entityManager, componentManager, pos, currentNetId);
             return;
         }
         if (type == models::CORNUS) {
-            entities::EnemyCornus cornus(componentManager, entityManager, pos, {netId});
+            entities::EnemyCornus cornus(componentManager, entityManager, pos, {currentNetId});
             return;
         }
+        if (type == models::CRABUS) {
+            entities::EnemyCrabus crabus(componentManager, entityManager, pos, {currentNetId});
+            return;
+        }
+#ifdef RTYPE_IS_CLIENT
         components::Sprite sprite3 = {{600, 100, 0}, {33, 36}, "assets/sprites/enemy.gif", {1}};
         rtype::entities::Enemy enemy(
             entityManager,
@@ -46,16 +59,6 @@ namespace rtype::services {
             { netId }
         );
 #else
-        systems::Network::globalNetId.store(systems::Network::globalNetId.load() + 1);
-
-        if (type == models::BOSS_TURRET) {
-            entities::BossTurret boss(componentManager, entityManager, pos, {systems::Network::globalNetId.load()});
-            return;
-        }
-        if (type == models::CORNUS) {
-            entities::EnemyCornus cornus(componentManager, entityManager, pos, {systems::Network::globalNetId.load()});
-            return;
-        }
         rtype::entities::Enemy enemy(
         entityManager,
         componentManager,

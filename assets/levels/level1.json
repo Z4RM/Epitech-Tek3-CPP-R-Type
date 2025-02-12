@@ -8,6 +8,18 @@
         {
           "type": 4,
           "quantity": 1
+        },
+        {
+          "type": 1,
+          "quantity": 1
+        },
+        {
+          "type": 5,
+          "quantity": 1
+        },
+        {
+          "type": 2,
+          "quantity": 1
         }
       ]
     }
