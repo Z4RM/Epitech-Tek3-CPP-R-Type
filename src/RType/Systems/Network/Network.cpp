@@ -168,7 +168,7 @@ namespace rtype::systems {
                             }
                             for (auto &projectile : projectiles) {
                                 network::PacketPlayerShoot packetPlayerShoot(projectile.event.netIdEmitter, projectile
-                                .projectileInfo.isSuperProjectile, projectile.event.value, projectile.pos);
+                                .projectileInfo.isSuperProjectile, projectile.event.value, projectile.pos, projectile.projectileInfo.isPlayer);
                                 network.sendPacket(packetPlayerShoot, net->endpoint.value());
                             }
                         }

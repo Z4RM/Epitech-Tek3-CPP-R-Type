@@ -42,8 +42,13 @@ namespace rtype::systems {
                     return;
                 }
             }
-            services::ProjectileService::createProjectile(_entityManager, _componentManager, std::make_shared<components::Position>(packetPlayerShoot->pos),
-            packetPlayerShoot->isSuperProjectile, {packetPlayerShoot->eventId, packetPlayerShoot->netId});
+            if (packetPlayerShoot->isPlayer) {
+                services::ProjectileService::createProjectile(_entityManager, _componentManager, std::make_shared<components::Position>(packetPlayerShoot->pos),
+                packetPlayerShoot->isSuperProjectile, {packetPlayerShoot->eventId, packetPlayerShoot->netId});
+            } else {
+                services::ProjectileService::createEnemyProjectile(_entityManager, _componentManager, std::make_shared<components::Position>
+                (packetPlayerShoot->pos), {packetPlayerShoot->eventId, packetPlayerShoot->netId});
+            }
         }
     }
 }

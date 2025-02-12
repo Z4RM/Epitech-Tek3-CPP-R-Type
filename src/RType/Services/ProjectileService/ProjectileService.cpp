@@ -84,7 +84,7 @@ namespace rtype::services {
 
     void ProjectileService::createEnemyProjectile(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager, std::shared_ptr<components::Position> shooterPos, components::EventId eventId) {
         constexpr float projectileVelX = -2.0;
-        constexpr int projectileDamage = 50;
+        constexpr int projectileDamage = 200;
         size_t projectileId = entityManager.createEntity();
 
         components::Velocity vel = {projectileVelX, 0.0, 0.0};

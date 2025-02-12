@@ -9,6 +9,7 @@
 
 #include <spdlog/spdlog.h>
 
+#include "RType/Components/Server/AiShoot.hpp"
 #include "RType/Entities/BossTurret.hpp"
 #include "RType/Systems/Network/Network.hpp"
 
@@ -94,6 +95,7 @@ namespace rtype::services {
         componentManager.addComponent<components::Sprite>(turretEntity, sprite, entityManager);
 #else
         componentManager.addComponent<components::Hitbox>(turretEntity, {pos, 32 * 1.2, 15 * 1.2}, entityManager);
+        componentManager.addComponent<components::AiShoot>(turretEntity, {0.5f}, entityManager);
 #endif
         return turretEntity;
     }

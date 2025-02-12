@@ -69,7 +69,6 @@ void rtype::systems::Movement::handleCollisions(unsigned int entity, components:
         const auto colliderHitBox = componentManager.getComponent<components::Hitbox>(collisionEntity);
         const auto entityHealthBar = componentManager.getComponent<components::Health>(entity);
         const auto colliderDamage = componentManager.getComponent<components::Damage>(collisionEntity);
-        const auto peaceful = componentManager.getComponent<components::NoDamageToPlayer>(collisionEntity);
         const auto player = componentManager.getComponent<components::NetworkConnection>(entity);
         const auto actualPlayer = componentManager.getComponent<components::ActualPlayer>(entity);
         const auto ai1 = componentManager.getComponent<components::IA>(entity);
@@ -78,6 +77,7 @@ void rtype::systems::Movement::handleCollisions(unsigned int entity, components:
         auto playerBonuses = componentManager.getComponent<components::PlayerBonuses>(entity);
         auto childEntities = componentManager.getComponent<components::ChildEntities>(entity);
         auto parentEntity = componentManager.getComponent<components::ParentEntity>(entity);
+        auto projectileInfo = componentManager.getComponent<components::ProjectileInfo>(collisionEntity);
         bool childEntitiesAlive = false;
 
         if (childEntities) {
@@ -129,12 +129,13 @@ void rtype::systems::Movement::handleCollisions(unsigned int entity, components:
                 continue;
 #endif
             if (entityHealthBar && colliderDamage && entityHealthBar->value > 0) {
-                if (player && peaceful) {
+                if (player && projectileInfo && projectileInfo->isPlayer)
                     continue;
-                }
+                if (projectileInfo && ai1 && projectileInfo->isPlayer == false)
+                    continue;
                 auto now = std::chrono::steady_clock::now();
                 std::chrono::duration<double> elapsed = now - entityHealthBar->_elapsedDamage;
-                if (elapsed.count() > 0.8 || (peaceful && ai1)) {
+                if (elapsed.count() > 0.8 || (projectileInfo && projectileInfo->isPlayer && ai1)) {
                     entityHealthBar->takeDamage(colliderDamage->collisionDamage);
                     entityHealthBar->_elapsedDamage = now;
                     componentManager.addComponent<components::Health>(entity, *entityHealthBar, entityManager);
@@ -144,9 +145,11 @@ void rtype::systems::Movement::handleCollisions(unsigned int entity, components:
                             componentManager.removeAllComponent(entity);
                         }
                     }
-                    if (peaceful && ai1) {
-                        entityManager.destroyEntity(collisionEntity);
-                        componentManager.removeAllComponent(collisionEntity);
+                    if (projectileInfo && ai1) {
+                        if (!projectileInfo->isSuperProjectile) {
+                            entityManager.destroyEntity(collisionEntity);
+                            componentManager.removeAllComponent(collisionEntity);
+                        }
                     }
                 }
             }
