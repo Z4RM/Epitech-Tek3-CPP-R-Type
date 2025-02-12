@@ -24,6 +24,7 @@ namespace rtype {
         std::shared_ptr<sf::Texture> getTexture(std::string key);
 
         void registerTexture(std::string key, std::string path, sf::IntRect rect);
+        void registerTexture(std::string key, std::string path);
     private:
         std::map<std::string, std::shared_ptr<sf::Texture>> _textures;
 

@@ -105,6 +105,7 @@ namespace rtype {
          */
         [[nodiscard]] Network getNetwork() const;
 
+        bool isDebug() { return isLogLevelDebug; }
         /**
          * @return The sounds configuration.
          */
@@ -181,7 +182,8 @@ namespace rtype {
          * @see Network
          */
         Network _network;
-
+      
+        bool isLogLevelDebug = false;
         /**
          * @var The sounds configuration.
          *

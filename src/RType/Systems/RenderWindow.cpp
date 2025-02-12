@@ -12,6 +12,9 @@
 
 #include "RType/Components/Client/SlidingBg.hpp"
 #include "RType/Components/Shared/Counter.hpp"
+#include "RType/Components/Shared/PlayerBonuses.hpp"
+#include "RType/Components/Shared/ProjectileInfo.hpp"
+#include "RType/Config/Config.hpp"
 
 void rtype::systems::RenderWindowSys::render(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager)
 {
@@ -32,7 +35,7 @@ void rtype::systems::RenderWindowSys::render(ecs::EntityManager &entityManager, 
                     auto component = componentManager.getComponent<components::Running>(entity);
                     if (component) {
                         component->running = false;
-                        componentManager.addComponent<components::Running>(entity, *component);
+                        componentManager.addComponent<components::Running>(entity, *component, entityManager);
                         break;
                     }
                 }
@@ -57,7 +60,6 @@ void rtype::systems::RenderWindowSys::render(ecs::EntityManager &entityManager, 
             if (sprite && sprite->sprite) {
                 auto pos = componentManager.getComponent<components::Position>(e.id);
                 auto slide = componentManager.getComponent<components::SlidingBg>(e.id);
-
                 if (slide) {
                     auto position = sprite->sprite->getPosition();
                     position.x -= 150 * elapsedTime.count();
@@ -75,26 +77,42 @@ void rtype::systems::RenderWindowSys::render(ecs::EntityManager &entityManager, 
                 if (health) {
                     if (health->value > 0)
                         renderWindow->window->draw(*sprite->sprite);
-                } else
+                } else {
                     renderWindow->window->draw(*sprite->sprite);
+                }
             }
         }
 
         for (auto e: entityManager.getEntities()) {
             auto text = componentManager.getComponent<components::SfText>(e);
             auto counter = componentManager.getComponent<components::Counter>(e);
+            auto hitbox = componentManager.getComponent<components::Hitbox>(e);
+            auto playerBonuses = componentManager.getComponent<components::PlayerBonuses>(e);
+            auto health = componentManager.getComponent<components::Health>(e);
+
+
             if (text) {
                 renderWindow->window->draw(text->text);
             }
             if (counter && counter->text.has_value()) {
                 renderWindow->window->draw(counter->text->text);
             }
+            if (hitbox && Config::getInstance().isDebug()) {
+                renderWindow->window->draw(hitbox->rect);
+            }
+            if (playerBonuses) {
+                if (health && health->value > 0) {
+                    for (auto &bonus: playerBonuses->bonuses) {
+                        renderWindow->window->draw(bonus.second);
+                    }
+                }
+            }
         }
         renderWindow->window->display();
     }
 }
 
-void rtype::systems::RenderWindowSys::createWindow(const ecs::EntityManager& entityManager, ecs::ComponentManager& componentManager)
+void rtype::systems::RenderWindowSys::createWindow(ecs::EntityManager& entityManager, ecs::ComponentManager& componentManager)
 {
     for (const auto& entity : entityManager.getEntities()) {
         const auto renderWindow = componentManager.getComponent<rtype::entities::RWindow>(entity);
@@ -106,7 +124,7 @@ void rtype::systems::RenderWindowSys::createWindow(const ecs::EntityManager& ent
             renderWindow->window->create(mode->mode, title->s, mode->style.style);
             renderWindow->window->setFramerateLimit(mode->limit);
             created->isCreate = true;
-            componentManager.addComponent<components::Created>(entity, *created);
+            componentManager.addComponent<components::Created>(entity, *created, entityManager);
         }
     }
 }

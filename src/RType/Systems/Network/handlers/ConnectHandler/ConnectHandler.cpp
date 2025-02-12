@@ -46,7 +46,7 @@ namespace rtype::systems {
             services::PlayerService::createPlayer(_entityManager, _componentManager, socket);
 #endif
 
-            _componentManager.addComponent<components::MenuState>(menuStateEntity, newState);
+            _componentManager.addComponent<components::MenuState>(menuStateEntity, newState, _entityManager);
             std::vector<std::shared_ptr<components::NetworkConnection>> players = {};
 
             for (auto &entity : _entityManager.getEntities()) {

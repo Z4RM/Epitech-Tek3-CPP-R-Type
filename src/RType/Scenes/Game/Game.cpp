@@ -7,8 +7,6 @@
 
 #include "Game.hpp"
 
-#include "RType/Components/Client/SlidingBg.hpp"
-
 #ifdef RTYPE_IS_CLIENT
 
 #include "RType/Entities/Image.hpp"
@@ -34,7 +32,7 @@ namespace rtype::scenes {
         this->registerEntity(img);
         this->registerEntity(img2);
 
-        systems::Sound::createMusic("assets/sounds/musics/game.mp3", _componentManager, gameEntity, true, std::nullopt);
+        systems::Sound::createMusic("assets/sounds/musics/game.mp3", _componentManager, _entityManager, gameEntity, true, std::nullopt);
 #endif
         AScene::load();
     }

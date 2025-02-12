@@ -1,0 +1,27 @@
+{
+  "id": 6,
+  "duration": 40,
+  "spawns": [
+    {
+      "time": 7,
+      "bonuses": [2],
+      "enemies": [
+        { "type": 1, "quantity": 1 },
+        { "type": 6, "quantity": 2 }
+      ]
+    },
+    {
+      "time": 22,
+      "bonuses": [1],
+      "enemies": [
+        { "type": 4, "quantity": 3 }
+      ]
+    },
+    {
+      "time": 30,
+      "enemies": [
+        { "type": 12, "quantity": 1 }
+      ]
+    }
+  ]
+}

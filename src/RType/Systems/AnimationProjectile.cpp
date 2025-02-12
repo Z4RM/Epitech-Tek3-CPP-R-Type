@@ -34,18 +34,12 @@ void rtype::systems::UpdateProjectilesSystem::updateProjectiles(
                 sprite->sprite->setColor(sf::Color::White);
             }
             healthBar->collisionState = !healthBar->collisionState;
-            componentManager.addComponent<components::Health>(entity, *healthBar);
-            componentManager.addComponent<components::Sprite>(entity, *sprite);
+            componentManager.addComponent<components::Health>(entity, *healthBar, entityManager);
+            componentManager.addComponent<components::Sprite>(entity, *sprite, entityManager);
         }
 
         if (!projectile || !sprite || !pos)
             continue;
-
-        if (pos->x < 0 || pos->x >= 760 ||
-        pos->y < 0 || pos->y >= 590) {
-            entityManager.destroyEntity(entity, componentManager);
-            continue;
-        }
 
         float elapsedTime = projectile->animationClock.getElapsedTime().asSeconds();
         int frame = static_cast<int>(elapsedTime * projectile->animation.frameRate) % projectile->animation.nbFrames;
@@ -53,6 +47,6 @@ void rtype::systems::UpdateProjectilesSystem::updateProjectiles(
         sf::IntRect textureRect(frame * frameWidth + 82, 165, frameWidth, static_cast<int>(sprite->size.height));
         sprite->sprite->setTextureRect(textureRect);
 
-        componentManager.addComponent<components::Sprite>(entity, *sprite);
+        componentManager.addComponent<components::Sprite>(entity, *sprite, entityManager);
     }
 }

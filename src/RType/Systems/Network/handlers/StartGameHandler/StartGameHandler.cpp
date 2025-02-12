@@ -34,7 +34,7 @@ namespace rtype::systems {
                 if (gameState->isStarted)
                     return;
                 gameState->isStarted = true;
-                _componentManager.addComponent<components::GameState>(entity, *gameState);
+                _componentManager.addComponent<components::GameState>(entity, *gameState, _entityManager);
                 for (auto &entity: _entityManager.getEntities()) {
                     auto netCo = _componentManager.getComponent<components::NetworkConnection>(entity);
                     auto netId = _componentManager.getComponent<components::NetId>(entity);

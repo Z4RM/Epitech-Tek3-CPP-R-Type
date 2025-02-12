@@ -13,7 +13,12 @@
 
 #include "LevelManager.hpp"
 #include "ECS/Scene/SceneManager.hpp"
+#include "Network/Packets/Descriptors/PacketBonus/PacketBonus.hpp"
 #include "Network/TCPNetwork/TCPNetwork.hpp"
+#include "RType/Components/Shared/Bonus.hpp"
+#include "RType/Components/Shared/EventId.hpp"
+#include "RType/Components/Shared/ProjectileInfo.hpp"
+#include "RType/Services/BonusService/BonusService.hpp"
 #include "RType/Services/EnemyService/EnemyService.hpp"
 #include "RType/Systems/Network/Network.hpp"
 
@@ -26,22 +31,37 @@ namespace rtype::levels {
             auto gameState = componentManager.getComponent<components::GameState>(entity);
             auto menuState = componentManager.getComponent<components::MenuState>(entity);
             auto ai = componentManager.getComponent<components::IA>(entity);
+            auto projectileInfo = componentManager.getComponent<components::ProjectileInfo>(entity);
+            auto bonus = componentManager.getComponent<components::Bonus>(entity);
+
+            if (bonus) {
+                entityManager.destroyEntity(entity);;
+                componentManager.removeAllComponent(entity);
+            }
+            if (projectileInfo) {
+                entityManager.destroyEntity(entity);
+                componentManager.removeAllComponent(entity);
+                continue;
+            }
 
             if (ai && isLose) {
-                entityManager.destroyEntity(entity, componentManager);
+                entityManager.destroyEntity(entity);
+                componentManager.removeAllComponent(entity);
+                continue;
             }
 
             if (menuState) {
                 menuState->playerCount = 0;
-                componentManager.addComponent<components::MenuState>(entity, *menuState);
+                componentManager.addComponent<components::MenuState>(entity, *menuState, entityManager);
             }
 
             if (gameState) {
-                componentManager.addComponent(entity, components::GameState{0, 0});
+                componentManager.addComponent(entity, components::GameState{0, 0}, entityManager);
             }
             if (netCo) {
                 network::TCPNetwork::getInstance().sendPacket(network::PacketEndGame(isLose), netCo->socket);
-                entityManager.destroyEntity(entity, componentManager);
+                entityManager.destroyEntity(entity);
+                componentManager.removeAllComponent(entity);
             }
         }
         for (auto &spawn : this->_spawns) {
@@ -93,9 +113,23 @@ namespace rtype::levels {
                 for (auto &enemySpawn : spawn.enemies) {
                     spdlog::debug("Spawning {} ennemies of type {}", enemySpawn.quantity, std::to_string(enemySpawn.type));
                     for (int i = 0; i < enemySpawn.quantity; i++) {
-                        const auto y = static_cast<float>(dis(gen));
-                        services::EnemyService::createEnemy(entityManager, componentManager, {800, y, 0});
+                        auto y = static_cast<float>(dis(gen));
+                        float x = 800.f;
+
+                        if (enemySpawn.type != 1) {
+                            x = 600.f;
+                            y = 300;
+                        }
+                        services::EnemyService::createEnemy(entityManager, componentManager, {x, y, 0}, 0, enemySpawn.type);
                     }
+                }
+
+                for (models::EBonusType bonus : spawn.bonuses) {
+                    const auto y = static_cast<float>(dis(gen));
+                    const auto x = static_cast<float>(dis(gen));
+
+                    components::globalEventId.store(components::globalEventId.load() + 1);
+                    services::BonusService::createBonus(entityManager, componentManager, bonus, {x, y, 0}, components::globalEventId.load());
                 }
                 spawn.spawned = true;
             }

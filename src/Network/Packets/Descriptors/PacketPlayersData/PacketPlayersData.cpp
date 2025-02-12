@@ -24,6 +24,12 @@ namespace rtype::network {
             size += sizeof(data.vel.y);
             size += sizeof(data.vel.z);
             size += sizeof(data.health);
+            size += sizeof(data.bonuses.size());
+            int bonusesCount = data.bonuses.size();
+            size += bonusesCount;
+            for (auto &bonus : data.bonuses) {
+                size += sizeof(bonus);
+            }
         }
 
         std::vector<char> buffer(sizeof(this->_code) + sizeof(int) + size);
@@ -59,6 +65,15 @@ namespace rtype::network {
 
             std::memcpy(buffer.data() + currentSize, &data.health, sizeof(data.health));
             currentSize += sizeof(data.health);
+
+            int bonusCount = data.bonuses.size();
+            std::memcpy(buffer.data() + currentSize, &bonusCount, sizeof(bonusCount));
+            currentSize += sizeof(bonusCount);
+
+            for (auto &bonus: data.bonuses) {
+                std::memcpy(buffer.data() + currentSize, &bonus, sizeof(bonus));
+                currentSize += sizeof(bonus);
+            }
         }
 
         return buffer;
@@ -98,6 +113,16 @@ namespace rtype::network {
 
             std::memcpy(&datas[i].health, buffer.data() + currentSize, sizeof(datas[i].health));
             currentSize += sizeof(datas[i].health);
+
+            int bonusCount = 0;
+            std::memcpy(&bonusCount, buffer.data() + currentSize, sizeof(bonusCount));
+            currentSize += sizeof(bonusCount);
+            datas[i].bonuses.resize((bonusCount));
+
+            for (int j = 0; j < bonusCount; j++) {
+                std::memcpy(&datas[i].bonuses[j], buffer.data() + currentSize, sizeof(datas[i].bonuses[j]));
+                currentSize += sizeof(datas[i].bonuses[j]);
+            }
         }
     }
 }

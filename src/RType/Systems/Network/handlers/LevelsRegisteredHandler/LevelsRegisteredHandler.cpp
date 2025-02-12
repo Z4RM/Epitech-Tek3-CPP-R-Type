@@ -13,6 +13,8 @@
 #include "RType/Components/Shared/Counter.hpp"
 #include "RType/Levels/LevelBuilder.hpp"
 #include "RType/Levels/LevelManager.hpp"
+#include <algorithm>
+
 
 namespace rtype::systems {
     void LevelsRegisteredHandler::handle(std::unique_ptr<network::IPacket> packet, std::shared_ptr<asio::ip::tcp::socket> socket) {
@@ -21,7 +23,7 @@ namespace rtype::systems {
 
         if (packetLevelsRegistered) {
             levels::LevelManager::getInstance().reset();
-
+            std::sort(packetLevelsRegistered->levels.begin(), packetLevelsRegistered->levels.end());
             for (int level: packetLevelsRegistered->levels) {
                 levels::LevelManager::getInstance().registerLevel(std::make_shared<levels::Level>(
                     levels::LevelBuilder()
@@ -38,7 +40,7 @@ namespace rtype::systems {
 
                 if (counter && counter->name == "level") {
                     counter->update(lowestLevel);
-                    _componentManager.addComponent<components::Counter>(entity, *counter);
+                    _componentManager.addComponent<components::Counter>(entity, *counter, _entityManager);
                     return;
                 }
             }

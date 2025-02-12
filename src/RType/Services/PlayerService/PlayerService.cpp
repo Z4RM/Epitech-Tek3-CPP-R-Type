@@ -29,7 +29,7 @@ namespace rtype::services {
                 componentManager,
                 {20, 20, 0},
                 {0, 0, 0},
-                {64, 64},
+                {64, 32},
                 sprite2,
                 {"", 0, 0},
                 {netId},
@@ -50,7 +50,7 @@ namespace rtype::services {
                     componentManager,
                     {20, 20, 0},
                     {0, 0, 0},
-                    {64, 64},
+                    {32, 14},
                     {std::move(socket)},
                     {systems::Network::globalNetId.load()},
                     {PLAYER_SPEED}

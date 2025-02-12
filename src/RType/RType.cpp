@@ -86,17 +86,25 @@ void rtype::RType::stopServer() {
                         for (auto &spawn : jsonData["spawns"]) {
                             models::SpawnPoint spawnPoint;
 
-                            if (spawn.contains("time") && spawn.contains("enemies")) {
+                            if (spawn.contains("time")) {
                                 int time = spawn["time"].get<int>();
 
                                 spawnPoint.time = time;
-                                for (auto &enemySpawn : spawn["enemies"]) {
-                                    if (enemySpawn.contains("quantity") && enemySpawn.contains("type")) {
-                                        int quantity = enemySpawn["quantity"].get<int>();
-                                        auto type = static_cast<models::EEnemyType>(enemySpawn["type"].get<int>());
-                                        models::EnemySpawn enemy = {quantity, type};
+                                if (spawn.contains("enemies")) {
+                                    for (auto &enemySpawn : spawn["enemies"]) {
+                                        if (enemySpawn.contains("quantity") && enemySpawn.contains("type")) {
+                                            int quantity = enemySpawn["quantity"].get<int>();
+                                            auto type = static_cast<models::EEnemyType>(enemySpawn["type"].get<int>());
+                                            models::EnemySpawn enemy = {quantity, type};
 
-                                        spawnPoint.enemies.emplace_back(enemy);
+                                            spawnPoint.enemies.emplace_back(enemy);
+                                        }
+                                    }
+                                }
+                                if (spawn.contains("bonuses")) {
+                                    for (auto &bonus : spawn["bonuses"]) {
+                                        auto bonusType = static_cast<models::EBonusType>(bonus.get<int>());
+                                        spawnPoint.bonuses.emplace_back(bonusType);
                                     }
                                 }
                             }
@@ -125,7 +133,7 @@ int rtype::RType::run() {
 
     size_t rtype = entityManager.createEntity();
 
-    componentManager.addComponent<components::Running>(rtype, {true});
+    componentManager.addComponent<components::Running>(rtype, {true}, entityManager);
 
 #ifdef RTYPE_IS_CLIENT
     systemManager.addSystem(rtype::systems::RenderWindowSys::createWindow);
@@ -142,8 +150,28 @@ int rtype::RType::run() {
             renderWindow,
             mode
     );
-    TextureManager::getInstance().registerTexture("player", "assets/sprites/players.gif", {0, 0, 33, 17});
+    TextureManager::getInstance().registerTexture("player", "assets/sprites/players.gif", {0, 3, 32, 14});
+    TextureManager::getInstance().registerTexture("player2", "assets/sprites/players.gif", {0, 20, 32, 14});
+    TextureManager::getInstance().registerTexture("player3", "assets/sprites/players.gif", {0, 37, 32, 14});
+    TextureManager::getInstance().registerTexture("player4", "assets/sprites/players.gif", {0, 54, 32, 14});
     TextureManager::getInstance().registerTexture("enemy", "assets/sprites/enemy.gif", {0, 0, 33, 36});
+    TextureManager::getInstance().registerTexture("projectile", "assets/sprites/projectile/player-shots.gif");
+    TextureManager::getInstance().registerTexture("super_projectile", "assets/sprites/projectile/player-shots-charged.gif");
+    TextureManager::getInstance().registerTexture("force", "assets/sprites/force.gif", {162, 411, 32, 20});
+    TextureManager::getInstance().registerTexture("boss_turret", "assets/sprites/boss_turret.gif", {1, 1, 592, 176});
+    TextureManager::getInstance().registerTexture("turret", "assets/sprites/boss_turret.gif", {153, 908, 32, 15});
+    TextureManager::getInstance().registerTexture("enemy_projectile", "assets/sprites/enemy-projectile.gif");
+    TextureManager::getInstance().registerTexture("cornus", "assets/sprites/enemy-cornus.gif", {223, 140, 62, 46});
+    TextureManager::getInstance().registerTexture("crabus", "assets/sprites/enemy-crabus.gif", {135, 36, 29, 28});
+    TextureManager::getInstance().registerTexture("pablitos", "assets/sprites/enemy-pablitos.gif", {1, 20, 32, 28});
+    TextureManager::getInstance().registerTexture("boss_heart", "assets/sprites/boss-heart.gif", {2, 292, 256, 142});
+    TextureManager::getInstance().registerTexture("shield", "assets/sprites/shield.gif", {117, 198, 40, 34});
+    TextureManager::getInstance().registerTexture("boss_staros", "assets/sprites/boss-staros.gif", {34, 2, 64, 64});
+    TextureManager::getInstance().registerTexture("boss_alien", "assets/sprites/boss-alien.gif", {27, 2, 155, 204});
+    TextureManager::getInstance().registerTexture("boss_cask", "assets/sprites/boss-cask.gif", {253, 1, 64, 80});
+    TextureManager::getInstance().registerTexture("boss_robot", "assets/sprites/boss-robot.gif", {2, 2, 176, 144});
+    TextureManager::getInstance().registerTexture("boss_machin", "assets/sprites/boss-machin.gif", {1, 1, 128, 48});
+    TextureManager::getInstance().registerTexture("boss_darkplayer", "assets/sprites/players.gif", {133, 70, 32, 14});
 
     systemManager.addSystem(rtype::systems::RenderWindowSys::render);
     systemManager.addSystem(rtype::systems::Sound::play);

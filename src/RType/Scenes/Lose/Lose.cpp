@@ -50,10 +50,9 @@ void rtype::scenes::Lose::load() {
 
     unsigned int loseSateEntity = _entityManager.createEntity();
     components::MenuState state = {0};
+    _componentManager.addComponent<components::MenuState>(loseSateEntity, state, _entityManager);
 
-    _componentManager.addComponent<components::MenuState>(loseSateEntity, state);
-
-    systems::Sound::createEffect("assets/sounds/effects/loser.mp3", _componentManager, loseSateEntity);
+    systems::Sound::createEffect("assets/sounds/effects/loser.mp3", _componentManager, _entityManager, loseSateEntity);
 
     AScene::load();
 }
@@ -63,7 +62,7 @@ void rtype::scenes::Lose::load() {
     unsigned int loseSateEntity = _entityManager.createEntity();
     components::MenuState state = { 0 };
 
-    _componentManager.addComponent<components::MenuState>(loseSateEntity, state);
+    _componentManager.addComponent<components::MenuState>(loseSateEntity, state, _entityManager);
 
     this->registerEntity(loseSateEntity);
     AScene::load();

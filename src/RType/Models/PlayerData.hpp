@@ -9,6 +9,7 @@
 
 #include <optional>
 #include "Components.hpp"
+#include "EBonusType.hpp"
 
 namespace rtype::models {
     /** Represent the datas of a player **/
@@ -18,6 +19,7 @@ namespace rtype::models {
         components::Size size{};
         components::NetId netId;
         int health = 0;
+        std::vector<EBonusType> bonuses {};
         std::optional<components::NetworkConnection> network;
     };
 }

@@ -6,7 +6,6 @@
 */
 
 #include "PlayerCounter.hpp"
-
 #include "RType/Components/Shared/Counter.hpp"
 
 namespace rtype::entities {
@@ -15,14 +14,14 @@ namespace rtype::entities {
     (entityManager) {
         std::string counterName = "players";
         components::Counter count(0, 4, counterName, pos, 35);
-        componentManager.addComponent<components::Counter>(_id, count);
+        componentManager.addComponent<components::Counter>(_id, count, entityManager);
     }
 #else
     PlayerCounter::PlayerCounter(ecs::ComponentManager &componentManager, ecs::EntityManager &entityManager) : AEntity
 (entityManager) {
         std::string counterName = "players";
         components::Counter count(0, 4, counterName);
-        componentManager.addComponent<components::Counter>(_id, count);
+        componentManager.addComponent<components::Counter>(_id, count, entityManager);
     }
 #endif
 }

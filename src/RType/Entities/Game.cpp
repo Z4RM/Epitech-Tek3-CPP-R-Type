@@ -15,7 +15,7 @@ namespace rtype::entities {
 
         state.isStarted = false;
 
-        componentManager.addComponent(_id, state);
+        componentManager.addComponent(_id, state, entityManager);
     }
 
 }

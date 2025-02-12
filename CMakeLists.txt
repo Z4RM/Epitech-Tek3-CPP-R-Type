@@ -109,6 +109,41 @@ set(RTYPE_SRC
         src/RType/Services/EnemyService/EnemyService.hpp
         src/Network/Packets/Descriptors/PacketLevelsRegistered/PacketLevelsRegistered.cpp
         src/Network/Packets/Descriptors/PacketLevelsRegistered/PacketLevelsRegistered.hpp
+        src/RType/Models/EBonusType.hpp
+        src/RType/Components/Shared/Bonus.hpp
+        src/RType/Services/BonusService/BonusService.cpp
+        src/RType/Services/BonusService/BonusService.hpp
+        src/Network/Packets/Descriptors/PacketBonus/PacketBonus.cpp
+        src/Network/Packets/Descriptors/PacketBonus/PacketBonus.hpp
+        src/RType/Components/Shared/EventId.hpp
+        src/RType/Models/BonusData.hpp
+        src/RType/Models/ProjectileData.hpp
+        src/RType/Components/Shared/PlayerBonuses.hpp
+        src/RType/Entities/BossTurret.cpp
+        src/RType/Entities/BossTurret.hpp
+        src/RType/Components/Shared/ParentEntity.hpp
+        src/RType/Components/Shared/ChildEntities.hpp
+        src/RType/Components/Server/AiShoot.hpp
+        src/RType/Entities/EnemyCornus.cpp
+        src/RType/Entities/EnemyCornus.hpp
+        src/RType/Entities/EnemyCrabus.cpp
+        src/RType/Entities/EnemyCrabus.hpp
+        src/RType/Entities/EnemyPablitos.cpp
+        src/RType/Entities/EnemyPablitos.hpp
+        src/RType/Entities/BossHeart.cpp
+        src/RType/Entities/BossHeart.hpp
+        src/RType/Entities/BossStaros.cpp
+        src/RType/Entities/BossStaros.hpp
+        src/RType/Entities/BossAlien.cpp
+        src/RType/Entities/BossAlien.hpp
+        src/RType/Entities/BossCask.cpp
+        src/RType/Entities/BossCask.hpp
+        src/RType/Entities/BossRobot.cpp
+        src/RType/Entities/BossRobot.hpp
+        src/RType/Entities/BossMachin.cpp
+        src/RType/Entities/BossMachin.hpp
+        src/RType/Entities/BossDarkplayer.cpp
+        src/RType/Entities/BossDarkplayer.hpp
 )
 
 set(CLIENT_SRC
@@ -156,6 +191,8 @@ set(CLIENT_SRC
         src/RType/Systems/Sound/Sound.hpp
         src/RType/TextureManager/TextureManager.cpp
         src/RType/TextureManager/TextureManager.hpp
+        src/RType/Systems/Network/handlers/BonusHandler/BonusHandler.cpp
+        src/RType/Systems/Network/handlers/BonusHandler/BonusHandler.hpp
 )
 
 
@@ -166,6 +203,7 @@ set(RTYPE_HEADERS
         include/Packets.hpp
         include/Networks.hpp
         include/Keys.hpp
+        src/RType/Components/Shared/ProjectileInfo.hpp
 )
 
 link_libraries(inih::inireader spdlog::spdlog asio::asio nlohmann_json::nlohmann_json)

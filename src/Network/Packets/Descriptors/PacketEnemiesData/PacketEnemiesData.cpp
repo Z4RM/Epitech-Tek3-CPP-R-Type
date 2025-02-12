@@ -19,6 +19,7 @@ namespace rtype::network {
             size += sizeof(data.size.width) + sizeof(data.size.height);
             size += sizeof(data.vel.x) + sizeof(data.vel.y);
             size += sizeof(data.health);
+            size += sizeof(data.type);
         }
 
         std::vector<char> buffer(sizeof(this->_code) + sizeof(dataCount) + size);
@@ -48,6 +49,9 @@ namespace rtype::network {
 
             std::memcpy(buffer.data() + currentSize, &data.health, sizeof(data.health));
             currentSize += sizeof(data.health);
+
+            std::memcpy(buffer.data() + currentSize, &data.type, sizeof(data.type));
+            currentSize += sizeof(data.type);
         }
 
         return buffer;
@@ -81,6 +85,9 @@ namespace rtype::network {
 
             std::memcpy(&datas[i].health, buffer.data() + currentSize, sizeof(datas[i].health));
             currentSize += sizeof(datas[i].health);
+
+            std::memcpy(&datas[i].type, buffer.data() + currentSize, sizeof(datas[i].type));
+            currentSize += sizeof(datas[i].type);
         }
     }
 }

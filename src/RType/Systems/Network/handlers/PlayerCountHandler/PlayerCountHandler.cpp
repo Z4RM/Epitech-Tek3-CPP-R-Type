@@ -25,7 +25,7 @@ namespace rtype::systems {
                 }
                 if (playerCount && playerCount->name == "players") {
                     playerCount->update(packetPlayerCounter->count);
-                    _componentManager.addComponent<components::Counter>(entity, *playerCount);
+                    _componentManager.addComponent<components::Counter>(entity, *playerCount, _entityManager);
                 }
             }
         }

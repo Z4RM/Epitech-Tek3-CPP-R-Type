@@ -53,7 +53,7 @@ namespace rtype::systems
          * @param componentManager A reference to the `ComponentManager` for
          *        managing window-related components.
          */
-        static void createWindow(const ecs::EntityManager& entityManager, ecs::ComponentManager& componentManager);
+        static void createWindow(ecs::EntityManager& entityManager, ecs::ComponentManager& componentManager);
 
     private:
         static std::vector<rtype::ecs::Entity> _getEntitiesSortedByZIndex(

@@ -52,9 +52,9 @@ void rtype::scenes::Win::load() {
     unsigned int winSateEntity = _entityManager.createEntity();
     components::MenuState state = {0};
 
-    _componentManager.addComponent<components::MenuState>(winSateEntity, state);
+    _componentManager.addComponent<components::MenuState>(winSateEntity, state, _entityManager);
 
-    systems::Sound::createEffect("assets/sounds/effects/winner.mp3", _componentManager, winSateEntity);
+    systems::Sound::createEffect("assets/sounds/effects/winner.mp3", _componentManager, _entityManager, winSateEntity);
 
     AScene::load();
 }
@@ -64,7 +64,7 @@ void rtype::scenes::Win::load() {
     unsigned int winSateEntity = _entityManager.createEntity();
     components::MenuState state = { 0 };
 
-    _componentManager.addComponent<components::MenuState>(winSateEntity, state);
+    _componentManager.addComponent<components::MenuState>(winSateEntity, state, _entityManager);
 
     this->registerEntity(winSateEntity);
     AScene::load();

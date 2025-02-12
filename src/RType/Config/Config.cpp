@@ -33,6 +33,9 @@ rtype::Config::Config(const std::string &filename) : _reader(filename) {
 void rtype::Config::_setLogLevel() {
     auto logLevel = _reader.GetString("log", "level", "");
 
+    if (logLevel == "debug") {
+        this->isLogLevelDebug = true;
+    }
     if (!logLevel.empty()) {
         if (_logLevels.find(logLevel) == _logLevels.end())
             spdlog::warn("\"\33[3m" + logLevel + "\33[0m\" is not a valid log level, ignoring this setting");
@@ -69,7 +72,6 @@ void rtype::Config::_initializeSounds() {
     } catch (const std::invalid_argument &exception) {
         spdlog::warn("Invalid volume value provided");
     }
-    spdlog::info("{} {}", _sounds.volumes.effects, _sounds.volumes.music);
 }
 
 rtype::Config::Sounds rtype::Config::getSounds() const {

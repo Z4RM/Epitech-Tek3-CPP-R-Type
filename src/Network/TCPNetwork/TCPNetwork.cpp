@@ -61,7 +61,8 @@ namespace rtype::network {
 
     TCPNetwork::~TCPNetwork() {
         this->setStop(true);
-        this->_socket->close();
+        if (this->_socket)
+            this->_socket->close();
     };
 
 
@@ -121,6 +122,8 @@ namespace rtype::network {
 
         auto targetSocket = socket ? socket : this->_socket;
 
+        if (_socket && !_socket->is_open())
+            return;
         if (!targetSocket || !targetSocket->is_open())
             return;
 
@@ -163,17 +166,8 @@ namespace rtype::network {
     }
 
     void TCPNetwork::setStop(bool state) {
-        std::lock_guard<std::mutex> lock(this->_stopMutex);
-        this->_stop = state;
-
-        if (state) {
+        if (state)
             this->_ioContext.stop();
-        }
-    }
-
-    bool TCPNetwork::getStop() {
-        std::lock_guard<std::mutex> lock(this->_stopMutex);
-        return this->_stop;
     }
 
     TCPNetwork &TCPNetwork::getInstance(unsigned short port) {
