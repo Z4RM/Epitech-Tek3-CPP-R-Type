@@ -190,7 +190,7 @@ bool rtype::entities::Player::shoot(
         std::chrono::steady_clock::time_point &clock,
         bool isSuperProjectile
 ) {
-    const auto cooldown = isSuperProjectile ? 1.5 : 0.2;
+    const auto cooldown = isSuperProjectile ? 2.0 : 0.2;
     auto now = std::chrono::steady_clock::now();
     std::chrono::duration<double> elapsed = now - clock;
 
