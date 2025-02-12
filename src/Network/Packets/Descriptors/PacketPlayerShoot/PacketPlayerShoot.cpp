@@ -12,7 +12,6 @@ namespace rtype::network {
         std::vector<char> buffer(sizeof(this->_code) + sizeof(this->netId) + sizeof(bool) + sizeof
         (this->eventId) + sizeof(pos.x) + sizeof(pos.y) + sizeof(isPlayer));
 
-        std::vector<char> buffer(size);
         size_t currentSize = 0;
 
         // Sérialisation des données dans le buffer
