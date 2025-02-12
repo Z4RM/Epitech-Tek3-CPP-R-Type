@@ -10,6 +10,7 @@
 #include <spdlog/spdlog.h>
 
 #include "RType/Components/Server/AiShoot.hpp"
+#include "RType/Entities/BossAlien.hpp"
 #include "RType/Entities/BossHeart.hpp"
 #include "RType/Entities/BossStaros.hpp"
 #include "RType/Entities/BossTurret.hpp"
@@ -59,6 +60,10 @@ namespace rtype::services {
         }
         if (type == models::BOSS_STAROS) {
             entities::BossStaros staros(componentManager, entityManager, pos, {currentNetId});
+            return;
+        }
+        if (type == models::BOSS_ALIEN) {
+            entities::BossAlien alien(componentManager, entityManager, pos, {currentNetId});
             return;
         }
 #ifdef RTYPE_IS_CLIENT

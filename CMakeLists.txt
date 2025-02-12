@@ -134,6 +134,8 @@ set(RTYPE_SRC
         src/RType/Entities/BossHeart.hpp
         src/RType/Entities/BossStaros.cpp
         src/RType/Entities/BossStaros.hpp
+        src/RType/Entities/BossAlien.cpp
+        src/RType/Entities/BossAlien.hpp
 )
 
 set(CLIENT_SRC
