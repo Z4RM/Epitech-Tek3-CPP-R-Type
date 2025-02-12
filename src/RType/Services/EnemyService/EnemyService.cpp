@@ -62,7 +62,7 @@ namespace rtype::services {
     components::Position pos, int netId) {
         unsigned int turretEntity = entityManager.createEntity();
 
-        components::Health health(300);
+        components::Health health(200);
 
         componentManager.addComponent<components::Position>(turretEntity, pos, entityManager);
         componentManager.addComponent<components::Health>(turretEntity, health, entityManager);
@@ -75,7 +75,7 @@ namespace rtype::services {
 
 #ifdef RTYPE_IS_CLIENT
         components::Sprite sprite;
-        sprite.priority = { 1 };
+        sprite.priority = { 2 };
         sprite.sprite = std::make_shared<sf::Sprite>();
         sprite.texture = TextureManager::getInstance().getTexture("turret");
         sprite.sprite->setTexture(*sprite.texture);

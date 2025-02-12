@@ -17,6 +17,7 @@
 #include "RType/Components/Shared/ProjectileInfo.hpp"
 #include <random>
 
+#include "RType/Components/Shared/ChildEntities.hpp"
 #include "RType/Components/Shared/ParentEntity.hpp"
 
 float rtype::systems::Movement::getDistanceBetweenPositions(const rtype::components::Position *pos1,
@@ -75,7 +76,23 @@ void rtype::systems::Movement::handleCollisions(unsigned int entity, components:
         const auto ai2 = componentManager.getComponent<components::IA>(collisionEntity);
         auto bonus = componentManager.getComponent<components::Bonus>(collisionEntity);
         auto playerBonuses = componentManager.getComponent<components::PlayerBonuses>(entity);
+        auto childEntities = componentManager.getComponent<components::ChildEntities>(entity);
+        auto parentEntity = componentManager.getComponent<components::ParentEntity>(entity);
+        bool childEntitiesAlive = false;
 
+        if (childEntities) {
+            for (auto &entity: childEntities->childEntities) {
+                auto childHealth = componentManager.getComponent<components::Health>(entity);
+                if (childHealth->value > 0) {
+                    childEntitiesAlive = true;
+                    break;
+                }
+            }
+        }
+
+        if (childEntitiesAlive) {
+            continue;
+        }
         if (ai1 && ai2)
             continue;
 
@@ -122,7 +139,7 @@ void rtype::systems::Movement::handleCollisions(unsigned int entity, components:
                     entityHealthBar->_elapsedDamage = now;
                     componentManager.addComponent<components::Health>(entity, *entityHealthBar, entityManager);
                     if (entityHealthBar->value <= 0) {
-                        if (!player) {
+                        if (!player && !parentEntity) {
                             entityManager.destroyEntity(entity);
                             componentManager.removeAllComponent(entity);
                         }
