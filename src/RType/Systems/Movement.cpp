@@ -139,7 +139,7 @@ void rtype::systems::Movement::handleCollisions(unsigned int entity, components:
                     }
                     if (IS_SERVER)
                         entityHealthBar->takeDamage(colliderDamage->collisionDamage);
-=======
+
                     entityHealthBar->_elapsedDamage = now;
                     componentManager.addComponent<components::Health>(entity, *entityHealthBar, entityManager);
                     if (entityHealthBar->value <= 0) {
