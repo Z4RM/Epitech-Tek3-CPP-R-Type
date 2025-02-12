@@ -44,7 +44,7 @@ var searchData=
   ['counter_2ehpp_41',['Counter.hpp',['../Counter_8hpp.html',1,'']]],
   ['covenant_20code_20of_20conduct_42',['Contributor Covenant Code of Conduct',['../md_CODE__OF__CONDUCT.html',1,'']]],
   ['crabus_43',['CRABUS',['../namespacertype_1_1models.html#a25dc1bce3e480831a3881452fa482800a0e82bfa0f4022f90d8e92c6f8157ff0a',1,'rtype::models']]],
-  ['createbonus_44',['createBonus',['../classrtype_1_1services_1_1BonusService.html#a71c1572edb4a4bfb9b6e5ce414af7699',1,'rtype::services::BonusService']]],
+  ['createbonus_44',['createBonus',['../classrtype_1_1services_1_1BonusService.html#aa8c7105530a0f1631ea88e3812b3fc23',1,'rtype::services::BonusService']]],
   ['created_45',['Created',['../structrtype_1_1components_1_1Created.html',1,'rtype::components']]],
   ['created_46',['created',['../structrtype_1_1components_1_1Sprite.html#ae061bd10cc6221f217ae872f2440281d',1,'rtype::components::Sprite']]],
   ['created_2ehpp_47',['Created.hpp',['../Created_8hpp.html',1,'']]],

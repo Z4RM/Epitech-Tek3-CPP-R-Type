@@ -6,7 +6,7 @@ var searchData=
   ['connect_3',['connect',['../classrtype_1_1network_1_1TCPNetwork.html#a386a34817636f915d07be1a26c418de5',1,'rtype::network::TCPNetwork']]],
   ['connecthandler_4',['ConnectHandler',['../classrtype_1_1systems_1_1ConnectHandler.html#aa573dc5100d899ce3b0770a3aa1717aa',1,'rtype::systems::ConnectHandler']]],
   ['counter_5',['Counter',['../structrtype_1_1components_1_1Counter.html#a97e0e5e94d3baa03f9a1ad0a3cadb188',1,'rtype::components::Counter']]],
-  ['createbonus_6',['createBonus',['../classrtype_1_1services_1_1BonusService.html#a71c1572edb4a4bfb9b6e5ce414af7699',1,'rtype::services::BonusService']]],
+  ['createbonus_6',['createBonus',['../classrtype_1_1services_1_1BonusService.html#aa8c7105530a0f1631ea88e3812b3fc23',1,'rtype::services::BonusService']]],
   ['createeffect_7',['createEffect',['../classrtype_1_1systems_1_1Sound.html#ad72efe485bab58abbeaa90590a679380',1,'rtype::systems::Sound']]],
   ['createenemy_8',['createEnemy',['../classrtype_1_1services_1_1EnemyService.html#a5cda0ec9845ca3c3317fd9052ae01fce',1,'rtype::services::EnemyService']]],
   ['createenemyprojectile_9',['createEnemyProjectile',['../classrtype_1_1services_1_1ProjectileService.html#a95b001c80ef14134230e2dd0454d87ce',1,'rtype::services::ProjectileService']]],
