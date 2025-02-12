@@ -59,7 +59,8 @@ namespace rtype::systems {
                                 const auto health = _componentManager.getComponent<components::Health>(entity);
                                 #ifdef RTYPE_IS_CLIENT
                                 const auto playerBonuses = _componentManager.getComponent<components::PlayerBonuses>(entity);
-                                components::PlayerBonuses newBonuses;
+                                components::PlayerBonuses newBonuses = {};
+
                                 for (auto &bonus: data.bonuses) {
                                     if (playerBonuses) {
                                         newBonuses = *playerBonuses;

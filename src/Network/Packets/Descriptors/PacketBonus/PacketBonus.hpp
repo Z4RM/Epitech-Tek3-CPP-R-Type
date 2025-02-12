@@ -24,7 +24,7 @@ namespace rtype::network {
         void fillData(const std::vector<char> &buffer) override;
 
         int type = 0;
-        long eventId = 0;
+        int eventId = 0;
         components::Position pos;
         int netIdEmitter = -1;
     };
