@@ -3,14 +3,14 @@
   "duration":10,
   "spawns":[
     {
-      "time": 5,
+      "time": 2,
       "bonuses": [
         2,
         1
       ],
       "enemies": [
         {
-          "type": 7,
+          "type": 8,
           "quantity": 1
         }
       ]
