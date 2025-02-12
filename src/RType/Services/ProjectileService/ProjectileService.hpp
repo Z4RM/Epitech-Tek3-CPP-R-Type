@@ -17,5 +17,8 @@ namespace rtype::services {
     public:
         static void createProjectile(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager,
         std::shared_ptr<components::Position> shooterPos, bool isSuperProjectile, components::EventId eventId);
+
+        static void createEnemyProjectile(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager,
+        std::shared_ptr<components::Position> shooterPos, components::EventId eventId);
     };
 }

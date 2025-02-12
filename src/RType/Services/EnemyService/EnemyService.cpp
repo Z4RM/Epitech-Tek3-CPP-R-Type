@@ -80,7 +80,7 @@ namespace rtype::services {
         sprite.texture = TextureManager::getInstance().getTexture("turret");
         sprite.sprite->setTexture(*sprite.texture);
         sf::Vector2f spriteSize(sprite.sprite->getTextureRect().width, sprite.sprite->getTextureRect().height);
-        sprite.sprite->setScale(1.5, 1.5);
+        sprite.sprite->setScale(1.2, 1.2);
         sprite.sprite->setOrigin(spriteSize.x / 2, spriteSize.y / 2);
         sf::RectangleShape hitboxRect;
 

@@ -10,5 +10,6 @@
 namespace rtype::components {
     struct ProjectileInfo {
         bool isSuperProjectile = false;
+        bool isPlayer = true;
     };
 }

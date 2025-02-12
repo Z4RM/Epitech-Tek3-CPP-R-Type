@@ -9,7 +9,7 @@
 namespace rtype::network {
     std::vector<char> PacketPlayerShoot::bufferize() const {
         std::vector<char> buffer(sizeof(this->_code) + sizeof(this->netId) + sizeof(this->isSuperProjectile) + sizeof
-        (this->eventId) + sizeof(pos.x) + sizeof(pos.y));
+        (this->eventId) + sizeof(pos.x) + sizeof(pos.y) + sizeof(isPlayer));
 
         size_t currentSize = 0;
 
@@ -24,6 +24,8 @@ namespace rtype::network {
         std::memcpy(buffer.data() + currentSize, &this->pos.x, sizeof(this->pos.x));
         currentSize += sizeof(this->pos.x);
         std::memcpy(buffer.data() + currentSize, &this->pos.y, sizeof(this->pos.y));
+        currentSize += sizeof(this->pos.y);
+        std::memcpy(buffer.data() + currentSize, &this->isPlayer, sizeof(this->isPlayer));
         return buffer;
     }
 
@@ -38,5 +40,7 @@ namespace rtype::network {
         std::memcpy(&this->pos.x, buffer.data() + currentSize, sizeof(this->pos.x));
         currentSize += sizeof(this->pos.x);
         std::memcpy(&this->pos.y, buffer.data() + currentSize, sizeof(this->pos.y));
+        currentSize += sizeof(this->pos.y);
+        std::memcpy(&this->isPlayer, buffer.data() + currentSize, sizeof(this->isPlayer));
     }
 }

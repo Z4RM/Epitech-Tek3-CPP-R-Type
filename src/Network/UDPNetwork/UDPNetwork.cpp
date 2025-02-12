@@ -78,6 +78,10 @@ namespace rtype::network {
         }
         try {
             std::unique_ptr<IPacket> packet = PacketFactory::fromBuffer(buffer);
+
+            if (!packet)
+                return;
+
             std::string codeStr = std::to_string(packet->getCode());
 
             auto it = this->_netHandlers.find(packet->getCode());

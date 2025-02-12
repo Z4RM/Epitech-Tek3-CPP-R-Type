@@ -13,6 +13,7 @@
 #include "RType/Components/Client/SlidingBg.hpp"
 #include "RType/Components/Shared/Counter.hpp"
 #include "RType/Components/Shared/PlayerBonuses.hpp"
+#include "RType/Components/Shared/ProjectileInfo.hpp"
 #include "RType/Config/Config.hpp"
 
 void rtype::systems::RenderWindowSys::render(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager)
@@ -59,7 +60,6 @@ void rtype::systems::RenderWindowSys::render(ecs::EntityManager &entityManager, 
             if (sprite && sprite->sprite) {
                 auto pos = componentManager.getComponent<components::Position>(e.id);
                 auto slide = componentManager.getComponent<components::SlidingBg>(e.id);
-
                 if (slide) {
                     auto position = sprite->sprite->getPosition();
                     position.x -= 150 * elapsedTime.count();
@@ -77,8 +77,9 @@ void rtype::systems::RenderWindowSys::render(ecs::EntityManager &entityManager, 
                 if (health) {
                     if (health->value > 0)
                         renderWindow->window->draw(*sprite->sprite);
-                } else
+                } else {
                     renderWindow->window->draw(*sprite->sprite);
+                }
             }
         }
 

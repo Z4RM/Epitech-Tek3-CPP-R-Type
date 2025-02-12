@@ -6,6 +6,9 @@
 */
 
 #include "ProjectileService.hpp"
+
+#include <spdlog/spdlog.h>
+
 #include "Components.hpp"
 #include "RType/Components/Shared/ProjectileInfo.hpp"
 #include "RType/Systems/Sound/Sound.hpp"
@@ -75,7 +78,55 @@ namespace rtype::services {
         componentManager.addComponent<components::Projectile>(projectileId, projectile, entityManager);
         systems::Sound::createEffect("assets/sounds/effects/shoot.wav", componentManager, entityManager, projectileId);
         #else
-        componentManager.addComponent<components::Hitbox>(projectileId, {pos, {10.0f, 10.0f}}, entityManager);
+        componentManager.addComponent<components::Hitbox>(projectileId, {pos, {82.0f, 18.0f}}, entityManager);
         #endif
     }
+
+    void ProjectileService::createEnemyProjectile(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager, std::shared_ptr<components::Position> shooterPos, components::EventId eventId) {
+        constexpr float projectileVelX = -2.0;
+        constexpr int projectileDamage = 50;
+        size_t projectileId = entityManager.createEntity();
+
+        components::Velocity vel = {projectileVelX, 0.0, 0.0};
+        components::Position pos = {shooterPos->x - 10.0f, shooterPos->y, shooterPos->z};
+        componentManager.addComponent<components::Velocity>(projectileId, vel, entityManager);
+        componentManager.addComponent<components::Position>(projectileId, pos, entityManager);
+        componentManager.addComponent<components::Size>(projectileId, {16.0f, 14.0f}, entityManager);
+        componentManager.addComponent<components::Speed>(projectileId, {200}, entityManager);
+        componentManager.addComponent<components::Damage>(projectileId, {projectileDamage}, entityManager);
+        componentManager.addComponent<components::NoDamageToPlayer>(projectileId, {true}, entityManager);
+        componentManager.addComponent<components::EventId>(projectileId, eventId, entityManager);
+        componentManager.addComponent<components::ProjectileInfo>(projectileId, {false, false}, entityManager);
+        #ifdef RTYPE_IS_CLIENT
+        sf::RectangleShape hitboxRect;
+
+        hitboxRect.setPosition(pos.x, pos.y);
+        hitboxRect.setOrigin(16.0f / 2, 14.0f / 2);
+        hitboxRect.setSize({16.0f, 14.0f});
+        hitboxRect.setOutlineColor(sf::Color::Green);
+        hitboxRect.setOutlineThickness(2.f);
+        hitboxRect.setFillColor(sf::Color::Transparent);
+        componentManager.addComponent<components::Hitbox>(projectileId, {pos, {16.0f, 14.0f}, hitboxRect}, entityManager);
+        components::Sprite projectileSprite = {
+            pos,
+            {16.0f, 14.0f},
+            "assets/sprite/enemy-projectile.gif",
+            {1},
+            {1.0, 1.0},
+            std::make_shared<sf::Texture>(),
+            std::make_shared<sf::Sprite>()
+        };
+        projectileSprite.texture = TextureManager::getInstance().getTexture("enemy_projectile");
+        projectileSprite.sprite->setTexture(*projectileSprite.texture, false);
+        sf::IntRect textureRect(52, 2, 16, 14);
+        projectileSprite.sprite->setTextureRect(textureRect);
+        sf::Vector2f spriteSize(16.0f, 14.0f);
+        projectileSprite.sprite->setOrigin(spriteSize.x / 2, spriteSize.y / 2);
+        projectileSprite.sprite->setPosition({pos.x, pos.y});
+        componentManager.addComponent<components::Sprite>(projectileId, projectileSprite, entityManager);
+        #else
+        componentManager.addComponent<components::Hitbox>(projectileId, {pos, {16.0f, 14.0f}}, entityManager);
+        #endif
+    }
+
 }
