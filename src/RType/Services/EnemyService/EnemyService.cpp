@@ -13,6 +13,7 @@
 #include "RType/Entities/BossTurret.hpp"
 #include "RType/Entities/EnemyCornus.hpp"
 #include "RType/Entities/EnemyCrabus.hpp"
+#include "RType/Entities/EnemyPablitos.hpp"
 #include "RType/Systems/Network/Network.hpp"
 
 #ifdef RTYPE_IS_CLIENT
@@ -44,6 +45,10 @@ namespace rtype::services {
         }
         if (type == models::CRABUS) {
             entities::EnemyCrabus crabus(componentManager, entityManager, pos, {currentNetId});
+            return;
+        }
+        if (type == models::PABLITOS) {
+            entities::EnemyPablitos pablitos(componentManager, entityManager, pos, {currentNetId});
             return;
         }
 #ifdef RTYPE_IS_CLIENT

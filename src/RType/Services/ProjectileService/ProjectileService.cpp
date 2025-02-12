@@ -23,7 +23,7 @@ namespace rtype::services {
         const auto projectileSpritePath = isSuperProjectile ? "assets/sprites/projectile/player-shots-charged.gif" : "assets/sprites/projectile/player-shots.gif";
         std::string projectileTextureKey = isSuperProjectile ? "super_projectile" : "projectile";
         const float projectileVelX = isSuperProjectile ? 0.25 : 2.0;
-        const int projectileDamage = isSuperProjectile ? 35 : 20;
+        const int projectileDamage = isSuperProjectile ? 100 : 50;
         size_t projectileId = entityManager.createEntity();
 
         components::Velocity vel = {projectileVelX, 0.0, 0.0};
@@ -84,7 +84,7 @@ namespace rtype::services {
 
     void ProjectileService::createEnemyProjectile(ecs::EntityManager &entityManager, ecs::ComponentManager &componentManager, std::shared_ptr<components::Position> shooterPos, components::EventId eventId) {
         constexpr float projectileVelX = -2.0;
-        constexpr int projectileDamage = 200;
+        constexpr int projectileDamage = 150;
         size_t projectileId = entityManager.createEntity();
 
         components::Velocity vel = {projectileVelX, 0.0, 0.0};

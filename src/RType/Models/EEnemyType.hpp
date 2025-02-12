@@ -13,6 +13,7 @@ namespace rtype::models {
         BOSS_TURRET = 2,
         TURRET = 3,
         CORNUS = 4,
-        CRABUS = 5
+        CRABUS = 5,
+        PABLITOS = 6
     };
 }

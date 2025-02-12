@@ -27,18 +27,18 @@ namespace rtype::entities {
         componentManager.addComponent<components::Size>(_id, size, entityManager);
         componentManager.addComponent<components::Speed>(_id, {200 }, entityManager);
 
-        components::Health health(2000);
+        components::Health health(100);
         componentManager.addComponent<components::Health>(_id, health, entityManager);
 
-        components::Damage damage = {200};
+        components::Damage damage = {300};
         componentManager.addComponent<components::Damage>(_id, damage, entityManager);
 
         std::vector<components::Velocity> move;
         move.emplace_back(components::Velocity({0, 0.5, 0}));
+        move.emplace_back(components::Velocity({0, -1, 0}));
         move.emplace_back(components::Velocity({0, -0.5, 0}));
-        move.emplace_back(components::Velocity({0.3, -0.5, 0}));
-        move.emplace_back(components::Velocity({-0.3, 0.5, 0}));
-        componentManager.addComponent<components::IA>(_id, {move, models::CRABUS, 0.5, 1}, entityManager);
+        move.emplace_back(components::Velocity({0, 0.5, 0}));
+        componentManager.addComponent<components::IA>(_id, {move, models::CRABUS, 0.6, 0.9}, entityManager);
 #ifdef RTYPE_IS_CLIENT
         components::Sprite sprite;
         sprite.priority = { 1 };
